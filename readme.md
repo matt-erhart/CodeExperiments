@@ -18,3 +18,6 @@ In all my years of TypeScriptin’ I’ve never come across this. Who codes this
 
 # any testing lib
 cannot test css selectors
+
+# recognize touch gestures
+http://hammerjs.github.io/getting-started/

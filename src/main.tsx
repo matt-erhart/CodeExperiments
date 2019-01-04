@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Spring, animated, interpolate } from "react-spring";
+import {dnd} from './rx'
 
 const ASpan = props => {
   return (
@@ -23,18 +24,22 @@ const styles = {
   shape: { width: 300, height: 300, willChange: "transform" }
 };
 
-
-const color = 'white'
+const color = "white";
 class SpringExample extends React.Component<any, any> {
+  static defaultProps = {
+    coords: [0,0]
+  }
   state = { toggle: true };
   toggle = () => this.setState(state => ({ toggle: !state.toggle }));
+  
+  
   render() {
     const toggle = this.state.toggle;
     return (
       <Spring
         from={{ color: color }}
         to={{
-          coords: toggle ? [0, 0] : [50, 50],
+          coords: this.props.coords,
           color: toggle ? color : "black",
           start: toggle ? "#B2DBBF" : "#B2DBBF",
           end: toggle ? "#247BA0" : "#F3FFBD",
@@ -58,14 +63,16 @@ class SpringExample extends React.Component<any, any> {
           <div
             style={{
               ...styles.container,
-              background: `linear-gradient(to bottom, ${start} ${stop}, ${end} 100%)`,
+              background: `linear-gradient(to bottom,
+                 ${start} ${stop}, ${end} 100%)`,
               ...rest
             }}
           >
             <svg
               style={{
                 ...styles.shape,
-                transform: `scale3d(${scale}, ${scale}, ${scale}) rotate(${rotation}) translate3d(${
+                transform: `scale3d(${scale}, ${scale}, 
+                  ${scale}) rotate(${rotation}) translate3d(${
                   coords[0]
                 }px,${coords[1]}px,0)`
               }}
@@ -90,6 +97,18 @@ class SpringExample extends React.Component<any, any> {
 }
 
 class App extends React.Component<any, any> {
+  state = {
+    coords: [0,0]
+  }
+  unsub
+  componentDidMount(){
+    this.unsub = dnd.subscribe(coords => this.setState({coords}))
+  }
+
+  componentWillUnmount(){
+    this.unsub()
+  }
+
   render() {
     return (
       <Router>
@@ -98,7 +117,7 @@ class App extends React.Component<any, any> {
             <ASpan data-testid="a">asdf</ASpan>
           </Route>
           <Route path="/b">
-            <SpringExample />
+            <SpringExample coords={this.state.coords}/>
           </Route>
         </Switch>
       </Router>
