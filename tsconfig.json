@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "target": "esnext",
+    "jsx": "react",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "declaration": false,
+    "removeComments": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
+    "strict": false,
+    "outDir": "dist",
+    "lib": ["es6", "es7", "dom", "esnext.asynciterable"],
+    "baseUrl": "src",
+    "rootDirs": ["src"],
+    "paths": {
+      "@media/*": ["media/*"],
+      "@src/*": ["./*"],
+      "@store/*": ["store/*"]
+    },
+    "types": ["node", "@emotion/core"]
+  },
+  "exclude": ["dist", "build", "node_modules"]
+}
