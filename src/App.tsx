@@ -1,3 +1,4 @@
 import * as React from 'react'
-import { DivStage } from './DivStage'
-export const App = () => <DivStage />
+import { ForceLayout } from './ForceLayout'
+
+export const App = () => <ForceLayout />
