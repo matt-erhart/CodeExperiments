@@ -1,4 +1,5 @@
 import * as React from 'react'
-import { DragTest } from './dragUtils/DragTest'
+import { DragTestLeftTop, DragTestDraw } from './dragUtils/DragTest'
 
-export const App = () => <DragTest />
+// export const App = () => <DragTestLeftTop />
+export const App = () => <DragTestDraw />
