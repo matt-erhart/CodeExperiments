@@ -35,8 +35,8 @@ function useDragLeftTop(
   return leftTop
 }
 
-export type BoxLTWH = {
-  // ltwb = left, top, width, height
+export type Box = {
+  // absolute position of box with css
   left: number
   top: number
   width: number
@@ -50,7 +50,7 @@ export type BoxEdges = {
   maxY: number // bottom
 }
 
-export const boxLTHWToBoxEdges = (box: BoxLTWH): BoxEdges => {
+export const boxToEdges = (box: Box): BoxEdges => {
   const { left, top, width, height } = box
   return {
     minX: left,
@@ -60,13 +60,13 @@ export const boxLTHWToBoxEdges = (box: BoxLTWH): BoxEdges => {
   }
 }
 
-export const boxEdgesToBoxLTHW = (edges: BoxEdges): BoxLTWH => {
+export const edgesToBox = (edges: BoxEdges): Box => {
   const { minX, maxX, minY, maxY } = edges
   return {
     left: minX,
     top: minY,
-    width: maxX - minX,
-    height: maxY - minY,
+    width: Math.abs(maxX - minX),
+    height: Math.abs(maxY - minY),
   }
 }
 
@@ -92,10 +92,10 @@ function useDragRect(drag: ReturnType<typeof useDrag>) {
         return undefined
     }
   }, [drag])
-  const [minX, maxX] = [xys.x1, xys.x2].sort()
-  const [minY, maxY] = [xys.y1, xys.y2].sort()
+  const [minX, maxX] = [Math.min(xys.x1, xys.x2), Math.max(xys.x1, xys.x2)]
+  const [minY, maxY] = [Math.min(xys.y1, xys.y2), Math.max(xys.y1, xys.y2)]
 
-  return boxEdgesToBoxLTHW({ minX, maxX, minY, maxY })
+  return edgesToBox({ minX, maxX, minY, maxY })
 }
 
 export const DragTestLeftTop = () => {
@@ -122,9 +122,8 @@ export const DragTestLeftTop = () => {
 export const DragTestDraw = () => {
   const divRef = useRef(null)
   const drag = useDrag(divRef)
-  console.log('drag: ', drag)
+
   const ltwh = useDragRect(drag)
-  console.log('ltwh: ', ltwh)
 
   return (
     <Div100vh ref={divRef}>
