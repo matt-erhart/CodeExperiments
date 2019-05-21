@@ -1,0 +1,49 @@
+ScienceDirect Crowdsourcing putational Intelligence and Data Science (ICCIDS 2018) Crowdsourcing -A Step Towards Advanced Machine Learning
+Entity quick click: rapid text copying based on automatic entity extraction Copying text, entity extraction, information extraction, text editing, sensemaking, copy-and-paste ACM Classification Keywords
+Artificial Intelligence ELSEVIER Creativity and artificial intelligence
+GENERATI ON ( OMPUTING Searching for Computational Creativity
+TOWARD A THEORY OF KNOWLEDGE REUSE 57 Toward A Theory of Knowledge Reuse: Types of Knowledge Reuse Situations and Factors in Reuse Success
+Entity quick click: rapid text copying based on automatic entity extraction Copying text, entity extraction, information extraction, text editing, sensemaking, copy-and-paste ACM Classification Keywords
+FORUM ON MODELING The Analysis-Synthesis Bridge Model Researching Prototyping Design: What It Is, and How To Teach and Learn It
+Towards a Comprehensive Model of the Cognitive Process and Mechanisms of Individual Sensemaking This review introduces a comprehensive model of the cognitive process and mechanisms of individual sense- making to provide a theoretical basis for
+S T E X+ -a System for Flexible Formalization of Linked Data
+Google Effects on Memory: Cognitive Consequences of Having
+Work-in-Progress A Sensemaking Environment for Literature Study Work-in-Progress
+How analysts cognitively &#x201C;connect the dots&#x201D;
+Towards a Comprehensive Model of the Cognitive Process and Mechanisms of Individual Sensemaking This review introduces a comprehensive model of the cognitive process and mechanisms of individual sense- making to provide a theoretical basis for
+Rethinking Evaluation for Today's HCI CHI 2015, Crossings, Seoul, Korea Real-World Affinity Diagramming Practices: Bridging the Paper-Digital Gap
+Late-Breaking Work: Interaction in Specific Domains PaperQuest: A Visualization Tool to Support Literature Review Introduction and Related Work
+Semantic Web 0 (0) 1 1 IOS Press Visualizing Ontologies with VOWL
+Facilitating Vocabulary Note Taking on Computers Through the Deep Processing Strategy Journal of Educational Computing Research 0(0) 1-28
+Rapid Tagging and Reporting for Functional Language Extraction in Scientific Articles Part of the Communication Technology and New Media Commons, Ergonomics Commons, Graphics and Human Computer Interfaces Commons, and the Publishing Commons Recommended Citation
+SemEval 2017 Task 10: ScienceIE - Extracting Keyphrases and Relations from Scientific Publications
+Crowdsourced semantic annotation of scientific publications and tabular data in PDF CITATIONS READS 5 46 4 authors, including: Crowdsourced Semantic Annotation of Scientific Publications and Tabular Data in PDF *
+Towards a Hybrid Human-Computer Scientific Information Extraction Pipeline Towards a Hybrid Human-Computer Scientific Information Extraction Pipeline
+Journal of Business and Technical Communication Journal of Business and Technical Communication Additional services and information for
+International Journal of Intelligent Systems and Applications in Engineering Using Word Embeddings for Ontology Enrichment
+jws_special_issue.tex Click here to view linked References Structuring Visual Exploratory Analysis of Skill Demand
+BayesPiles: Visualisation Support for
+Are Ideas Getting Harder to Find? Acknowledgements We are grateful to
+A Survey of Multi-faceted Graph Visualization VASSiB: Visual Analytics and Stochastic Spatial Simulation for Cell Biology View project Scalable Information Visualization in 3D Terrain View project A Survey of Multi-faceted Graph Visualization
+SOFTWARE -PRACTICE AND EXPERIENCE Empirical evidence about the UML: a systematic literature review
+SIGPLAN Empirical Evaluation Checklist
+Big Data Visualization Tools: A Survey - The New Paradigms, Methodologies and Tools for Large Data Sets Visualization CITATIONS READS 0 104 2 authors: Design for All: Sw integration and advanced Human Machine Interfaces in design for Ambient Assisted Living View project Big Data Visualization View project Big Data Visualization Tools: A Survey The new paradigms, methodologies and tools for large data sets visualization
+Adjust and Reuse -How Teachers Script Pedagogical Activities. CHI'18 Extended Abstracts
+GraphScape: A Model for Automated Reasoning about Visualization Similarity and Sequencing ADD_COLOR
+Instructional Complexity and the Science to Constrain It School-researcher partnerships and large in vivo experiments help focus on useful, effec- tive, instruction
+To appear in an IEEE VGTC sponsored conference proceedings
+Information and Learning Science Search, sense making and learning: closing gaps Article information
+Karupppasamy Subburaj Does Analogical Distance Affect Performance of Ideation? Lucienne Blessing
+Session 26: Creativity and Design Twenty Years of Creativity Research in Human-Computer Interaction: Current State and Future Directions
+lNTfRcHr93 24-29 April1993 The Cost Structure of Sensemaking
+CHI 2007 Proceedings • Empirical Models Meta-Analysis of Correlations Among Usability Measures
+PG03_Guide for CLDs12:Guide for CLDs_03 Guidelines for Drawing Causal Loop Diagrams Example Guideline Quality s Quality s
+AN ABSTRACT OF THE DISSERTATION OF
+SALT: Enriching L A T E Xwith Semantic Annotations
+Science and Engineering Publication Output Trends: 2014 Shows Rise of Developing Country Output while Developed Countries Dominate Highly Cited Publications
+<italic>TextTile</italic>: An Interactive Visualization Tool for Seamless Exploratory Analysis of Structured Data and Unstructured Text
+Edward Tiong The Economies and Dimensionality of Design Prototyping: Value, Time, Cost, and Fidelity Motivation and Inspiration
+Understanding Data Visualization CHI
+
+
++ 6 empty

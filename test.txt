@@ -1,0 +1,362 @@
+Towards Know-how Mapping Using Goal Modeling
+What Do We Know about the Effectiveness of Software Design Patterns?
+Concise and consistent naming
+Software Architecture Optimization Methods: A Systematic Literature Review
+An ontology evolution approach for information retrieval strategies with compound terms
+Knowledge representation artifacts for use in sensemaking support systems
+SenseMap: Supporting browser-based online sensemaking through analytic provenance
+Incremental Annotate-Generalize-Search Framework for Interactive Source Code Comprehension
+And then the internet happened: Thoughts on the future of concept mapping
+Computers in Human Behavior Cognitive load in hypertext reading: A review
+Computers in Human Behavior Cognitive load in hypertext reading: A review
+Quantitative analysis of fault density in design patterns: An empirical study
+Sensemaking tools for understanding research literatures: Design, implementation and user evaluation
+ScienceDirect Crowdsourcing -A Step Towards Advanced Machine Learning International Conference on Computational Intelligence and Data Science (ICCIDS 2018) Crowdsourcing -A Step Towards Advanced Machine Learning
+Edit wear and read wear
+Informal information gathering techniques for active reading
+Artificial Intelligence ELSEVIER Creativity and artificial intelligence
+GENERATI ON ( OMPUTING Searching for Computational Creativity
+Sharing Knowledge and Expertise: The CSCW View of Knowledge Management
+Does Writing Summaries Improve Memory for Text?
+WordBridge: Using Composite Tag Clouds in Node-Link Diagrams for Visualizing Content and Relations in Text Corpora
+Drawing to Learn in Science
+Putting graphic elicitation into practice: tools and typologies for the use of participant-led diagrams in qualitative research interviews
+Visualizing and Understanding Neural Models in NLP
+Self Paced Deep Learning for Weakly Supervised Object Detection
+Why Does Deep and Cheap Learning Work So Well?
+Student Reading Practices in Print and Electronic Media
+Machine Learning as a UX Design Material: How Can We Imagine Beyond Automation, Recommenders, and Reminders?
+HappyDB: A Corpus of 100,000 Crowdsourced Happy Moments
+A Survey on Food Computing
+Exploring the limits of complexity: A survey of empirical studies on graph visualisation
+A Map of Knowledge
+Origraph: Interactive Network Wrangling Network Model View Attribute View Network Sample View
+A Deep Generative Model for Graph Layout
+Readers' models of text structures: the case of academic articles
+Scatter/Gather: A Cluster-based Approach to Browsing Large Document Collections
+Towards a Typology of Reading Goals
+Natural Language Processing: A Human-Computer Interaction Perspective
+Applying Text Comprehension and Active Reading Principles to Adaptive Hyperbooks
+Effects of Variable Names on Comprehension: An Empirical Study
+ScholOnto: an ontology-based digital library server for research documents and discourse
+Reading of Electronic Documents: The Usability of Linear, Fisheye, and Overview+Detail Interfaces
+The magical number 4 in short-term memory: A reconsideration of mental storage capacity
+TOWARD A THEORY OF KNOWLEDGE REUSE 57 Toward A Theory of Knowledge Reuse: Types of Knowledge Reuse Situations and Factors in Reuse Success
+
+Reading Patterns and Usability in Visualizations of Electronic Documents
+Does Active Learning Work? A Review of the Research
+Being Literate with Large Document Collections: Observational Studies and Cost Structure Tradeoffs
+Entity quick click: rapid text copying based on automatic entity extraction Copying text, entity extraction, information extraction, text editing, sensemaking, copy-and-paste ACM Classification Keywords
+Computers in Human Behavior Cognitive load in hypertext reading: A review
+Formalization, User Strategy and Interaction Design: Users' Behaviour with Discourse Tagging Semantics
+Rapidly Exploring Application Design Through Speed Dating
+Reading Revisited: Evaluating the Usability of Digital Display Surfaces for Active Reading Tasks
+Relevance and Goal-Focusing in Text Processing
+CiteSense: Supporting Sensemaking of Research Literature
+Information and Communication Tools as Aids to Collaborative Sensemaking
+Information Provenance and Semantic Publishing A New Vision for Publishing in Science
+Sensemaking for the rest of us
+FORUM ON MODELING The Analysis-Synthesis Bridge Model Researching Prototyping Design: What It Is, and How To Teach and Learn It
+Understanding and Characterizing Insights: How Do People Gain Insights Using Information Visualization?
+User-centered evaluation of adaptive and adaptable systems: A literature review User-centered evaluation of adaptive and adaptable systems: a literature review
+A Predictive Model of Human Performance With Scrolling and Hierarchical Lists
+Design Space and Evaluation Challenges of Adaptive Graphical User Interfaces
+Interactive Data Integration through Smart Copy & Paste
+State of the art research into Cognitive Load Theory
+The roots of reading comprehension instruction
+Towards a Comprehensive Model of the Cognitive Process and Mechanisms of Individual Sensemaking This review introduces a comprehensive model of the cognitive process and mechanisms of individual sense- making to provide a theoretical basis for
+HCI design principles for ereaders
+S T E X+ -a System for Flexible Formalization of Linked Data
+Taking the Load Off a Learner's Mind: Instructional Design for Complex Learning
+Narrative Visualization: Telling Stories with Data
+Active Reading and Its Discontents: The Situations, Problems and Ideas of Readers
+Google Effects on Memory: Cognitive Consequences of Having
+Human Computation: A Survey and Taxonomy of a Growing Field
+Old Wine in New Bottles or Novel Challenges? A Critical Analysis of Empirical Studies of User Experience
+PaperVis: Literature Review Made Easy
+Relevance processes in multiple document comprehension
+Work-in-Progress A Sensemaking Environment for Literature Study Work-in-Progress
+An ontology evolution approach for information retrieval strategies with compound terms
+BRAT: a Web-based Tool for NLP-Assisted Text Annotation
+DBpedia -A Large-scale, Multilingual Knowledge Base Extracted from Wikipedia
+Designing a multi-slate reading environment to support active reading activities
+Session: Leveraging the Crowd Distributed Sensemaking: Improving Sensemaking by Leveraging the Efforts of Previous Users
+Interactive Poster General Terms Experimentation, Human Factors
+Exploring Think-Alouds in Usability Testing: An International Survey
+Formalising Uncertainty: An Ontology of Reasoning, Certainty and Attribution (ORCA)
+Is beautiful really usable? Toward understanding the relation between usability, aesthetics, and affect in HCI
+Microanalysis of active reading behavior to inform design of interactive desktop workspaces
+Poverty Impedes Cognitive Function
+Supporting and Exploiting Spatial Memory in User Interfaces
+The effect of concept mapping on students’ learning achievements and interests
+Session: Searching and Finding CHI 2013: Changing Perspectives, Costs and Benefits of Structured Information Foraging
+Effects of visualization and note-taking on sensemaking and analysis
+How analysts cognitively &#x201C;connect the dots&#x201D;
+Investigating and Improving Network Visualizations’ Effectiveness at Supporting Human Sensemaking Tasks
+Sharing Knowledge and Expertise: The CSCW View of Knowledge Management
+The Impact of Learner Control on E-Learning Effectiveness: Towards a Theoretical Model Research-in-Progress
+A review of ontologies for describing scholarly and scientific documents
+Briefings in Bioinformatics Advance A survey on annotation tools for the biomedical literature
+Common motifs in scientific workflows: An empirical analysis
+Student Reading Practices in Print and Electronic Media
+Taxonomy Construction Using Syntactic Contextual Evidence
+The Influence of Text Annotation Tools on Print and Digital Reading Comprehension
+Towards a Comprehensive Model of the Cognitive Process and Mechanisms of Individual Sensemaking This review introduces a comprehensive model of the cognitive process and mechanisms of individual sense- making to provide a theoretical basis for
+Linguistic antipatterns: what they are and how developers perceive them
+Collaborative authoring, evolution, and personalization for a "transdisciplinary" textbook
+neonion -combining human and machine intelligence
+Rethinking Evaluation for Today's HCI CHI 2015, Crossings, Seoul, Korea Real-World Affinity Diagramming Practices: Bridging the Paper-Digital Gap
+iSTART-2 A Reading Comprehension and Strategy Instruction Tutor Author's Note
+Automatic Extraction of Causal Relations from Natural Language Texts: A Comprehensive Survey
+Data Programming: Creating Large Training Sets, Quickly
+ExTaSem! Extending, Taxonomizing and Semantifying Domain Terminologies
+HyNote: Integrated Concept Mapping and Notetaking
+Merging open knowledge extracted from text with MERGILO
+Momentary Pleasure or Lasting Meaning? Distinguishing Eudaimonic and Hedonic User Experiences
+Handbook of Linguistic Annotation
+Late-Breaking Work: Interaction in Specific Domains PaperQuest: A Visualization Tool to Support Literature Review Introduction and Related Work
+Process patterns and conceptual changes in knowledge representations during information seeking and sensemaking: A qualitative user study
+SensePath: Understanding the Sensemaking Process Through Analytic Provenance
+Supporting Semantic Annotation of Educational Content by Automatic Extraction of Hierarchical Domain Relationships
+TASTY: Interactive Entity Linking As-You-Type
+Towards an Approach for Analysing External Representations Created During Sensemaking Using Generative Grammar
+Visual Analysis and Dissemination of Scientific Literature Collections with SurVis
+Semantic Web 0 (0) 1 1 IOS Press Visualizing Ontologies with VOWL
+Comparing Different Sensemaking Approaches for Large-Scale Ideation
+Improving Crowd Innovation with Expert Facilitation
+A Short Survey on Taxonomy Learning from Text Corpora: Issues, Resources and Recent Advances
+A Survey on Visual Approaches for Analyzing Scientific Literature and Patents
+Active Learning with Visualization for Text Data
+NLPReViz: an interactive tool for natural language processing on clinical text
+As We May Ink? Learning from Everyday Analog Pen Use to Improve Digital Ink Experiences
+Big Scholarly Data: A Survey
+cite2vec: Citation-Driven Document Exploration via Word Embeddings
+Creative Sense-Making: Quantifying Interaction Dynamics in Co-Creation
+Disrupting Students' Online Reading and Research Habits: The LINKS Intervention and its Impact on Multiple Internet Text Integration Processes
+Evaluating an instrument to measure mental load and mental effort considering different sources of validity evidence
+Facilitating Vocabulary Note Taking on Computers Through the Deep Processing Strategy Journal of Educational Computing Research 0(0) 1-28
+HESDK: A Hybrid Approach to Extracting Scientific Domain Knowledge Entities
+Incorporating Expert Knowledge into Keyphrase Extraction
+Integrating Visual Analytics Support for Grounded Theory Practice in Qualitative Text Analysis
+Iterative Machine Teaching
+Learning how to Active Learn: A Deep Reinforcement Learning Approach
+LitPathExplorer: a confidence-based visual text analytics tool for exploring literature-enriched pathway models
+NITE: A Neural Inductive Teaching Framework for Domain Specific NER
+NuSys: Towards a Document IDE for Knowledge Work
+On the Positive Effect of Reactive Programming on Software Comprehension: An Empirical Study
+PACTE : a collaborative platform for textual annotation
+Rapid Tagging and Reporting for Functional Language Extraction in Scientific Articles Part of the Communication Technology and New Media Commons, Ergonomics Commons, Graphics and Human Computer Interfaces Commons, and the Publishing Commons Recommended Citation
+Reading on Paper and Digitally: What the Past Decades of Empirical Research Reveal
+Reimagining the Digital Monograph: Design Thinking to Build New Tools for Researchers
+Semantic Zooming for Ontology Graph Visualizations
+SemEval 2017 Task 10: ScienceIE - Extracting Keyphrases and Relations from Scientific Publications
+SenseMap: Supporting browser-based online sensemaking through analytic provenance
+Crowdsourced semantic annotation of scientific publications and tabular data in PDF CITATIONS READS 5 46 4 authors, including: Crowdsourced Semantic Annotation of Scientific Publications and Tabular Data in PDF *
+Text Annotation Graphs: Annotating Complex Natural Language Phenomena
+Towards a Hybrid Human-Computer Scientific Information Extraction Pipeline Towards a Hybrid Human-Computer Scientific Information Extraction Pipeline
+Where to Add Actions in Human-in-the-Loop Reinforcement Learning
+Word-Sized Graphics for Scientific Texts
+Active Learning of Regular Expressions for Entity Extraction
+Active Reading of Visualizations
+Adversarial Data Programming: Using GANs to Relax the Bottleneck of Curated Labeled Data
+Engineering a Better Future Interplay between Engineering, Social Sciences, and Innovation
+Bridging from Goals to Tasks with Design Study Analysis Reports
+ConceptScape: Collaborative Concept Mapping for Video Learning
+Evaluation of Interactive Machine Learning Systems
+Extracting Causal Claims from Information Systems Papers with Natural Language Processing for Theory Ontology Learning
+Formal Ontology Learning from English IS-A Sentences
+VIGOR: Interactive Visual Exploration of Graph Query Results
+Idyll: A Markup Language for Authoring and Publishing Interactive Articles on the Web
+THE ECONOMIES AND DIMENSIONALITY OF PROTOTYPING: VALUE, TIME, COST AND FIDELITY
+Computer Models of Creativity
+Feature Engineering for Knowledge Base Construction
+Clustering Classes in Packages for Program Comprehension
+Word Embeddings Evaluation and Combination
+Journal of Business and Technical Communication Journal of Business and Technical Communication Additional services and information for
+International Journal of Intelligent Systems and Applications in Engineering Using Word Embeddings for Ontology Enrichment
+Human Computations in Citizen Crowds: A Knowledge Management Solution Framework
+jws_special_issue.tex Click here to view linked References Structuring Visual Exploratory Analysis of Skill Demand
+An Analysis of Spontaneous Study Strategies
+A Context Model For IDE-Based Recommendation Systems
+A Creativity Support System Based on Causal Mapping
+A Field Experiment of Spatially-Stable Overviews for Document Navigation
+A review of ontologies for describing scholarly and scientific documents
+A Survey of Information Visualization Books
+BayesPiles: Visualisation Support for
+Some Whys and Hows of Experiments in Human-Computer Interaction
+The diminishing criterion model for metacognitive regulation of time investment.
+A Framework for the Experience of Meaning in Human-Computer Interaction
+Age dynamics in scientific creativity
+Agency plus automation: Designing artificial intelligence into interactive systems
+An Introduction to Graph Data Management
+ANALYTIC AND PRAGMATIC FACTORS IN COLLEGE STUDENTS' METACOGNITIVE READING STRATEGIES
+Annotation technologies: A software and research review
+Are Ideas Getting Harder to Find? Acknowledgements We are grateful to
+A Survey of Multi-faceted Graph Visualization VASSiB: Visual Analytics and Stochastic Spatial Simulation for Cell Biology View project Scalable Information Visualization in 3D Terrain View project A Survey of Multi-faceted Graph Visualization
+A Translational Science Model for HCI
+Avoiding a Tragedy of the Commons in the Peer Review Process
+Top-down Program Comprehension with Multilayer Clustering Based on LDA
+How to Evaluate an Evaluation Study? Comparing and Contrasting Practices in Vis with Those of Other Disciplines : Position Paper
+Towards Automatic Argument Extraction and Visualization in a Deliberative Model of Online Consultations for Local Governments
+Ontological Foundations for Scholarly Debate Mapping Technology
+SOFTWARE -PRACTICE AND EXPERIENCE Empirical evidence about the UML: a systematic literature review
+Capturing the online academic reading process
+Charting Subtle Interaction in the HCI Literature
+SIGPLAN Empirical Evaluation Checklist
+A Design Space For Meaningful Structural Gamification
+LiquidText: A Flexible, Multitouch Environment to Support Active Reading
+Chunking mechanisms in human learning
+Citation function, polarity and influence classification
+cite2vec: Citation-Driven Document Exploration via Word Embeddings
+Micropublications: a semantic model for claims, evidence, arguments and annotations in biomedical communications
+Cognitive Task Analysis
+Cognitive task analysis-based training: A metaanalysisof studies
+Reading Psychology COLLEGE STUDENTS' ACADEMIC PERFORMANCE AND SELF-REPORTS OF COMPREHENSION STRATEGY USE
+Parallel Tag Clouds to explore and analyze faceted text corpora
+CommunityCommands: Command Recommendations for Software Applications
+Based Reasoning with Visualizations
+Hindsight is 20/20: Reflections on the evolution of concept mapping
+SOLVENT: A Mixed Initiative System for Finding Analogies between Research Papers
+Sensemaking for the rest of us
+What Do We Talk About When We Talk About Dashboards?
+Data Mountain: Using Spatial Memory for Document Management
+Data visualization literacy: Definitions, conceptual frameworks, exercises, and assessments
+Big Data Visualization Tools: A Survey - The New Paradigms, Methodologies and Tools for Large Data Sets Visualization CITATIONS READS 0 104 2 authors: Design for All: Sw integration and advanced Human Machine Interfaces in design for Ambient Assisted Living View project Big Data Visualization View project Big Data Visualization Tools: A Survey The new paradigms, methodologies and tools for large data sets visualization
+DESIGN TALKING: AN ONTOLOGY OF DESIGN METHODS TO SUPPORT A COMMON LANGUAGE OF DESIGN
+Designing affordances for navigating information spaces in code editors
+Designing Idea Management Tools: three challenges
+Digital reading theory and its relationship to academic reading practices
+Digital reading theory and its relationship to academic reading practices
+Reading from paper compared to screens: A systematic review and meta‐analysis
+Docent: Transforming personal intuitions to scientific hypotheses through content learning and process training
+Do Peers See More in a Paper Than Its Authors?
+
+Eight Ways to Promote Generative Learning
+Students' Framing of a Reading Annotation Tool in the Context of Research-Based Teaching
+Drawing-to-Learn: A Framework for Using Drawings to Promote Model-Based Reasoning in Biology
+Evaluating user interface systems research
+Evaluation Strategies for HCI Toolkit Research
+
+Evaluating Visual Perceptions CHI
+Exploring the relationship between personal and public annotations
+Adjust and Reuse -How Teachers Script Pedagogical Activities. CHI'18 Extended Abstracts
+External Labeling Techniques: A Taxonomy and Survey
+Extracting Scientific Figures with Distantly Supervised Neural Networks
+Towards a Survey of Interactive Visualization for Education
+Session: Leveraging the Crowd Distributed Sensemaking: Improving Sensemaking by Leveraging the Efforts of Previous Users
+And then the internet happened: Thoughts on the future of concept mapping
+ThemeDelta: Dynamic Segmentations over Temporal Topic Models
+Effects of visualization and note-taking on sensemaking and analysis
+Storing Dynamic Graphs: Speed vs. Storage Trade-offs Storing Dynamic Graphs: Speed vs. Storage Trade-offs
+GraphScape: A Model for Automated Reasoning about Visualization Similarity and Sequencing ADD_COLOR
+Guidelines for Human-AI Interaction
+Design and in-situ evaluation of a mixed-initiative approach to information organization
+HCI as an Inter-Discipline Author Keywords
+CiteRivers: Visual Analytics of Citation Patterns
+Annotating for the world: Attitudes toward sharing scholarly annotations
+Explanation as a Cognitive Process
+Extending the H-Tree Layout Pedigree: An Evaluation
+Making Sense of Human-Food Interaction
+Hypergraph visualization and enrichment statistics: how the EGAN paradigm facilitates organic discovery from big data
+Improving command selection with CommandMaps
+Dimensionality reduction for documents with nearest neighbor queries
+Instructional Complexity and the Science to Constrain It School-researcher partnerships and large in vivo experiments help focus on useful, effec- tive, instruction
+Interfaces for staying in the flow
+Introduction to a special issue on concept mapping
+A systematic literature review on the usage of eye-tracking in software engineering
+To appear in an IEEE VGTC sponsored conference proceedings
+Interactive Visual Profiling of Musicians
+User perspectives on relevance criteria: A comparison among relevant, partially relevant, and not-relevant judgments
+A text visualization method for cross-domain research topic mining
+A Review on Crowdsourcing for Education: State of the Art of Literature and Practice
+A Study of Calorie Estimation in Pictures of Food
+The role of reading strategies in scientific text comprehension and academic achievement of university students
+Extracting references between text and charts via crowdsourcing
+Bridging from Goals to Tasks with Design Study Analysis Reports
+Why a Diagram is (Sometimes) Worth Ten Thousand Words
+A Survey of the Usage of Sticky Notes
+A Survey of the Usage of Sticky Notes
+Learning Design Semantics for Mobile Apps
+Academic Reading: Technologies and Practices
+Reading on Paper and Digitally: What the Past Decades of Empirical Research Reveal
+The State of the Art in Multilayer Network Visualization
+Making Sense of Group Chat through Collaborative Tagging and Summarization
+PaperPoles: Facilitating adaptive visual exploration of scientific publications by citation links
+One of a CHInd
+Mapping the Landscape of Creativity Support Tools in HCI
+Information and Learning Science Search, sense making and learning: closing gaps Article information
+Karupppasamy Subburaj Does Analogical Distance Affect Performance of Ideation? Lucienne Blessing
+Interpreting Idea Maps: Pairwise Comparisons Reveal What Makes Ideas Novel
+The State of the Art in Integrating Machine Learning into Visual Analytics
+mouseFocus: Graph Query Autocompletion at User's Cursor
+Extracting Causal Claims from Information Systems Papers with Natural Language Processing for Theory Ontology Learning
+Multidomain Document Layout Understanding using Few Shot Object Detection
+Learning Knowledge Graphs for Question Answering through Conversational Dialog
+A Dataset of Peer Reviews (PeerRead): Collection, Insights and NLP Applications
+neonion -combining human and machine intelligence
+Path Patterns Visualization in Semantic Graphs
+Debates and Perspectives On being 'systematic' in literature reviews in IS
+Analysis of code reading to gain more insight in program comprehension
+Structuring Interactions for Large-Scale Synchronous Peer Learning
+Session 26: Creativity and Design Twenty Years of Creativity Research in Human-Computer Interaction: Current State and Future Directions
+Normalizing source code vocabulary to support program comprehension and software quality
+Can Natural Language Processing Become Natural Language Coaching?
+Interaction for reading comprehension in mobile devices
+PDFX: Fully-automated PDF-to-XML Conversion of Scientific Literature
+Effects of annotations on student readers and writers
+Microanalysis of active reading behavior to inform design of interactive desktop workspaces
+lNTfRcHr93 24-29 April1993 The Cost Structure of Sensemaking
+Between Ontology and Folksonomy: A Study of Collaborative and Implicit Ontology Evolution
+AXIS: Generating Explanations at Scale with Learnersourcing and Machine Learning
+
+Design Patterns for Voice Interaction in Games
+Interaction in Creative Tasks: Ideation, Representation and Evaluation in Composition
+CHI 2007 Proceedings • Empirical Models Meta-Analysis of Correlations Among Usability Measures
+FacetSearch: A Faceted Information Search and Exploration Prototype
+uRank: Exploring Document Recommendations through an Interactive User-Driven Approach
+PG03_Guide for CLDs12:Guide for CLDs_03 Guidelines for Drawing Causal Loop Diagrams Example Guideline Quality s Quality s
+VIGOR: Interactive Visual Exploration of Graph Query Results
+AN ABSTRACT OF THE DISSERTATION OF
+Categorization of Concerns A Categorical Program Comprehension Model
+Active learning increases student performance in science, engineering, and mathematics
+Intersecting Word Vectors to Take Figurative Language to New Heights
+Porta: Profiling Software Tutorials Using Operating-System-Wide Activity Tracing
+Journal of Visual Languages and Computing Twelve years of diagrams research
+Quality Metrics for Information Visualization
+Reading Comprehension of Scientific Text: A Domain-Specific Test of the Direct and Inferential Mediation Model of Reading Inference-Making and Reasoning: Refinement of an Assessment for Use in Gateway Biology Courses View project Bootstrapping Achievement and Motivation in STEM: An Integrated Cognitive-Motivational Intervention to Improve Biology Grades View project
+Recommendation Delivery: Getting the User Interface Just Right
+Visualization of Neural Network Predictions for Weather Forecasting
+Dr. Inventor Framework: Extracting Structured Information from Scientific Publications
+Quality and rigor of the concept mapping methodology: A pooled study analysis
+Rousillon: Scraping Distributed Hierarchical Web Data
+Being Literate with Large Document Collections: Observational Studies and Cost Structure Tradeoffs
+SALT: Enriching L A T E Xwith Semantic Annotations
+Scaling up analogical innovation with crowds and AI
+Scented Widgets: Improving Navigation Cues with Embedded Visualizations
+Sketching Temporal Uncertainty -An Exploratory User Study
+Science and Engineering Publication Output Trends: 2014 Shows Rise of Developing Country Output while Developed Countries Dominate Highly Cited Publications
+Comprehending Studies on Program Comprehension
+The effect of self-explanation and prediction on the development of principled understanding of chess in novices
+Scalable graph exploration and visualization: Sensemaking challenges and opportunities
+Sharing Economy Design Cards
+Soylent: A Word Processor with a Crowd Inside
+Guidelines for Effective Usage of Text Highlighting Techniques
+Supporting and Exploiting Spatial Memory in User Interfaces
+Supporting Transitions to Expertise in Hidden Toolbars
+Scout: Mixed-Initiative Exploration of Design Variations through High-Level Design Constraints
+Comparing Similarity Perception in Time Series Visualizations Comparing Similarity Perception in Time Series Visualizations
+Testing the robustness and performance of spatially consistent interfaces
+<italic>TextTile</italic>: An Interactive Visualization Tool for Seamless Exploratory Analysis of Structured Data and Unstructured Text
+Edward Tiong The Economies and Dimensionality of Design Prototyping: Value, Time, Cost, and Fidelity Motivation and Inspiration
+The Effects of Artificial Landmarks on Learning and Performance in Spatial-Memory Interfaces
+The Hotkey Palette: Flexible Contextual Retrieval of Chosen Documents and Windows
+The State of the Art in Multilayer Network Visualization
+The value of data
+The role of answer fluency and perceptual fluency as metacognitive cues for initiating analytic thinking
+TopicLens: Efficient Multi-Level Visual Topic Exploration of Large-Scale Document Collections
+On the Comprehension of Program Comprehension
+
+Towards a Knowledge Graph for Science
+Underspecified Scientific Claims in Nanopublications
+Understanding Data Visualization CHI
+Aeonium: Visual analytics to support collaborative qualitative coding

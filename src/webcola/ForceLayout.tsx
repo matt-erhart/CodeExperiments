@@ -5,7 +5,7 @@ import * as cola from 'webcola'
 const myWorker = new Worker('./LayoutWorker.js') // relative path to the source file, not the public URL
 import { Spring, animated, config } from 'react-spring/renderprops'
 // custom
-import { DivStage } from './DivStage'
+import { Div100vh } from '../Custom'
 import throttle from 'lodash/throttle'
 
 const makeGraph = () => {
@@ -56,13 +56,13 @@ export class ForceLayout extends React.Component<
 
   render() {
     return (
-      <DivStage ref={this.stage}>
+      <Div100vh ref={this.stage}>
         {/* <div>{this.state.alpha}</div> */}
         {this.state.nodes && (
           <Spring
             native
             to={{ nodes: this.state.nodes }}
-            config={{duration: 50}}
+            config={{ duration: 50 }}
           >
             {({ nodes }) =>
               this.state.nodes.map((node, ix) => {
@@ -84,7 +84,7 @@ export class ForceLayout extends React.Component<
             }
           </Spring>
         )}
-      </DivStage>
+      </Div100vh>
     )
   }
 }

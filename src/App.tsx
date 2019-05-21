@@ -1,4 +1,4 @@
 import * as React from 'react'
-import { ForceLayout } from './ForceLayout'
+import { DragTest } from './dragUtils/DragTest'
 
-export const App = () => <ForceLayout />
+export const App = () => <DragTest />
