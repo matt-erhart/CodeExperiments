@@ -89,6 +89,23 @@ export const pointsToBox = (points: { first: Point; second: Point }): Box => {
   return edgesToBox({ minX, maxX, minY, maxY })
 }
 
+export const movementZoomAdjust = (
+  movement: { movementX: number; movementY: number },
+  zooms: number[]
+) => {
+  const browserZoom =
+    Math.round((window.outerWidth / window.innerWidth) * 100) / 100
+
+  if (!movement) return { movementX: 0, movementY: 0 }
+
+  const { movementX, movementY } = movement
+
+  return {
+    movementX: movementX / browserZoom,
+    movementY: movementY / browserZoom,
+  }
+}
+
 function useDragPoints(drag: ReturnType<typeof useDrag>) {
   const [points, setPoints] = useState({
     first: { x: 0, y: 0 },
@@ -96,8 +113,18 @@ function useDragPoints(drag: ReturnType<typeof useDrag>) {
   })
   useEffect(() => {
     if (!drag) return undefined
-    const { type, movementX, movementY, clientX, clientY } = drag
-    const { first, second } = points
+    const {
+      type,
+      movementX: _moveX,
+      movementY: _moveY,
+      clientX,
+      clientY,
+    } = drag
+    const { movementX, movementY } = movementZoomAdjust(
+      { movementX: _moveX, movementY: _moveY },
+      []
+    )
+    const { second } = points
     switch (type) {
       case 'mousedown':
         setPoints({
@@ -148,9 +175,9 @@ export const DragTestDraw = () => {
   const [boxes, setBoxes] = useState([])
   const divRef = useRef(null)
   const drag = useDrag(divRef)
-
   const points = useDragPoints(drag)
   const box = pointsToBox(points)
+
   useEffect(() => {
     if (!!drag && drag.type === 'mouseup') {
       const id = boxes.length + 1
