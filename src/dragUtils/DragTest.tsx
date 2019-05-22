@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useRef, useCallback, useEffect, useMemo } from 'react'
 import { dragData } from './rx'
 import { Div100vh, DivRect } from '../Custom'
 
@@ -50,6 +50,11 @@ export type BoxEdges = {
   maxY: number // bottom
 }
 
+export type Point = {
+  x: number
+  y: number
+}
+
 export const boxToEdges = (box: Box): BoxEdges => {
   const { left, top, width, height } = box
   return {
@@ -70,32 +75,52 @@ export const edgesToBox = (edges: BoxEdges): Box => {
   }
 }
 
-function useDragRect(drag: ReturnType<typeof useDrag>) {
-  const [xys, setXys] = useState({ x1: 0, y1: 0, x2: 0, y2: 0 })
+export const pointsToBox = (points: { first: Point; second: Point }): Box => {
+  const { first, second } = points
+  const [minX, maxX] = [
+    Math.min(first.x, second.x),
+    Math.max(first.x, second.x),
+  ]
+  const [minY, maxY] = [
+    Math.min(first.y, second.y),
+    Math.max(first.y, second.y),
+  ]
+
+  return edgesToBox({ minX, maxX, minY, maxY })
+}
+
+function useDragPoints(drag: ReturnType<typeof useDrag>) {
+  const [points, setPoints] = useState({
+    first: { x: 0, y: 0 },
+    second: { x: 0, y: 0 },
+  })
   useEffect(() => {
     if (!drag) return undefined
     const { type, movementX, movementY, clientX, clientY } = drag
-    const { x1, y1, x2, y2 } = xys
+    const { first, second } = points
     switch (type) {
       case 'mousedown':
-        setXys({ ...xys, x1: clientX, y1: clientY, x2: clientX, y2: clientY })
+        setPoints({
+          ...points,
+          first: { x: clientX, y: clientY },
+          second: { x: clientX, y: clientY },
+        })
         break
       case 'mousemove':
       case 'mouseup':
-        setXys({
-          ...xys,
-          x2: x2 + movementX,
-          y2: y2 + movementY,
+        setPoints({
+          ...points,
+          second: {
+            x: second.x + movementX,
+            y: second.y + movementY,
+          },
         })
         break
       default:
         return undefined
     }
   }, [drag])
-  const [minX, maxX] = [Math.min(xys.x1, xys.x2), Math.max(xys.x1, xys.x2)]
-  const [minY, maxY] = [Math.min(xys.y1, xys.y2), Math.max(xys.y1, xys.y2)]
-
-  return edgesToBox({ minX, maxX, minY, maxY })
+  return points
 }
 
 export const DragTestLeftTop = () => {
@@ -120,14 +145,34 @@ export const DragTestLeftTop = () => {
 }
 
 export const DragTestDraw = () => {
+  const [boxes, setBoxes] = useState([])
   const divRef = useRef(null)
   const drag = useDrag(divRef)
 
-  const ltwh = useDragRect(drag)
+  const points = useDragPoints(drag)
+  const box = pointsToBox(points)
+  useEffect(() => {
+    if (!!drag && drag.type === 'mouseup') {
+      const id = boxes.length + 1
+      setBoxes([...boxes, { id, ...box }])
+    }
+  }, [drag, points])
 
   return (
-    <Div100vh ref={divRef}>
-      <DivRect style={{ ...ltwh }} />
+    // userSelect: none or it'll do a drag event which will break everything
+    <Div100vh style={{ userSelect: 'none' }} ref={divRef}>
+      <DivRect draggable={false} style={{ ...box }} />
+      {boxes.length > 0 &&
+        boxes.map((b, ix) => {
+          return (
+            <DivRect
+              draggable={false}
+              onDrag={e => e.preventDefault()}
+              key={b.id}
+              style={b}
+            />
+          )
+        })}
     </Div100vh>
   )
 }
