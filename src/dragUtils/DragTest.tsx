@@ -2,6 +2,9 @@ import * as React from 'react'
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react'
 import { dragData } from './rx'
 import { Div100vh, DivRect } from '../Custom'
+const hyperid = require('hyperid')
+const makeUid = hyperid()
+const memoize = require('fast-memoize')
 
 function useDrag(reactRef: React.RefObject<HTMLElement>) {
   if (!reactRef) return undefined
@@ -37,6 +40,7 @@ function useDragLeftTop(
 
 export type Box = {
   // absolute position of box with css
+  id?: string
   left: number
   top: number
   width: number
@@ -150,7 +154,7 @@ function useDragPoints(drag: ReturnType<typeof useDrag>) {
   return points
 }
 
-export const DragTestLeftTop = () => {
+export const DragTestLeftTop = props => {
   const divRef = useRef(null)
   const drag = useDrag(divRef)
   const leftTop = useDragLeftTop(drag, { left: 0, top: 0 })
@@ -166,40 +170,110 @@ export const DragTestLeftTop = () => {
         ...leftTop,
       }}
     >
-      hey
+      {props.children}
     </div>
   )
 }
 
 export const DragTestDraw = () => {
-  const [boxes, setBoxes] = useState([])
+  // const [boxes, setBoxes] = useState([])
   const divRef = useRef(null)
   const drag = useDrag(divRef)
   const points = useDragPoints(drag)
   const box = pointsToBox(points)
+  const { boxes, addBox, selectId, selectedIds } = useBoxes()
 
   useEffect(() => {
-    if (!!drag && drag.type === 'mouseup') {
-      const id = boxes.length + 1
-      setBoxes([...boxes, { id, ...box }])
+    if (
+      !!drag &&
+      drag.type === 'mouseup' &&
+      (drag.target as HTMLElement).id === 'container'
+    ) {
+      const id = makeUid()
+      addBox({ id, ...box })
+      // setBoxes([...boxes, { id, ...box }])
     }
   }, [drag, points])
 
+  let selectIdMemo = useCallback(id => {
+    selectId(id)
+  }, [])
+  let preventDefault = useCallback(e => e.preventDefault(), [])
+
   return (
     // userSelect: none or it'll do a drag event which will break everything
-    <Div100vh style={{ userSelect: 'none' }} ref={divRef}>
-      <DivRect draggable={false} style={{ ...box }} />
+    <Div100vh id={'container'} style={{ userSelect: 'none' }} ref={divRef}>
+      <DivRect draggable={false} style={box} />
       {boxes.length > 0 &&
         boxes.map((b, ix) => {
+          const isSelected = selectedIds.includes(b.id)
           return (
             <DivRect
               draggable={false}
-              onDrag={e => e.preventDefault()}
+              onDrag={preventDefault}
               key={b.id}
+              id={b.id}
               style={b}
+              isSelected={isSelected}
+              onMouseDown={selectIdMemo(b.id)}
             />
           )
         })}
     </Div100vh>
   )
 }
+
+type BoxesContextValue = {
+  boxes: Box[]
+  setBoxes: React.Dispatch<React.SetStateAction<Box[]>>
+  selectedIds: string[]
+  setSelectedIdsBoxes: React.Dispatch<React.SetStateAction<any[]>>
+}
+
+const BoxContext = React.createContext<BoxesContextValue | undefined>(undefined)
+
+type BoxProviderProps = {
+  value?: BoxesContextValue
+  children: React.ReactNode
+}
+
+function BoxesProvider(props: BoxProviderProps) {
+  const [boxes, setBoxes] = useState([])
+  const [selectedIds, setSelectedIdsBoxes] = useState([])
+
+  const value = React.useMemo(() => {
+    return {
+      boxes,
+      setBoxes,
+      selectedIds,
+      setSelectedIdsBoxes,
+    }
+  }, [boxes, selectedIds])
+  return <BoxContext.Provider value={value} {...props} />
+}
+
+function useBoxes() {
+  const context = React.useContext(BoxContext)
+  if (!context) {
+    throw new Error('useBoxes must be used within a BoxesProvider')
+  }
+  const { boxes, setBoxes, selectedIds, setSelectedIdsBoxes } = context
+  const addBox = React.useCallback(box => setBoxes(boxes => [...boxes, box]), [
+    setBoxes,
+  ])
+  const selectId = React.useCallback(
+    id => {
+      setSelectedIdsBoxes(id)
+    },
+    [setBoxes]
+  )
+  // move many
+  // add many
+  return {
+    boxes,
+    addBox,
+    selectedIds,
+    selectId,
+  }
+}
+export { BoxesProvider, useBoxes }
