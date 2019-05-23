@@ -181,7 +181,7 @@ export const DragTestDraw = () => {
   const drag = useDrag(divRef)
   const points = useDragPoints(drag)
   const box = pointsToBox(points)
-  const { boxes, addBox, selectId, selectedIds } = useBoxes()
+  const { boxes, addBox, addId, selectedIds } = useBoxes()
 
   useEffect(() => {
     if (
@@ -189,15 +189,16 @@ export const DragTestDraw = () => {
       drag.type === 'mouseup' &&
       (drag.target as HTMLElement).id === 'container'
     ) {
-      const id = makeUid()
+      const id = boxes.length //makeUid()
       addBox({ id, ...box })
       // setBoxes([...boxes, { id, ...box }])
     }
-  }, [drag, points])
+  }, [drag])
 
-  let selectIdMemo = useCallback(id => {
-    selectId(id)
-  }, [])
+  let addIdMemo = useRef(memoize((id: string[]) => e => {
+    addId(id)
+  }))
+  
   let preventDefault = useCallback(e => e.preventDefault(), [])
 
   return (
@@ -206,7 +207,9 @@ export const DragTestDraw = () => {
       <DivRect draggable={false} style={box} />
       {boxes.length > 0 &&
         boxes.map((b, ix) => {
-          const isSelected = selectedIds.includes(b.id)
+          
+
+          const isSelected = false //selectedIds.includes(b.id)
           return (
             <DivRect
               draggable={false}
@@ -215,7 +218,7 @@ export const DragTestDraw = () => {
               id={b.id}
               style={b}
               isSelected={isSelected}
-              onMouseDown={selectIdMemo(b.id)}
+              onMouseDown={addIdMemo.current([b.id])}
             />
           )
         })}
@@ -227,7 +230,7 @@ type BoxesContextValue = {
   boxes: Box[]
   setBoxes: React.Dispatch<React.SetStateAction<Box[]>>
   selectedIds: string[]
-  setSelectedIdsBoxes: React.Dispatch<React.SetStateAction<any[]>>
+  setSelectedIds: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 const BoxContext = React.createContext<BoxesContextValue | undefined>(undefined)
@@ -238,15 +241,17 @@ type BoxProviderProps = {
 }
 
 function BoxesProvider(props: BoxProviderProps) {
-  const [boxes, setBoxes] = useState([])
-  const [selectedIds, setSelectedIdsBoxes] = useState([])
+  const [boxes, setBoxes] = useState(() => [])
+  const [selectedIds, setSelectedIds] = useState(() => [])
 
   const value = React.useMemo(() => {
+    
+
     return {
       boxes,
       setBoxes,
       selectedIds,
-      setSelectedIdsBoxes,
+      setSelectedIds,
     }
   }, [boxes, selectedIds])
   return <BoxContext.Provider value={value} {...props} />
@@ -257,23 +262,21 @@ function useBoxes() {
   if (!context) {
     throw new Error('useBoxes must be used within a BoxesProvider')
   }
-  const { boxes, setBoxes, selectedIds, setSelectedIdsBoxes } = context
+  const { boxes, setBoxes, selectedIds, setSelectedIds } = context
   const addBox = React.useCallback(box => setBoxes(boxes => [...boxes, box]), [
     setBoxes,
   ])
-  const selectId = React.useCallback(
-    id => {
-      setSelectedIdsBoxes(id)
-    },
-    [setBoxes]
-  )
+
+  const addId = React.useCallback(id => setSelectedIds(ids => [...ids, id]), [
+    setSelectedIds,
+  ])
   // move many
   // add many
   return {
     boxes,
     addBox,
     selectedIds,
-    selectId,
+    addId,
   }
 }
 export { BoxesProvider, useBoxes }

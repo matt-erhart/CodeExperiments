@@ -16,5 +16,6 @@ const _DivRect = styled.div<{ isSelected?: boolean }>`
 `
 
 export const DivRect = React.memo<any>(props => {
+  
   return <_DivRect {...props} />
 })
