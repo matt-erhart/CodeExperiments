@@ -112,8 +112,8 @@ export const movementZoomAdjust = (
 
 function useDragPoints(drag: ReturnType<typeof useDrag>) {
   const [points, setPoints] = useState({
-    first: { x: 0, y: 0 },
-    second: { x: 0, y: 0 },
+    first: { x: 0, y: 0, type: '', id: '' },
+    second: { x: 0, y: 0, type: '', id: '' },
   })
   useEffect(() => {
     if (!drag) return undefined
@@ -123,6 +123,7 @@ function useDragPoints(drag: ReturnType<typeof useDrag>) {
       movementY: _moveY,
       clientX,
       clientY,
+      target,
     } = drag
     const { movementX, movementY } = movementZoomAdjust(
       { movementX: _moveX, movementY: _moveY },
@@ -131,10 +132,16 @@ function useDragPoints(drag: ReturnType<typeof useDrag>) {
     const { second } = points
     switch (type) {
       case 'mousedown':
+        const point = {
+          x: clientX,
+          y: clientY,
+          type,
+          id: (target as HTMLElement).id,
+        }
         setPoints({
           ...points,
-          first: { x: clientX, y: clientY },
-          second: { x: clientX, y: clientY },
+          first: point,
+          second: point,
         })
         break
       case 'mousemove':
@@ -144,6 +151,8 @@ function useDragPoints(drag: ReturnType<typeof useDrag>) {
           second: {
             x: second.x + movementX,
             y: second.y + movementY,
+            type,
+            id: (target as HTMLElement).id,
           },
         })
         break
@@ -176,40 +185,67 @@ export const DragTestLeftTop = props => {
 }
 
 export const DragTestDraw = () => {
-  // const [boxes, setBoxes] = useState([])
+  const [mode, setMode] = useState('')
   const divRef = useRef(null)
   const drag = useDrag(divRef)
   const points = useDragPoints(drag)
+
   const box = pointsToBox(points)
-  const { boxes, addBox, addId, selectedIds } = useBoxes()
+  const {
+    boxes,
+    addBox,
+    addId,
+    selectedIds,
+    selectOneId,
+    moveSelectedBoxes,
+  } = useBoxes()
 
   useEffect(() => {
     if (
-      !!drag &&
-      drag.type === 'mouseup' &&
-      (drag.target as HTMLElement).id === 'container'
+      !!points &&
+      points.second.type === 'mouseup' &&
+      points.first.id === 'container'
     ) {
       const id = boxes.length //makeUid()
       addBox({ id, ...box })
       // setBoxes([...boxes, { id, ...box }])
     }
-  }, [drag])
+    if (
+      !!points &&
+      points.second.type === 'mousemove' &&
+      points.first.id !== 'container'
+    ) {
+      const { movementX, movementY } = drag
+      // apply zoom at root data
+      moveSelectedBoxes({ movementX, movementY })
+      // setBoxes([...boxes, { id, ...box }])
+    }
+  }, [points])
 
-  let addIdMemo = useRef(memoize((id: string[]) => e => {
-    addId(id)
-  }))
-  
+  let selectOneIdMemo = useRef(
+    memoize((id: string) => e => {
+      selectOneId(id)
+    })
+  )
+
   let preventDefault = useCallback(e => e.preventDefault(), [])
+
+  const showSelectorBox = points.first.id === 'container' //(drag.target as HTMLElement).id === 'container'
+  const SelectorBox = showSelectorBox
+    ? () => <DivRect draggable={false} style={box} />
+    : () => null
 
   return (
     // userSelect: none or it'll do a drag event which will break everything
-    <Div100vh id={'container'} style={{ userSelect: 'none' }} ref={divRef}>
-      <DivRect draggable={false} style={box} />
+    <Div100vh
+      id={'container'}
+      style={{ userSelect: 'none', transform: 'scale(1)' }}
+      ref={divRef}
+    >
+      <SelectorBox />
       {boxes.length > 0 &&
         boxes.map((b, ix) => {
-          
-
-          const isSelected = false //selectedIds.includes(b.id)
+          const isSelected = selectedIds.includes(b.id)
           return (
             <DivRect
               draggable={false}
@@ -218,7 +254,7 @@ export const DragTestDraw = () => {
               id={b.id}
               style={b}
               isSelected={isSelected}
-              onMouseDown={addIdMemo.current([b.id])}
+              onMouseDown={selectOneIdMemo.current(b.id)}
             />
           )
         })}
@@ -226,6 +262,7 @@ export const DragTestDraw = () => {
   )
 }
 
+// CONTEXT /////////////////////////////////////////////////////
 type BoxesContextValue = {
   boxes: Box[]
   setBoxes: React.Dispatch<React.SetStateAction<Box[]>>
@@ -245,8 +282,6 @@ function BoxesProvider(props: BoxProviderProps) {
   const [selectedIds, setSelectedIds] = useState(() => [])
 
   const value = React.useMemo(() => {
-    
-
     return {
       boxes,
       setBoxes,
@@ -257,17 +292,46 @@ function BoxesProvider(props: BoxProviderProps) {
   return <BoxContext.Provider value={value} {...props} />
 }
 
+// useBoxes() /////////////////////////////////////////////////////
 function useBoxes() {
   const context = React.useContext(BoxContext)
+
   if (!context) {
     throw new Error('useBoxes must be used within a BoxesProvider')
   }
+
   const { boxes, setBoxes, selectedIds, setSelectedIds } = context
   const addBox = React.useCallback(box => setBoxes(boxes => [...boxes, box]), [
     setBoxes,
   ])
 
-  const addId = React.useCallback(id => setSelectedIds(ids => [...ids, id]), [
+  const moveSelectedBoxes = React.useCallback(
+    (movement: { movementX: number; movementY: number }) => {
+      const { movementX, movementY } = movement
+      setBoxes(boxes => {
+        // todo immer
+        return boxes.map(box => {
+          
+          if (selectedIds.includes(box.id)) {
+            return {
+              ...box,
+              left: box.left + movementX,
+              top: box.top + movementY,
+            }
+          } else {
+            return box
+          }
+        })
+      })
+    },
+    [setBoxes, selectedIds]
+  )
+
+  const addId = React.useCallback(
+    (id: string) => setSelectedIds(ids => [...ids, id]),
+    [setSelectedIds]
+  )
+  const selectOneId = React.useCallback((id: string) => setSelectedIds([id]), [
     setSelectedIds,
   ])
   // move many
@@ -277,6 +341,8 @@ function useBoxes() {
     addBox,
     selectedIds,
     addId,
+    selectOneId,
+    moveSelectedBoxes,
   }
 }
 export { BoxesProvider, useBoxes }
