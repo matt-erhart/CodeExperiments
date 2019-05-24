@@ -1,28 +1,10 @@
 import * as React from 'react'
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react'
-import { dragData } from './rx'
+import { useDrag } from './rx'
 import { Div100vh, DivRect } from '../Custom'
 const hyperid = require('hyperid')
 const makeUid = hyperid()
 const memoize = require('fast-memoize')
-
-function useDrag(reactRef: React.RefObject<HTMLElement>) {
-  if (!reactRef) return undefined
-  const [mouseDrag, setMouseDrag] = useState(null as React.MouseEvent<
-    HTMLElement,
-    MouseEvent
-  >)
-  const sub = useRef(null)
-  useEffect(() => {
-    sub.current = dragData(reactRef.current).subscribe(event => {
-      setMouseDrag(event)
-    })
-    return () => {
-      !!sub && sub.current.unsubscribe()
-    }
-  }, [])
-  return mouseDrag
-}
 
 function useDragLeftTop(
   drag: ReturnType<typeof useDrag>,
@@ -109,6 +91,7 @@ export const movementZoomAdjust = (
     movementY: movementY / browserZoom,
   }
 }
+// todo let elem = document.elementFromPoint(x, y);
 
 function useDragPoints(drag: ReturnType<typeof useDrag>) {
   const [points, setPoints] = useState({
@@ -117,24 +100,15 @@ function useDragPoints(drag: ReturnType<typeof useDrag>) {
   })
   useEffect(() => {
     if (!drag) return undefined
-    const {
-      type,
-      movementX: _moveX,
-      movementY: _moveY,
-      clientX,
-      clientY,
-      target,
-    } = drag
-    const { movementX, movementY } = movementZoomAdjust(
-      { movementX: _moveX, movementY: _moveY },
-      []
-    )
+    const { type, movementX, movementY, offsetX, offsetY, target } = drag
+
     const { second } = points
     switch (type) {
       case 'mousedown':
+        // valid start component
         const point = {
-          x: clientX,
-          y: clientY,
+          x: offsetX,
+          y: offsetY,
           type,
           id: (target as HTMLElement).id,
         }
@@ -144,13 +118,16 @@ function useDragPoints(drag: ReturnType<typeof useDrag>) {
           second: point,
         })
         break
+
+      // valid end component
+      // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
       case 'mousemove':
       case 'mouseup':
         setPoints({
           ...points,
           second: {
-            x: second.x + movementX,
-            y: second.y + movementY,
+            x: offsetX,
+            y: offsetY,
             type,
             id: (target as HTMLElement).id,
           },
@@ -162,6 +139,11 @@ function useDragPoints(drag: ReturnType<typeof useDrag>) {
   }, [drag])
   return points
 }
+
+const getRelativeCoordinates = () => {}
+// clientXY + movementXY
+// validDrop targets
+// if validDrop, get relative coordinate in drop target
 
 export const DragTestLeftTop = props => {
   const divRef = useRef(null)
@@ -189,6 +171,7 @@ export const DragTestDraw = () => {
   const divRef = useRef(null)
   const drag = useDrag(divRef)
   const points = useDragPoints(drag)
+  console.log('points: ', points)
 
   const box = pointsToBox(points)
   const {
@@ -237,28 +220,30 @@ export const DragTestDraw = () => {
 
   return (
     // userSelect: none or it'll do a drag event which will break everything
-    <Div100vh
-      id={'container'}
-      style={{ userSelect: 'none', transform: 'scale(1)' }}
-      ref={divRef}
-    >
-      <SelectorBox />
-      {boxes.length > 0 &&
-        boxes.map((b, ix) => {
-          const isSelected = selectedIds.includes(b.id)
-          return (
-            <DivRect
-              draggable={false}
-              onDrag={preventDefault}
-              key={b.id}
-              id={b.id}
-              style={b}
-              isSelected={isSelected}
-              onMouseDown={selectOneIdMemo.current(b.id)}
-            />
-          )
-        })}
-    </Div100vh>
+    <>
+      <Div100vh
+        id={'container'}
+        style={{ userSelect: 'none', transform: 'scale(1)' }}
+        ref={divRef}
+      >
+        <SelectorBox />
+        {boxes.length > 0 &&
+          boxes.map((b, ix) => {
+            const isSelected = selectedIds.includes(b.id)
+            return (
+              <DivRect
+                draggable={false}
+                onDrag={preventDefault}
+                key={b.id}
+                id={b.id}
+                style={b}
+                isSelected={isSelected}
+                onMouseDown={selectOneIdMemo.current(b.id)}
+              />
+            )
+          })}
+      </Div100vh>
+    </>
   )
 }
 
@@ -311,7 +296,6 @@ function useBoxes() {
       setBoxes(boxes => {
         // todo immer
         return boxes.map(box => {
-          
           if (selectedIds.includes(box.id)) {
             return {
               ...box,

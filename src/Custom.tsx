@@ -13,6 +13,7 @@ const _DivRect = styled.div<{ isSelected?: boolean }>`
   };
   position: absolute;
   border: 1px solid hsl(220, 82%, 66%);
+  /* margin: 20px; */
 `
 
 export const DivRect = React.memo<any>(props => {

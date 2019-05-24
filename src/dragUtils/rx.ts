@@ -1,8 +1,7 @@
 // if we need touch screens: https://varun.ca/drag-with-rxjs/
-import { fromEvent, Observable, merge } from "rxjs";
+import { fromEvent, merge } from "rxjs";
 import {
   startWith,
-  map,
   takeWhile,
   exhaustMap as mapUntilInnerDone
 } from "rxjs/operators";
@@ -13,15 +12,18 @@ import {
  */
 export const dragData = (el: HTMLElement) => {
   if (!el) return null
-  const mousedown = fromEvent<React.MouseEvent<HTMLElement, MouseEvent>>(
+
+  const mousedown = fromEvent<MouseEvent>(
     el,
     "mousedown"
   );
-  const mousemove = fromEvent<React.MouseEvent<HTMLElement, MouseEvent>>(
+
+  const mousemove = fromEvent<MouseEvent>(
     document,
     "mousemove"
   );
-  const mouseup = fromEvent<React.MouseEvent<HTMLElement, MouseEvent>>(
+
+  const mouseup = fromEvent<MouseEvent>(
     document,
     "mouseup"
   );
@@ -37,3 +39,22 @@ export const dragData = (el: HTMLElement) => {
     })
   );
 };
+
+
+// rx + react
+import { useState, useRef, useEffect } from 'react'
+
+export const useDrag = (reactRef: React.RefObject<HTMLElement>) => {
+  if (!reactRef) return undefined
+  const [mouseDrag, setMouseDrag] = useState(null as MouseEvent)
+  const sub = useRef(null)
+  useEffect(() => {
+    sub.current = dragData(reactRef.current).subscribe(event => {
+      setMouseDrag(event)
+    })
+    return () => {
+      !!sub && sub.current.unsubscribe()
+    }
+  }, [])
+  return mouseDrag
+}
