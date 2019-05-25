@@ -47,6 +47,7 @@
     "Parcel"
   ],
   "dependencies": {
+    "@rooks/use-boundingclientrect": "^3.0.1",
     "babel-polyfill": "^6.26.0",
     "cheerio": "1.0.0-rc.3",
     "d3": "^5.9.2",

@@ -7,13 +7,13 @@ const logit = e => {
 }
 
 // export const App = () => <DragTestLeftTop />
-// export const App = () => {
-//   return (
-//     <BoxesProvider>
-//       <DragTestDraw />
-//     </BoxesProvider>
-//   )
-// }
+export const _App = () => {
+  return (
+    <BoxesProvider>
+      <DragTestDraw />
+    </BoxesProvider>
+  )
+}
 /**
  * const transed =  Math.round((e.clientX - bbox.left) / scale);
  */
@@ -22,7 +22,7 @@ const logit = e => {
 export const App = () => {
   const ref = useRef(null)
   const [coords, setCoords] = useState({ left: 0, top: 0 })
-  const scale = 0.9
+  const scale = 1.1
   return (
     <div style={{ transform: `scale(${scale})` }}>
       <div style={{ transform: `scale(${scale})` }}>
@@ -37,17 +37,26 @@ export const App = () => {
             width: '50vh',
             height: '50vh',
             outline: '1px solid black',
-            transform: `scale(${scale})`,
+            transform: `scale(${scale}) translateX(100px)`,
+            transformOrigin: 'bottom',
           }}
           onMouseDown={e => {
             const bbox = ref.current.getBoundingClientRect()
+            const { offsetWidth, offsetHeight } = ref.current
+
+            // DND MAGIC
+            const effectiveScaleX = bbox.width / ref.current.offsetWidth || 1
+            const effectiveScaleY = bbox.height / ref.current.offsetHeight || 1
+
             const browserZoom =
               Math.round((window.outerWidth / window.innerWidth) * 100) / 100
+            // x,y could be scaled differently, need two numbers
+
             const transedX = Math.round(
-              (e.clientX - bbox.left) / scale / scale / scale
+              (e.clientX - bbox.left) / effectiveScaleX
             )
             const transedY = Math.round(
-              (e.clientY - bbox.top) / scale / scale / scale
+              (e.clientY - bbox.top) / effectiveScaleY
             )
             setCoords({ left: transedX, top: transedY })
             console.log(

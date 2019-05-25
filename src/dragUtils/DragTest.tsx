@@ -5,7 +5,7 @@ import { Div100vh, DivRect } from '../Custom'
 const hyperid = require('hyperid')
 const makeUid = hyperid()
 const memoize = require('fast-memoize')
-
+import useBoundingclientrect from '@rooks/use-boundingclientrect'
 function useDragLeftTop(
   drag: ReturnType<typeof useDrag>,
   lt = { left: 0, top: 0 }
@@ -93,7 +93,10 @@ export const movementZoomAdjust = (
 }
 // todo let elem = document.elementFromPoint(x, y);
 
-function useDragPoints(drag: ReturnType<typeof useDrag>) {
+function useDragPoints(
+  drag: ReturnType<typeof useDrag>,
+  el: React.RefObject<HTMLElement>
+) {
   const [points, setPoints] = useState({
     first: { x: 0, y: 0, type: '', id: '' },
     second: { x: 0, y: 0, type: '', id: '' },
@@ -178,11 +181,6 @@ function useDragPoints(drag: ReturnType<typeof useDrag>) {
   return points
 }
 
-const getRelativeCoordinates = () => {}
-// clientXY + movementXY
-// validDrop targets
-// if validDrop, get relative coordinate in drop target
-
 export const DragTestLeftTop = props => {
   const divRef = useRef(null)
   const drag = useDrag(divRef)
@@ -208,14 +206,8 @@ export const DragTestDraw = () => {
   const [mode, setMode] = useState('')
   const divRef = useRef(null)
   const drag = useDrag(divRef)
-  const points = useDragPoints(drag)
-  const showDims = useCallback(() => {
-    divRef.current.getBoundingClientRect()
-    console.log(
-      'divRef.current.getBoundingClientRect(): ',
-      divRef.current.getBoundingClientRect().width
-    )
-  },[])
+  const points = useDragPoints(drag, divRef)
+
   const box = pointsToBox(points)
   const {
     boxes,
@@ -268,7 +260,7 @@ export const DragTestDraw = () => {
         id={'container'}
         style={{ userSelect: 'none', transform: 'scale(.5)' }}
         ref={divRef}
-        >
+      >
         <SelectorBox />
         {boxes.length > 0 &&
           boxes.map((b, ix) => {

@@ -13,7 +13,6 @@ import {
  */
 export const dragData = (el: HTMLElement) => {
   if (!el) return null
-
   const mousedown = fromEvent<MouseEvent>(el, 'mousedown')
 
   const mousemove = fromEvent<MouseEvent>(
@@ -39,6 +38,7 @@ import { useState, useRef, useEffect } from 'react'
 
 export const useDrag = (reactRef: React.RefObject<HTMLElement>) => {
   if (!reactRef) return undefined
+
   const [mouseDrag, setMouseDrag] = useState(null as MouseEvent)
   const sub = useRef(null)
   useEffect(() => {

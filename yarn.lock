@@ -977,6 +977,11 @@
     "@parcel/utils" "^1.11.0"
     physical-cpu-count "^2.0.0"
 
+"@rooks/use-boundingclientrect@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@rooks/use-boundingclientrect/-/use-boundingclientrect-3.0.1.tgz#cbe7c708d259a2b58db4d306d6ec9ecf040a6002"
+  integrity sha512-Xy343Z8BFY8GtLC/3bVsDGtvLSmg3iD7uisRhah7Lf/hpyKeaxv2081H9LzS+OQ5AIyBKt3q2RUmdqrW72s0/w==
+
 "@sheerun/mutationobserver-shim@^0.3.2":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.2.tgz#8013f2af54a2b7d735f71560ff360d3a8176a87b"
