@@ -97,31 +97,64 @@ function useDragPoints(drag: ReturnType<typeof useDrag>) {
   const [points, setPoints] = useState({
     first: { x: 0, y: 0, type: '', id: '' },
     second: { x: 0, y: 0, type: '', id: '' },
+    movement: { x: 0, y: 0 },
+    isDragging: false,
   })
+
+  const [prevOffsets, setPrevOffsets] = useState(undefined as {
+    x: number
+    y: number
+  })
+
   useEffect(() => {
     if (!drag) return undefined
+    // important note: offsetX + offsetY handles zoom right, but not multiple els
+    //
     const { type, movementX, movementY, offsetX, offsetY, target } = drag
+    // const nearest = (drag.target as HTMLElement).closest('#container')
+    // var sides = !!nearest
+    //   ? nearest.getBoundingClientRect()
+    //   : { left: 0, top: 0 }
 
     const { second } = points
     switch (type) {
       case 'mousedown':
         // valid start component
+        setPrevOffsets({ x: offsetX, y: offsetY })
         const point = {
           x: offsetX,
           y: offsetY,
           type,
           id: (target as HTMLElement).id,
         }
+
         setPoints({
           ...points,
           first: point,
           second: point,
+          movement: { x: 0, y: 0 },
+          isDragging: true,
         })
         break
 
       // valid end component
       // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
       case 'mousemove':
+        setPoints({
+          ...points,
+          second: {
+            x: offsetX,
+            y: offsetY,
+            type,
+            id: (target as HTMLElement).id,
+          },
+          movement: {
+            x: offsetX - prevOffsets.x,
+            y: offsetY - prevOffsets.y,
+          },
+          isDragging: true,
+        })
+        break
       case 'mouseup':
         setPoints({
           ...points,
@@ -131,6 +164,11 @@ function useDragPoints(drag: ReturnType<typeof useDrag>) {
             type,
             id: (target as HTMLElement).id,
           },
+          movement: {
+            x: offsetX - prevOffsets.x,
+            y: offsetY - prevOffsets.y,
+          },
+          isDragging: false,
         })
         break
       default:
@@ -171,8 +209,13 @@ export const DragTestDraw = () => {
   const divRef = useRef(null)
   const drag = useDrag(divRef)
   const points = useDragPoints(drag)
-  console.log('points: ', points)
-
+  const showDims = useCallback(() => {
+    divRef.current.getBoundingClientRect()
+    console.log(
+      'divRef.current.getBoundingClientRect(): ',
+      divRef.current.getBoundingClientRect().width
+    )
+  },[])
   const box = pointsToBox(points)
   const {
     boxes,
@@ -198,12 +241,11 @@ export const DragTestDraw = () => {
       points.second.type === 'mousemove' &&
       points.first.id !== 'container'
     ) {
-      const { movementX, movementY } = drag
       // apply zoom at root data
-      moveSelectedBoxes({ movementX, movementY })
+      moveSelectedBoxes(points)
       // setBoxes([...boxes, { id, ...box }])
     }
-  }, [points])
+  }, [points, selectedIds])
 
   let selectOneIdMemo = useRef(
     memoize((id: string) => e => {
@@ -215,17 +257,18 @@ export const DragTestDraw = () => {
 
   const showSelectorBox = points.first.id === 'container' //(drag.target as HTMLElement).id === 'container'
   const SelectorBox = showSelectorBox
-    ? () => <DivRect draggable={false} style={box} />
+    ? () => <DivRect draggable={false} style={box} emitEvents={false} />
     : () => null
 
   return (
     // userSelect: none or it'll do a drag event which will break everything
     <>
+      <div>hey</div>
       <Div100vh
         id={'container'}
-        style={{ userSelect: 'none', transform: 'scale(1)' }}
+        style={{ userSelect: 'none', transform: 'scale(.5)' }}
         ref={divRef}
-      >
+        >
         <SelectorBox />
         {boxes.length > 0 &&
           boxes.map((b, ix) => {
@@ -239,6 +282,7 @@ export const DragTestDraw = () => {
                 style={b}
                 isSelected={isSelected}
                 onMouseDown={selectOneIdMemo.current(b.id)}
+                emitEvents={!points.isDragging}
               />
             )
           })}
@@ -291,16 +335,15 @@ function useBoxes() {
   ])
 
   const moveSelectedBoxes = React.useCallback(
-    (movement: { movementX: number; movementY: number }) => {
-      const { movementX, movementY } = movement
+    (points: ReturnType<typeof useDragPoints>) => {
       setBoxes(boxes => {
         // todo immer
         return boxes.map(box => {
           if (selectedIds.includes(box.id)) {
             return {
               ...box,
-              left: box.left + movementX,
-              top: box.top + movementY,
+              left: box.left + points.movement.x,
+              top: box.top + points.movement.y,
             }
           } else {
             return box
