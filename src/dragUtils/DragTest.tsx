@@ -75,27 +75,33 @@ export const pointsToBox = (points: { first: Point; second: Point }): Box => {
   return edgesToBox({ minX, maxX, minY, maxY })
 }
 
-export const movementZoomAdjust = (
-  movement: { movementX: number; movementY: number },
-  zooms: number[]
-) => {
-  const browserZoom =
-    Math.round((window.outerWidth / window.innerWidth) * 100) / 100
-
-  if (!movement) return { movementX: 0, movementY: 0 }
-
-  const { movementX, movementY } = movement
-
-  return {
-    movementX: movementX / browserZoom,
-    movementY: movementY / browserZoom,
-  }
-}
 // todo let elem = document.elementFromPoint(x, y);
+
+const getElementScale = (element: HTMLElement) => {
+  // from leaflet utils
+  const elementRect = element.getBoundingClientRect()
+  const scaleX = elementRect.width / element.offsetWidth || 1
+  const scaleY = elementRect.height / element.offsetHeight || 1
+
+  return { scaleX, scaleY }
+}
+
+const getPointInElement = (
+  element: HTMLElement,
+  point: { clientX: number; clientY: number } // e.g. from mouseevent
+) => {
+  const rect = element.getBoundingClientRect()
+  const { scaleX, scaleY } = getElementScale(element)
+
+  const elementX = (point.clientX - rect.left) / scaleX
+  const elementY = (point.clientY - rect.top) / scaleY
+
+  return { x: elementX, y: elementY, scaleX, scaleY }
+}
 
 function useDragPoints(
   drag: ReturnType<typeof useDrag>,
-  el: React.RefObject<HTMLElement>
+  el: React.RefObject<HTMLElement> //todo infer from linage
 ) {
   const [points, setPoints] = useState({
     first: { x: 0, y: 0, type: '', id: '' },
@@ -104,29 +110,26 @@ function useDragPoints(
     isDragging: false,
   })
 
-  const [prevOffsets, setPrevOffsets] = useState(undefined as {
-    x: number
-    y: number
-  })
-
   useEffect(() => {
     if (!drag) return undefined
     // important note: offsetX + offsetY handles zoom right, but not multiple els
     //
-    const { type, movementX, movementY, offsetX, offsetY, target } = drag
-    // const nearest = (drag.target as HTMLElement).closest('#container')
-    // var sides = !!nearest
-    //   ? nearest.getBoundingClientRect()
-    //   : { left: 0, top: 0 }
-
+    const browserZoom =
+              Math.round((window.outerWidth / window.innerWidth) * 100) / 100
+            // x,y could be scaled differently, need 
+    const { type, movementX, movementY, clientX, clientY, target } = drag
     const { second } = points
+    const { x, y, scaleX, scaleY } = getPointInElement(el.current, {
+      clientX,
+      clientY,
+    })
+
     switch (type) {
       case 'mousedown':
         // valid start component
-        setPrevOffsets({ x: offsetX, y: offsetY })
         const point = {
-          x: offsetX,
-          y: offsetY,
+          x,
+          y,
           type,
           id: (target as HTMLElement).id,
         }
@@ -146,14 +149,14 @@ function useDragPoints(
         setPoints({
           ...points,
           second: {
-            x: offsetX,
-            y: offsetY,
+            x,
+            y,
             type,
             id: (target as HTMLElement).id,
           },
           movement: {
-            x: offsetX - prevOffsets.x,
-            y: offsetY - prevOffsets.y,
+            x: movementX / scaleX / browserZoom,
+            y: movementY / scaleY / browserZoom,
           },
           isDragging: true,
         })
@@ -162,14 +165,14 @@ function useDragPoints(
         setPoints({
           ...points,
           second: {
-            x: offsetX,
-            y: offsetY,
+            x,
+            y,
             type,
             id: (target as HTMLElement).id,
           },
           movement: {
-            x: offsetX - prevOffsets.x,
-            y: offsetY - prevOffsets.y,
+            x: 0,
+            y: 0,
           },
           isDragging: false,
         })

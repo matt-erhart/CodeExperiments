@@ -7,7 +7,7 @@ const logit = e => {
 }
 
 // export const App = () => <DragTestLeftTop />
-export const _App = () => {
+export const App = () => {
   return (
     <BoxesProvider>
       <DragTestDraw />
@@ -19,7 +19,7 @@ export const _App = () => {
  */
 
 // coordinates test
-export const App = () => {
+export const _App = () => {
   const ref = useRef(null)
   const [coords, setCoords] = useState({ left: 0, top: 0 })
   const scale = 1.1
