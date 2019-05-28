@@ -15,6 +15,8 @@ import {
 } from './geometry'
 import { getBrowserZoom, getPointInElement } from './geometryFromHtml'
 import { useBoxes, useDragPoints } from './BoxContextHooks'
+import { getEdgeHoverData } from './getEdgeHoverData'
+import { DivDraggablePadding } from './ResizableDiv'
 
 export const DragTestDraw = () => {
   const [mode, setMode] = useState('')
@@ -30,6 +32,7 @@ export const DragTestDraw = () => {
     selectedIds,
     selectOneId,
     moveSelectedBoxes,
+    resizeBox,
   } = useBoxes()
 
   useEffect(() => {
@@ -80,15 +83,21 @@ export const DragTestDraw = () => {
           boxes.map((b, ix) => {
             const isSelected = selectedIds.includes(b.id)
             return (
-              <DivRect
-                draggable={false}
-                onDrag={preventDefault}
+              // <DivRect
+              //   draggable={false}
+              //   onDrag={preventDefault}
+              //   key={b.id}
+              //   id={b.id}
+              //   style={b}
+              //   isSelected={isSelected}
+              //   onMouseDown={selectOneIdMemo.current(b.id)}
+              //   emitEvents={!points.isDragging}
+              // />
+              <DivDraggablePadding
                 key={b.id}
                 id={b.id}
                 style={b}
-                isSelected={isSelected}
-                onMouseDown={selectOneIdMemo.current(b.id)}
-                emitEvents={!points.isDragging}
+                onResize={resizeBox}
               />
             )
           })}

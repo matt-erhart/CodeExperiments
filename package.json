@@ -62,6 +62,7 @@
     "react-spring": "^8.0.19",
     "rxjs": "^6.5.1",
     "styled-components": "^4.2.0",
+    "use-immer": "^0.3.2",
     "webcola": "^3.3.9"
   },
   "devDependencies": {

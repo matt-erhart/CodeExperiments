@@ -15,6 +15,7 @@ import {
 } from './geometry'
 import { getBrowserZoom, getPointInElement } from './geometryFromHtml'
 import {} from './BoxContextHooks'
+import { useImmer } from 'use-immer'
 
 export function useDragPoints(
   drag: ReturnType<typeof useDrag>,
@@ -160,6 +161,22 @@ function useBoxes() {
     [setBoxes, selectedIds]
   )
 
+  const resizeBox = React.useCallback(
+    (newBox: Box) => {
+      const {id, left, top, width, height} = newBox
+      setBoxes(boxes => {
+        return boxes.map(box => {
+          if (id === box.id) {
+            return {id, left, top, width, height}
+          } else {
+            return box
+          }
+        })
+      })
+    },
+    [setBoxes]
+  )
+
   const addId = React.useCallback(
     (id: string) => setSelectedIds(ids => [...ids, id]),
     [setSelectedIds]
@@ -176,6 +193,7 @@ function useBoxes() {
     addId,
     selectOneId,
     moveSelectedBoxes,
+    resizeBox
   }
 }
 export { BoxesProvider, useBoxes }
