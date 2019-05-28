@@ -1,11 +1,9 @@
-resize
+
 
 ---
-
-each element emits on move/resize or ...
+let css figure out the first size
 text under
-resize - padding - hover border tooltip
-
+hover border tooltip
 nesting -> track nesting in context var
 stay in bounds
 where in the el -> resize

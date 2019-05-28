@@ -18,6 +18,7 @@ const StyledDiv = styled.div<{ cursor?: React.CSSProperties['cursor'] }>`
   border: 1px solid hsl(220, 82%, 66%);
   padding: 15px;
   cursor: ${props => !!props.cursor && props.cursor};
+  display: flex;
 `
 
 const resize = (
@@ -91,7 +92,7 @@ export const DivDraggablePadding = React.memo<{ onResize } & any>(props => {
   useEffect(() => {
     const newBox = resize(props.style, points.movement, mouseDownLocation)
     if (newBox && !!props.onResize) {
-      console.log('points.movement: ', points.movement)
+      
       props.onResize({ id: props.id, ...newBox })
     }
   }, [points.movement, mouseDownLocation])
@@ -105,6 +106,8 @@ export const DivDraggablePadding = React.memo<{ onResize } & any>(props => {
       cursor={edgeData.cursor}
       onMouseDown={onMouseDown}
       {...props}
-    />
+    >
+      {props.children}
+    </StyledDiv>
   )
 })

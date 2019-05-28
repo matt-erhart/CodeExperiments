@@ -23,6 +23,7 @@ export const DragTestDraw = () => {
   const divRef = useRef(null)
   const drag = useDrag(divRef)
   const points = useDragPoints(drag, divRef)
+  console.log('points: ', points);
 
   const box = pointsToBox(points)
   const {
@@ -48,7 +49,7 @@ export const DragTestDraw = () => {
     if (
       !!points &&
       points.second.type === 'mousemove' &&
-      points.first.id !== 'container'
+      !['container', 'resizable'].includes(points.first.id)
     ) {
       // apply zoom at root data
       moveSelectedBoxes(points)
@@ -95,10 +96,12 @@ export const DragTestDraw = () => {
               // />
               <DivDraggablePadding
                 key={b.id}
-                id={b.id}
+                id={'resizable'}
                 style={b}
                 onResize={resizeBox}
-              />
+              >
+                <div id='drag-handle' onMouseDown={selectOneIdMemo.current(b.id)}>hey</div>
+              </DivDraggablePadding>
             )
           })}
       </Div100vh>
