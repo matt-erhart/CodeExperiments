@@ -23,7 +23,7 @@ export const DragTestDraw = () => {
   const divRef = useRef(null)
   const drag = useDrag(divRef)
   const points = useDragPoints(drag, divRef)
-  console.log('points: ', points);
+  console.log('points: ', points)
 
   const box = pointsToBox(points)
   const {
@@ -100,7 +100,12 @@ export const DragTestDraw = () => {
                 style={b}
                 onResize={resizeBox}
               >
-                <div id='drag-handle' onMouseDown={selectOneIdMemo.current(b.id)}>hey</div>
+                <div
+                  id="drag-handle"
+                  onMouseDown={selectOneIdMemo.current(b.id)}
+                >
+                  hey
+                </div>
               </DivDraggablePadding>
             )
           })}
