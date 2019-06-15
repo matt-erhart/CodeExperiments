@@ -27,6 +27,7 @@
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "downlevelIteration":true,
+    "resolveJsonModule":true,
     "lib": [
       "es2015",
       "dom",

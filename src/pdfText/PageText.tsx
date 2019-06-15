@@ -9,7 +9,8 @@ import {
 } from 'react'
 import styled from 'styled-components'
 import search from 'approx-string-match'
-const numberRange = (start, end) => [...Array(end+1-start).keys()].map(k => k + start)
+const numberRange = (start, end) =>
+  [...Array(end + 1 - start).keys()].map(k => k + start)
 
 const pageOfTextItems: TextItem[] = (jsonText as {
   text: TextItem[]
@@ -63,36 +64,63 @@ const test = () => {
   console.log('|' + pageString.slice(startIx, endIx + 1) + '|')
 
   //given a string in pagestring, get ids that contain it
-  const findStr = 'Sented Wigets: Improving Navigation Cues with Embedded Visualizations'.toLowerCase()
+  const findStr = 'depends'.toLowerCase()
   var matches = search(pageString, findStr, 4 /* max errors */)
 
-  let ixStart = -1
-  let ixEnd = -1
-  for (const [offsetIx, offset] of offsets.entries()) {
-    const offset = offsets[offsetIx]
-    if (ixStart === -1) {
-      const isStartInOffset =
-        matches[0].start >= offset.charRangeInclusive[0] &&
-        matches[0].start <= offset.charRangeInclusive[1]
-      if (isStartInOffset) ixStart = offsetIx
+  const hightlightIxs = []
+  for (let match of matches) {
+    let ixStart = -1
+    let ixEnd = -1
+    let charStart = -1
+    let charEnd = -1
+    for (const [offsetIx, offset] of offsets.entries()) {
+      const offset = offsets[offsetIx]
+      if (ixStart === -1) {
+        const isStartInOffset =
+          match.start >= offset.charRangeInclusive[0] &&
+          match.start <= offset.charRangeInclusive[1]
+        if (isStartInOffset) {
+          ixStart = offsetIx
+          charStart = match.start - offset.charRangeInclusive[0]
+          console.log('charOffsetStartIncl: ', charStart)
+        }
+      }
+      if (ixStart > -1) {
+        const isEndInOffset =
+          match.end >= offset.charRangeInclusive[0] &&
+          match.end <= offset.charRangeInclusive[1]
+        if (isEndInOffset) {
+          ixEnd = offsetIx
+        }
+      }
+      if (ixEnd > -1) {
+        charEnd = match.end - offset.charRangeInclusive[0]
+        break
+      }
     }
-    if (ixStart > -1) {
-      const isEndInOffset =
-        matches[0].end >= offset.charRangeInclusive[0] &&
-        matches[0].end <= offset.charRangeInclusive[1]
-      if (isEndInOffset) ixEnd = offsetIx
-    }
-    if (ixEnd > -1) break
-  }
-  for (const i of numberRange(ixStart, ixEnd)) {
-      console.log(pageOfTextItems[i]);
+
+    const allNumbers = numberRange(ixStart, ixEnd)
+    const highlights = allNumbers.map((num, i) => {
+      let res = { ix: num, charStart: -1, charEnd: -1 }
+      if (i === 0) res = { ...res, charStart }
+      if (i === allNumbers.length - 1) res = { ...res, charEnd }
+      return res
+    })
+
+    hightlightIxs.push(...highlights)
   }
 
-
-  return numberRange(ixStart, ixEnd)
+  return hightlightIxs.reduce((all, val, ix) => {
+    return {
+      ...all,
+      [val.ix]: { charStart: val.charStart, charEnd: val.charEnd },
+    }
+  }, {})
 }
 
 test()
+// hightlight multiple matches
+// highlight part of fragment
 
 const computeStyle = (
   textItem: TextItem,
@@ -111,7 +139,7 @@ const computeStyle = (
     transformOrigin: 'left bottom',
     whiteSpace: 'pre',
     color: 'black',
-    backgroundColor: hightlight? 'lightblue': 'white'
+    backgroundColor: hightlight ? 'lightblue' : 'white',
     // userSelect: "none",
     // outline: '1px solid lightgrey',
   }
@@ -119,7 +147,7 @@ const computeStyle = (
 
 export const PageText = () => {
   const ref = useRef<HTMLDivElement>(null)
-  const ixHighlight = test()
+  const highlights = test()
 
   return (
     <Div100vh ref={ref}>
@@ -129,7 +157,7 @@ export const PageText = () => {
             key={text.id}
             // style={computeStyle(text, 1, 1)}
             textItem={text}
-            highlight={ixHighlight.includes(ix)}
+            highlight={highlights[ix]}
           >
             {text.str}
           </CanvasAdjustedTextFragment>
@@ -144,10 +172,34 @@ const styleScaleX = (style, scaleX: number) => ({
   transform: `scaleX(${scaleX})`,
 })
 
+const SpansFromHighlight = (text, highlight) => {
+  if (!highlight || !text) return text
+  let textParts = []
+  const { charStart, charEnd } = highlight
+  if (charStart > 0 && charEnd > 0) {
+    try {
+      textParts.push(text.splice(0, charStart))
+      textParts.push(
+        <span style={{ color: 'lightgreen' }}>
+          {text.splice(charStart, charEnd)}
+        </span>
+      )
+      textParts.push(text.splice(charEnd, charEnd))
+    } catch {
+      return ['']
+    }
+  } else {
+    textParts.push(text)
+  }
+  console.log('textParts: ', textParts)
+
+  return textParts
+}
+
 const CanvasAdjustedTextFragment = (props: {
   textItem: TextItem
-  children: React.ReactNode,
-  highlight: boolean
+  children: React.ReactNode
+  highlight: { charStart: number; charEnd: number }
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [scaleX, setScaleX] = useState(1)
@@ -155,14 +207,15 @@ const CanvasAdjustedTextFragment = (props: {
     const domWidth = ref.current.getBoundingClientRect()['width']
     setScaleX(props.textItem.width / domWidth) // textItem.width from canvas render
   }, [])
+
   return (
     <TextDiv
       ref={ref}
       id={props.textItem.id}
-      style={computeStyle(props.textItem, 1, scaleX, props.highlight)}
+      style={computeStyle(props.textItem, 1, scaleX, !!props.highlight)}
       title={props.textItem.width + ''}
     >
-      {props.children}
+      {SpansFromHighlight(props.textItem.str, props.highlight)}
     </TextDiv>
   )
 }
