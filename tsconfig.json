@@ -26,6 +26,7 @@
     "noUnusedParameters": false,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
+    "downlevelIteration":true,
     "lib": [
       "es2015",
       "dom",
