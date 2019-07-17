@@ -11,6 +11,8 @@ import styled from 'styled-components'
 import search from 'approx-string-match'
 const numberRange = (start, end) =>
   [...Array(end + 1 - start).keys()].map(k => k + start)
+import  nlp from 'compromise'
+import * as use from '@tensorflow-models/universal-sentence-encoder';
 
 const pageOfTextItems: TextItem[] = (jsonText as {
   text: TextItem[]
@@ -36,8 +38,8 @@ export function getRegexIndexes(str: string, regex: RegExp): number[] {
   return results
 }
 
-const test = () => {
-  let pageString = pageOfTextItems[0].str
+const test = async () => {
+  let pageString = pageOfTextItems[0].str 
   let offsets = [
     {
       id: pageOfTextItems[0].id,
@@ -53,19 +55,24 @@ const test = () => {
       charRangeInclusive: [startIx, pageString.length - 1],
     })
   }
+  //@ts-ignore
+  const doc = nlp(pageString).sentences().out('array')
+  
 
-  console.log('offsets: ', offsets)
+
+  
   // given an id, find the text in the pagestring
   const id = '0001-0037'
   const sampleOrig = pageOfTextItems.find(t => t.id === id)
   const sampleNew = offsets.find(t => t.id === id)
   const [startIx, endIx] = sampleNew.charRangeInclusive
-  console.log('|' + sampleOrig.str + '|')
-  console.log('|' + pageString.slice(startIx, endIx + 1) + '|')
+  
+  
 
   //given a string in pagestring, get ids that contain it
-  const findStr = 'depends'.toLowerCase()
-  var matches = search(pageString, findStr, 4 /* max errors */)
+  const findStr = 'mechanism'.toLowerCase()
+  var matches = search(pageString, findStr, 6 /* max errors */)
+  console.log('matches: ', matches);
 
   const hightlightIxs = []
   for (let match of matches) {
@@ -82,7 +89,7 @@ const test = () => {
         if (isStartInOffset) {
           ixStart = offsetIx
           charStart = match.start - offset.charRangeInclusive[0]
-          console.log('charOffsetStartIncl: ', charStart)
+          
         }
       }
       if (ixStart > -1) {
@@ -95,13 +102,15 @@ const test = () => {
       }
       if (ixEnd > -1) {
         charEnd = match.end - offset.charRangeInclusive[0]
+        if (charStart === -1) charStart = 0
         break
       }
     }
 
+
     const allNumbers = numberRange(ixStart, ixEnd)
     const highlights = allNumbers.map((num, i) => {
-      let res = { ix: num, charStart: -1, charEnd: -1 }
+      let res = { ix: num, charStart: 0, charEnd: Infinity }
       if (i === 0) res = { ...res, charStart }
       if (i === allNumbers.length - 1) res = { ...res, charEnd }
       return res
@@ -110,6 +119,7 @@ const test = () => {
     hightlightIxs.push(...highlights)
   }
 
+  // where 0,Infinity means 0 to end, can do slice (start, end)
   return hightlightIxs.reduce((all, val, ix) => {
     return {
       ...all,
@@ -139,7 +149,7 @@ const computeStyle = (
     transformOrigin: 'left bottom',
     whiteSpace: 'pre',
     color: 'black',
-    backgroundColor: hightlight ? 'lightblue' : 'white',
+    // backgroundColor: hightlight ? 'lightblue' : 'white',
     // userSelect: "none",
     // outline: '1px solid lightgrey',
   }
@@ -176,24 +186,16 @@ const SpansFromHighlight = (text, highlight) => {
   if (!highlight || !text) return text
   let textParts = []
   const { charStart, charEnd } = highlight
-  if (charStart > 0 && charEnd > 0) {
-    try {
-      textParts.push(text.splice(0, charStart))
-      textParts.push(
-        <span style={{ color: 'lightgreen' }}>
-          {text.splice(charStart, charEnd)}
-        </span>
-      )
-      textParts.push(text.splice(charEnd, charEnd))
-    } catch {
-      return ['']
-    }
-  } else {
-    textParts.push(text)
-  }
-  console.log('textParts: ', textParts)
 
-  return textParts
+  if (charStart+charEnd === 0) {
+    return text
+  } else if (charStart===0 && charEnd===Infinity){
+    return <span style={{fontWeight: 'bold'}}>{text}</span>
+  } else {
+    return <>{text.slice(0,charStart)} 
+    <span style={{fontWeight: 'bold'}}>{text.slice(charStart, charEnd)}</span>
+    <span >{text.slice(charEnd)}</span></>
+  }
 }
 
 const CanvasAdjustedTextFragment = (props: {
@@ -221,15 +223,20 @@ const CanvasAdjustedTextFragment = (props: {
 }
 
 export const TextDiv = styled.div`
-  outline: 1px solid lightgray;
+user-select: text;
+pointer-events: all;
+
+  /* border: 1px solid lightgray; */
 `
 
 export const Div100vh = styled.div`
   width: 100vw;
   height: 100vh;
-  border: 1px solid lightblue;
+  /* border: 1px solid lightblue; */
   transform: scale(1);
   transform-origin: left top;
+  user-select: none;
+  pointer-events: none;
 `
 
 export interface ViewportFlat {

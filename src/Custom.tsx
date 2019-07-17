@@ -6,7 +6,6 @@ export const Div100vh = styled.div`
   width: 500px;
   height: 500px;
   border: 1px solid lightblue;
-  transform: scale(2);
 
 `
 const _DivRect = styled.div<{ isSelected?: boolean; emitEvents?: boolean }>`
