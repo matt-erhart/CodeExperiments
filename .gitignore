@@ -1,9 +1,13 @@
-node_modules/
-public/
-dist/
-.cache/
-.vscode/
-.idea/
-yarn-error.log
-package-lock.json
-.DS_Store
+# output
+/.cache
+/coverage
+/app/renderer/.parcel
+/app/main/.parcel
+*.map
+/release
+
+# dependencies
+/node_modules
+
+# logs
+*.log
