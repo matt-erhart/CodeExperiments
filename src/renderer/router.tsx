@@ -3,15 +3,42 @@ import { HashRouter, Route, Switch, Link } from "react-router-dom";
 
 import { Start } from "./Start";
 import { FreeformCanvas } from "./FreeformCanvas";
+import { ListWithGestures } from "./ListWithGestures";
+import {
+  FullViewPort,
+  ViewPortMainContent,
+  ViewPortNav
+} from "./StyledComponents";
+
+import { PageText } from "./pdfText/PageText";
+const linkRoute = [
+  { to: "/", label: "pdftext", component: PageText },
+  { to: "/GestureList", label: "GestureList", component: ListWithGestures },
+  { to: "/freeform", label: "freeform", component: FreeformCanvas }
+];
+
 export default () => {
   return (
     <HashRouter hashType="noslash">
-      <Link to="/">hey</Link>
-      <Switch>
-        <Route exact path="/" component={FreeformCanvas} />
-        <Route exact path="/start" component={Start} />
-        <Route component={() => <h1>No Content</h1>} />
-      </Switch>
+      <FullViewPort>
+        <ViewPortNav>
+          {linkRoute.map(lr => {
+            return (
+              <Link key={lr.label} to={lr.to} style={{ margin: 5 }}>
+                {lr.label}
+              </Link>
+            );
+          })}
+        </ViewPortNav>
+        <ViewPortMainContent>
+          <Switch>
+            {linkRoute.map(lr => {
+              return <Route key={lr.label} exact path={lr.to} component={lr.component} />;
+            })}
+            <Route component={() => <h1>No Content</h1>} />
+          </Switch>
+        </ViewPortMainContent>
+      </FullViewPort>
     </HashRouter>
   );
 };

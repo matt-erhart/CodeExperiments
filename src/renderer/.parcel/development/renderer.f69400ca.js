@@ -29870,10 +29870,3877 @@ if ("development" !== "production") {
     style: _propTypes.default.object
   });
 }
-},{"@babel/runtime/helpers/esm/inheritsLoose":"../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"../../node_modules/react/index.js","react-router":"../../node_modules/react-router/esm/react-router.js","history":"../../node_modules/history/esm/history.js","prop-types":"../../node_modules/prop-types/index.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js","@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","tiny-invariant":"../../node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"Start.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/inheritsLoose":"../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"../../node_modules/react/index.js","react-router":"../../node_modules/react-router/esm/react-router.js","history":"../../node_modules/history/esm/history.js","prop-types":"../../node_modules/prop-types/index.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js","@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","tiny-invariant":"../../node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"../../node_modules/@babel/runtime/helpers/extends.js":[function(require,module,exports) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+},{}],"../../node_modules/@babel/runtime/helpers/arrayWithHoles.js":[function(require,module,exports) {
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+module.exports = _arrayWithHoles;
+},{}],"../../node_modules/@babel/runtime/helpers/iterableToArrayLimit.js":[function(require,module,exports) {
+function _iterableToArrayLimit(arr, i) {
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+module.exports = _iterableToArrayLimit;
+},{}],"../../node_modules/@babel/runtime/helpers/nonIterableRest.js":[function(require,module,exports) {
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
+
+module.exports = _nonIterableRest;
+},{}],"../../node_modules/@babel/runtime/helpers/slicedToArray.js":[function(require,module,exports) {
+var arrayWithHoles = require("./arrayWithHoles");
+
+var iterableToArrayLimit = require("./iterableToArrayLimit");
+
+var nonIterableRest = require("./nonIterableRest");
+
+function _slicedToArray(arr, i) {
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
+}
+
+module.exports = _slicedToArray;
+},{"./arrayWithHoles":"../../node_modules/@babel/runtime/helpers/arrayWithHoles.js","./iterableToArrayLimit":"../../node_modules/@babel/runtime/helpers/iterableToArrayLimit.js","./nonIterableRest":"../../node_modules/@babel/runtime/helpers/nonIterableRest.js"}],"../../node_modules/react-use-gesture/dist/react-use-gesture.esm.js":[function(require,module,exports) {
 "use strict";
 
-var __importStar = this && this.__importStar || function (mod) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.useGesture = useGesture;
+exports.useWheel = exports.useScroll = exports.usePinch = exports.useMove = exports.useHover = exports.useDrag = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+var GestureFlag;
+
+(function (GestureFlag) {
+  GestureFlag["OnStart"] = "start";
+  GestureFlag["OnChange"] = "change";
+  GestureFlag["OnEnd"] = "end";
+})(GestureFlag || (GestureFlag = {})); // blank function
+
+
+var noop = function noop() {}; // returns a function that chains all functions given as parameters
+
+
+var chainFns = function chainFns() {
+  for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
+    fns[_key] = arguments[_key];
+  }
+
+  return function () {
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return fns.forEach(function (fn) {
+      return fn.apply(void 0, args);
+    });
+  };
+}; // vector add
+
+
+var addV = function addV(v1, v2) {
+  return v1.map(function (v, i) {
+    return v + v2[i];
+  });
+}; // vector substract
+
+
+var subV = function subV(v1, v2) {
+  return v1.map(function (v, i) {
+    return v - v2[i];
+  });
+};
+
+var setListeners = function setListeners(add) {
+  return function (el, listeners, options) {
+    var action = add ? 'addEventListener' : 'removeEventListener';
+    listeners.forEach(function (_ref) {
+      var type = _ref[0],
+          fn = _ref[1];
+      return el[action](type, fn, options);
+    });
+  };
+};
+
+var addListeners =
+/*#__PURE__*/
+setListeners(true);
+var removeListeners =
+/*#__PURE__*/
+setListeners(false);
+/**
+ * Gets modifier keys from event
+ * @param event
+ * @returns modifier keys
+ */
+
+function getModifierKeys(event) {
+  var shiftKey = event.shiftKey,
+      altKey = event.altKey,
+      metaKey = event.metaKey,
+      ctrlKey = event.ctrlKey;
+  return {
+    shiftKey: shiftKey,
+    altKey: altKey,
+    metaKey: metaKey,
+    ctrlKey: ctrlKey
+  };
+}
+/**
+ * Gets scroll event data
+ * @param event
+ * @returns scroll event data
+ */
+
+
+function getScrollEventData(event) {
+  // If the currentTarget is the window then we return the scrollX/Y position.
+  // If not (ie the currentTarget is a DOM element), then we return scrollLeft/Top
+  var _event$currentTarget = event.currentTarget,
+      scrollX = _event$currentTarget.scrollX,
+      scrollY = _event$currentTarget.scrollY,
+      scrollLeft = _event$currentTarget.scrollLeft,
+      scrollTop = _event$currentTarget.scrollTop;
+  return _extends({
+    values: [scrollX || scrollLeft || 0, scrollY || scrollTop || 0]
+  }, getModifierKeys(event));
+}
+/**
+ * Gets wheel event data
+ * @param event
+ * @returns wheel event data
+ */
+
+
+function getWheelEventData(event) {
+  var deltaX = event.deltaX,
+      deltaY = event.deltaY; //TODO implement polyfill ?
+  // https://developer.mozilla.org/en-US/docs/Web/Events/wheel#Polyfill
+
+  return _extends({
+    values: [deltaX, deltaY]
+  }, getModifierKeys(event));
+}
+/**
+ * Gets pointer event data
+ * @param event
+ * @returns pointer event data
+ */
+
+
+function getPointerEventData(event) {
+  var touches = event.touches,
+      buttons = event.buttons,
+      changedTouches = event.changedTouches;
+  var touchEvents = touches && touches.length > 0 ? touches : changedTouches && changedTouches.length > 0 ? changedTouches : null;
+
+  var _ref2 = touchEvents ? touchEvents[0] : event,
+      clientX = _ref2.clientX,
+      clientY = _ref2.clientY;
+
+  var down = touchEvents && touchEvents.length > 0 || buttons > 0;
+  return _extends({
+    values: [clientX, clientY],
+    touches: touchEvents && touchEvents.length || 0,
+    down: down,
+    buttons: buttons
+  }, getModifierKeys(event));
+}
+/**
+ * Gets two touches event data
+ * @param event
+ * @returns two touches event data
+ */
+
+
+function getTwoTouchesEventData(event) {
+  var touches = event.touches;
+  var dx = touches[1].clientX - touches[0].clientX;
+  var dy = touches[1].clientY - touches[0].clientY;
+  var da = [Math.hypot(dx, dy), -(Math.atan2(dx, dy) * 180) / Math.PI];
+  var origin = [(touches[1].clientX + touches[0].clientX) / 2, (touches[1].clientY + touches[0].clientY) / 2];
+  return _extends({
+    values: da,
+    origin: origin,
+    touches: 2,
+    down: touches.length > 0
+  }, getModifierKeys(event));
+}
+/**
+ * Calculates velocity
+ * @param diff the difference between current and previous vectors
+ * @param delta_t the time delta
+ * @param len the length of the diff vector
+ * @returns velocity
+ */
+
+
+function calculateVelocity(diff, delta_t, len) {
+  len = len || Math.hypot.apply(Math, diff);
+  return delta_t ? len / delta_t : 0;
+}
+/**
+ * Calculates velocities vector
+ * @template T the expected vector type
+ * @param diff the previous value
+ * @param delta_t the time delta
+ * @returns velocities vector
+ */
+
+
+function calculateVelocities(diff, delta_t) {
+  return delta_t ? diff.map(function (v) {
+    return v / delta_t;
+  }) : Array(diff.length).fill(0);
+}
+/**
+ * Calculates distance
+ * @param delta the difference between current and initial vectors
+ * @returns distance
+ */
+
+
+function calculateDistance(delta) {
+  return Math.hypot.apply(Math, delta);
+}
+/**
+ * Calculates direction
+ * @template T the expected vector type
+ * @param diff
+ * @param len
+ * @returns direction
+ */
+
+
+function calculateDirection(diff, len) {
+  len = len || Math.hypot.apply(Math, diff) || 1;
+  return diff.map(function (v) {
+    return v / len;
+  });
+}
+/**
+ * Calculates all kinematics
+ * @template T the expected vector type
+ * @param delta the difference between current and initial vectors
+ * @param diff the difference between current and previous vectors
+ * @param delta_t the time delta between current and previous timestamps
+ * @returns all kinematics
+ */
+
+
+function calculateAllKinematics(delta, diff, delta_t) {
+  var len = Math.hypot.apply(Math, diff);
+  return {
+    velocities: calculateVelocities(diff, delta_t),
+    velocity: calculateVelocity(diff, delta_t, len),
+    distance: calculateDistance(delta),
+    direction: calculateDirection(diff, len)
+  };
+}
+/**
+ * Whether the browser supports GestureEvent (ie Safari)
+ * @returns true if the browser supports gesture event
+ */
+
+
+function supportsGestureEvent() {
+  try {
+    // TODO [TS] possibly find GestureEvent definitions?
+    // @ts-ignore: Unreachable code error
+    return 'constructor' in GestureEvent;
+  } catch (e) {
+    return false;
+  }
+}
+/**
+ * Some gestures might use the state key from another gesture (i.e. hover)
+ * so mappedKeys is a commodity object to get the state key and handler key
+ * for every gesture
+ */
+
+
+var mappedKeys = {
+  drag: {
+    stateKey: 'drag',
+    handlerKey: 'onDrag'
+  },
+  pinch: {
+    stateKey: 'pinch',
+    handlerKey: 'onPinch'
+  },
+  move: {
+    stateKey: 'move',
+    handlerKey: 'onMove'
+  },
+  scroll: {
+    stateKey: 'scroll',
+    handlerKey: 'onScroll'
+  },
+  wheel: {
+    stateKey: 'wheel',
+    handlerKey: 'onWheel'
+  },
+  hover: {
+    stateKey: 'move',
+    handlerKey: 'onHover'
+  }
+}; // default config (will extend user config)
+
+var defaultConfig = {
+  domTarget: undefined,
+  event: {
+    passive: true,
+    capture: false
+  },
+  pointerEvents: false,
+  window: typeof window !== 'undefined' ? window : undefined,
+  transform: {
+    x: function x(_x) {
+      return _x;
+    },
+    y: function y(_y) {
+      return _y;
+    }
+  },
+  enabled: true,
+  drag: true,
+  pinch: true,
+  scroll: true,
+  wheel: true,
+  hover: true,
+  move: true
+}; // common initial state for all gestures
+
+var initialCommon = {
+  event: undefined,
+  currentTarget: undefined,
+  pointerId: undefined,
+  values: [0, 0],
+  velocities: [0, 0],
+  delta: [0, 0],
+  initial: [0, 0],
+  previous: [0, 0],
+  transform: undefined,
+  local: [0, 0],
+  lastLocal: [0, 0],
+  first: false,
+  last: false,
+  active: false,
+  time: undefined,
+  cancel: noop,
+  canceled: false,
+  memo: undefined,
+  args: undefined
+}; // initial state for coordinates-based gestures
+
+var initialCoordinates = {
+  xy: [0, 0],
+  vxvy: [0, 0],
+  velocity: 0,
+  distance: 0,
+  direction: [0, 0]
+}; // xy coordinates
+// initial state for distance and angle-based gestures (pinch)
+
+var initialDistanceAngle = {
+  da: [0, 0],
+  vdva: [0, 0],
+  origin: [0, 0],
+  turns: 0
+}; // distance and angle
+// initial state object (used by the gesture controller)
+
+var initialState = {
+  shared: {
+    hovering: false,
+    scrolling: false,
+    wheeling: false,
+    dragging: false,
+    moving: false,
+    pinching: false,
+    touches: 0,
+    buttons: 0,
+    down: false,
+    shiftKey: false,
+    altKey: false,
+    metaKey: false,
+    ctrlKey: false
+  },
+  move: _extends({}, initialCommon, {}, initialCoordinates),
+  drag: _extends({}, initialCommon, {}, initialCoordinates),
+  scroll: _extends({}, initialCommon, {}, initialCoordinates),
+  wheel: _extends({}, initialCommon, {}, initialCoordinates),
+  pinch: _extends({}, initialCommon, {}, initialDistanceAngle)
+}; // generic end state for all gestures
+
+var genericEndState = {
+  first: false,
+  last: true,
+  active: false
+};
+/**
+ * Recognizer abstract class
+ * @template GestureType whether the Recognizer should deal with coordinates or distance / angle
+ */
+
+var Recognizer =
+/**
+ * Creates an instance of a gesture recognizer.
+ * @param gestureKey drag, move, hover, pinch, etc.
+ * @param controller the controller attached to the gesture
+ * @param [args] the args that should be passed to the gesture handler
+ */
+function Recognizer(gestureKey, controller, args) {
+  var _this = this;
+
+  if (args === void 0) {
+    args = [];
+  }
+
+  this.gestureKey = gestureKey;
+  this.controller = controller;
+  this.args = args;
+
+  this.isEnabled = function () {
+    return _this.controller.config.enabled && _this.controller.config[_this.gestureKey];
+  }; // convenience method to set a timeout for a given gesture
+
+
+  this.setTimeout = function (callback, ms) {
+    var _window;
+
+    for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      args[_key - 2] = arguments[_key];
+    }
+
+    _this.controller.timeouts[_this.stateKey] = (_window = window).setTimeout.apply(_window, [callback, ms].concat(args));
+  }; // convenience method to clear a timeout for a given gesture
+
+
+  this.clearTimeout = function () {
+    clearTimeout(_this.controller.timeouts[_this.stateKey]);
+  }; // get the controller state for a given gesture
+
+
+  this.getState = function () {
+    return _this.controller.state[_this.stateKey];
+  }; // get the controller shared state
+
+
+  this.getSharedState = function () {
+    return _this.controller.state.shared;
+  }; // does the controller config has pointer events enabled
+
+
+  this.pointerEventsEnabled = function () {
+    return _this.controller.config.pointerEvents;
+  }; // gets the transform config of the controller
+
+
+  this.getTransformConfig = function () {
+    return _this.controller.config.transform;
+  }; // convenience method to add window listeners for a given gesture
+
+
+  this.addWindowListeners = function (listeners) {
+    _this.controller.addWindowListeners(_this.stateKey, listeners);
+  }; // convenience method to remove window listeners for a given gesture
+
+
+  this.removeWindowListeners = function () {
+    _this.controller.removeWindowListeners(_this.stateKey);
+  };
+  /**
+   * convenience method to update the controller state for a given gesture
+   * @param sharedState shared partial state object
+   * @param gestureState partial state object for the gesture handled by the recognizer
+   * @param [gestureFlag] if set, will also fire the gesture handler set by the user
+   */
+
+
+  this.updateState = function (sharedState, gestureState, gestureFlag) {
+    _this.controller.updateState(sharedState, gestureState, _this.gestureKey, gestureFlag);
+  };
+  /**
+   * returns the start state for a given gesture
+   * @param values the values of the start state
+   * @param event the event that triggers the gesture start
+   */
+
+
+  this.getStartState = function (values, event) {
+    var state = _this.getState();
+
+    var initial = initialState[_this.stateKey];
+
+    var transform = state.transform || event.transform || _this.getTransformConfig();
+
+    var lastLocal = state.local || initial.local;
+    return _extends({}, initial, {
+      event: event,
+      values: values,
+      initial: values,
+      previous: values,
+      local: lastLocal,
+      lastLocal: lastLocal,
+      first: true,
+      active: true,
+      transform: transform,
+      time: event.timeStamp,
+      args: _this.args
+    });
+  }; // mapping this.stateKey to the state key the gesture handles
+  // (ie hover actually deals with the move gesture state)
+
+
+  this.stateKey = mappedKeys[gestureKey].stateKey;
+};
+/**
+ * Abstract class for coordinates-based gesture recongizers
+ */
+
+
+var CoordinatesRecognizer =
+/*#__PURE__*/
+function (_Recognizer) {
+  _inheritsLoose(CoordinatesRecognizer, _Recognizer);
+
+  function CoordinatesRecognizer() {
+    var _this;
+
+    _this = _Recognizer.apply(this, arguments) || this;
+    /**
+     * Utility function to get kinematics of the gesture
+     * @values values we want to calculate the kinematics from
+     * @event
+     * @returns set of values including delta, velocity, velocities, distance and direction
+     */
+
+    _this.getKinematics = function (values, event) {
+      // we get the gesture specific state
+      var state = _this.getState();
+
+      var xy = state.values,
+          initial = state.initial,
+          lastLocal = state.lastLocal,
+          _state$time = state.time,
+          time = _state$time === void 0 ? 0 : _state$time;
+
+      var transform = state.transform || event.transform || _this.getTransformConfig(); // delta is the difference between the current and initial value vectors
+
+
+      var delta = subV(values, initial).map(function (v, i) {
+        return Object.values(transform)[i](v);
+      }); // diff is the difference between the current and previous value vectors
+
+      var diff = subV(values, xy).map(function (v, i) {
+        return Object.values(transform)[i](v);
+      });
+      var delta_t = event.timeStamp - time;
+
+      var _calculateAllKinemati = calculateAllKinematics(delta, diff, delta_t),
+          velocity = _calculateAllKinemati.velocity,
+          velocities = _calculateAllKinemati.velocities,
+          distance = _calculateAllKinemati.distance,
+          direction = _calculateAllKinemati.direction;
+
+      return {
+        event: event,
+        values: values,
+        delta: delta,
+        velocity: velocity,
+        velocities: velocities,
+        distance: distance,
+        direction: direction,
+        local: addV(lastLocal, delta),
+        previous: xy,
+        transform: transform,
+        time: event.timeStamp
+      };
+    };
+
+    return _this;
+  }
+
+  return CoordinatesRecognizer;
+}(Recognizer);
+
+var DragRecognizer =
+/*#__PURE__*/
+function (_CoordinatesRecognize) {
+  _inheritsLoose(DragRecognizer, _CoordinatesRecognize);
+
+  function DragRecognizer(controller, args) {
+    var _this;
+
+    _this = _CoordinatesRecognize.call(this, 'drag', controller, args) || this;
+
+    _this.onStart = function (event) {
+      if (!_this.isEnabled()) return;
+
+      var _getPointerEventData = getPointerEventData(event),
+          values = _getPointerEventData.values,
+          rest = _objectWithoutPropertiesLoose(_getPointerEventData, ["values"]); // making sure we're not dragging the element when more than one finger press the screen
+
+
+      if (rest.touches > 1) return;
+      var currentTarget = event.currentTarget,
+          pointerId = event.pointerId;
+
+      if (_this.pointerEventsEnabled()) {
+        // if pointers events
+        currentTarget && currentTarget.setPointerCapture(pointerId);
+      } else {
+        _this.removeWindowListeners();
+
+        var dragListeners = [['mousemove', _this.onChange], ['mouseup', _this.onEnd], ['touchmove', _this.onChange], ['touchend', _this.onEnd], ['touchcancel', _this.onEnd]];
+
+        _this.addWindowListeners(dragListeners);
+      }
+
+      var startState = _this.getStartState(values, event);
+
+      _this.updateState(_extends({}, rest, {
+        dragging: true,
+        down: true
+      }), _extends({}, startState, {
+        currentTarget: currentTarget,
+        pointerId: pointerId,
+        cancel: function cancel() {
+          return _this.onCancel(event);
+        }
+      }), GestureFlag.OnStart);
+    };
+
+    _this.onChange = function (event) {
+      var _this$getState = _this.getState(),
+          canceled = _this$getState.canceled,
+          active = _this$getState.active;
+
+      if (canceled || !active) return;
+
+      var _getPointerEventData2 = getPointerEventData(event),
+          values = _getPointerEventData2.values,
+          rest = _objectWithoutPropertiesLoose(_getPointerEventData2, ["values"]);
+
+      if (rest.buttons === 0 && rest.touches === 0) {
+        _this.onEnd(event);
+
+        return;
+      }
+
+      var kinematics = _this.getKinematics(values, event);
+
+      var cancel = function cancel() {
+        return _this.onCancel(event);
+      };
+
+      _this.updateState(rest, _extends({}, kinematics, {
+        first: false,
+        cancel: cancel
+      }), GestureFlag.OnChange);
+    };
+
+    _this.onEnd = function (event) {
+      var state = _this.getState();
+
+      if (!state.active) return;
+      var currentTarget = state.currentTarget,
+          pointerId = state.pointerId;
+      if (currentTarget && _this.pointerEventsEnabled()) currentTarget.releasePointerCapture(pointerId);else _this.removeWindowListeners();
+
+      _this.updateState({
+        dragging: false,
+        down: false,
+        buttons: 0,
+        touches: 0
+      }, _extends({}, genericEndState, {
+        event: event
+      }), GestureFlag.OnEnd);
+    };
+
+    _this.onCancel = function (event) {
+      _this.updateState(null, {
+        canceled: true,
+        cancel: noop
+      });
+
+      requestAnimationFrame(function () {
+        return _this.onEnd(event);
+      });
+    };
+
+    return _this;
+  }
+
+  var _proto = DragRecognizer.prototype;
+
+  _proto.getEventBindings = function getEventBindings() {
+    if (this.pointerEventsEnabled()) {
+      return [['onPointerDown', this.onStart], ['onPointerMove', this.onChange], [['onPointerUp', 'onPointerCancel'], this.onEnd]];
+    }
+
+    return [[['onMouseDown', 'onTouchStart'], this.onStart]];
+  };
+
+  return DragRecognizer;
+}(CoordinatesRecognizer);
+
+var ScrollRecognizer =
+/*#__PURE__*/
+function (_CoordinatesRecognize) {
+  _inheritsLoose(ScrollRecognizer, _CoordinatesRecognize);
+
+  function ScrollRecognizer(controller, args) {
+    var _this;
+
+    _this = _CoordinatesRecognize.call(this, 'scroll', controller, args) || this;
+
+    _this.onChange = function (event) {
+      if (!_this.isEnabled()) return;
+
+      _this.clearTimeout();
+
+      _this.setTimeout(_this.onEnd, 100);
+
+      var _getScrollEventData = getScrollEventData(event),
+          values = _getScrollEventData.values,
+          rest = _objectWithoutPropertiesLoose(_getScrollEventData, ["values"]);
+
+      if (!_this.getState().active) {
+        var startState = _this.getStartState(values, event);
+
+        _this.updateState(_extends({
+          scrolling: true
+        }, rest), startState, GestureFlag.OnStart);
+      } else {
+        var kinematics = _this.getKinematics(values, event);
+
+        _this.updateState(rest, _extends({}, kinematics, {
+          first: false
+        }), GestureFlag.OnChange);
+      }
+    };
+
+    _this.onEnd = function () {
+      if (!_this.getState().active) return;
+
+      _this.updateState({
+        scrolling: false
+      }, _extends({}, genericEndState, {
+        velocity: 0,
+        velocities: [0, 0]
+      }), GestureFlag.OnEnd);
+    };
+
+    return _this;
+  }
+
+  var _proto = ScrollRecognizer.prototype;
+
+  _proto.getEventBindings = function getEventBindings() {
+    return [['onScroll', this.onChange]];
+  };
+
+  return ScrollRecognizer;
+}(CoordinatesRecognizer);
+
+var WheelRecognizer =
+/*#__PURE__*/
+function (_CoordinatesRecognize) {
+  _inheritsLoose(WheelRecognizer, _CoordinatesRecognize);
+
+  function WheelRecognizer(controller, args) {
+    var _this;
+
+    _this = _CoordinatesRecognize.call(this, 'wheel', controller, args) || this;
+
+    _this.onChange = function (event) {
+      if (!_this.isEnabled()) return;
+
+      _this.clearTimeout();
+
+      _this.setTimeout(_this.onEnd, 100);
+
+      var _getWheelEventData = getWheelEventData(event),
+          eventValues = _getWheelEventData.values,
+          rest = _objectWithoutPropertiesLoose(_getWheelEventData, ["values"]);
+
+      var values = addV(eventValues, _this.getState().values);
+
+      if (!_this.getState().active) {
+        var startState = _this.getStartState(values, event);
+
+        _this.updateState(_extends({
+          wheeling: true
+        }, rest), startState, GestureFlag.OnStart);
+      } else {
+        var kinematics = _this.getKinematics(values, event);
+
+        _this.updateState(rest, _extends({}, kinematics, {
+          first: false
+        }), GestureFlag.OnChange);
+      }
+    };
+
+    _this.onEnd = function () {
+      if (!_this.getState().active) return;
+
+      _this.updateState({
+        wheeling: false
+      }, _extends({}, genericEndState, {
+        velocity: 0,
+        velocities: [0, 0]
+      }), GestureFlag.OnEnd);
+    };
+
+    return _this;
+  }
+
+  var _proto = WheelRecognizer.prototype;
+
+  _proto.getEventBindings = function getEventBindings() {
+    return [['onWheel', this.onChange]];
+  };
+
+  return WheelRecognizer;
+}(CoordinatesRecognizer);
+
+var MoveRecognizer =
+/*#__PURE__*/
+function (_CoordinatesRecognize) {
+  _inheritsLoose(MoveRecognizer, _CoordinatesRecognize);
+
+  function MoveRecognizer(controller, args) {
+    var _this;
+
+    _this = _CoordinatesRecognize.call(this, 'move', controller, args) || this;
+
+    _this.onChange = function (event) {
+      if (!_this.isEnabled()) return;
+
+      _this.clearTimeout();
+
+      _this.setTimeout(_this.onEnd, 100);
+
+      var _getPointerEventData = getPointerEventData(event),
+          values = _getPointerEventData.values,
+          rest = _objectWithoutPropertiesLoose(_getPointerEventData, ["values"]);
+
+      if (!_this.getState().active) {
+        var startState = _this.getStartState(values, event);
+
+        _this.updateState(_extends({
+          moving: true
+        }, rest), startState, GestureFlag.OnStart);
+      } else {
+        var kinematics = _this.getKinematics(values, event);
+
+        _this.updateState(rest, _extends({}, kinematics, {
+          first: false
+        }), GestureFlag.OnChange);
+      }
+    };
+
+    _this.onEnd = function () {
+      if (!_this.getState().active) return;
+
+      _this.updateState({
+        moving: false
+      }, _extends({}, genericEndState, {
+        velocity: 0,
+        velocities: [0, 0]
+      }), GestureFlag.OnEnd);
+    };
+
+    return _this;
+  }
+
+  var _proto = MoveRecognizer.prototype;
+
+  _proto.getEventBindings = function getEventBindings() {
+    if (this.pointerEventsEnabled()) {
+      return [['onPointerMove', this.onChange]];
+    }
+
+    return [['onMouseMove', this.onChange]];
+  };
+
+  return MoveRecognizer;
+}(CoordinatesRecognizer);
+
+var HoverRecognizer =
+/*#__PURE__*/
+function (_CoordinatesRecognize) {
+  _inheritsLoose(HoverRecognizer, _CoordinatesRecognize);
+
+  function HoverRecognizer(controller, args) {
+    var _this;
+
+    _this = _CoordinatesRecognize.call(this, 'hover', controller, args) || this;
+
+    _this.onStart = function (event) {
+      if (!_this.isEnabled()) return;
+
+      var _getPointerEventData = getPointerEventData(event),
+          values = _getPointerEventData.values,
+          rest = _objectWithoutPropertiesLoose(_getPointerEventData, ["values"]);
+
+      _this.updateState(_extends({
+        hovering: true
+      }, rest), {
+        values: values,
+        event: event,
+        args: _this.args
+      }, GestureFlag.OnChange);
+    };
+
+    _this.onEnd = function (event) {
+      if (!_this.isEnabled()) return;
+
+      var _getPointerEventData2 = getPointerEventData(event),
+          values = _getPointerEventData2.values,
+          rest = _objectWithoutPropertiesLoose(_getPointerEventData2, ["values"]);
+
+      var kinematics = _this.getKinematics(values, event);
+
+      _this.updateState(_extends({
+        hovering: false,
+        moving: false
+      }, rest), _extends({}, kinematics, {}, genericEndState, {
+        velocity: 0,
+        velocities: [0, 0]
+      })); // when the mouse leaves the element, we also fire the move handler
+      // without waiting for move to end with debounce
+
+
+      _this.controller.fireGestureHandler('move', GestureFlag.OnEnd);
+
+      _this.controller.fireGestureHandler('hover', GestureFlag.OnChange);
+    };
+
+    return _this;
+  }
+
+  var _proto = HoverRecognizer.prototype;
+
+  _proto.getEventBindings = function getEventBindings() {
+    if (this.pointerEventsEnabled()) {
+      return [['onPointerEnter', this.onStart], ['onPointerLeave', this.onEnd]];
+    }
+
+    return [['onMouseEnter', this.onStart], ['onMouseLeave', this.onEnd]];
+  };
+
+  return HoverRecognizer;
+}(CoordinatesRecognizer);
+/**
+ * Abstract class for distance/angle-based gesture recongizers
+ */
+
+
+var DistanceAngleRecognizer =
+/*#__PURE__*/
+function (_Recognizer) {
+  _inheritsLoose(DistanceAngleRecognizer, _Recognizer);
+
+  function DistanceAngleRecognizer() {
+    var _this;
+
+    _this = _Recognizer.apply(this, arguments) || this;
+    /**
+     * Utility function to get kinematics of the gesture
+     * @d distance
+     * @a angle
+     * @event
+     * @returns set of values including delta, velocities, turns
+     */
+
+    _this.getKinematics = function (_ref, event) {
+      var d = _ref[0],
+          a = _ref[1];
+
+      var state = _this.getState();
+
+      var da = state.values,
+          turns = state.turns,
+          initial = state.initial,
+          lastLocal = state.lastLocal,
+          _state$time = state.time,
+          time = _state$time === void 0 ? 0 : _state$time; // angle might not be defined when ctrl wheel is used for zoom only
+      // in that case we set it to the previous angle value
+
+      a = a === undefined ? da[1] : a;
+      var diff_d = d - da[0];
+      var diff_a = a - da[1];
+      /**
+       * The angle value might jump from 179deg to -179deg when we actually want to
+       * read 181deg to ensure continuity. To make that happen, we detect when the jump
+       * is supsiciously high (ie > 300deg) and increase the `turns` value
+       */
+
+      var newTurns = Math.abs(diff_a) > 300 ? turns + Math.sign(diff_a) : turns; // we update the angle difference to its corrected value
+
+      diff_a -= 360 * newTurns;
+      var delta_d = d - initial[0];
+      var delta_a = a - 360 * newTurns - initial[1];
+      var delta = [delta_d, delta_a];
+      var delta_t = event.timeStamp - time;
+      var velocities = calculateVelocities([diff_d, diff_a], delta_t);
+      return {
+        event: event,
+        values: [d, a],
+        delta: delta,
+        velocities: velocities,
+        turns: newTurns,
+        local: addV(lastLocal, delta),
+        previous: da,
+        time: event.timeStamp
+      };
+    };
+
+    return _this;
+  }
+
+  return DistanceAngleRecognizer;
+}(Recognizer);
+
+var PinchRecognizer =
+/*#__PURE__*/
+function (_DistanceAngleRecogni) {
+  _inheritsLoose(PinchRecognizer, _DistanceAngleRecogni);
+
+  function PinchRecognizer(controller, args) {
+    var _this;
+
+    _this = _DistanceAngleRecogni.call(this, 'pinch', controller, args) || this;
+
+    _this.onStart = function (event) {
+      if (!_this.isEnabled() || event.touches.length !== 2) return;
+
+      var _getTwoTouchesEventDa = getTwoTouchesEventData(event),
+          values = _getTwoTouchesEventDa.values,
+          origin = _getTwoTouchesEventDa.origin,
+          rest = _objectWithoutPropertiesLoose(_getTwoTouchesEventDa, ["values", "origin"]);
+
+      var startState = _this.getStartState(values, event);
+
+      _this.updateState(_extends({}, rest, {
+        pinching: true,
+        down: true
+      }), _extends({}, startState, {
+        origin: origin,
+        cancel: function cancel() {
+          return _this.onCancel(event);
+        }
+      }), GestureFlag.OnStart);
+    };
+
+    _this.onChange = function (event) {
+      var _this$getState = _this.getState(),
+          canceled = _this$getState.canceled,
+          active = _this$getState.active;
+
+      if (canceled || !active || event.touches.length !== 2) return;
+
+      var _getTwoTouchesEventDa2 = getTwoTouchesEventData(event),
+          values = _getTwoTouchesEventDa2.values,
+          origin = _getTwoTouchesEventDa2.origin,
+          rest = _objectWithoutPropertiesLoose(_getTwoTouchesEventDa2, ["values", "origin"]);
+
+      var kinematics = _this.getKinematics(values, event);
+
+      var cancel = function cancel() {
+        return _this.onCancel(event);
+      };
+
+      _this.updateState(rest, _extends({}, kinematics, {
+        origin: origin,
+        first: false,
+        cancel: cancel
+      }), GestureFlag.OnChange);
+    };
+
+    _this.onEnd = function (event) {
+      if (!_this.getState().active) return;
+
+      _this.updateState({
+        pinching: false,
+        down: false,
+        touches: 0
+      }, _extends({}, genericEndState, {
+        event: event
+      }), GestureFlag.OnEnd);
+    };
+
+    _this.onCancel = function (event) {
+      _this.updateState(null, {
+        canceled: true,
+        cancel: noop
+      });
+
+      requestAnimationFrame(function () {
+        return _this.onEnd(event);
+      });
+    };
+
+    return _this;
+  }
+
+  var _proto = PinchRecognizer.prototype;
+
+  _proto.getEventBindings = function getEventBindings() {
+    return [['onTouchStart', this.onStart], ['onTouchMove', this.onChange], [['onTouchEnd', 'onTouchCancel'], this.onEnd]];
+  };
+
+  return PinchRecognizer;
+}(DistanceAngleRecognizer);
+
+var PinchWheelRecognizer =
+/*#__PURE__*/
+function (_DistanceAngleRecogni) {
+  _inheritsLoose(PinchWheelRecognizer, _DistanceAngleRecogni);
+
+  function PinchWheelRecognizer(controller, args) {
+    var _this;
+
+    _this = _DistanceAngleRecogni.call(this, 'pinch', controller, args) || this;
+
+    _this.onChange = function (event) {
+      if (!_this.isEnabled() || !event.ctrlKey) return;
+      event.preventDefault();
+
+      _this.clearTimeout();
+
+      _this.setTimeout(_this.onEnd, 100);
+
+      var _getWheelEventData = getWheelEventData(event),
+          values = _getWheelEventData.values,
+          rest = _objectWithoutPropertiesLoose(_getWheelEventData, ["values"]);
+
+      var d = _this.getState().values[0] - values[1];
+
+      if (!_this.getState().active) {
+        var startState = _this.getStartState([d, 0], event);
+
+        _this.updateState(_extends({
+          pinching: true
+        }, rest), startState, GestureFlag.OnStart);
+      } else {
+        var kinematics = _this.getKinematics([d, undefined], event);
+
+        _this.updateState(rest, _extends({}, kinematics, {
+          first: false
+        }), GestureFlag.OnChange);
+      }
+    };
+
+    _this.onEnd = function () {
+      if (!_this.getState().active) return;
+
+      _this.updateState({
+        pinching: false,
+        down: false,
+        touches: 0
+      }, _extends({}, genericEndState), GestureFlag.OnEnd);
+    };
+
+    return _this;
+  }
+
+  var _proto = PinchWheelRecognizer.prototype;
+
+  _proto.getEventBindings = function getEventBindings() {
+    return [['onWheel', this.onChange]];
+  };
+
+  return PinchWheelRecognizer;
+}(DistanceAngleRecognizer);
+
+var SCALE_FACTOR = 260;
+
+var PinchWebKitGestureRecognizer =
+/*#__PURE__*/
+function (_DistanceAngleRecogni) {
+  _inheritsLoose(PinchWebKitGestureRecognizer, _DistanceAngleRecogni);
+
+  function PinchWebKitGestureRecognizer(controller, args) {
+    var _this;
+
+    _this = _DistanceAngleRecogni.call(this, 'pinch', controller, args) || this;
+
+    _this.onStart = function (event) {
+      if (!_this.isEnabled()) return;
+      event.preventDefault();
+      var da = [event.scale * SCALE_FACTOR, event.rotation];
+
+      var startState = _this.getStartState(da, event);
+
+      _this.updateState({
+        pinching: true,
+        down: true,
+        touches: 2
+      }, _extends({}, startState, {
+        cancel: function cancel() {
+          return _this.onCancel(event);
+        }
+      }), GestureFlag.OnStart);
+    };
+
+    _this.onChange = function (event) {
+      var _this$getState = _this.getState(),
+          canceled = _this$getState.canceled,
+          active = _this$getState.active;
+
+      if (canceled || !active) return;
+      event.preventDefault();
+      var da = [event.scale * SCALE_FACTOR, event.rotation];
+
+      var kinematics = _this.getKinematics(da, event);
+
+      var cancel = function cancel() {
+        return _this.onCancel(event);
+      };
+
+      _this.updateState(null, _extends({}, kinematics, {
+        first: false,
+        cancel: cancel
+      }), GestureFlag.OnChange);
+    };
+
+    _this.onEnd = function (event) {
+      if (!_this.getState().active) return;
+      event.preventDefault();
+
+      _this.updateState({
+        pinching: false,
+        down: false,
+        touches: 0
+      }, _extends({}, genericEndState, {
+        event: event
+      }), GestureFlag.OnEnd);
+    };
+
+    _this.onCancel = function (event) {
+      _this.updateState(null, {
+        canceled: true,
+        cancel: noop
+      });
+
+      requestAnimationFrame(function () {
+        return _this.onEnd(event);
+      });
+    };
+
+    _this.updateTouchData = function (event) {
+      var _getTwoTouchesEventDa = getTwoTouchesEventData(event),
+          origin = _getTwoTouchesEventDa.origin;
+
+      _this.updateState(null, {
+        origin: origin
+      });
+    };
+
+    return _this;
+  }
+
+  var _proto = PinchWebKitGestureRecognizer.prototype;
+
+  _proto.getEventBindings = function getEventBindings() {
+    return [['onGestureStart', this.onStart], ['onGestureChange', this.onChange], [['onGestureEnd', 'onTouchCancel'], this.onEnd], [['onTouchStart', 'onTouchMove'], this.updateTouchData]];
+  };
+
+  return PinchWebKitGestureRecognizer;
+}(DistanceAngleRecognizer);
+/**
+ * Gesture controller will create gesture recognizers (which handle the gesture logic)
+ * and keep track of the state for all gestures
+ *
+ * @template BinderType the type the bind function should return
+ */
+
+
+var GestureController = function GestureController(handlers, config) {
+  var _this = this;
+
+  this.handlers = handlers;
+  this.config = config;
+  this.state = initialState; // state for all gestures
+
+  this.timeouts = {}; // keeping track of timeouts for debounced gestures (such as move, scroll, wheel)
+
+  this.bindings = {}; // an object holding the handlers associated to the gestures
+
+  this.domListeners = []; // when config.domTarget is set, we attach events directly to the dom
+
+  this.windowListeners = {}; // keeps track of window listeners added by gestures (drag only at the moment)
+
+  /**
+   * Function run on component unmount
+   * Cleans timeouts and removes dom listeners set by the bind function
+   */
+
+  this.clean = function () {
+    _this.cleanOnBind();
+
+    Object.values(_this.timeouts).forEach(clearTimeout);
+    Object.keys(_this.windowListeners).forEach(function (stateKey) {
+      return _this.removeWindowListeners(stateKey);
+    });
+  };
+  /**
+   * Function run every time the bind function is run (ie on every render)
+   * Reset the binding object and remove dom listeners attached to config.domTarget
+   */
+
+
+  this.cleanOnBind = function () {
+    _this.bindings = {};
+    var domTarget = _this.config.domTarget;
+
+    if (domTarget) {
+      removeListeners(domTarget, _this.domListeners, _this.config.event);
+      _this.domListeners = [];
+    }
+  };
+  /**
+   * Commodity function to let gesture recognizer update global state
+   * @param sharedState shared partial state object
+   * @param gestureState partial gesture specific state object
+   * @param gestureKey the gesture key ('drag', 'move'...)
+   * @param [gestureFlag] if set, will also fire the gesture handler set by the user
+   */
+
+
+  this.updateState = function (sharedState, gestureState, gestureKey, gestureFlag) {
+    var _extends2;
+
+    var stateKey = mappedKeys[gestureKey].stateKey;
+    _this.state = _extends({}, _this.state, (_extends2 = {
+      shared: _extends({}, _this.state.shared, {}, sharedState)
+    }, _extends2[stateKey] = _extends({}, _this.state[stateKey], {}, gestureState), _extends2));
+
+    if (gestureFlag) {
+      _this.fireGestureHandler(gestureKey, gestureFlag);
+    }
+  }; // fire the gesture handler defined by the user
+
+
+  this.fireGestureHandler = function (gestureKey, gestureFlag) {
+    // gets the state key and handler key from the gesture key
+    // gestureKey: 'hover' -> stateKey: 'move', handlerKey: 'onHover'
+    var _mappedKeys$gestureKe = mappedKeys[gestureKey],
+        stateKey = _mappedKeys$gestureKe.stateKey,
+        handlerKey = _mappedKeys$gestureKe.handlerKey;
+
+    var state = _extends({}, _this.state.shared, {}, _this.state[stateKey]);
+
+    if (gestureKey === 'pinch') {
+      var pinchState = state;
+      pinchState.da = state.values; // legacy state attribute for pinch gestures
+
+      pinchState.vdva = state.velocities; // legacy state attribute for pinch gestures
+    } else {
+      var coordinatesState = state;
+      coordinatesState.xy = state.values; // legacy state attribute for xy gestures
+
+      coordinatesState.vxvy = state.velocities; // legacy state attribute for xy gestures
+    } // TODO to be removed in future versions
+
+
+    state.temp = state.memo; // legacy temp attribute
+
+    if (gestureFlag === GestureFlag.OnStart) {
+      var handlerStart = handlerKey + "Start";
+      var _handler = _this.handlers[handlerStart];
+      _handler && _handler(state);
+    } // whenever a flag is set, we run the default on[Gesture] function
+    // i.e. GestureFlag.OnStart would trigger both onDragStart and onDrag
+
+
+    var handler = _this.handlers[handlerKey];
+
+    if (handler) {
+      _this.state[stateKey].memo = handler(state) || _this.state[stateKey].memo;
+    }
+
+    if (gestureFlag === GestureFlag.OnEnd) {
+      var handlerEnd = handlerKey + "End";
+      var _handler2 = _this.handlers[handlerEnd];
+      _handler2 && _handler2(state);
+    }
+  };
+  /**
+   * Commodity function to let recognizers simply add listeners to config.window
+   * @param stateKey
+   * @param listeners
+   */
+
+
+  this.addWindowListeners = function (stateKey, listeners) {
+    if (!_this.config.window) return; // we use this.windowListeners to keep track of the listeners we add
+
+    _this.windowListeners[stateKey] = listeners;
+    addListeners(_this.config.window, listeners, _this.config.event);
+  }; // commodity function to let recognizers simply remove listeners from config.window
+
+
+  this.removeWindowListeners = function (stateKey) {
+    if (!_this.config.window) return;
+    var listeners = _this.windowListeners[stateKey];
+
+    if (listeners) {
+      removeListeners(_this.config.window, listeners, _this.config.event);
+      delete _this.windowListeners[stateKey];
+    }
+  };
+  /**
+   * Adds a recognizer to this.bindings
+   * @param recognizer
+   */
+
+
+  this.addRecognizer = function (recognizer) {
+    recognizer.getEventBindings().map(_this.addEventBindings);
+  };
+  /**
+   * this.bindings is an object which keys match ReactEventHandlerKeys (onMouseMove, onTouchStart...).
+   * Since a recognizer might want to bind a handler function to an event key already used by a previously
+   * added recognizer, we need to make sure that each event key is an array of all the functions mapped for
+   * that key.
+   */
+
+
+  this.addEventBindings = function (_ref) {
+    var eventNames = _ref[0],
+        fn = _ref[1];
+    var eventNamesArray = !Array.isArray(eventNames) ? [eventNames] : eventNames;
+    eventNamesArray.forEach(function (eventName) {
+      _this.bindings[eventName] = _this.bindings[eventName] ? [].concat(_this.bindings[eventName], [fn]) : [fn];
+    });
+  };
+  /**
+   * When config.domTarget is set, this function will add dom listeners to it
+   */
+
+
+  this.addDomTargetListeners = function () {
+    var domTarget = _this.config.domTarget; // we iterate on the entries of this.binding
+    // for each event, we chain the array of functions mapped to it
+    // and push it to this.domListeners
+
+    Object.entries(_this.bindings).forEach(function (_ref2) {
+      var event = _ref2[0],
+          fns = _ref2[1];
+
+      _this.domListeners.push([event.substr(2).toLowerCase(), chainFns.apply(void 0, fns)]);
+    });
+    addListeners(domTarget, _this.domListeners, _this.config.event);
+  };
+  /**
+   * getBindings will return an object that will be bound by users
+   * to the react component they want to interact with
+   */
+
+
+  this.getBindings = function () {
+    var output = {};
+    var captureString = _this.config.event.capture ? 'Capture' : '';
+    Object.entries(_this.bindings).forEach(function (_ref3) {
+      var event = _ref3[0],
+          fns = _ref3[1];
+      var fnsArray = Array.isArray(fns) ? fns : [fns];
+      var key = event + captureString;
+      output[key] = chainFns.apply(void 0, fnsArray);
+    });
+    return output;
+  };
+
+  this.bind = function () {
+    // if handlers contains {onDragStart, onDrag, onDragEnd, onMoveStart, onMove}
+    // actions will skip on[Gesture]["Start"|"End"] functions and include
+    // ['onDrag', 'onMove']
+    var actions = new Set(Object.keys(_this.handlers).filter(function (k) {
+      return k.indexOf('on') === 0;
+    }).map(function (k) {
+      var match = k.match(/(on[A-Z][a-z]+)/);
+      return match ? match[1] : undefined;
+    }));
+    var domTarget = _this.config.domTarget;
+
+    var genuineHandlers = _extends({}, _this.handlers); // cleaning before adding
+
+
+    _this.cleanOnBind();
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    if (actions.has('onDrag')) {
+      _this.addRecognizer(new DragRecognizer(_this, args));
+
+      delete genuineHandlers.onDrag;
+      delete genuineHandlers.onDragStart;
+      delete genuineHandlers.onDragEnd;
+    }
+
+    if (actions.has('onScroll')) {
+      _this.addRecognizer(new ScrollRecognizer(_this, args));
+
+      delete genuineHandlers.onScroll;
+      delete genuineHandlers.onScrollStart;
+      delete genuineHandlers.onScrollEnd;
+    }
+
+    if (actions.has('onWheel')) {
+      _this.addRecognizer(new WheelRecognizer(_this, args));
+
+      delete genuineHandlers.onWheel;
+      delete genuineHandlers.onWheelStart;
+      delete genuineHandlers.onWheelEnd;
+    }
+
+    if (actions.has('onMove')) {
+      _this.addRecognizer(new MoveRecognizer(_this, args));
+
+      delete genuineHandlers.onMove;
+      delete genuineHandlers.onMoveStart;
+      delete genuineHandlers.onMoveEnd;
+    }
+
+    if (actions.has('onHover')) {
+      _this.addRecognizer(new HoverRecognizer(_this, args));
+
+      delete genuineHandlers.onHover;
+    }
+
+    if (actions.has('onPinch')) {
+      // since react doesn't have handlers for gesture events we can only use them
+      // domTarget is set (and when the browser supprots them).
+      if (domTarget && supportsGestureEvent()) {
+        _this.addRecognizer(new PinchWebKitGestureRecognizer(_this, args));
+      } else {
+        _this.addRecognizer(new PinchRecognizer(_this, args));
+
+        _this.addRecognizer(new PinchWheelRecognizer(_this, args));
+      }
+
+      delete genuineHandlers.onPinch;
+      delete genuineHandlers.onPinchStart;
+      delete genuineHandlers.onPinchEnd;
+    } // we also add event bindings for genuine handlers
+
+
+    Object.entries(genuineHandlers).map(function (_ref4) {
+      var event = _ref4[0],
+          fn = _ref4[1]; // we're cheating when it comes to event type :(
+
+      _this.addEventBindings([event, fn]);
+    }); // if config.domTarget is set we add event listeners to it and return the clean function
+
+    if (domTarget) {
+      _this.addDomTargetListeners();
+
+      return _this.clean;
+    } // if not, we return an object that contains gesture handlers mapped to react handler event keys
+
+
+    return _this.getBindings();
+  };
+};
+
+function useGesture(handlers, config) {
+  // the gesture controller will keep track of all gesture states
+  var gestureController = _react.default.useRef();
+
+  if (!gestureController.current) {
+    // we initialize the gesture controller once
+    gestureController.current = new GestureController(getDerivedHandlers(handlers), getDerivedConfig(config));
+  }
+
+  _react.default.useEffect(function () {
+    // every time handlers or config change, we let the gesture controller compute
+    // them so that the gesture handlers functions are aware of the changes
+    gestureController.current.config = getDerivedConfig(config);
+    gestureController.current.handlers = getDerivedHandlers(handlers);
+  }, [handlers, config]); // when the user component unmounts, we run our gesture controller clean function
+
+
+  _react.default.useEffect(function () {
+    return gestureController.current.clean;
+  }, []); // we return the bind function of our controller, which returns an binding object or
+  // a cleaning function depending on whether config.domTarget is set
+
+
+  return gestureController.current.bind;
+}
+/* SHORTHAND HANDLERS */
+
+
+var useDrag = function useDrag(handler, config) {
+  return useGesture({
+    onDrag: handler
+  }, config);
+};
+
+exports.useDrag = useDrag;
+
+var useMove = function useMove(handler, config) {
+  return useGesture({
+    onMove: handler
+  }, config);
+};
+
+exports.useMove = useMove;
+
+var useHover = function useHover(handler, config) {
+  return useGesture({
+    onHover: handler
+  }, config);
+};
+
+exports.useHover = useHover;
+
+var useScroll = function useScroll(handler, config) {
+  return useGesture({
+    onScroll: handler
+  }, config);
+};
+
+exports.useScroll = useScroll;
+
+var useWheel = function useWheel(handler, config) {
+  return useGesture({
+    onWheel: handler
+  }, config);
+};
+
+exports.useWheel = useWheel;
+
+var usePinch = function usePinch(handler, config) {
+  return useGesture({
+    onPinch: handler
+  }, config);
+};
+
+exports.usePinch = usePinch;
+
+function getDerivedHandlers(handlers) {
+  if (typeof handlers === 'function') return {
+    onDrag: handlers
+  };
+
+  var onAction = handlers.onAction,
+      rest = _objectWithoutPropertiesLoose(handlers, ["onAction"]);
+
+  var derivedHandlers = rest;
+  if (onAction) derivedHandlers.onDrag = onAction;
+  return derivedHandlers;
+}
+
+function getDerivedConfig(config) {
+  var derivedConfig = _extends({}, defaultConfig, {}, config);
+
+  var domTarget = derivedConfig.domTarget;
+  var realDomTarget = domTarget && 'current' in domTarget ? domTarget.current : domTarget;
+  derivedConfig.domTarget = realDomTarget;
+  return derivedConfig;
+}
+},{"react":"../../node_modules/react/index.js"}],"../../node_modules/react-spring/node_modules/@babel/runtime/helpers/esm/extends.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _extends;
+
+function _extends() {
+  exports.default = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+},{}],"../../node_modules/react-spring/node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _objectWithoutPropertiesLoose;
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+},{}],"../../node_modules/react-spring/web.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.useTransition = useTransition;
+exports.useChain = useChain;
+exports.useSprings = exports.useTrail = exports.useSpring = exports.Globals = exports.interpolate = exports.a = exports.animated = exports.update = exports.config = exports.apply = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const is = {
+  arr: Array.isArray,
+  obj: a => Object.prototype.toString.call(a) === '[object Object]',
+  fun: a => typeof a === 'function',
+  str: a => typeof a === 'string',
+  num: a => typeof a === 'number',
+  und: a => a === void 0,
+  nul: a => a === null,
+  set: a => a instanceof Set,
+  map: a => a instanceof Map,
+
+  equ(a, b) {
+    if (typeof a !== typeof b) return false;
+    if (is.str(a) || is.num(a)) return a === b;
+    if (is.obj(a) && is.obj(b) && Object.keys(a).length + Object.keys(b).length === 0) return true;
+    let i;
+
+    for (i in a) if (!(i in b)) return false;
+
+    for (i in b) if (a[i] !== b[i]) return false;
+
+    return is.und(i) ? a === b : true;
+  }
+
+};
+
+function merge(target, lowercase) {
+  if (lowercase === void 0) {
+    lowercase = true;
+  }
+
+  return object => (is.arr(object) ? object : Object.keys(object)).reduce((acc, element) => {
+    const key = lowercase ? element[0].toLowerCase() + element.substring(1) : element;
+    acc[key] = target(key);
+    return acc;
+  }, target);
+}
+
+function useForceUpdate() {
+  const _useState = (0, _react.useState)(false),
+        f = _useState[1];
+
+  const forceUpdate = (0, _react.useCallback)(() => f(v => !v), []);
+  return forceUpdate;
+}
+
+function withDefault(value, defaultValue) {
+  return is.und(value) || is.nul(value) ? defaultValue : value;
+}
+
+function toArray(a) {
+  return !is.und(a) ? is.arr(a) ? a : [a] : [];
+}
+
+function callProp(obj) {
+  for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    args[_key - 1] = arguments[_key];
+  }
+
+  return is.fun(obj) ? obj(...args) : obj;
+}
+
+function getForwardProps(props) {
+  const to = props.to,
+        from = props.from,
+        config = props.config,
+        onStart = props.onStart,
+        onRest = props.onRest,
+        onFrame = props.onFrame,
+        children = props.children,
+        reset = props.reset,
+        reverse = props.reverse,
+        force = props.force,
+        immediate = props.immediate,
+        delay = props.delay,
+        attach = props.attach,
+        destroyed = props.destroyed,
+        interpolateTo = props.interpolateTo,
+        ref = props.ref,
+        lazy = props.lazy,
+        forward = (0, _objectWithoutPropertiesLoose2.default)(props, ["to", "from", "config", "onStart", "onRest", "onFrame", "children", "reset", "reverse", "force", "immediate", "delay", "attach", "destroyed", "interpolateTo", "ref", "lazy"]);
+  return forward;
+}
+
+function interpolateTo(props) {
+  const forward = getForwardProps(props);
+  if (is.und(forward)) return (0, _extends2.default)({
+    to: forward
+  }, props);
+  const rest = Object.keys(props).reduce((a, k) => !is.und(forward[k]) ? a : (0, _extends2.default)({}, a, {
+    [k]: props[k]
+  }), {});
+  return (0, _extends2.default)({
+    to: forward
+  }, rest);
+}
+
+function handleRef(ref, forward) {
+  if (forward) {
+    // If it's a function, assume it's a ref callback
+    if (is.fun(forward)) forward(ref);else if (is.obj(forward)) {
+      forward.current = ref;
+    }
+  }
+
+  return ref;
+}
+
+class Animated {
+  constructor() {
+    this.payload = void 0;
+    this.children = [];
+  }
+
+  getAnimatedValue() {
+    return this.getValue();
+  }
+
+  getPayload() {
+    return this.payload || this;
+  }
+
+  attach() {}
+
+  detach() {}
+
+  getChildren() {
+    return this.children;
+  }
+
+  addChild(child) {
+    if (this.children.length === 0) this.attach();
+    this.children.push(child);
+  }
+
+  removeChild(child) {
+    const index = this.children.indexOf(child);
+    this.children.splice(index, 1);
+    if (this.children.length === 0) this.detach();
+  }
+
+}
+
+class AnimatedArray extends Animated {
+  constructor() {
+    super(...arguments);
+    this.payload = [];
+
+    this.attach = () => this.payload.forEach(p => p instanceof Animated && p.addChild(this));
+
+    this.detach = () => this.payload.forEach(p => p instanceof Animated && p.removeChild(this));
+  }
+
+}
+
+class AnimatedObject extends Animated {
+  constructor() {
+    super(...arguments);
+    this.payload = {};
+
+    this.attach = () => Object.values(this.payload).forEach(s => s instanceof Animated && s.addChild(this));
+
+    this.detach = () => Object.values(this.payload).forEach(s => s instanceof Animated && s.removeChild(this));
+  }
+
+  getValue(animated) {
+    if (animated === void 0) {
+      animated = false;
+    }
+
+    const payload = {};
+
+    for (const key in this.payload) {
+      const value = this.payload[key];
+      if (animated && !(value instanceof Animated)) continue;
+      payload[key] = value instanceof Animated ? value[animated ? 'getAnimatedValue' : 'getValue']() : value;
+    }
+
+    return payload;
+  }
+
+  getAnimatedValue() {
+    return this.getValue(true);
+  }
+
+}
+
+let applyAnimatedValues;
+
+function injectApplyAnimatedValues(fn, transform) {
+  applyAnimatedValues = {
+    fn,
+    transform
+  };
+}
+
+let colorNames;
+
+function injectColorNames(names) {
+  colorNames = names;
+}
+
+let requestFrame = cb => typeof window !== 'undefined' ? window.requestAnimationFrame(cb) : -1;
+
+let cancelFrame = id => {
+  typeof window !== 'undefined' && window.cancelAnimationFrame(id);
+};
+
+function injectFrame(raf, caf) {
+  requestFrame = raf;
+  cancelFrame = caf;
+}
+
+let interpolation;
+
+function injectStringInterpolator(fn) {
+  interpolation = fn;
+}
+
+let now = () => Date.now();
+
+function injectNow(nowFn) {
+  now = nowFn;
+}
+
+let defaultElement;
+
+function injectDefaultElement(el) {
+  defaultElement = el;
+}
+
+let animatedApi = node => node.current;
+
+function injectAnimatedApi(fn) {
+  animatedApi = fn;
+}
+
+let createAnimatedStyle;
+
+function injectCreateAnimatedStyle(factory) {
+  createAnimatedStyle = factory;
+}
+
+let manualFrameloop;
+
+function injectManualFrameloop(callback) {
+  manualFrameloop = callback;
+}
+
+var Globals =
+/*#__PURE__*/
+Object.freeze({
+  get applyAnimatedValues() {
+    return applyAnimatedValues;
+  },
+
+  injectApplyAnimatedValues: injectApplyAnimatedValues,
+
+  get colorNames() {
+    return colorNames;
+  },
+
+  injectColorNames: injectColorNames,
+
+  get requestFrame() {
+    return requestFrame;
+  },
+
+  get cancelFrame() {
+    return cancelFrame;
+  },
+
+  injectFrame: injectFrame,
+
+  get interpolation() {
+    return interpolation;
+  },
+
+  injectStringInterpolator: injectStringInterpolator,
+
+  get now() {
+    return now;
+  },
+
+  injectNow: injectNow,
+
+  get defaultElement() {
+    return defaultElement;
+  },
+
+  injectDefaultElement: injectDefaultElement,
+
+  get animatedApi() {
+    return animatedApi;
+  },
+
+  injectAnimatedApi: injectAnimatedApi,
+
+  get createAnimatedStyle() {
+    return createAnimatedStyle;
+  },
+
+  injectCreateAnimatedStyle: injectCreateAnimatedStyle,
+
+  get manualFrameloop() {
+    return manualFrameloop;
+  },
+
+  injectManualFrameloop: injectManualFrameloop
+});
+/**
+ * Wraps the `style` property with `AnimatedStyle`.
+ */
+
+exports.Globals = Globals;
+
+class AnimatedProps extends AnimatedObject {
+  constructor(props, callback) {
+    super();
+    this.update = void 0;
+    this.payload = !props.style ? props : (0, _extends2.default)({}, props, {
+      style: createAnimatedStyle(props.style)
+    });
+    this.update = callback;
+    this.attach();
+  }
+
+}
+
+const isFunctionComponent = val => is.fun(val) && !(val.prototype instanceof _react.default.Component);
+
+const createAnimatedComponent = Component => {
+  const AnimatedComponent = (0, _react.forwardRef)((props, ref) => {
+    const forceUpdate = useForceUpdate();
+    const mounted = (0, _react.useRef)(true);
+    const propsAnimated = (0, _react.useRef)(null);
+    const node = (0, _react.useRef)(null);
+    const attachProps = (0, _react.useCallback)(props => {
+      const oldPropsAnimated = propsAnimated.current;
+
+      const callback = () => {
+        let didUpdate = false;
+
+        if (node.current) {
+          didUpdate = applyAnimatedValues.fn(node.current, propsAnimated.current.getAnimatedValue());
+        }
+
+        if (!node.current || didUpdate === false) {
+          // If no referenced node has been found, or the update target didn't have a
+          // native-responder, then forceUpdate the animation ...
+          forceUpdate();
+        }
+      };
+
+      propsAnimated.current = new AnimatedProps(props, callback);
+      oldPropsAnimated && oldPropsAnimated.detach();
+    }, []);
+    (0, _react.useEffect)(() => () => {
+      mounted.current = false;
+      propsAnimated.current && propsAnimated.current.detach();
+    }, []);
+    (0, _react.useImperativeHandle)(ref, () => animatedApi(node, mounted, forceUpdate));
+    attachProps(props);
+
+    const _getValue = propsAnimated.current.getValue(),
+          scrollTop = _getValue.scrollTop,
+          scrollLeft = _getValue.scrollLeft,
+          animatedProps = (0, _objectWithoutPropertiesLoose2.default)(_getValue, ["scrollTop", "scrollLeft"]); // Functions cannot have refs, see:
+    // See: https://github.com/react-spring/react-spring/issues/569
+
+
+    const refFn = isFunctionComponent(Component) ? undefined : childRef => node.current = handleRef(childRef, ref);
+    return _react.default.createElement(Component, (0, _extends2.default)({}, animatedProps, {
+      ref: refFn
+    }));
+  });
+  return AnimatedComponent;
+};
+
+let active = false;
+const controllers = new Set();
+
+const update = () => {
+  if (!active) return false;
+  let time = now();
+
+  for (let controller of controllers) {
+    let isActive = false;
+
+    for (let configIdx = 0; configIdx < controller.configs.length; configIdx++) {
+      let config = controller.configs[configIdx];
+      let endOfAnimation, lastTime;
+
+      for (let valIdx = 0; valIdx < config.animatedValues.length; valIdx++) {
+        let animation = config.animatedValues[valIdx]; // If an animation is done, skip, until all of them conclude
+
+        if (animation.done) continue;
+        let from = config.fromValues[valIdx];
+        let to = config.toValues[valIdx];
+        let position = animation.lastPosition;
+        let isAnimated = to instanceof Animated;
+        let velocity = Array.isArray(config.initialVelocity) ? config.initialVelocity[valIdx] : config.initialVelocity;
+        if (isAnimated) to = to.getValue(); // Conclude animation if it's either immediate, or from-values match end-state
+
+        if (config.immediate) {
+          animation.setValue(to);
+          animation.done = true;
+          continue;
+        } // Break animation when string values are involved
+
+
+        if (typeof from === 'string' || typeof to === 'string') {
+          animation.setValue(to);
+          animation.done = true;
+          continue;
+        }
+
+        if (config.duration !== void 0) {
+          /** Duration easing */
+          position = from + config.easing((time - animation.startTime) / config.duration) * (to - from);
+          endOfAnimation = time >= animation.startTime + config.duration;
+        } else if (config.decay) {
+          /** Decay easing */
+          position = from + velocity / (1 - 0.998) * (1 - Math.exp(-(1 - 0.998) * (time - animation.startTime)));
+          endOfAnimation = Math.abs(animation.lastPosition - position) < 0.1;
+          if (endOfAnimation) to = position;
+        } else {
+          /** Spring easing */
+          lastTime = animation.lastTime !== void 0 ? animation.lastTime : time;
+          velocity = animation.lastVelocity !== void 0 ? animation.lastVelocity : config.initialVelocity; // If we lost a lot of frames just jump to the end.
+
+          if (time > lastTime + 64) lastTime = time; // http://gafferongames.com/game-physics/fix-your-timestep/
+
+          let numSteps = Math.floor(time - lastTime);
+
+          for (let i = 0; i < numSteps; ++i) {
+            let force = -config.tension * (position - to);
+            let damping = -config.friction * velocity;
+            let acceleration = (force + damping) / config.mass;
+            velocity = velocity + acceleration * 1 / 1000;
+            position = position + velocity * 1 / 1000;
+          } // Conditions for stopping the spring animation
+
+
+          let isOvershooting = config.clamp && config.tension !== 0 ? from < to ? position > to : position < to : false;
+          let isVelocity = Math.abs(velocity) <= config.precision;
+          let isDisplacement = config.tension !== 0 ? Math.abs(to - position) <= config.precision : true;
+          endOfAnimation = isOvershooting || isVelocity && isDisplacement;
+          animation.lastVelocity = velocity;
+          animation.lastTime = time;
+        } // Trails aren't done until their parents conclude
+
+
+        if (isAnimated && !config.toValues[valIdx].done) endOfAnimation = false;
+
+        if (endOfAnimation) {
+          // Ensure that we end up with a round value
+          if (animation.value !== to) position = to;
+          animation.done = true;
+        } else isActive = true;
+
+        animation.setValue(position);
+        animation.lastPosition = position;
+      } // Keep track of updated values only when necessary
+
+
+      if (controller.props.onFrame) controller.values[config.name] = config.interpolation.getValue();
+    } // Update callbacks in the end of the frame
+
+
+    if (controller.props.onFrame) controller.props.onFrame(controller.values); // Either call onEnd or next frame
+
+    if (!isActive) {
+      controllers.delete(controller);
+      controller.stop(true);
+    }
+  } // Loop over as long as there are controllers ...
+
+
+  if (controllers.size) {
+    if (manualFrameloop) manualFrameloop();else requestFrame(update);
+  } else {
+    active = false;
+  }
+
+  return active;
+};
+
+exports.update = update;
+
+const start = controller => {
+  if (!controllers.has(controller)) controllers.add(controller);
+
+  if (!active) {
+    active = true;
+    if (manualFrameloop) requestFrame(manualFrameloop);else requestFrame(update);
+  }
+};
+
+const stop = controller => {
+  if (controllers.has(controller)) controllers.delete(controller);
+};
+
+function createInterpolator(range, output, extrapolate) {
+  if (typeof range === 'function') {
+    return range;
+  }
+
+  if (Array.isArray(range)) {
+    return createInterpolator({
+      range,
+      output: output,
+      extrapolate
+    });
+  }
+
+  if (interpolation && typeof range.output[0] === 'string') {
+    return interpolation(range);
+  }
+
+  const config = range;
+  const outputRange = config.output;
+  const inputRange = config.range || [0, 1];
+  const extrapolateLeft = config.extrapolateLeft || config.extrapolate || 'extend';
+  const extrapolateRight = config.extrapolateRight || config.extrapolate || 'extend';
+
+  const easing = config.easing || (t => t);
+
+  return input => {
+    const range = findRange(input, inputRange);
+    return interpolate(input, inputRange[range], inputRange[range + 1], outputRange[range], outputRange[range + 1], easing, extrapolateLeft, extrapolateRight, config.map);
+  };
+}
+
+function interpolate(input, inputMin, inputMax, outputMin, outputMax, easing, extrapolateLeft, extrapolateRight, map) {
+  let result = map ? map(input) : input; // Extrapolate
+
+  if (result < inputMin) {
+    if (extrapolateLeft === 'identity') return result;else if (extrapolateLeft === 'clamp') result = inputMin;
+  }
+
+  if (result > inputMax) {
+    if (extrapolateRight === 'identity') return result;else if (extrapolateRight === 'clamp') result = inputMax;
+  }
+
+  if (outputMin === outputMax) return outputMin;
+  if (inputMin === inputMax) return input <= inputMin ? outputMin : outputMax; // Input Range
+
+  if (inputMin === -Infinity) result = -result;else if (inputMax === Infinity) result = result - inputMin;else result = (result - inputMin) / (inputMax - inputMin); // Easing
+
+  result = easing(result); // Output Range
+
+  if (outputMin === -Infinity) result = -result;else if (outputMax === Infinity) result = result + outputMin;else result = result * (outputMax - outputMin) + outputMin;
+  return result;
+}
+
+function findRange(input, inputRange) {
+  for (var i = 1; i < inputRange.length - 1; ++i) if (inputRange[i] >= input) break;
+
+  return i - 1;
+}
+
+class AnimatedInterpolation extends AnimatedArray {
+  constructor(parents, range, output, extrapolate) {
+    super();
+    this.calc = void 0;
+    this.payload = parents instanceof AnimatedArray && !(parents instanceof AnimatedInterpolation) ? parents.getPayload() : Array.isArray(parents) ? parents : [parents];
+    this.calc = createInterpolator(range, output, extrapolate);
+  }
+
+  getValue() {
+    return this.calc(...this.payload.map(value => value.getValue()));
+  }
+
+  updateConfig(range, output, extrapolate) {
+    this.calc = createInterpolator(range, output, extrapolate);
+  }
+
+  interpolate(range, output, extrapolate) {
+    return new AnimatedInterpolation(this, range, output, extrapolate);
+  }
+
+}
+
+const interpolate$1 = (parents, range, output) => parents && new AnimatedInterpolation(parents, range, output);
+
+exports.interpolate = interpolate$1;
+const config = {
+  default: {
+    tension: 170,
+    friction: 26
+  },
+  gentle: {
+    tension: 120,
+    friction: 14
+  },
+  wobbly: {
+    tension: 180,
+    friction: 12
+  },
+  stiff: {
+    tension: 210,
+    friction: 20
+  },
+  slow: {
+    tension: 280,
+    friction: 60
+  },
+  molasses: {
+    tension: 280,
+    friction: 120
+  }
+};
+/** API
+ *  useChain(references, timeSteps, timeFrame)
+ */
+
+exports.config = config;
+
+function useChain(refs, timeSteps, timeFrame) {
+  if (timeFrame === void 0) {
+    timeFrame = 1000;
+  }
+
+  const previous = (0, _react.useRef)();
+  (0, _react.useEffect)(() => {
+    if (is.equ(refs, previous.current)) refs.forEach(_ref => {
+      let current = _ref.current;
+      return current && current.start();
+    });else if (timeSteps) {
+      refs.forEach((_ref2, index) => {
+        let current = _ref2.current;
+
+        if (current) {
+          const ctrls = current.controllers;
+
+          if (ctrls.length) {
+            const t = timeFrame * timeSteps[index];
+            ctrls.forEach(ctrl => {
+              ctrl.queue = ctrl.queue.map(e => (0, _extends2.default)({}, e, {
+                delay: e.delay + t
+              }));
+              ctrl.start();
+            });
+          }
+        }
+      });
+    } else refs.reduce((q, _ref3, rI) => {
+      let current = _ref3.current;
+      return q = q.then(() => current.start());
+    }, Promise.resolve());
+    previous.current = refs;
+  });
+}
+/**
+ * Animated works by building a directed acyclic graph of dependencies
+ * transparently when you render your Animated components.
+ *
+ *               new Animated.Value(0)
+ *     .interpolate()        .interpolate()    new Animated.Value(1)
+ *         opacity               translateY      scale
+ *          style                         transform
+ *         View#234                         style
+ *                                         View#123
+ *
+ * A) Top Down phase
+ * When an AnimatedValue is updated, we recursively go down through this
+ * graph in order to find leaf nodes: the views that we flag as needing
+ * an update.
+ *
+ * B) Bottom Up phase
+ * When a view is flagged as needing an update, we recursively go back up
+ * in order to build the new value that it needs. The reason why we need
+ * this two-phases process is to deal with composite props such as
+ * transform which can receive values from multiple parents.
+ */
+
+
+function addAnimatedStyles(node, styles) {
+  if ('update' in node) {
+    styles.add(node);
+  } else {
+    node.getChildren().forEach(child => addAnimatedStyles(child, styles));
+  }
+}
+
+class AnimatedValue extends Animated {
+  constructor(_value) {
+    var _this;
+
+    super();
+    _this = this;
+    this.animatedStyles = new Set();
+    this.value = void 0;
+    this.startPosition = void 0;
+    this.lastPosition = void 0;
+    this.lastVelocity = void 0;
+    this.startTime = void 0;
+    this.lastTime = void 0;
+    this.done = false;
+
+    this.setValue = function (value, flush) {
+      if (flush === void 0) {
+        flush = true;
+      }
+
+      _this.value = value;
+      if (flush) _this.flush();
+    };
+
+    this.value = _value;
+    this.startPosition = _value;
+    this.lastPosition = _value;
+  }
+
+  flush() {
+    if (this.animatedStyles.size === 0) {
+      addAnimatedStyles(this, this.animatedStyles);
+    }
+
+    this.animatedStyles.forEach(animatedStyle => animatedStyle.update());
+  }
+
+  clearStyles() {
+    this.animatedStyles.clear();
+  }
+
+  getValue() {
+    return this.value;
+  }
+
+  interpolate(range, output, extrapolate) {
+    return new AnimatedInterpolation(this, range, output, extrapolate);
+  }
+
+}
+
+class AnimatedValueArray extends AnimatedArray {
+  constructor(values) {
+    super();
+    this.payload = values.map(n => new AnimatedValue(n));
+  }
+
+  setValue(value, flush) {
+    if (flush === void 0) {
+      flush = true;
+    }
+
+    if (Array.isArray(value)) {
+      if (value.length === this.payload.length) {
+        value.forEach((v, i) => this.payload[i].setValue(v, flush));
+      }
+    } else {
+      this.payload.forEach(p => p.setValue(value, flush));
+    }
+  }
+
+  getValue() {
+    return this.payload.map(v => v.getValue());
+  }
+
+  interpolate(range, output) {
+    return new AnimatedInterpolation(this, range, output);
+  }
+
+}
+
+let G = 0;
+
+class Controller {
+  constructor() {
+    this.id = void 0;
+    this.idle = true;
+    this.hasChanged = false;
+    this.guid = 0;
+    this.local = 0;
+    this.props = {};
+    this.merged = {};
+    this.animations = {};
+    this.interpolations = {};
+    this.values = {};
+    this.configs = [];
+    this.listeners = [];
+    this.queue = [];
+    this.localQueue = void 0;
+
+    this.getValues = () => this.interpolations;
+
+    this.id = G++;
+  }
+  /** update(props)
+   *  This function filters input props and creates an array of tasks which are executed in .start()
+   *  Each task is allowed to carry a delay, which means it can execute asnychroneously */
+
+
+  update(args) {
+    //this._id = n + this.id
+    if (!args) return this; // Extract delay and the to-prop from props
+
+    const _ref = interpolateTo(args),
+          _ref$delay = _ref.delay,
+          delay = _ref$delay === void 0 ? 0 : _ref$delay,
+          to = _ref.to,
+          props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["delay", "to"]);
+
+    if (is.arr(to) || is.fun(to)) {
+      // If config is either a function or an array queue it up as is
+      this.queue.push((0, _extends2.default)({}, props, {
+        delay,
+        to
+      }));
+    } else if (to) {
+      // Otherwise go through each key since it could be delayed individually
+      let ops = {};
+      Object.entries(to).forEach(_ref2 => {
+        let k = _ref2[0],
+            v = _ref2[1]; // Fetch delay and create an entry, consisting of the to-props, the delay, and basic props
+
+        const entry = (0, _extends2.default)({
+          to: {
+            [k]: v
+          },
+          delay: callProp(delay, k)
+        }, props);
+        const previous = ops[entry.delay] && ops[entry.delay].to;
+        ops[entry.delay] = (0, _extends2.default)({}, ops[entry.delay], entry, {
+          to: (0, _extends2.default)({}, previous, entry.to)
+        });
+      });
+      this.queue = Object.values(ops);
+    } // Sort queue, so that async calls go last
+
+
+    this.queue = this.queue.sort((a, b) => a.delay - b.delay); // Diff the reduced props immediately (they'll contain the from-prop and some config)
+
+    this.diff(props);
+    return this;
+  }
+  /** start(onEnd)
+   *  This function either executes a queue, if present, or starts the frameloop, which animates */
+
+
+  start(onEnd) {
+    // If a queue is present we must excecute it
+    if (this.queue.length) {
+      this.idle = false; // Updates can interrupt trailing queues, in that case we just merge values
+
+      if (this.localQueue) {
+        this.localQueue.forEach(_ref3 => {
+          let _ref3$from = _ref3.from,
+              from = _ref3$from === void 0 ? {} : _ref3$from,
+              _ref3$to = _ref3.to,
+              to = _ref3$to === void 0 ? {} : _ref3$to;
+          if (is.obj(from)) this.merged = (0, _extends2.default)({}, from, this.merged);
+          if (is.obj(to)) this.merged = (0, _extends2.default)({}, this.merged, to);
+        });
+      } // The guid helps us tracking frames, a new queue over an old one means an override
+      // We discard async calls in that caseÍ
+
+
+      const local = this.local = ++this.guid;
+      const queue = this.localQueue = this.queue;
+      this.queue = []; // Go through each entry and execute it
+
+      queue.forEach((_ref4, index) => {
+        let delay = _ref4.delay,
+            props = (0, _objectWithoutPropertiesLoose2.default)(_ref4, ["delay"]);
+
+        const cb = finished => {
+          if (index === queue.length - 1 && local === this.guid && finished) {
+            this.idle = true;
+            if (this.props.onRest) this.props.onRest(this.merged);
+          }
+
+          if (onEnd) onEnd();
+        }; // Entries can be delayed, ansyc or immediate
+
+
+        let async = is.arr(props.to) || is.fun(props.to);
+
+        if (delay) {
+          setTimeout(() => {
+            if (local === this.guid) {
+              if (async) this.runAsync(props, cb);else this.diff(props).start(cb);
+            }
+          }, delay);
+        } else if (async) this.runAsync(props, cb);else this.diff(props).start(cb);
+      });
+    } // Otherwise we kick of the frameloop
+    else {
+        if (is.fun(onEnd)) this.listeners.push(onEnd);
+        if (this.props.onStart) this.props.onStart();
+        start(this);
+      }
+
+    return this;
+  }
+
+  stop(finished) {
+    this.listeners.forEach(onEnd => onEnd(finished));
+    this.listeners = [];
+    return this;
+  }
+  /** Pause sets onEnd listeners free, but also removes the controller from the frameloop */
+
+
+  pause(finished) {
+    this.stop(true);
+    if (finished) stop(this);
+    return this;
+  }
+
+  runAsync(_ref5, onEnd) {
+    var _this = this;
+
+    let delay = _ref5.delay,
+        props = (0, _objectWithoutPropertiesLoose2.default)(_ref5, ["delay"]);
+    const local = this.local; // If "to" is either a function or an array it will be processed async, therefor "to" should be empty right now
+    // If the view relies on certain values "from" has to be present
+
+    let queue = Promise.resolve(undefined);
+
+    if (is.arr(props.to)) {
+      for (let i = 0; i < props.to.length; i++) {
+        const index = i;
+        const fresh = (0, _extends2.default)({}, props, interpolateTo(props.to[index]));
+        if (is.arr(fresh.config)) fresh.config = fresh.config[index];
+        queue = queue.then(() => {
+          //this.stop()
+          if (local === this.guid) return new Promise(r => this.diff(fresh).start(r));
+        });
+      }
+    } else if (is.fun(props.to)) {
+      let index = 0;
+      let last;
+      queue = queue.then(() => props.to( // next(props)
+      p => {
+        const fresh = (0, _extends2.default)({}, props, interpolateTo(p));
+        if (is.arr(fresh.config)) fresh.config = fresh.config[index];
+        index++; //this.stop()
+
+        if (local === this.guid) return last = new Promise(r => this.diff(fresh).start(r));
+        return;
+      }, // cancel()
+      function (finished) {
+        if (finished === void 0) {
+          finished = true;
+        }
+
+        return _this.stop(finished);
+      }).then(() => last));
+    }
+
+    queue.then(onEnd);
+  }
+
+  diff(props) {
+    this.props = (0, _extends2.default)({}, this.props, props);
+    let _this$props = this.props,
+        _this$props$from = _this$props.from,
+        from = _this$props$from === void 0 ? {} : _this$props$from,
+        _this$props$to = _this$props.to,
+        to = _this$props$to === void 0 ? {} : _this$props$to,
+        _this$props$config = _this$props.config,
+        config = _this$props$config === void 0 ? {} : _this$props$config,
+        reverse = _this$props.reverse,
+        attach = _this$props.attach,
+        reset = _this$props.reset,
+        immediate = _this$props.immediate; // Reverse values when requested
+
+    if (reverse) {
+      var _ref6 = [to, from];
+      from = _ref6[0];
+      to = _ref6[1];
+    } // This will collect all props that were ever set, reset merged props when necessary
+
+
+    this.merged = (0, _extends2.default)({}, from, this.merged, to);
+    this.hasChanged = false; // Attachment handling, trailed springs can "attach" themselves to a previous spring
+
+    let target = attach && attach(this); // Reduces input { name: value } pairs into animated values
+
+    this.animations = Object.entries(this.merged).reduce((acc, _ref7) => {
+      let name = _ref7[0],
+          value = _ref7[1]; // Issue cached entries, except on reset
+
+      let entry = acc[name] || {}; // Figure out what the value is supposed to be
+
+      const isNumber = is.num(value);
+      const isString = is.str(value) && !value.startsWith('#') && !/\d/.test(value) && !colorNames[value];
+      const isArray = is.arr(value);
+      const isInterpolation = !isNumber && !isArray && !isString;
+      let fromValue = !is.und(from[name]) ? from[name] : value;
+      let toValue = isNumber || isArray ? value : isString ? value : 1;
+      let toConfig = callProp(config, name);
+      if (target) toValue = target.animations[name].parent;
+      let parent = entry.parent,
+          interpolation$$1 = entry.interpolation,
+          toValues = toArray(target ? toValue.getPayload() : toValue),
+          animatedValues;
+      let newValue = value;
+      if (isInterpolation) newValue = interpolation({
+        range: [0, 1],
+        output: [value, value]
+      })(1);
+      let currentValue = interpolation$$1 && interpolation$$1.getValue(); // Change detection flags
+
+      const isFirst = is.und(parent);
+      const isActive = !isFirst && entry.animatedValues.some(v => !v.done);
+      const currentValueDiffersFromGoal = !is.equ(newValue, currentValue);
+      const hasNewGoal = !is.equ(newValue, entry.previous);
+      const hasNewConfig = !is.equ(toConfig, entry.config); // Change animation props when props indicate a new goal (new value differs from previous one)
+      // and current values differ from it. Config changes trigger a new update as well (though probably shouldn't?)
+
+      if (reset || hasNewGoal && currentValueDiffersFromGoal || hasNewConfig) {
+        // Convert regular values into animated values, ALWAYS re-use if possible
+        if (isNumber || isString) parent = interpolation$$1 = entry.parent || new AnimatedValue(fromValue);else if (isArray) parent = interpolation$$1 = entry.parent || new AnimatedValueArray(fromValue);else if (isInterpolation) {
+          let prev = entry.interpolation && entry.interpolation.calc(entry.parent.value);
+          prev = prev !== void 0 && !reset ? prev : fromValue;
+
+          if (entry.parent) {
+            parent = entry.parent;
+            parent.setValue(0, false);
+          } else parent = new AnimatedValue(0);
+
+          const range = {
+            output: [prev, value]
+          };
+
+          if (entry.interpolation) {
+            interpolation$$1 = entry.interpolation;
+            entry.interpolation.updateConfig(range);
+          } else interpolation$$1 = parent.interpolate(range);
+        }
+        toValues = toArray(target ? toValue.getPayload() : toValue);
+        animatedValues = toArray(parent.getPayload());
+        if (reset && !isInterpolation) parent.setValue(fromValue, false);
+        this.hasChanged = true; // Reset animated values
+
+        animatedValues.forEach(value => {
+          value.startPosition = value.value;
+          value.lastPosition = value.value;
+          value.lastVelocity = isActive ? value.lastVelocity : undefined;
+          value.lastTime = isActive ? value.lastTime : undefined;
+          value.startTime = now();
+          value.done = false;
+          value.animatedStyles.clear();
+        }); // Set immediate values
+
+        if (callProp(immediate, name)) {
+          parent.setValue(isInterpolation ? toValue : value, false);
+        }
+
+        return (0, _extends2.default)({}, acc, {
+          [name]: (0, _extends2.default)({}, entry, {
+            name,
+            parent,
+            interpolation: interpolation$$1,
+            animatedValues,
+            toValues,
+            previous: newValue,
+            config: toConfig,
+            fromValues: toArray(parent.getValue()),
+            immediate: callProp(immediate, name),
+            initialVelocity: withDefault(toConfig.velocity, 0),
+            clamp: withDefault(toConfig.clamp, false),
+            precision: withDefault(toConfig.precision, 0.01),
+            tension: withDefault(toConfig.tension, 170),
+            friction: withDefault(toConfig.friction, 26),
+            mass: withDefault(toConfig.mass, 1),
+            duration: toConfig.duration,
+            easing: withDefault(toConfig.easing, t => t),
+            decay: toConfig.decay
+          })
+        });
+      } else {
+        if (!currentValueDiffersFromGoal) {
+          // So ... the current target value (newValue) appears to be different from the previous value,
+          // which normally constitutes an update, but the actual value (currentValue) matches the target!
+          // In order to resolve this without causing an animation update we silently flag the animation as done,
+          // which it technically is. Interpolations also needs a config update with their target set to 1.
+          if (isInterpolation) {
+            parent.setValue(1, false);
+            interpolation$$1.updateConfig({
+              output: [newValue, newValue]
+            });
+          }
+
+          parent.done = true;
+          this.hasChanged = true;
+          return (0, _extends2.default)({}, acc, {
+            [name]: (0, _extends2.default)({}, acc[name], {
+              previous: newValue
+            })
+          });
+        }
+
+        return acc;
+      }
+    }, this.animations);
+
+    if (this.hasChanged) {
+      // Make animations available to frameloop
+      this.configs = Object.values(this.animations);
+      this.values = {};
+      this.interpolations = {};
+
+      for (let key in this.animations) {
+        this.interpolations[key] = this.animations[key].interpolation;
+        this.values[key] = this.animations[key].interpolation.getValue();
+      }
+    }
+
+    return this;
+  }
+
+  destroy() {
+    this.stop();
+    this.props = {};
+    this.merged = {};
+    this.animations = {};
+    this.interpolations = {};
+    this.values = {};
+    this.configs = [];
+    this.local = 0;
+  }
+
+}
+/** API
+ * const props = useSprings(number, [{ ... }, { ... }, ...])
+ * const [props, set] = useSprings(number, (i, controller) => ({ ... }))
+ */
+
+
+const useSprings = (length, props) => {
+  const mounted = (0, _react.useRef)(false);
+  const ctrl = (0, _react.useRef)();
+  const isFn = is.fun(props); // The controller maintains the animation values, starts and stops animations
+
+  const _useMemo = (0, _react.useMemo)(() => {
+    // Remove old controllers
+    if (ctrl.current) {
+      ctrl.current.map(c => c.destroy());
+      ctrl.current = undefined;
+    }
+
+    let ref;
+    return [new Array(length).fill().map((_, i) => {
+      const ctrl = new Controller();
+      const newProps = isFn ? callProp(props, i, ctrl) : props[i];
+      if (i === 0) ref = newProps.ref;
+      ctrl.update(newProps);
+      if (!ref) ctrl.start();
+      return ctrl;
+    }), ref];
+  }, [length]),
+        controllers = _useMemo[0],
+        ref = _useMemo[1];
+
+  ctrl.current = controllers; // The hooks reference api gets defined here ...
+
+  const api = (0, _react.useImperativeHandle)(ref, () => ({
+    start: () => Promise.all(ctrl.current.map(c => new Promise(r => c.start(r)))),
+    stop: finished => ctrl.current.forEach(c => c.stop(finished)),
+
+    get controllers() {
+      return ctrl.current;
+    }
+
+  })); // This function updates the controllers
+
+  const updateCtrl = (0, _react.useMemo)(() => updateProps => ctrl.current.map((c, i) => {
+    c.update(isFn ? callProp(updateProps, i, c) : updateProps[i]);
+    if (!ref) c.start();
+  }), [length]); // Update controller if props aren't functional
+
+  (0, _react.useEffect)(() => {
+    if (mounted.current) {
+      if (!isFn) updateCtrl(props);
+    } else if (!ref) ctrl.current.forEach(c => c.start());
+  }); // Update mounted flag and destroy controller on unmount
+
+  (0, _react.useEffect)(() => (mounted.current = true, () => ctrl.current.forEach(c => c.destroy())), []); // Return animated props, or, anim-props + the update-setter above
+
+  const propValues = ctrl.current.map(c => c.getValues());
+  return isFn ? [propValues, updateCtrl, finished => ctrl.current.forEach(c => c.pause(finished))] : propValues;
+};
+/** API
+ * const props = useSpring({ ... })
+ * const [props, set] = useSpring(() => ({ ... }))
+ */
+
+
+exports.useSprings = useSprings;
+
+const useSpring = props => {
+  const isFn = is.fun(props);
+
+  const _useSprings = useSprings(1, isFn ? props : [props]),
+        result = _useSprings[0],
+        set = _useSprings[1],
+        pause = _useSprings[2];
+
+  return isFn ? [result[0], set, pause] : result;
+};
+/** API
+ * const trails = useTrail(number, { ... })
+ * const [trails, set] = useTrail(number, () => ({ ... }))
+ */
+
+
+exports.useSpring = useSpring;
+
+const useTrail = (length, props) => {
+  const mounted = (0, _react.useRef)(false);
+  const isFn = is.fun(props);
+  const updateProps = callProp(props);
+  const instances = (0, _react.useRef)();
+
+  const _useSprings = useSprings(length, (i, ctrl) => {
+    if (i === 0) instances.current = [];
+    instances.current.push(ctrl);
+    return (0, _extends2.default)({}, updateProps, {
+      config: callProp(updateProps.config, i),
+      attach: i > 0 && (() => instances.current[i - 1])
+    });
+  }),
+        result = _useSprings[0],
+        set = _useSprings[1],
+        pause = _useSprings[2]; // Set up function to update controller
+
+
+  const updateCtrl = (0, _react.useMemo)(() => props => set((i, ctrl) => {
+    const last = props.reverse ? i === 0 : length - 1 === i;
+    const attachIdx = props.reverse ? i + 1 : i - 1;
+    const attachController = instances.current[attachIdx];
+    return (0, _extends2.default)({}, props, {
+      config: callProp(props.config || updateProps.config, i),
+      attach: attachController && (() => attachController)
+    });
+  }), [length, updateProps.reverse]); // Update controller if props aren't functional
+
+  (0, _react.useEffect)(() => void (mounted.current && !isFn && updateCtrl(props))); // Update mounted flag and destroy controller on unmount
+
+  (0, _react.useEffect)(() => void (mounted.current = true), []);
+  return isFn ? [result, updateCtrl, pause] : result;
+};
+/** API
+ * const transitions = useTransition(items, itemKeys, { ... })
+ * const [transitions, update] = useTransition(items, itemKeys, () => ({ ... }))
+ */
+
+
+exports.useTrail = useTrail;
+let guid = 0;
+const ENTER = 'enter';
+const LEAVE = 'leave';
+const UPDATE = 'update';
+
+const mapKeys = (items, keys) => (typeof keys === 'function' ? items.map(keys) : toArray(keys)).map(String);
+
+const get = props => {
+  let items = props.items,
+      _props$keys = props.keys,
+      keys = _props$keys === void 0 ? item => item : _props$keys,
+      rest = (0, _objectWithoutPropertiesLoose2.default)(props, ["items", "keys"]);
+  items = toArray(items !== void 0 ? items : null);
+  return (0, _extends2.default)({
+    items,
+    keys: mapKeys(items, keys)
+  }, rest);
+};
+
+function useTransition(input, keyTransform, config) {
+  const props = (0, _extends2.default)({
+    items: input,
+    keys: keyTransform || (i => i)
+  }, config);
+
+  const _get = get(props),
+        _get$lazy = _get.lazy,
+        lazy = _get$lazy === void 0 ? false : _get$lazy,
+        _get$unique = _get.unique,
+        _get$reset = _get.reset,
+        reset = _get$reset === void 0 ? false : _get$reset,
+        enter = _get.enter,
+        leave = _get.leave,
+        update = _get.update,
+        onDestroyed = _get.onDestroyed,
+        keys = _get.keys,
+        items = _get.items,
+        onFrame = _get.onFrame,
+        _onRest = _get.onRest,
+        onStart = _get.onStart,
+        ref = _get.ref,
+        extra = (0, _objectWithoutPropertiesLoose2.default)(_get, ["lazy", "unique", "reset", "enter", "leave", "update", "onDestroyed", "keys", "items", "onFrame", "onRest", "onStart", "ref"]);
+
+  const forceUpdate = useForceUpdate();
+  const mounted = (0, _react.useRef)(false);
+  const state = (0, _react.useRef)({
+    mounted: false,
+    first: true,
+    deleted: [],
+    current: {},
+    transitions: [],
+    prevProps: {},
+    paused: !!props.ref,
+    instances: !mounted.current && new Map(),
+    forceUpdate
+  });
+  (0, _react.useImperativeHandle)(props.ref, () => ({
+    start: () => Promise.all(Array.from(state.current.instances).map(_ref => {
+      let c = _ref[1];
+      return new Promise(r => c.start(r));
+    })),
+    stop: finished => Array.from(state.current.instances).forEach(_ref2 => {
+      let c = _ref2[1];
+      return c.stop(finished);
+    }),
+
+    get controllers() {
+      return Array.from(state.current.instances).map(_ref3 => {
+        let c = _ref3[1];
+        return c;
+      });
+    }
+
+  })); // Update state
+
+  state.current = diffItems(state.current, props);
+
+  if (state.current.changed) {
+    // Update state
+    state.current.transitions.forEach(transition => {
+      const slot = transition.slot,
+            from = transition.from,
+            to = transition.to,
+            config = transition.config,
+            trail = transition.trail,
+            key = transition.key,
+            item = transition.item;
+      if (!state.current.instances.has(key)) state.current.instances.set(key, new Controller()); // update the map object
+
+      const ctrl = state.current.instances.get(key);
+      const newProps = (0, _extends2.default)({}, extra, {
+        to,
+        from,
+        config,
+        ref,
+        onRest: values => {
+          if (state.current.mounted) {
+            if (transition.destroyed) {
+              // If no ref is given delete destroyed items immediately
+              if (!ref && !lazy) cleanUp(state, key);
+              if (onDestroyed) onDestroyed(item);
+            } // A transition comes to rest once all its springs conclude
+
+
+            const curInstances = Array.from(state.current.instances);
+            const active = curInstances.some(_ref4 => {
+              let c = _ref4[1];
+              return !c.idle;
+            });
+            if (!active && (ref || lazy) && state.current.deleted.length > 0) cleanUp(state);
+            if (_onRest) _onRest(item, slot, values);
+          }
+        },
+        onStart: onStart && (() => onStart(item, slot)),
+        onFrame: onFrame && (values => onFrame(item, slot, values)),
+        delay: trail,
+        reset: reset && slot === ENTER // Update controller
+
+      });
+      ctrl.update(newProps);
+      if (!state.current.paused) ctrl.start();
+    });
+  }
+
+  (0, _react.useEffect)(() => {
+    state.current.mounted = mounted.current = true;
+    return () => {
+      state.current.mounted = mounted.current = false;
+      Array.from(state.current.instances).map(_ref5 => {
+        let c = _ref5[1];
+        return c.destroy();
+      });
+      state.current.instances.clear();
+    };
+  }, []);
+  return state.current.transitions.map(_ref6 => {
+    let item = _ref6.item,
+        slot = _ref6.slot,
+        key = _ref6.key;
+    return {
+      item,
+      key,
+      state: slot,
+      props: state.current.instances.get(key).getValues()
+    };
+  });
+}
+
+function cleanUp(state, filterKey) {
+  const deleted = state.current.deleted;
+
+  for (let _ref7 of deleted) {
+    let key = _ref7.key;
+
+    const filter = t => t.key !== key;
+
+    if (is.und(filterKey) || filterKey === key) {
+      state.current.instances.delete(key);
+      state.current.transitions = state.current.transitions.filter(filter);
+      state.current.deleted = state.current.deleted.filter(filter);
+    }
+  }
+
+  state.current.forceUpdate();
+}
+
+function diffItems(_ref8, props) {
+  let first = _ref8.first,
+      prevProps = _ref8.prevProps,
+      state = (0, _objectWithoutPropertiesLoose2.default)(_ref8, ["first", "prevProps"]);
+
+  let _get2 = get(props),
+      items = _get2.items,
+      keys = _get2.keys,
+      initial = _get2.initial,
+      from = _get2.from,
+      enter = _get2.enter,
+      leave = _get2.leave,
+      update = _get2.update,
+      _get2$trail = _get2.trail,
+      trail = _get2$trail === void 0 ? 0 : _get2$trail,
+      unique = _get2.unique,
+      config = _get2.config,
+      _get2$order = _get2.order,
+      order = _get2$order === void 0 ? [ENTER, LEAVE, UPDATE] : _get2$order;
+
+  let _get3 = get(prevProps),
+      _keys = _get3.keys,
+      _items = _get3.items;
+
+  let current = (0, _extends2.default)({}, state.current);
+  let deleted = [...state.deleted]; // Compare next keys with current keys
+
+  let currentKeys = Object.keys(current);
+  let currentSet = new Set(currentKeys);
+  let nextSet = new Set(keys);
+  let added = keys.filter(item => !currentSet.has(item));
+  let removed = state.transitions.filter(item => !item.destroyed && !nextSet.has(item.originalKey)).map(i => i.originalKey);
+  let updated = keys.filter(item => currentSet.has(item));
+  let delay = -trail;
+
+  while (order.length) {
+    const changeType = order.shift();
+
+    switch (changeType) {
+      case ENTER:
+        {
+          added.forEach((key, index) => {
+            // In unique mode, remove fading out transitions if their key comes in again
+            if (unique && deleted.find(d => d.originalKey === key)) deleted = deleted.filter(t => t.originalKey !== key);
+            const keyIndex = keys.indexOf(key);
+            const item = items[keyIndex];
+            const slot = first && initial !== void 0 ? 'initial' : ENTER;
+            current[key] = {
+              slot,
+              originalKey: key,
+              key: unique ? String(key) : guid++,
+              item,
+              trail: delay = delay + trail,
+              config: callProp(config, item, slot),
+              from: callProp(first ? initial !== void 0 ? initial || {} : from : from, item),
+              to: callProp(enter, item)
+            };
+          });
+          break;
+        }
+
+      case LEAVE:
+        {
+          removed.forEach(key => {
+            const keyIndex = _keys.indexOf(key);
+
+            const item = _items[keyIndex];
+            const slot = LEAVE;
+            deleted.unshift((0, _extends2.default)({}, current[key], {
+              slot,
+              destroyed: true,
+              left: _keys[Math.max(0, keyIndex - 1)],
+              right: _keys[Math.min(_keys.length, keyIndex + 1)],
+              trail: delay = delay + trail,
+              config: callProp(config, item, slot),
+              to: callProp(leave, item)
+            }));
+            delete current[key];
+          });
+          break;
+        }
+
+      case UPDATE:
+        {
+          updated.forEach(key => {
+            const keyIndex = keys.indexOf(key);
+            const item = items[keyIndex];
+            const slot = UPDATE;
+            current[key] = (0, _extends2.default)({}, current[key], {
+              item,
+              slot,
+              trail: delay = delay + trail,
+              config: callProp(config, item, slot),
+              to: callProp(update, item)
+            });
+          });
+          break;
+        }
+    }
+  }
+
+  let out = keys.map(key => current[key]); // This tries to restore order for deleted items by finding their last known siblings
+  // only using the left sibling to keep order placement consistent for all deleted items
+
+  deleted.forEach(_ref9 => {
+    let left = _ref9.left,
+        right = _ref9.right,
+        item = (0, _objectWithoutPropertiesLoose2.default)(_ref9, ["left", "right"]);
+    let pos; // Was it the element on the left, if yes, move there ...
+
+    if ((pos = out.findIndex(t => t.originalKey === left)) !== -1) pos += 1; // And if nothing else helps, move it to the start ¯\_(ツ)_/¯
+
+    pos = Math.max(0, pos);
+    out = [...out.slice(0, pos), item, ...out.slice(pos)];
+  });
+  return (0, _extends2.default)({}, state, {
+    changed: added.length || removed.length || updated.length,
+    first: first && added.length === 0,
+    transitions: out,
+    current,
+    deleted,
+    prevProps: props
+  });
+}
+
+class AnimatedStyle extends AnimatedObject {
+  constructor(style) {
+    if (style === void 0) {
+      style = {};
+    }
+
+    super();
+
+    if (style.transform && !(style.transform instanceof Animated)) {
+      style = applyAnimatedValues.transform(style);
+    }
+
+    this.payload = style;
+  }
+
+} // http://www.w3.org/TR/css3-color/#svg-color
+
+
+const colors = {
+  transparent: 0x00000000,
+  aliceblue: 0xf0f8ffff,
+  antiquewhite: 0xfaebd7ff,
+  aqua: 0x00ffffff,
+  aquamarine: 0x7fffd4ff,
+  azure: 0xf0ffffff,
+  beige: 0xf5f5dcff,
+  bisque: 0xffe4c4ff,
+  black: 0x000000ff,
+  blanchedalmond: 0xffebcdff,
+  blue: 0x0000ffff,
+  blueviolet: 0x8a2be2ff,
+  brown: 0xa52a2aff,
+  burlywood: 0xdeb887ff,
+  burntsienna: 0xea7e5dff,
+  cadetblue: 0x5f9ea0ff,
+  chartreuse: 0x7fff00ff,
+  chocolate: 0xd2691eff,
+  coral: 0xff7f50ff,
+  cornflowerblue: 0x6495edff,
+  cornsilk: 0xfff8dcff,
+  crimson: 0xdc143cff,
+  cyan: 0x00ffffff,
+  darkblue: 0x00008bff,
+  darkcyan: 0x008b8bff,
+  darkgoldenrod: 0xb8860bff,
+  darkgray: 0xa9a9a9ff,
+  darkgreen: 0x006400ff,
+  darkgrey: 0xa9a9a9ff,
+  darkkhaki: 0xbdb76bff,
+  darkmagenta: 0x8b008bff,
+  darkolivegreen: 0x556b2fff,
+  darkorange: 0xff8c00ff,
+  darkorchid: 0x9932ccff,
+  darkred: 0x8b0000ff,
+  darksalmon: 0xe9967aff,
+  darkseagreen: 0x8fbc8fff,
+  darkslateblue: 0x483d8bff,
+  darkslategray: 0x2f4f4fff,
+  darkslategrey: 0x2f4f4fff,
+  darkturquoise: 0x00ced1ff,
+  darkviolet: 0x9400d3ff,
+  deeppink: 0xff1493ff,
+  deepskyblue: 0x00bfffff,
+  dimgray: 0x696969ff,
+  dimgrey: 0x696969ff,
+  dodgerblue: 0x1e90ffff,
+  firebrick: 0xb22222ff,
+  floralwhite: 0xfffaf0ff,
+  forestgreen: 0x228b22ff,
+  fuchsia: 0xff00ffff,
+  gainsboro: 0xdcdcdcff,
+  ghostwhite: 0xf8f8ffff,
+  gold: 0xffd700ff,
+  goldenrod: 0xdaa520ff,
+  gray: 0x808080ff,
+  green: 0x008000ff,
+  greenyellow: 0xadff2fff,
+  grey: 0x808080ff,
+  honeydew: 0xf0fff0ff,
+  hotpink: 0xff69b4ff,
+  indianred: 0xcd5c5cff,
+  indigo: 0x4b0082ff,
+  ivory: 0xfffff0ff,
+  khaki: 0xf0e68cff,
+  lavender: 0xe6e6faff,
+  lavenderblush: 0xfff0f5ff,
+  lawngreen: 0x7cfc00ff,
+  lemonchiffon: 0xfffacdff,
+  lightblue: 0xadd8e6ff,
+  lightcoral: 0xf08080ff,
+  lightcyan: 0xe0ffffff,
+  lightgoldenrodyellow: 0xfafad2ff,
+  lightgray: 0xd3d3d3ff,
+  lightgreen: 0x90ee90ff,
+  lightgrey: 0xd3d3d3ff,
+  lightpink: 0xffb6c1ff,
+  lightsalmon: 0xffa07aff,
+  lightseagreen: 0x20b2aaff,
+  lightskyblue: 0x87cefaff,
+  lightslategray: 0x778899ff,
+  lightslategrey: 0x778899ff,
+  lightsteelblue: 0xb0c4deff,
+  lightyellow: 0xffffe0ff,
+  lime: 0x00ff00ff,
+  limegreen: 0x32cd32ff,
+  linen: 0xfaf0e6ff,
+  magenta: 0xff00ffff,
+  maroon: 0x800000ff,
+  mediumaquamarine: 0x66cdaaff,
+  mediumblue: 0x0000cdff,
+  mediumorchid: 0xba55d3ff,
+  mediumpurple: 0x9370dbff,
+  mediumseagreen: 0x3cb371ff,
+  mediumslateblue: 0x7b68eeff,
+  mediumspringgreen: 0x00fa9aff,
+  mediumturquoise: 0x48d1ccff,
+  mediumvioletred: 0xc71585ff,
+  midnightblue: 0x191970ff,
+  mintcream: 0xf5fffaff,
+  mistyrose: 0xffe4e1ff,
+  moccasin: 0xffe4b5ff,
+  navajowhite: 0xffdeadff,
+  navy: 0x000080ff,
+  oldlace: 0xfdf5e6ff,
+  olive: 0x808000ff,
+  olivedrab: 0x6b8e23ff,
+  orange: 0xffa500ff,
+  orangered: 0xff4500ff,
+  orchid: 0xda70d6ff,
+  palegoldenrod: 0xeee8aaff,
+  palegreen: 0x98fb98ff,
+  paleturquoise: 0xafeeeeff,
+  palevioletred: 0xdb7093ff,
+  papayawhip: 0xffefd5ff,
+  peachpuff: 0xffdab9ff,
+  peru: 0xcd853fff,
+  pink: 0xffc0cbff,
+  plum: 0xdda0ddff,
+  powderblue: 0xb0e0e6ff,
+  purple: 0x800080ff,
+  rebeccapurple: 0x663399ff,
+  red: 0xff0000ff,
+  rosybrown: 0xbc8f8fff,
+  royalblue: 0x4169e1ff,
+  saddlebrown: 0x8b4513ff,
+  salmon: 0xfa8072ff,
+  sandybrown: 0xf4a460ff,
+  seagreen: 0x2e8b57ff,
+  seashell: 0xfff5eeff,
+  sienna: 0xa0522dff,
+  silver: 0xc0c0c0ff,
+  skyblue: 0x87ceebff,
+  slateblue: 0x6a5acdff,
+  slategray: 0x708090ff,
+  slategrey: 0x708090ff,
+  snow: 0xfffafaff,
+  springgreen: 0x00ff7fff,
+  steelblue: 0x4682b4ff,
+  tan: 0xd2b48cff,
+  teal: 0x008080ff,
+  thistle: 0xd8bfd8ff,
+  tomato: 0xff6347ff,
+  turquoise: 0x40e0d0ff,
+  violet: 0xee82eeff,
+  wheat: 0xf5deb3ff,
+  white: 0xffffffff,
+  whitesmoke: 0xf5f5f5ff,
+  yellow: 0xffff00ff,
+  yellowgreen: 0x9acd32ff
+}; // const INTEGER = '[-+]?\\d+';
+
+const NUMBER = '[-+]?\\d*\\.?\\d+';
+const PERCENTAGE = NUMBER + '%';
+
+function call() {
+  for (var _len = arguments.length, parts = new Array(_len), _key = 0; _key < _len; _key++) {
+    parts[_key] = arguments[_key];
+  }
+
+  return '\\(\\s*(' + parts.join(')\\s*,\\s*(') + ')\\s*\\)';
+}
+
+const rgb = new RegExp('rgb' + call(NUMBER, NUMBER, NUMBER));
+const rgba = new RegExp('rgba' + call(NUMBER, NUMBER, NUMBER, NUMBER));
+const hsl = new RegExp('hsl' + call(NUMBER, PERCENTAGE, PERCENTAGE));
+const hsla = new RegExp('hsla' + call(NUMBER, PERCENTAGE, PERCENTAGE, NUMBER));
+const hex3 = /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/;
+const hex4 = /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/;
+const hex6 = /^#([0-9a-fA-F]{6})$/;
+const hex8 = /^#([0-9a-fA-F]{8})$/;
+/*
+https://github.com/react-community/normalize-css-color
+
+BSD 3-Clause License
+
+Copyright (c) 2016, React Community
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+function normalizeColor(color) {
+  let match;
+
+  if (typeof color === 'number') {
+    return color >>> 0 === color && color >= 0 && color <= 0xffffffff ? color : null;
+  } // Ordered based on occurrences on Facebook codebase
+
+
+  if (match = hex6.exec(color)) return parseInt(match[1] + 'ff', 16) >>> 0;
+  if (colors.hasOwnProperty(color)) return colors[color];
+
+  if (match = rgb.exec(color)) {
+    return (parse255(match[1]) << 24 | // r
+    parse255(match[2]) << 16 | // g
+    parse255(match[3]) << 8 | // b
+    0x000000ff) >>> // a
+    0;
+  }
+
+  if (match = rgba.exec(color)) {
+    return (parse255(match[1]) << 24 | // r
+    parse255(match[2]) << 16 | // g
+    parse255(match[3]) << 8 | // b
+    parse1(match[4])) >>> // a
+    0;
+  }
+
+  if (match = hex3.exec(color)) {
+    return parseInt(match[1] + match[1] + // r
+    match[2] + match[2] + // g
+    match[3] + match[3] + // b
+    'ff', // a
+    16) >>> 0;
+  } // https://drafts.csswg.org/css-color-4/#hex-notation
+
+
+  if (match = hex8.exec(color)) return parseInt(match[1], 16) >>> 0;
+
+  if (match = hex4.exec(color)) {
+    return parseInt(match[1] + match[1] + // r
+    match[2] + match[2] + // g
+    match[3] + match[3] + // b
+    match[4] + match[4], // a
+    16) >>> 0;
+  }
+
+  if (match = hsl.exec(color)) {
+    return (hslToRgb(parse360(match[1]), // h
+    parsePercentage(match[2]), // s
+    parsePercentage(match[3]) // l
+    ) | 0x000000ff) >>> // a
+    0;
+  }
+
+  if (match = hsla.exec(color)) {
+    return (hslToRgb(parse360(match[1]), // h
+    parsePercentage(match[2]), // s
+    parsePercentage(match[3]) // l
+    ) | parse1(match[4])) >>> // a
+    0;
+  }
+
+  return null;
+}
+
+function hue2rgb(p, q, t) {
+  if (t < 0) t += 1;
+  if (t > 1) t -= 1;
+  if (t < 1 / 6) return p + (q - p) * 6 * t;
+  if (t < 1 / 2) return q;
+  if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+  return p;
+}
+
+function hslToRgb(h, s, l) {
+  const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+  const p = 2 * l - q;
+  const r = hue2rgb(p, q, h + 1 / 3);
+  const g = hue2rgb(p, q, h);
+  const b = hue2rgb(p, q, h - 1 / 3);
+  return Math.round(r * 255) << 24 | Math.round(g * 255) << 16 | Math.round(b * 255) << 8;
+}
+
+function parse255(str) {
+  const int = parseInt(str, 10);
+  if (int < 0) return 0;
+  if (int > 255) return 255;
+  return int;
+}
+
+function parse360(str) {
+  const int = parseFloat(str);
+  return (int % 360 + 360) % 360 / 360;
+}
+
+function parse1(str) {
+  const num = parseFloat(str);
+  if (num < 0) return 0;
+  if (num > 1) return 255;
+  return Math.round(num * 255);
+}
+
+function parsePercentage(str) {
+  // parseFloat conveniently ignores the final %
+  const int = parseFloat(str);
+  if (int < 0) return 0;
+  if (int > 100) return 1;
+  return int / 100;
+}
+
+function colorToRgba(input) {
+  let int32Color = normalizeColor(input);
+  if (int32Color === null) return input;
+  int32Color = int32Color || 0;
+  let r = (int32Color & 0xff000000) >>> 24;
+  let g = (int32Color & 0x00ff0000) >>> 16;
+  let b = (int32Color & 0x0000ff00) >>> 8;
+  let a = (int32Color & 0x000000ff) / 255;
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+} // Problem: https://github.com/animatedjs/animated/pull/102
+// Solution: https://stackoverflow.com/questions/638565/parsing-scientific-notation-sensibly/658662
+
+
+const stringShapeRegex = /[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?/g; // Covers rgb, rgba, hsl, hsla
+// Taken from https://gist.github.com/olmokramer/82ccce673f86db7cda5e
+
+const colorRegex = /(#(?:[0-9a-f]{2}){2,4}|(#[0-9a-f]{3})|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d\.]+%?\))/gi; // Covers color names (transparent, blue, etc.)
+
+const colorNamesRegex = new RegExp(`(${Object.keys(colors).join('|')})`, 'g');
+/**
+ * Supports string shapes by extracting numbers so new values can be computed,
+ * and recombines those values into new strings of the same shape.  Supports
+ * things like:
+ *
+ *   rgba(123, 42, 99, 0.36)           // colors
+ *   -45deg                            // values with units
+ *   0 2px 2px 0px rgba(0, 0, 0, 0.12) // box shadows
+ */
+
+const createStringInterpolator = config => {
+  // Replace colors with rgba
+  const outputRange = config.output.map(rangeValue => rangeValue.replace(colorRegex, colorToRgba)).map(rangeValue => rangeValue.replace(colorNamesRegex, colorToRgba));
+  const outputRanges = outputRange[0].match(stringShapeRegex).map(() => []);
+  outputRange.forEach(value => {
+    value.match(stringShapeRegex).forEach((number, i) => outputRanges[i].push(+number));
+  });
+  const interpolations = outputRange[0].match(stringShapeRegex).map((_value, i) => createInterpolator((0, _extends2.default)({}, config, {
+    output: outputRanges[i]
+  })));
+  return input => {
+    let i = 0;
+    return outputRange[0] // 'rgba(0, 100, 200, 0)'
+    // ->
+    // 'rgba(${interpolations[0](input)}, ${interpolations[1](input)}, ...'
+    .replace(stringShapeRegex, () => interpolations[i++](input)) // rgba requires that the r,g,b are integers.... so we want to round them, but we *dont* want to
+    // round the opacity (4th column).
+    .replace(/rgba\(([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+)\)/gi, (_, p1, p2, p3, p4) => `rgba(${Math.round(p1)}, ${Math.round(p2)}, ${Math.round(p3)}, ${p4})`);
+  };
+};
+
+let isUnitlessNumber = {
+  animationIterationCount: true,
+  borderImageOutset: true,
+  borderImageSlice: true,
+  borderImageWidth: true,
+  boxFlex: true,
+  boxFlexGroup: true,
+  boxOrdinalGroup: true,
+  columnCount: true,
+  columns: true,
+  flex: true,
+  flexGrow: true,
+  flexPositive: true,
+  flexShrink: true,
+  flexNegative: true,
+  flexOrder: true,
+  gridRow: true,
+  gridRowEnd: true,
+  gridRowSpan: true,
+  gridRowStart: true,
+  gridColumn: true,
+  gridColumnEnd: true,
+  gridColumnSpan: true,
+  gridColumnStart: true,
+  fontWeight: true,
+  lineClamp: true,
+  lineHeight: true,
+  opacity: true,
+  order: true,
+  orphans: true,
+  tabSize: true,
+  widows: true,
+  zIndex: true,
+  zoom: true,
+  // SVG-related properties
+  fillOpacity: true,
+  floodOpacity: true,
+  stopOpacity: true,
+  strokeDasharray: true,
+  strokeDashoffset: true,
+  strokeMiterlimit: true,
+  strokeOpacity: true,
+  strokeWidth: true
+};
+
+const prefixKey = (prefix, key) => prefix + key.charAt(0).toUpperCase() + key.substring(1);
+
+const prefixes = ['Webkit', 'Ms', 'Moz', 'O'];
+isUnitlessNumber = Object.keys(isUnitlessNumber).reduce((acc, prop) => {
+  prefixes.forEach(prefix => acc[prefixKey(prefix, prop)] = acc[prop]);
+  return acc;
+}, isUnitlessNumber);
+
+function dangerousStyleValue(name, value, isCustomProperty) {
+  if (value == null || typeof value === 'boolean' || value === '') return '';
+  if (!isCustomProperty && typeof value === 'number' && value !== 0 && !(isUnitlessNumber.hasOwnProperty(name) && isUnitlessNumber[name])) return value + 'px'; // Presumes implicit 'px' suffix for unitless numbers
+
+  return ('' + value).trim();
+}
+
+const attributeCache = {};
+injectCreateAnimatedStyle(style => new AnimatedStyle(style));
+injectDefaultElement('div');
+injectStringInterpolator(createStringInterpolator);
+injectColorNames(colors);
+injectApplyAnimatedValues((instance, props) => {
+  if (instance.nodeType && instance.setAttribute !== undefined) {
+    const style = props.style,
+          children = props.children,
+          scrollTop = props.scrollTop,
+          scrollLeft = props.scrollLeft,
+          attributes = (0, _objectWithoutPropertiesLoose2.default)(props, ["style", "children", "scrollTop", "scrollLeft"]);
+    const filter = instance.nodeName === 'filter' || instance.parentNode && instance.parentNode.nodeName === 'filter';
+    if (scrollTop !== void 0) instance.scrollTop = scrollTop;
+    if (scrollLeft !== void 0) instance.scrollLeft = scrollLeft; // Set textContent, if children is an animatable value
+
+    if (children !== void 0) instance.textContent = children; // Set styles ...
+
+    for (let styleName in style) {
+      if (!style.hasOwnProperty(styleName)) continue;
+      var isCustomProperty = styleName.indexOf('--') === 0;
+      var styleValue = dangerousStyleValue(styleName, style[styleName], isCustomProperty);
+      if (styleName === 'float') styleName = 'cssFloat';
+      if (isCustomProperty) instance.style.setProperty(styleName, styleValue);else instance.style[styleName] = styleValue;
+    } // Set attributes ...
+
+
+    for (let name in attributes) {
+      // Attributes are written in dash case
+      const dashCase = filter ? name : attributeCache[name] || (attributeCache[name] = name.replace(/([A-Z])/g, n => '-' + n.toLowerCase()));
+      if (typeof instance.getAttribute(dashCase) !== 'undefined') instance.setAttribute(dashCase, attributes[name]);
+    }
+
+    return;
+  } else return false;
+}, style => style);
+const domElements = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b', 'base', 'bdi', 'bdo', 'big', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'cite', 'code', 'col', 'colgroup', 'data', 'datalist', 'dd', 'del', 'details', 'dfn', 'dialog', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'keygen', 'label', 'legend', 'li', 'link', 'main', 'map', 'mark', 'menu', 'menuitem', 'meta', 'meter', 'nav', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'picture', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul', 'var', 'video', 'wbr', // SVG
+'circle', 'clipPath', 'defs', 'ellipse', 'foreignObject', 'g', 'image', 'line', 'linearGradient', 'mask', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'stop', 'svg', 'text', 'tspan']; // Extend animated with all the available THREE elements
+
+const apply = merge(createAnimatedComponent, false);
+exports.apply = apply;
+const extendedAnimated = apply(domElements);
+exports.a = exports.animated = extendedAnimated;
+},{"@babel/runtime/helpers/esm/extends":"../../node_modules/react-spring/node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/react-spring/node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","react":"../../node_modules/react/index.js"}],"FreeformCanvas.tsx":[function(require,module,exports) {
+"use strict";
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var __importStar = void 0 && (void 0).__importStar || function (mod) {
   if (mod && mod.__esModule) return mod;
   var result = {};
   if (mod != null) for (var k in mod) {
@@ -29889,32 +33756,13448 @@ Object.defineProperty(exports, "__esModule", {
 
 var React = __importStar(require("react"));
 
-exports.Start = function () {
-  return React.createElement("div", null, "start");
-};
-},{"react":"../../node_modules/react/index.js"}],"FreeformCanvas.tsx":[function(require,module,exports) {
-"use strict";
+var react_use_gesture_1 = require("react-use-gesture");
 
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var React = __importStar(require("react"));
+var react_spring_1 = require("react-spring");
 
 exports.FreeformCanvas = function () {
-  return React.createElement("div", null, "FreeformCanvas");
+  var _react_spring_1$useSp = react_spring_1.useSpring(function () {
+    return {
+      local: [0, 0]
+    };
+  }),
+      _react_spring_1$useSp2 = (0, _slicedToArray2.default)(_react_spring_1$useSp, 2),
+      local = _react_spring_1$useSp2[0].local,
+      set = _react_spring_1$useSp2[1];
+
+  var bind = react_use_gesture_1.useDrag(function (state) {
+    console.log('state: ', state);
+    set({
+      local: state.local
+    });
+  });
+  return React.createElement(react_spring_1.animated.div, (0, _extends2.default)({}, bind(), {
+    style: {
+      width: 100,
+      height: 100,
+      background: "lightgrey",
+      transform: local.interpolate(function (x, y) {
+        return "translate3d(".concat(x, "px,").concat(y, "px,0)");
+      })
+    }
+  }));
 };
-},{"react":"../../node_modules/react/index.js"}],"router.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/extends":"../../node_modules/@babel/runtime/helpers/extends.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","react-use-gesture":"../../node_modules/react-use-gesture/dist/react-use-gesture.esm.js","react-spring":"../../node_modules/react-spring/web.js"}],"../../node_modules/lodash-es/_baseClamp.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+/**
+ * The base implementation of `_.clamp` which doesn't coerce arguments.
+ *
+ * @private
+ * @param {number} number The number to clamp.
+ * @param {number} [lower] The lower bound.
+ * @param {number} upper The upper bound.
+ * @returns {number} Returns the clamped number.
+ */
+function baseClamp(number, lower, upper) {
+  if (number === number) {
+    if (upper !== undefined) {
+      number = number <= upper ? number : upper;
+    }
+
+    if (lower !== undefined) {
+      number = number >= lower ? number : lower;
+    }
+  }
+
+  return number;
+}
+
+var _default = baseClamp;
+exports.default = _default;
+},{}],"../../node_modules/lodash-es/isObject.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+
+var _default = isObject;
+exports.default = _default;
+},{}],"../../node_modules/lodash-es/_freeGlobal.js":[function(require,module,exports) {
+var global = arguments[3];
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+var _default = freeGlobal;
+exports.default = _default;
+},{}],"../../node_modules/lodash-es/_root.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _freeGlobal = _interopRequireDefault(require("./_freeGlobal.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+/** Used as a reference to the global object. */
+
+var root = _freeGlobal.default || freeSelf || Function('return this')();
+var _default = root;
+exports.default = _default;
+},{"./_freeGlobal.js":"../../node_modules/lodash-es/_freeGlobal.js"}],"../../node_modules/lodash-es/_Symbol.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _root = _interopRequireDefault(require("./_root.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Built-in value references. */
+var Symbol = _root.default.Symbol;
+var _default = Symbol;
+exports.default = _default;
+},{"./_root.js":"../../node_modules/lodash-es/_root.js"}],"../../node_modules/lodash-es/_getRawTag.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Symbol = _interopRequireDefault(require("./_Symbol.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+/** Used to check objects for own properties. */
+
+var hasOwnProperty = objectProto.hasOwnProperty;
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+
+var nativeObjectToString = objectProto.toString;
+/** Built-in value references. */
+
+var symToStringTag = _Symbol.default ? _Symbol.default.toStringTag : undefined;
+/**
+ * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the raw `toStringTag`.
+ */
+
+function getRawTag(value) {
+  var isOwn = hasOwnProperty.call(value, symToStringTag),
+      tag = value[symToStringTag];
+
+  try {
+    value[symToStringTag] = undefined;
+    var unmasked = true;
+  } catch (e) {}
+
+  var result = nativeObjectToString.call(value);
+
+  if (unmasked) {
+    if (isOwn) {
+      value[symToStringTag] = tag;
+    } else {
+      delete value[symToStringTag];
+    }
+  }
+
+  return result;
+}
+
+var _default = getRawTag;
+exports.default = _default;
+},{"./_Symbol.js":"../../node_modules/lodash-es/_Symbol.js"}],"../../node_modules/lodash-es/_objectToString.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+
+var nativeObjectToString = objectProto.toString;
+/**
+ * Converts `value` to a string using `Object.prototype.toString`.
+ *
+ * @private
+ * @param {*} value The value to convert.
+ * @returns {string} Returns the converted string.
+ */
+
+function objectToString(value) {
+  return nativeObjectToString.call(value);
+}
+
+var _default = objectToString;
+exports.default = _default;
+},{}],"../../node_modules/lodash-es/_baseGetTag.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Symbol = _interopRequireDefault(require("./_Symbol.js"));
+
+var _getRawTag = _interopRequireDefault(require("./_getRawTag.js"));
+
+var _objectToString = _interopRequireDefault(require("./_objectToString.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** `Object#toString` result references. */
+var nullTag = '[object Null]',
+    undefinedTag = '[object Undefined]';
+/** Built-in value references. */
+
+var symToStringTag = _Symbol.default ? _Symbol.default.toStringTag : undefined;
+/**
+ * The base implementation of `getTag` without fallbacks for buggy environments.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+
+function baseGetTag(value) {
+  if (value == null) {
+    return value === undefined ? undefinedTag : nullTag;
+  }
+
+  return symToStringTag && symToStringTag in Object(value) ? (0, _getRawTag.default)(value) : (0, _objectToString.default)(value);
+}
+
+var _default = baseGetTag;
+exports.default = _default;
+},{"./_Symbol.js":"../../node_modules/lodash-es/_Symbol.js","./_getRawTag.js":"../../node_modules/lodash-es/_getRawTag.js","./_objectToString.js":"../../node_modules/lodash-es/_objectToString.js"}],"../../node_modules/lodash-es/isObjectLike.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return value != null && typeof value == 'object';
+}
+
+var _default = isObjectLike;
+exports.default = _default;
+},{}],"../../node_modules/lodash-es/isSymbol.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _baseGetTag = _interopRequireDefault(require("./_baseGetTag.js"));
+
+var _isObjectLike = _interopRequireDefault(require("./isObjectLike.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+
+function isSymbol(value) {
+  return typeof value == 'symbol' || (0, _isObjectLike.default)(value) && (0, _baseGetTag.default)(value) == symbolTag;
+}
+
+var _default = isSymbol;
+exports.default = _default;
+},{"./_baseGetTag.js":"../../node_modules/lodash-es/_baseGetTag.js","./isObjectLike.js":"../../node_modules/lodash-es/isObjectLike.js"}],"../../node_modules/lodash-es/toNumber.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _isObject = _interopRequireDefault(require("./isObject.js"));
+
+var _isSymbol = _interopRequireDefault(require("./isSymbol.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Used as references for various `Number` constants. */
+var NAN = 0 / 0;
+/** Used to match leading and trailing whitespace. */
+
+var reTrim = /^\s+|\s+$/g;
+/** Used to detect bad signed hexadecimal string values. */
+
+var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+/** Used to detect binary string values. */
+
+var reIsBinary = /^0b[01]+$/i;
+/** Used to detect octal string values. */
+
+var reIsOctal = /^0o[0-7]+$/i;
+/** Built-in method references without a dependency on `root`. */
+
+var freeParseInt = parseInt;
+/**
+ * Converts `value` to a number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {number} Returns the number.
+ * @example
+ *
+ * _.toNumber(3.2);
+ * // => 3.2
+ *
+ * _.toNumber(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toNumber(Infinity);
+ * // => Infinity
+ *
+ * _.toNumber('3.2');
+ * // => 3.2
+ */
+
+function toNumber(value) {
+  if (typeof value == 'number') {
+    return value;
+  }
+
+  if ((0, _isSymbol.default)(value)) {
+    return NAN;
+  }
+
+  if ((0, _isObject.default)(value)) {
+    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+    value = (0, _isObject.default)(other) ? other + '' : other;
+  }
+
+  if (typeof value != 'string') {
+    return value === 0 ? value : +value;
+  }
+
+  value = value.replace(reTrim, '');
+  var isBinary = reIsBinary.test(value);
+  return isBinary || reIsOctal.test(value) ? freeParseInt(value.slice(2), isBinary ? 2 : 8) : reIsBadHex.test(value) ? NAN : +value;
+}
+
+var _default = toNumber;
+exports.default = _default;
+},{"./isObject.js":"../../node_modules/lodash-es/isObject.js","./isSymbol.js":"../../node_modules/lodash-es/isSymbol.js"}],"../../node_modules/lodash-es/clamp.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _baseClamp = _interopRequireDefault(require("./_baseClamp.js"));
+
+var _toNumber = _interopRequireDefault(require("./toNumber.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Clamps `number` within the inclusive `lower` and `upper` bounds.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Number
+ * @param {number} number The number to clamp.
+ * @param {number} [lower] The lower bound.
+ * @param {number} upper The upper bound.
+ * @returns {number} Returns the clamped number.
+ * @example
+ *
+ * _.clamp(-10, -5, 5);
+ * // => -5
+ *
+ * _.clamp(10, -5, 5);
+ * // => 5
+ */
+function clamp(number, lower, upper) {
+  if (upper === undefined) {
+    upper = lower;
+    lower = undefined;
+  }
+
+  if (upper !== undefined) {
+    upper = (0, _toNumber.default)(upper);
+    upper = upper === upper ? upper : 0;
+  }
+
+  if (lower !== undefined) {
+    lower = (0, _toNumber.default)(lower);
+    lower = lower === lower ? lower : 0;
+  }
+
+  return (0, _baseClamp.default)((0, _toNumber.default)(number), lower, upper);
+}
+
+var _default = clamp;
+exports.default = _default;
+},{"./_baseClamp.js":"../../node_modules/lodash-es/_baseClamp.js","./toNumber.js":"../../node_modules/lodash-es/toNumber.js"}],"../../node_modules/lodash-move/lib/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = move;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function move(array, moveIndex, toIndex) {
+  /* #move - Moves an array item from one position in an array to another.
+      Note: This is a pure function so a new array will be returned, instead
+     of altering the array argument.
+     Arguments:
+    1. array     (String) : Array in which to move an item.         (required)
+    2. moveIndex (Object) : The index of the item to move.          (required)
+    3. toIndex   (Object) : The index to move item at moveIndex to. (required)
+  */
+  var item = array[moveIndex];
+  var length = array.length;
+  var diff = moveIndex - toIndex;
+
+  if (diff > 0) {
+    // move left
+    return [].concat(_toConsumableArray(array.slice(0, toIndex)), [item], _toConsumableArray(array.slice(toIndex, moveIndex)), _toConsumableArray(array.slice(moveIndex + 1, length)));
+  } else if (diff < 0) {
+    // move right
+    return [].concat(_toConsumableArray(array.slice(0, moveIndex)), _toConsumableArray(array.slice(moveIndex + 1, toIndex + 1)), [item], _toConsumableArray(array.slice(toIndex + 1, length)));
+  }
+  return array;
+}
+},{}],"../../node_modules/react-with-gesture/dist/react-with-gesture.es.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.useGesture = useGesture;
+exports.Gesture = exports.withGesture = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+var touchMove = 'touchmove';
+var touchEnd = 'touchend';
+var mouseMove = 'mousemove';
+var mouseUp = 'mouseup';
+var defaultProps = {
+  touch: true,
+  mouse: true,
+  passive: {
+    passive: true
+  },
+  onAction: undefined,
+  onDown: undefined,
+  onUp: undefined,
+  onMove: undefined
+};
+var initialState = {
+  event: undefined,
+  args: undefined,
+  temp: undefined,
+  target: undefined,
+  time: undefined,
+  xy: [0, 0],
+  delta: [0, 0],
+  initial: [0, 0],
+  previous: [0, 0],
+  direction: [0, 0],
+  local: [0, 0],
+  lastLocal: [0, 0],
+  velocity: 0,
+  distance: 0,
+  down: false,
+  first: true,
+  shiftKey: false
+};
+
+function handlers(set, props, args) {
+  if (props === void 0) {
+    props = {};
+  } // Common handlers
+
+
+  var handleUp = function handleUp(event, shiftKey) {
+    set(function (state) {
+      var newProps = _extends({}, state, {
+        down: false,
+        first: false
+      });
+
+      var temp = props.onAction && props.onAction(newProps);
+      if (props.onUp) props.onUp(newProps);
+      return _extends({}, newProps, {
+        event: event,
+        shiftKey: shiftKey,
+        lastLocal: state.local,
+        temp: temp || newProps.temp
+      });
+    });
+  };
+
+  var handleDown = function handleDown(event) {
+    var _ref = event.touches ? event.touches[0] : event,
+        target = _ref.target,
+        pageX = _ref.pageX,
+        pageY = _ref.pageY,
+        shiftKey = _ref.shiftKey;
+
+    set(function (state) {
+      var lastLocal = state.lastLocal || initialState.lastLocal;
+
+      var newProps = _extends({}, initialState, {
+        event: event,
+        target: target,
+        args: args,
+        lastLocal: lastLocal,
+        shiftKey: shiftKey,
+        local: lastLocal,
+        xy: [pageX, pageY],
+        initial: [pageX, pageY],
+        previous: [pageX, pageY],
+        down: true,
+        time: Date.now(),
+        cancel: function cancel() {
+          stop();
+          requestAnimationFrame(function () {
+            return handleUp(event);
+          });
+        }
+      });
+
+      var temp = props.onAction && props.onAction(newProps);
+      if (props.onDown) props.onDown(newProps);
+      return _extends({}, newProps, {
+        temp: temp
+      });
+    });
+  };
+
+  var handleMove = function handleMove(event) {
+    var _ref2 = event.touches ? event.touches[0] : event,
+        pageX = _ref2.pageX,
+        pageY = _ref2.pageY,
+        shiftKey = _ref2.shiftKey;
+
+    set(function (state) {
+      var time = Date.now();
+      var x_dist = pageX - state.xy[0];
+      var y_dist = pageY - state.xy[1];
+      var delta_x = pageX - state.initial[0];
+      var delta_y = pageY - state.initial[1];
+      var distance = Math.sqrt(delta_x * delta_x + delta_y * delta_y);
+      var len = Math.sqrt(x_dist * x_dist + y_dist * y_dist);
+      var scalar = 1 / (len || 1);
+
+      var newProps = _extends({}, state, {
+        event: event,
+        time: time,
+        shiftKey: shiftKey,
+        xy: [pageX, pageY],
+        delta: [delta_x, delta_y],
+        local: [state.lastLocal[0] + pageX - state.initial[0], state.lastLocal[1] + pageY - state.initial[1]],
+        velocity: len / (time - state.time),
+        distance: distance,
+        direction: [x_dist * scalar, y_dist * scalar],
+        previous: state.xy,
+        first: false
+      });
+
+      var temp = props.onAction && props.onAction(newProps);
+      if (props.onMove) props.onMove(newProps);
+      return _extends({}, newProps, {
+        temp: temp || newProps.temp
+      });
+    });
+  };
+
+  var onDown = function onDown(e) {
+    if (props.mouse) {
+      window.addEventListener(mouseMove, handleMove, props.passive);
+      window.addEventListener(mouseUp, onUp, props.passive);
+    }
+
+    if (props.touch) {
+      window.addEventListener(touchMove, handleMove, props.passive);
+      window.addEventListener(touchEnd, onUp, props.passive);
+    }
+
+    handleDown(e);
+  };
+
+  var stop = function stop() {
+    if (props.mouse) {
+      window.removeEventListener(mouseMove, handleMove, props.passive);
+      window.removeEventListener(mouseUp, onUp, props.passive);
+    }
+
+    if (props.touch) {
+      window.removeEventListener(touchMove, handleMove, props.passive);
+      window.removeEventListener(touchEnd, onUp, props.passive);
+    }
+  };
+
+  var onUp = function onUp(e) {
+    var shiftKey = e.shiftKey;
+    stop();
+    handleUp(e, shiftKey);
+  };
+
+  var output = {};
+  var capture = props.passive.capture ? 'Capture' : '';
+
+  if (props.mouse) {
+    output["onMouseDown" + capture] = onDown;
+  }
+
+  if (props.touch) {
+    output["onTouchStart" + capture] = onDown;
+  }
+
+  return output;
+}
+
+var Gesture =
+/*#__PURE__*/
+function (_React$Component) {
+  _inheritsLoose(Gesture, _React$Component);
+
+  function Gesture(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+    _this.state = initialState;
+
+    var set = _this.setState.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+
+    if (props.onAction) {
+      _this._state = initialState;
+
+      set = function set(cb) {
+        return _this._state = cb(_this._state);
+      };
+    }
+
+    _this.handlers = handlers(set, props);
+    return _this;
+  }
+
+  var _proto = Gesture.prototype;
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        style = _this$props.style,
+        children = _this$props.children,
+        className = _this$props.className;
+    return _react.default.createElement("div", _extends({}, this.handlers, {
+      style: _extends({
+        display: 'contents'
+      }, style),
+      className: className
+    }), children(this.state));
+  };
+
+  return Gesture;
+}(_react.default.Component);
+
+exports.Gesture = Gesture;
+Gesture.defaultProps = defaultProps;
+
+var withGesture = function withGesture(config) {
+  return function (Wrapped) {
+    return function (props) {
+      return _react.default.createElement(Gesture, _extends({}, config, {
+        children: function children(gestureProps) {
+          return _react.default.createElement(Wrapped, _extends({}, props, gestureProps));
+        }
+      }));
+    };
+  };
+};
+
+exports.withGesture = withGesture;
+
+function useGesture(props) {
+  var _React$useState = _react.default.useState(initialState),
+      state = _React$useState[0],
+      set = _React$useState[1];
+
+  var transientState = _react.default.useRef(initialState);
+
+  if (typeof props === 'function') props = {
+    onAction: props
+  };
+  props = _extends({}, defaultProps, props);
+
+  var _React$useState2 = _react.default.useState(function () {
+    return function () {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return handlers(props.onAction ? function (cb) {
+        return transientState.current = cb(transientState.current);
+      } : set, props, args);
+    };
+  }),
+      spread = _React$useState2[0];
+
+  return props.onAction ? spread : [spread, state];
+}
+},{"react":"../../node_modules/react/index.js"}],"ListWithGestures.tsx":[function(require,module,exports) {
+"use strict"; // Original: https://github.com/chenglou/react-motion/tree/master/demos/demo8-draggable-list
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var __importStar = void 0 && (void 0).__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+var __importDefault = void 0 && (void 0).__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var React = __importStar(require("react"));
+
+var react_1 = require("react");
+
+var clamp_1 = __importDefault(require("lodash-es/clamp"));
+
+var lodash_move_1 = __importDefault(require("lodash-move"));
+
+var react_with_gesture_1 = require("react-with-gesture");
+
+var react_spring_1 = require("react-spring"); // import "./ListWithGestures.css";
+// WHEN dragging, this function will be fed with all arguments.
+// OTHERWISE, only the list order is relevant.
+
+
+var fn = function fn(order, down, originalIndex, curIndex, y) {
+  return function (index) {
+    return down && index === originalIndex ?
+    /*
+    No need to transition the following properties:
+    - z-index, the elevation of the item related to the root of the view; it should pop straight up to 1, from 0.
+    - y, the translated distance from the top; it's already being updated dinamically, smoothly, from react-gesture.
+    Thus immediate returns `true` for both.
+    */
+    {
+      y: curIndex * 100 + y,
+      scale: 1.1,
+      zIndex: "1",
+      shadow: 15,
+      immediate: function immediate(n) {
+        return n === "y" || n === "zIndex";
+      }
+    } : {
+      y: order.indexOf(index) * 100,
+      scale: 1,
+      zIndex: "0",
+      shadow: 1,
+      immediate: false
+    };
+  };
+};
+
+function DraggableList(_ref) {
+  var items = _ref.items;
+  var order = react_1.useRef(items.map(function (_, index) {
+    return index;
+  })); // Store indices as a local ref, this represents the item order
+
+  /*
+    Curries the default order for the initial, "rested" list state.
+    Only the order array is relevant when the items aren't being dragged, thus
+    the other arguments from fn don't need to be supplied initially.
+  */
+
+  var _react_spring_1$useSp = react_spring_1.useSprings(items.length, fn(order.current)),
+      _react_spring_1$useSp2 = (0, _slicedToArray2.default)(_react_spring_1$useSp, 2),
+      springs = _react_spring_1$useSp2[0],
+      setSprings = _react_spring_1$useSp2[1];
+
+  var bind = react_with_gesture_1.useGesture(function (_ref2) {
+    var _ref2$args = (0, _slicedToArray2.default)(_ref2.args, 1),
+        originalIndex = _ref2$args[0],
+        down = _ref2.down,
+        _ref2$delta = (0, _slicedToArray2.default)(_ref2.delta, 2),
+        y = _ref2$delta[1];
+
+    var curIndex = order.current.indexOf(originalIndex);
+    var curRow = clamp_1.default(Math.round((curIndex * 100 + y) / 100), 0, items.length - 1);
+    var newOrder = lodash_move_1.default(order.current, curIndex, curRow);
+    /*
+      Curry all variables needed for the truthy clause of the ternary expression from fn,
+      so that new objects are fed to the springs without triggering a re-render.
+    */
+
+    setSprings(fn(newOrder, down, originalIndex, curIndex, y)); // Settles the new order on the end of the drag gesture (when down is false)
+
+    if (!down) order.current = newOrder;
+  });
+  return React.createElement("div", {
+    className: "content",
+    style: {
+      height: items.length * 100
+    }
+  }, springs.map(function (_ref3, i) {
+    var zIndex = _ref3.zIndex,
+        shadow = _ref3.shadow,
+        y = _ref3.y,
+        scale = _ref3.scale;
+    return React.createElement(react_spring_1.animated.div, (0, _extends2.default)({}, bind(i), {
+      key: i,
+      style: {
+        zIndex: zIndex,
+        boxShadow: shadow.interpolate(function (s) {
+          return "rgba(0, 0, 0, 0.15) 0px ".concat(s, "px ").concat(2 * s, "px 0px");
+        }),
+        transform: react_spring_1.interpolate([y, scale], function (y, s) {
+          return "translate3d(0,".concat(y, "px,0) scale(").concat(s, ")");
+        })
+      },
+      children: items[i]
+    }));
+  }));
+}
+
+exports.ListWithGestures = function () {
+  return React.createElement(DraggableList, {
+    items: "Lorem ipsum dolor sit".split(" ")
+  });
+};
+
+exports.default = exports.ListWithGestures;
+},{"@babel/runtime/helpers/extends":"../../node_modules/@babel/runtime/helpers/extends.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","lodash-es/clamp":"../../node_modules/lodash-es/clamp.js","lodash-move":"../../node_modules/lodash-move/lib/index.js","react-with-gesture":"../../node_modules/react-with-gesture/dist/react-with-gesture.es.js","react-spring":"../../node_modules/react-spring/web.js"}],"../../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js":[function(require,module,exports) {
+function _taggedTemplateLiteral(strings, raw) {
+  if (!raw) {
+    raw = strings.slice(0);
+  }
+
+  return Object.freeze(Object.defineProperties(strings, {
+    raw: {
+      value: Object.freeze(raw)
+    }
+  }));
+}
+
+module.exports = _taggedTemplateLiteral;
+},{}],"../../node_modules/stylis/stylis.min.js":[function(require,module,exports) {
+var define;
+!function(e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e(null):"function"==typeof define&&define.amd?define(e(null)):window.stylis=e(null)}(function e(a){"use strict";var r=/^\0+/g,c=/[\0\r\f]/g,s=/: */g,t=/zoo|gra/,i=/([,: ])(transform)/g,f=/,+\s*(?![^(]*[)])/g,n=/ +\s*(?![^(]*[)])/g,l=/ *[\0] */g,o=/,\r+?/g,h=/([\t\r\n ])*\f?&/g,u=/:global\(((?:[^\(\)\[\]]*|\[.*\]|\([^\(\)]*\))*)\)/g,d=/\W+/g,b=/@(k\w+)\s*(\S*)\s*/,p=/::(place)/g,k=/:(read-only)/g,g=/\s+(?=[{\];=:>])/g,A=/([[}=:>])\s+/g,C=/(\{[^{]+?);(?=\})/g,w=/\s{2,}/g,v=/([^\(])(:+) */g,m=/[svh]\w+-[tblr]{2}/,x=/\(\s*(.*)\s*\)/g,$=/([\s\S]*?);/g,y=/-self|flex-/g,O=/[^]*?(:[rp][el]a[\w-]+)[^]*/,j=/stretch|:\s*\w+\-(?:conte|avail)/,z=/([^-])(image-set\()/,N="-webkit-",S="-moz-",F="-ms-",W=59,q=125,B=123,D=40,E=41,G=91,H=93,I=10,J=13,K=9,L=64,M=32,P=38,Q=45,R=95,T=42,U=44,V=58,X=39,Y=34,Z=47,_=62,ee=43,ae=126,re=0,ce=12,se=11,te=107,ie=109,fe=115,ne=112,le=111,oe=105,he=99,ue=100,de=112,be=1,pe=1,ke=0,ge=1,Ae=1,Ce=1,we=0,ve=0,me=0,xe=[],$e=[],ye=0,Oe=null,je=-2,ze=-1,Ne=0,Se=1,Fe=2,We=3,qe=0,Be=1,De="",Ee="",Ge="";function He(e,a,s,t,i){for(var f,n,o=0,h=0,u=0,d=0,g=0,A=0,C=0,w=0,m=0,$=0,y=0,O=0,j=0,z=0,R=0,we=0,$e=0,Oe=0,je=0,ze=s.length,Je=ze-1,Re="",Te="",Ue="",Ve="",Xe="",Ye="";R<ze;){if(C=s.charCodeAt(R),R===Je)if(h+d+u+o!==0){if(0!==h)C=h===Z?I:Z;d=u=o=0,ze++,Je++}if(h+d+u+o===0){if(R===Je){if(we>0)Te=Te.replace(c,"");if(Te.trim().length>0){switch(C){case M:case K:case W:case J:case I:break;default:Te+=s.charAt(R)}C=W}}if(1===$e)switch(C){case B:case q:case W:case Y:case X:case D:case E:case U:$e=0;case K:case J:case I:case M:break;default:for($e=0,je=R,g=C,R--,C=W;je<ze;)switch(s.charCodeAt(je++)){case I:case J:case W:++R,C=g,je=ze;break;case V:if(we>0)++R,C=g;case B:je=ze}}switch(C){case B:for(g=(Te=Te.trim()).charCodeAt(0),y=1,je=++R;R<ze;){switch(C=s.charCodeAt(R)){case B:y++;break;case q:y--;break;case Z:switch(A=s.charCodeAt(R+1)){case T:case Z:R=Qe(A,R,Je,s)}break;case G:C++;case D:C++;case Y:case X:for(;R++<Je&&s.charCodeAt(R)!==C;);}if(0===y)break;R++}if(Ue=s.substring(je,R),g===re)g=(Te=Te.replace(r,"").trim()).charCodeAt(0);switch(g){case L:if(we>0)Te=Te.replace(c,"");switch(A=Te.charCodeAt(1)){case ue:case ie:case fe:case Q:f=a;break;default:f=xe}if(je=(Ue=He(a,f,Ue,A,i+1)).length,me>0&&0===je)je=Te.length;if(ye>0)if(f=Ie(xe,Te,Oe),n=Pe(We,Ue,f,a,pe,be,je,A,i,t),Te=f.join(""),void 0!==n)if(0===(je=(Ue=n.trim()).length))A=0,Ue="";if(je>0)switch(A){case fe:Te=Te.replace(x,Me);case ue:case ie:case Q:Ue=Te+"{"+Ue+"}";break;case te:if(Ue=(Te=Te.replace(b,"$1 $2"+(Be>0?De:"")))+"{"+Ue+"}",1===Ae||2===Ae&&Le("@"+Ue,3))Ue="@"+N+Ue+"@"+Ue;else Ue="@"+Ue;break;default:if(Ue=Te+Ue,t===de)Ve+=Ue,Ue=""}else Ue="";break;default:Ue=He(a,Ie(a,Te,Oe),Ue,t,i+1)}Xe+=Ue,O=0,$e=0,z=0,we=0,Oe=0,j=0,Te="",Ue="",C=s.charCodeAt(++R);break;case q:case W:if((je=(Te=(we>0?Te.replace(c,""):Te).trim()).length)>1){if(0===z)if((g=Te.charCodeAt(0))===Q||g>96&&g<123)je=(Te=Te.replace(" ",":")).length;if(ye>0)if(void 0!==(n=Pe(Se,Te,a,e,pe,be,Ve.length,t,i,t)))if(0===(je=(Te=n.trim()).length))Te="\0\0";switch(g=Te.charCodeAt(0),A=Te.charCodeAt(1),g){case re:break;case L:if(A===oe||A===he){Ye+=Te+s.charAt(R);break}default:if(Te.charCodeAt(je-1)===V)break;Ve+=Ke(Te,g,A,Te.charCodeAt(2))}}O=0,$e=0,z=0,we=0,Oe=0,Te="",C=s.charCodeAt(++R)}}switch(C){case J:case I:if(h+d+u+o+ve===0)switch($){case E:case X:case Y:case L:case ae:case _:case T:case ee:case Z:case Q:case V:case U:case W:case B:case q:break;default:if(z>0)$e=1}if(h===Z)h=0;else if(ge+O===0&&t!==te&&Te.length>0)we=1,Te+="\0";if(ye*qe>0)Pe(Ne,Te,a,e,pe,be,Ve.length,t,i,t);be=1,pe++;break;case W:case q:if(h+d+u+o===0){be++;break}default:switch(be++,Re=s.charAt(R),C){case K:case M:if(d+o+h===0)switch(w){case U:case V:case K:case M:Re="";break;default:if(C!==M)Re=" "}break;case re:Re="\\0";break;case ce:Re="\\f";break;case se:Re="\\v";break;case P:if(d+h+o===0&&ge>0)Oe=1,we=1,Re="\f"+Re;break;case 108:if(d+h+o+ke===0&&z>0)switch(R-z){case 2:if(w===ne&&s.charCodeAt(R-3)===V)ke=w;case 8:if(m===le)ke=m}break;case V:if(d+h+o===0)z=R;break;case U:if(h+u+d+o===0)we=1,Re+="\r";break;case Y:case X:if(0===h)d=d===C?0:0===d?C:d;break;case G:if(d+h+u===0)o++;break;case H:if(d+h+u===0)o--;break;case E:if(d+h+o===0)u--;break;case D:if(d+h+o===0){if(0===O)switch(2*w+3*m){case 533:break;default:y=0,O=1}u++}break;case L:if(h+u+d+o+z+j===0)j=1;break;case T:case Z:if(d+o+u>0)break;switch(h){case 0:switch(2*C+3*s.charCodeAt(R+1)){case 235:h=Z;break;case 220:je=R,h=T}break;case T:if(C===Z&&w===T&&je+2!==R){if(33===s.charCodeAt(je+2))Ve+=s.substring(je,R+1);Re="",h=0}}}if(0===h){if(ge+d+o+j===0&&t!==te&&C!==W)switch(C){case U:case ae:case _:case ee:case E:case D:if(0===O){switch(w){case K:case M:case I:case J:Re+="\0";break;default:Re="\0"+Re+(C===U?"":"\0")}we=1}else switch(C){case D:if(z+7===R&&108===w)z=0;O=++y;break;case E:if(0==(O=--y))we=1,Re+="\0"}break;case K:case M:switch(w){case re:case B:case q:case W:case U:case ce:case K:case M:case I:case J:break;default:if(0===O)we=1,Re+="\0"}}if(Te+=Re,C!==M&&C!==K)$=C}}m=w,w=C,R++}if(je=Ve.length,me>0)if(0===je&&0===Xe.length&&0===a[0].length==false)if(t!==ie||1===a.length&&(ge>0?Ee:Ge)===a[0])je=a.join(",").length+2;if(je>0){if(f=0===ge&&t!==te?function(e){for(var a,r,s=0,t=e.length,i=Array(t);s<t;++s){for(var f=e[s].split(l),n="",o=0,h=0,u=0,d=0,b=f.length;o<b;++o){if(0===(h=(r=f[o]).length)&&b>1)continue;if(u=n.charCodeAt(n.length-1),d=r.charCodeAt(0),a="",0!==o)switch(u){case T:case ae:case _:case ee:case M:case D:break;default:a=" "}switch(d){case P:r=a+Ee;case ae:case _:case ee:case M:case E:case D:break;case G:r=a+r+Ee;break;case V:switch(2*r.charCodeAt(1)+3*r.charCodeAt(2)){case 530:if(Ce>0){r=a+r.substring(8,h-1);break}default:if(o<1||f[o-1].length<1)r=a+Ee+r}break;case U:a="";default:if(h>1&&r.indexOf(":")>0)r=a+r.replace(v,"$1"+Ee+"$2");else r=a+r+Ee}n+=r}i[s]=n.replace(c,"").trim()}return i}(a):a,ye>0)if(void 0!==(n=Pe(Fe,Ve,f,e,pe,be,je,t,i,t))&&0===(Ve=n).length)return Ye+Ve+Xe;if(Ve=f.join(",")+"{"+Ve+"}",Ae*ke!=0){if(2===Ae&&!Le(Ve,2))ke=0;switch(ke){case le:Ve=Ve.replace(k,":"+S+"$1")+Ve;break;case ne:Ve=Ve.replace(p,"::"+N+"input-$1")+Ve.replace(p,"::"+S+"$1")+Ve.replace(p,":"+F+"input-$1")+Ve}ke=0}}return Ye+Ve+Xe}function Ie(e,a,r){var c=a.trim().split(o),s=c,t=c.length,i=e.length;switch(i){case 0:case 1:for(var f=0,n=0===i?"":e[0]+" ";f<t;++f)s[f]=Je(n,s[f],r,i).trim();break;default:f=0;var l=0;for(s=[];f<t;++f)for(var h=0;h<i;++h)s[l++]=Je(e[h]+" ",c[f],r,i).trim()}return s}function Je(e,a,r,c){var s=a,t=s.charCodeAt(0);if(t<33)t=(s=s.trim()).charCodeAt(0);switch(t){case P:switch(ge+c){case 0:case 1:if(0===e.trim().length)break;default:return s.replace(h,"$1"+e.trim())}break;case V:switch(s.charCodeAt(1)){case 103:if(Ce>0&&ge>0)return s.replace(u,"$1").replace(h,"$1"+Ge);break;default:return e.trim()+s.replace(h,"$1"+e.trim())}default:if(r*ge>0&&s.indexOf("\f")>0)return s.replace(h,(e.charCodeAt(0)===V?"":"$1")+e.trim())}return e+s}function Ke(e,a,r,c){var l,o=0,h=e+";",u=2*a+3*r+4*c;if(944===u)return function(e){var a=e.length,r=e.indexOf(":",9)+1,c=e.substring(0,r).trim(),s=e.substring(r,a-1).trim();switch(e.charCodeAt(9)*Be){case 0:break;case Q:if(110!==e.charCodeAt(10))break;default:for(var t=s.split((s="",f)),i=0,r=0,a=t.length;i<a;r=0,++i){for(var l=t[i],o=l.split(n);l=o[r];){var h=l.charCodeAt(0);if(1===Be&&(h>L&&h<90||h>96&&h<123||h===R||h===Q&&l.charCodeAt(1)!==Q))switch(isNaN(parseFloat(l))+(-1!==l.indexOf("("))){case 1:switch(l){case"infinite":case"alternate":case"backwards":case"running":case"normal":case"forwards":case"both":case"none":case"linear":case"ease":case"ease-in":case"ease-out":case"ease-in-out":case"paused":case"reverse":case"alternate-reverse":case"inherit":case"initial":case"unset":case"step-start":case"step-end":break;default:l+=De}}o[r++]=l}s+=(0===i?"":",")+o.join(" ")}}if(s=c+s+";",1===Ae||2===Ae&&Le(s,1))return N+s+s;return s}(h);else if(0===Ae||2===Ae&&!Le(h,1))return h;switch(u){case 1015:return 97===h.charCodeAt(10)?N+h+h:h;case 951:return 116===h.charCodeAt(3)?N+h+h:h;case 963:return 110===h.charCodeAt(5)?N+h+h:h;case 1009:if(100!==h.charCodeAt(4))break;case 969:case 942:return N+h+h;case 978:return N+h+S+h+h;case 1019:case 983:return N+h+S+h+F+h+h;case 883:if(h.charCodeAt(8)===Q)return N+h+h;if(h.indexOf("image-set(",11)>0)return h.replace(z,"$1"+N+"$2")+h;return h;case 932:if(h.charCodeAt(4)===Q)switch(h.charCodeAt(5)){case 103:return N+"box-"+h.replace("-grow","")+N+h+F+h.replace("grow","positive")+h;case 115:return N+h+F+h.replace("shrink","negative")+h;case 98:return N+h+F+h.replace("basis","preferred-size")+h}return N+h+F+h+h;case 964:return N+h+F+"flex-"+h+h;case 1023:if(99!==h.charCodeAt(8))break;return l=h.substring(h.indexOf(":",15)).replace("flex-","").replace("space-between","justify"),N+"box-pack"+l+N+h+F+"flex-pack"+l+h;case 1005:return t.test(h)?h.replace(s,":"+N)+h.replace(s,":"+S)+h:h;case 1e3:switch(o=(l=h.substring(13).trim()).indexOf("-")+1,l.charCodeAt(0)+l.charCodeAt(o)){case 226:l=h.replace(m,"tb");break;case 232:l=h.replace(m,"tb-rl");break;case 220:l=h.replace(m,"lr");break;default:return h}return N+h+F+l+h;case 1017:if(-1===h.indexOf("sticky",9))return h;case 975:switch(o=(h=e).length-10,u=(l=(33===h.charCodeAt(o)?h.substring(0,o):h).substring(e.indexOf(":",7)+1).trim()).charCodeAt(0)+(0|l.charCodeAt(7))){case 203:if(l.charCodeAt(8)<111)break;case 115:h=h.replace(l,N+l)+";"+h;break;case 207:case 102:h=h.replace(l,N+(u>102?"inline-":"")+"box")+";"+h.replace(l,N+l)+";"+h.replace(l,F+l+"box")+";"+h}return h+";";case 938:if(h.charCodeAt(5)===Q)switch(h.charCodeAt(6)){case 105:return l=h.replace("-items",""),N+h+N+"box-"+l+F+"flex-"+l+h;case 115:return N+h+F+"flex-item-"+h.replace(y,"")+h;default:return N+h+F+"flex-line-pack"+h.replace("align-content","").replace(y,"")+h}break;case 973:case 989:if(h.charCodeAt(3)!==Q||122===h.charCodeAt(4))break;case 931:case 953:if(true===j.test(e))if(115===(l=e.substring(e.indexOf(":")+1)).charCodeAt(0))return Ke(e.replace("stretch","fill-available"),a,r,c).replace(":fill-available",":stretch");else return h.replace(l,N+l)+h.replace(l,S+l.replace("fill-",""))+h;break;case 962:if(h=N+h+(102===h.charCodeAt(5)?F+h:"")+h,r+c===211&&105===h.charCodeAt(13)&&h.indexOf("transform",10)>0)return h.substring(0,h.indexOf(";",27)+1).replace(i,"$1"+N+"$2")+h}return h}function Le(e,a){var r=e.indexOf(1===a?":":"{"),c=e.substring(0,3!==a?r:10),s=e.substring(r+1,e.length-1);return Oe(2!==a?c:c.replace(O,"$1"),s,a)}function Me(e,a){var r=Ke(a,a.charCodeAt(0),a.charCodeAt(1),a.charCodeAt(2));return r!==a+";"?r.replace($," or ($1)").substring(4):"("+a+")"}function Pe(e,a,r,c,s,t,i,f,n,l){for(var o,h=0,u=a;h<ye;++h)switch(o=$e[h].call(Te,e,u,r,c,s,t,i,f,n,l)){case void 0:case false:case true:case null:break;default:u=o}if(u!==a)return u}function Qe(e,a,r,c){for(var s=a+1;s<r;++s)switch(c.charCodeAt(s)){case Z:if(e===T)if(c.charCodeAt(s-1)===T&&a+2!==s)return s+1;break;case I:if(e===Z)return s+1}return s}function Re(e){for(var a in e){var r=e[a];switch(a){case"keyframe":Be=0|r;break;case"global":Ce=0|r;break;case"cascade":ge=0|r;break;case"compress":we=0|r;break;case"semicolon":ve=0|r;break;case"preserve":me=0|r;break;case"prefix":if(Oe=null,!r)Ae=0;else if("function"!=typeof r)Ae=1;else Ae=2,Oe=r}}return Re}function Te(a,r){if(void 0!==this&&this.constructor===Te)return e(a);var s=a,t=s.charCodeAt(0);if(t<33)t=(s=s.trim()).charCodeAt(0);if(Be>0)De=s.replace(d,t===G?"":"-");if(t=1,1===ge)Ge=s;else Ee=s;var i,f=[Ge];if(ye>0)if(void 0!==(i=Pe(ze,r,f,f,pe,be,0,0,0,0))&&"string"==typeof i)r=i;var n=He(xe,f,r,0,0);if(ye>0)if(void 0!==(i=Pe(je,n,f,f,pe,be,n.length,0,0,0))&&"string"!=typeof(n=i))t=0;return De="",Ge="",Ee="",ke=0,pe=1,be=1,we*t==0?n:n.replace(c,"").replace(g,"").replace(A,"$1").replace(C,"$1").replace(w," ")}if(Te.use=function e(a){switch(a){case void 0:case null:ye=$e.length=0;break;default:if("function"==typeof a)$e[ye++]=a;else if("object"==typeof a)for(var r=0,c=a.length;r<c;++r)e(a[r]);else qe=0|!!a}return e},Te.set=Re,void 0!==a)Re(a);return Te});
+
+},{}],"../../node_modules/stylis-rule-sheet/index.js":[function(require,module,exports) {
+var define;
+(function (factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? (module['exports'] = factory()) :
+		typeof define === 'function' && define['amd'] ? define(factory()) :
+			(window['stylisRuleSheet'] = factory())
+}(function () {
+
+	'use strict'
+
+	return function (insertRule) {
+		var delimiter = '/*|*/'
+		var needle = delimiter+'}'
+
+		function toSheet (block) {
+			if (block)
+				try {
+					insertRule(block + '}')
+				} catch (e) {}
+		}
+
+		return function ruleSheet (context, content, selectors, parents, line, column, length, ns, depth, at) {
+			switch (context) {
+				// property
+				case 1:
+					// @import
+					if (depth === 0 && content.charCodeAt(0) === 64)
+						return insertRule(content+';'), ''
+					break
+				// selector
+				case 2:
+					if (ns === 0)
+						return content + delimiter
+					break
+				// at-rule
+				case 3:
+					switch (ns) {
+						// @font-face, @page
+						case 102:
+						case 112:
+							return insertRule(selectors[0]+content), ''
+						default:
+							return content + (at === 0 ? delimiter : '')
+					}
+				case -2:
+					content.split(needle).forEach(toSheet)
+			}
+		}
+	}
+}))
+
+},{}],"../../node_modules/@emotion/unitless/dist/unitless.browser.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var unitlessKeys = {
+  animationIterationCount: 1,
+  borderImageOutset: 1,
+  borderImageSlice: 1,
+  borderImageWidth: 1,
+  boxFlex: 1,
+  boxFlexGroup: 1,
+  boxOrdinalGroup: 1,
+  columnCount: 1,
+  columns: 1,
+  flex: 1,
+  flexGrow: 1,
+  flexPositive: 1,
+  flexShrink: 1,
+  flexNegative: 1,
+  flexOrder: 1,
+  gridRow: 1,
+  gridRowEnd: 1,
+  gridRowSpan: 1,
+  gridRowStart: 1,
+  gridColumn: 1,
+  gridColumnEnd: 1,
+  gridColumnSpan: 1,
+  gridColumnStart: 1,
+  msGridRow: 1,
+  msGridRowSpan: 1,
+  msGridColumn: 1,
+  msGridColumnSpan: 1,
+  fontWeight: 1,
+  lineHeight: 1,
+  opacity: 1,
+  order: 1,
+  orphans: 1,
+  tabSize: 1,
+  widows: 1,
+  zIndex: 1,
+  zoom: 1,
+  WebkitLineClamp: 1,
+  // SVG-related properties
+  fillOpacity: 1,
+  floodOpacity: 1,
+  stopOpacity: 1,
+  strokeDasharray: 1,
+  strokeDashoffset: 1,
+  strokeMiterlimit: 1,
+  strokeOpacity: 1,
+  strokeWidth: 1
+};
+var _default = unitlessKeys;
+exports.default = _default;
+},{}],"../../node_modules/memoize-one/dist/memoize-one.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function areInputsEqual(newInputs, lastInputs) {
+  if (newInputs.length !== lastInputs.length) {
+    return false;
+  }
+
+  for (var i = 0; i < newInputs.length; i++) {
+    if (newInputs[i] !== lastInputs[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function memoizeOne(resultFn, isEqual) {
+  if (isEqual === void 0) {
+    isEqual = areInputsEqual;
+  }
+
+  var lastThis;
+  var lastArgs = [];
+  var lastResult;
+  var calledOnce = false;
+
+  var result = function memoized() {
+    for (var _len = arguments.length, newArgs = new Array(_len), _key = 0; _key < _len; _key++) {
+      newArgs[_key] = arguments[_key];
+    }
+
+    if (calledOnce && lastThis === this && isEqual(newArgs, lastArgs)) {
+      return lastResult;
+    }
+
+    lastResult = resultFn.apply(this, newArgs);
+    calledOnce = true;
+    lastThis = this;
+    lastArgs = newArgs;
+    return lastResult;
+  };
+
+  return result;
+}
+
+var _default = memoizeOne;
+exports.default = _default;
+},{}],"../../node_modules/@emotion/memoize/dist/memoize.browser.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function memoize(fn) {
+  var cache = {};
+  return function (arg) {
+    if (cache[arg] === undefined) cache[arg] = fn(arg);
+    return cache[arg];
+  };
+}
+
+var _default = memoize;
+exports.default = _default;
+},{}],"../../node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _memoize = _interopRequireDefault(require("@emotion/memoize"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|download|draggable|encType|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|itemProp|itemScope|itemType|itemID|itemRef|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/; // https://esbench.com/bench/5bfee68a4cd7e6009ef61d23
+
+var index = (0, _memoize.default)(function (prop) {
+  return reactPropsRegex.test(prop) || prop.charCodeAt(0) === 111
+  /* o */
+  && prop.charCodeAt(1) === 110
+  /* n */
+  && prop.charCodeAt(2) < 91;
+}
+/* Z+1 */
+);
+var _default = index;
+exports.default = _default;
+},{"@emotion/memoize":"../../node_modules/@emotion/memoize/dist/memoize.browser.esm.js"}],"../../node_modules/is-what/dist/index.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getType = getType;
+exports.isUndefined = isUndefined;
+exports.isNull = isNull;
+exports.isPlainObject = isPlainObject;
+exports.isObject = isObject;
+exports.isAnyObject = isAnyObject;
+exports.isObjectLike = isObjectLike;
+exports.isFunction = isFunction;
+exports.isArray = isArray;
+exports.isString = isString;
+exports.isFullString = isFullString;
+exports.isEmptyString = isEmptyString;
+exports.isNumber = isNumber;
+exports.isBoolean = isBoolean;
+exports.isRegExp = isRegExp;
+exports.isDate = isDate;
+exports.isSymbol = isSymbol;
+exports.isPrimitive = isPrimitive;
+exports.isType = isType;
+
+/**
+ * Returns the object type of the given payload
+ *
+ * @param {*} payload
+ * @returns {string}
+ */
+function getType(payload) {
+  return Object.prototype.toString.call(payload).slice(8, -1);
+}
+/**
+ * Returns whether the payload is undefined
+ *
+ * @param {*} payload
+ * @returns {payload is undefined}
+ */
+
+
+function isUndefined(payload) {
+  return getType(payload) === 'Undefined';
+}
+/**
+ * Returns whether the payload is null
+ *
+ * @param {*} payload
+ * @returns {payload is null}
+ */
+
+
+function isNull(payload) {
+  return getType(payload) === 'Null';
+}
+/**
+ * Returns whether the payload is a plain JavaScript object (excluding special classes or objects with other prototypes)
+ *
+ * @param {*} payload
+ * @returns {payload is {[key: string]: any}}
+ */
+
+
+function isPlainObject(payload) {
+  if (getType(payload) !== 'Object') return false;
+  return payload.constructor === Object && Object.getPrototypeOf(payload) === Object.prototype;
+}
+/**
+ * Returns whether the payload is a plain JavaScript object (excluding special classes or objects with other prototypes)
+ *
+ * @param {*} payload
+ * @returns {payload is {[key: string]: any}}
+ */
+
+
+function isObject(payload) {
+  return isPlainObject(payload);
+}
+/**
+ * Returns whether the payload is an any kind of object (including special classes or objects with different prototypes)
+ *
+ * @param {*} payload
+ * @returns {payload is {[key: string]: any}}
+ */
+
+
+function isAnyObject(payload) {
+  return getType(payload) === 'Object';
+}
+/**
+ * Returns whether the payload is an object like a type passed in < >
+ *
+ * Usage: isObjectLike<{id: any}>(payload) // will make sure it's an object and has an `id` prop.
+ *
+ * @template T this must be passed in < >
+ * @param {*} payload
+ * @returns {payload is T}
+ */
+
+
+function isObjectLike(payload) {
+  return isAnyObject(payload);
+}
+/**
+ * Returns whether the payload is a function
+ *
+ * @param {*} payload
+ * @returns {payload is Function}
+ */
+
+
+function isFunction(payload) {
+  return getType(payload) === 'Function';
+}
+/**
+ * Returns whether the payload is an array
+ *
+ * @param {*} payload
+ * @returns {payload is undefined}
+ */
+
+
+function isArray(payload) {
+  return getType(payload) === 'Array';
+}
+/**
+ * Returns whether the payload is a string
+ *
+ * @param {*} payload
+ * @returns {payload is string}
+ */
+
+
+function isString(payload) {
+  return getType(payload) === 'String';
+}
+/**
+ * Returns whether the payload is a string, BUT returns false for ''
+ *
+ * @param {*} payload
+ * @returns {payload is string}
+ */
+
+
+function isFullString(payload) {
+  return isString(payload) && payload !== '';
+}
+/**
+ * Returns whether the payload is ''
+ *
+ * @param {*} payload
+ * @returns {payload is string}
+ */
+
+
+function isEmptyString(payload) {
+  return payload === '';
+}
+/**
+ * Returns whether the payload is a number
+ *
+ * This will return false for NaN
+ *
+ * @param {*} payload
+ * @returns {payload is number}
+ */
+
+
+function isNumber(payload) {
+  return getType(payload) === 'Number' && !isNaN(payload);
+}
+/**
+ * Returns whether the payload is a boolean
+ *
+ * @param {*} payload
+ * @returns {payload is boolean}
+ */
+
+
+function isBoolean(payload) {
+  return getType(payload) === 'Boolean';
+}
+/**
+ * Returns whether the payload is a regular expression
+ *
+ * @param {*} payload
+ * @returns {payload is RegExp}
+ */
+
+
+function isRegExp(payload) {
+  return getType(payload) === 'RegExp';
+}
+/**
+ * Returns whether the payload is a date, and that the date is Valid
+ *
+ * @param {*} payload
+ * @returns {payload is Date}
+ */
+
+
+function isDate(payload) {
+  return getType(payload) === 'Date' && !isNaN(payload);
+}
+/**
+ * Returns whether the payload is a Symbol
+ *
+ * @param {*} payload
+ * @returns {payload is Symbol}
+ */
+
+
+function isSymbol(payload) {
+  return getType(payload) === 'Symbol';
+}
+/**
+ * Returns whether the payload is a primitive type (eg. Boolean | Null | Undefined | Number | String | Symbol)
+ *
+ * @param {*} payload
+ * @returns {*}
+ */
+
+
+function isPrimitive(payload) {
+  return isBoolean(payload) || isNull(payload) || isUndefined(payload) || isNumber(payload) || isString(payload) || isSymbol(payload);
+}
+/**
+ * Does a generic check to check that the given payload is of a given type.
+ * In cases like Number, it will return true for NaN as NaN is a Number (thanks javascript!);
+ * It will, however, differentiate between object and null
+ *
+ * @template T
+ * @param {*} payload
+ * @param {T} type
+ * @throws {TypeError} Will throw type error if type is an invalid type
+ * @returns {payload is T}
+ */
+
+
+function isType(payload, type) {
+  if (!(type instanceof Function)) {
+    throw new TypeError('Type must be a function');
+  }
+
+  if (!type.hasOwnProperty('prototype')) {
+    throw new TypeError('Type is not a class');
+  } // Classes usually have names (as functions usually have names)
+
+
+  var name = type.name;
+  return getType(payload) === name || Boolean(payload && payload.constructor === type);
+}
+},{}],"../../node_modules/merge-anything/dist/index.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.merge = merge;
+exports.concatArrays = concatArrays;
+exports.default = void 0;
+
+var _isWhat = require("is-what");
+
+function assignProp(carry, key, newVal, originalObject) {
+  var propType = originalObject.propertyIsEnumerable(key) ? 'enumerable' : 'nonenumerable';
+  if (propType === 'enumerable') carry[key] = newVal;
+
+  if (propType === 'nonenumerable') {
+    Object.defineProperty(carry, key, {
+      value: newVal,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    });
+  }
+}
+
+function mergeRecursively(origin, newComer, extensions) {
+  // work directly on newComer if its not an object
+  if (!(0, _isWhat.isPlainObject)(newComer)) {
+    // extend merge rules
+    if (extensions && (0, _isWhat.isArray)(extensions)) {
+      extensions.forEach(function (extend) {
+        newComer = extend(origin, newComer);
+      });
+    }
+
+    return newComer;
+  } // define newObject to merge all values upon
+
+
+  var newObject = {};
+
+  if ((0, _isWhat.isPlainObject)(origin)) {
+    var props_1 = Object.getOwnPropertyNames(origin);
+    var symbols_1 = Object.getOwnPropertySymbols(origin);
+    newObject = props_1.concat(symbols_1).reduce(function (carry, key) {
+      // @ts-ignore
+      var targetVal = origin[key];
+
+      if (!(0, _isWhat.isSymbol)(key) && !Object.getOwnPropertyNames(newComer).includes(key) || (0, _isWhat.isSymbol)(key) && !Object.getOwnPropertySymbols(newComer).includes(key)) {
+        assignProp(carry, key, targetVal, origin);
+      }
+
+      return carry;
+    }, {});
+  }
+
+  var props = Object.getOwnPropertyNames(newComer);
+  var symbols = Object.getOwnPropertySymbols(newComer);
+  var result = props.concat(symbols).reduce(function (carry, key) {
+    // re-define the origin and newComer as targetVal and newVal
+    var newVal = newComer[key];
+    var targetVal = (0, _isWhat.isPlainObject)(origin) ? // @ts-ignore
+    origin[key] : undefined; // extend merge rules
+
+    if (extensions && (0, _isWhat.isArray)(extensions)) {
+      extensions.forEach(function (extend) {
+        newVal = extend(targetVal, newVal);
+      });
+    } // When newVal is an object do the merge recursively
+
+
+    if (targetVal !== undefined && (0, _isWhat.isPlainObject)(newVal)) {
+      newVal = mergeRecursively(targetVal, newVal, extensions);
+    }
+
+    assignProp(carry, key, newVal, newComer);
+    return carry;
+  }, newObject);
+  return result;
+}
+/**
+ * Merge anything recursively.
+ * Objects get merged, special objects (classes etc.) are re-assigned "as is".
+ * Basic types overwrite objects or other basic types.
+ *
+ * @param {(IConfig | any)} origin
+ * @param {...any[]} newComers
+ * @returns the result
+ */
+
+
+function merge(origin) {
+  var newComers = [];
+
+  for (var _i = 1; _i < arguments.length; _i++) {
+    newComers[_i - 1] = arguments[_i];
+  }
+
+  var extensions = null;
+  var base = origin;
+
+  if ((0, _isWhat.isPlainObject)(origin) && origin.extensions && Object.keys(origin).length === 1) {
+    base = {};
+    extensions = origin.extensions;
+  }
+
+  return newComers.reduce(function (result, newComer) {
+    return mergeRecursively(result, newComer, extensions);
+  }, base);
+}
+
+function concatArrays(originVal, newVal) {
+  if ((0, _isWhat.isArray)(originVal) && (0, _isWhat.isArray)(newVal)) {
+    // concat logic
+    return originVal.concat(newVal);
+  }
+
+  return newVal; // always return newVal as fallback!!
+}
+
+var _default = merge;
+exports.default = _default;
+},{"is-what":"../../node_modules/is-what/dist/index.esm.js"}],"../../node_modules/process/browser.js":[function(require,module,exports) {
+
+// shim for using process in browser
+var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+  throw new Error('setTimeout has not been defined');
+}
+
+function defaultClearTimeout() {
+  throw new Error('clearTimeout has not been defined');
+}
+
+(function () {
+  try {
+    if (typeof setTimeout === 'function') {
+      cachedSetTimeout = setTimeout;
+    } else {
+      cachedSetTimeout = defaultSetTimout;
+    }
+  } catch (e) {
+    cachedSetTimeout = defaultSetTimout;
+  }
+
+  try {
+    if (typeof clearTimeout === 'function') {
+      cachedClearTimeout = clearTimeout;
+    } else {
+      cachedClearTimeout = defaultClearTimeout;
+    }
+  } catch (e) {
+    cachedClearTimeout = defaultClearTimeout;
+  }
+})();
+
+function runTimeout(fun) {
+  if (cachedSetTimeout === setTimeout) {
+    //normal enviroments in sane situations
+    return setTimeout(fun, 0);
+  } // if setTimeout wasn't available but was latter defined
+
+
+  if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+    cachedSetTimeout = setTimeout;
+    return setTimeout(fun, 0);
+  }
+
+  try {
+    // when when somebody has screwed with setTimeout but no I.E. maddness
+    return cachedSetTimeout(fun, 0);
+  } catch (e) {
+    try {
+      // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+      return cachedSetTimeout.call(null, fun, 0);
+    } catch (e) {
+      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+      return cachedSetTimeout.call(this, fun, 0);
+    }
+  }
+}
+
+function runClearTimeout(marker) {
+  if (cachedClearTimeout === clearTimeout) {
+    //normal enviroments in sane situations
+    return clearTimeout(marker);
+  } // if clearTimeout wasn't available but was latter defined
+
+
+  if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+    cachedClearTimeout = clearTimeout;
+    return clearTimeout(marker);
+  }
+
+  try {
+    // when when somebody has screwed with setTimeout but no I.E. maddness
+    return cachedClearTimeout(marker);
+  } catch (e) {
+    try {
+      // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+      return cachedClearTimeout.call(null, marker);
+    } catch (e) {
+      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+      // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+      return cachedClearTimeout.call(this, marker);
+    }
+  }
+}
+
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+  if (!draining || !currentQueue) {
+    return;
+  }
+
+  draining = false;
+
+  if (currentQueue.length) {
+    queue = currentQueue.concat(queue);
+  } else {
+    queueIndex = -1;
+  }
+
+  if (queue.length) {
+    drainQueue();
+  }
+}
+
+function drainQueue() {
+  if (draining) {
+    return;
+  }
+
+  var timeout = runTimeout(cleanUpNextTick);
+  draining = true;
+  var len = queue.length;
+
+  while (len) {
+    currentQueue = queue;
+    queue = [];
+
+    while (++queueIndex < len) {
+      if (currentQueue) {
+        currentQueue[queueIndex].run();
+      }
+    }
+
+    queueIndex = -1;
+    len = queue.length;
+  }
+
+  currentQueue = null;
+  draining = false;
+  runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+  var args = new Array(arguments.length - 1);
+
+  if (arguments.length > 1) {
+    for (var i = 1; i < arguments.length; i++) {
+      args[i - 1] = arguments[i];
+    }
+  }
+
+  queue.push(new Item(fun, args));
+
+  if (queue.length === 1 && !draining) {
+    runTimeout(drainQueue);
+  }
+}; // v8 likes predictible objects
+
+
+function Item(fun, array) {
+  this.fun = fun;
+  this.array = array;
+}
+
+Item.prototype.run = function () {
+  this.fun.apply(null, this.array);
+};
+
+process.title = 'browser';
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) {
+  return [];
+};
+
+process.binding = function (name) {
+  throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () {
+  return '/';
+};
+
+process.chdir = function (dir) {
+  throw new Error('process.chdir is not supported');
+};
+
+process.umask = function () {
+  return 0;
+};
+},{}],"../../node_modules/styled-components/dist/styled-components.browser.esm.js":[function(require,module,exports) {
+var process = require("process");
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createGlobalStyle = createGlobalStyle;
+exports.css = css;
+exports.isStyledComponent = isStyledComponent;
+exports.keyframes = keyframes;
+exports.__DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS = exports.withTheme = exports.ThemeProvider = exports.ThemeContext = exports.ThemeConsumer = exports.StyleSheetManager = exports.StyleSheetContext = exports.StyleSheetConsumer = exports.ServerStyleSheet = exports.default = void 0;
+
+var _stylis = _interopRequireDefault(require("stylis/stylis.min"));
+
+var _stylisRuleSheet = _interopRequireDefault(require("stylis-rule-sheet"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _unitless = _interopRequireDefault(require("@emotion/unitless"));
+
+var _reactIs = require("react-is");
+
+var _memoizeOne = _interopRequireDefault(require("memoize-one"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _isPropValid = _interopRequireDefault(require("@emotion/is-prop-valid"));
+
+var _mergeAnything = _interopRequireDefault(require("merge-anything"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// 
+var interleave = function (strings, interpolations) {
+  var result = [strings[0]];
+
+  for (var i = 0, len = interpolations.length; i < len; i += 1) {
+    result.push(interpolations[i], strings[i + 1]);
+  }
+
+  return result;
+};
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+var inherits = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+var objectWithoutProperties = function (obj, keys) {
+  var target = {};
+
+  for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;
+    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+    target[i] = obj[i];
+  }
+
+  return target;
+};
+
+var possibleConstructorReturn = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+}; // 
+
+
+var isPlainObject = function (x) {
+  return (typeof x === 'undefined' ? 'undefined' : _typeof(x)) === 'object' && x.constructor === Object;
+}; // 
+
+
+var EMPTY_ARRAY = Object.freeze([]);
+var EMPTY_OBJECT = Object.freeze({}); // 
+
+function isFunction(test) {
+  return typeof test === 'function';
+} // 
+
+
+function getComponentName(target) {
+  return ("development" !== 'production' ? typeof target === 'string' && target : false) || target.displayName || target.name || 'Component';
+} // 
+
+
+function isStatelessFunction(test) {
+  return typeof test === 'function' && !(test.prototype && test.prototype.isReactComponent);
+} // 
+
+
+function isStyledComponent(target) {
+  return target && typeof target.styledComponentId === 'string';
+} // 
+
+
+var SC_ATTR = typeof process !== 'undefined' && (undefined || undefined) || 'data-styled';
+var SC_VERSION_ATTR = 'data-styled-version';
+var SC_STREAM_ATTR = 'data-styled-streamed';
+var IS_BROWSER = typeof window !== 'undefined' && 'HTMLElement' in window;
+var DISABLE_SPEEDY = typeof SC_DISABLE_SPEEDY === 'boolean' && SC_DISABLE_SPEEDY || typeof process !== 'undefined' && (undefined || undefined) || "development" !== 'production'; // Shared empty execution context when generating static styles
+
+var STATIC_EXECUTION_CONTEXT = {}; // 
+
+/**
+ * Parse errors.md and turn it into a simple hash of code: message
+ */
+
+var ERRORS = "development" !== 'production' ? {
+  "1": "Cannot create styled-component for component: %s.\n\n",
+  "2": "Can't collect styles once you've consumed a `ServerStyleSheet`'s styles! `ServerStyleSheet` is a one off instance for each server-side render cycle.\n\n- Are you trying to reuse it across renders?\n- Are you accidentally calling collectStyles twice?\n\n",
+  "3": "Streaming SSR is only supported in a Node.js environment; Please do not try to call this method in the browser.\n\n",
+  "4": "The `StyleSheetManager` expects a valid target or sheet prop!\n\n- Does this error occur on the client and is your target falsy?\n- Does this error occur on the server and is the sheet falsy?\n\n",
+  "5": "The clone method cannot be used on the client!\n\n- Are you running in a client-like environment on the server?\n- Are you trying to run SSR on the client?\n\n",
+  "6": "Trying to insert a new style tag, but the given Node is unmounted!\n\n- Are you using a custom target that isn't mounted?\n- Does your document not have a valid head element?\n- Have you accidentally removed a style tag manually?\n\n",
+  "7": "ThemeProvider: Please return an object from your \"theme\" prop function, e.g.\n\n```js\ntheme={() => ({})}\n```\n\n",
+  "8": "ThemeProvider: Please make your \"theme\" prop an object.\n\n",
+  "9": "Missing document `<head>`\n\n",
+  "10": "Cannot find a StyleSheet instance. Usually this happens if there are multiple copies of styled-components loaded at once. Check out this issue for how to troubleshoot and fix the common cases where this situation can happen: https://github.com/styled-components/styled-components/issues/1941#issuecomment-417862021\n\n",
+  "11": "_This error was replaced with a dev-time warning, it will be deleted for v4 final._ [createGlobalStyle] received children which will not be rendered. Please use the component without passing children elements.\n\n",
+  "12": "It seems you are interpolating a keyframe declaration (%s) into an untagged string. This was supported in styled-components v3, but is not longer supported in v4 as keyframes are now injected on-demand. Please wrap your string in the css\\`\\` helper (see https://www.styled-components.com/docs/api#css), which ensures the styles are injected correctly.\n\n",
+  "13": "%s is not a styled component and cannot be referred to via component selector. See https://www.styled-components.com/docs/advanced#referring-to-other-components for more details.\n"
+} : {};
+/**
+ * super basic version of sprintf
+ */
+
+function format() {
+  var a = arguments.length <= 0 ? undefined : arguments[0];
+  var b = [];
+
+  for (var c = 1, len = arguments.length; c < len; c += 1) {
+    b.push(arguments.length <= c ? undefined : arguments[c]);
+  }
+
+  b.forEach(function (d) {
+    a = a.replace(/%[a-z]/, d);
+  });
+  return a;
+}
+/**
+ * Create an error file out of errors.md for development and a simple web link to the full errors
+ * in production mode.
+ */
+
+
+var StyledComponentsError = function (_Error) {
+  inherits(StyledComponentsError, _Error);
+
+  function StyledComponentsError(code) {
+    classCallCheck(this, StyledComponentsError);
+
+    for (var _len = arguments.length, interpolations = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      interpolations[_key - 1] = arguments[_key];
+    }
+
+    if ("development" === 'production') {
+      var _this = possibleConstructorReturn(this, _Error.call(this, 'An error occurred. See https://github.com/styled-components/styled-components/blob/master/packages/styled-components/src/utils/errors.md#' + code + ' for more information.' + (interpolations.length > 0 ? ' Additional arguments: ' + interpolations.join(', ') : '')));
+    } else {
+      var _this = possibleConstructorReturn(this, _Error.call(this, format.apply(undefined, [ERRORS[code]].concat(interpolations)).trim()));
+    }
+
+    return possibleConstructorReturn(_this);
+  }
+
+  return StyledComponentsError;
+}(Error); // 
+
+
+var SC_COMPONENT_ID = /^[^\S\n]*?\/\* sc-component-id:\s*(\S+)\s+\*\//gm;
+
+var extractComps = function (maybeCSS) {
+  var css = '' + (maybeCSS || ''); // Definitely a string, and a clone
+
+  var existingComponents = [];
+  css.replace(SC_COMPONENT_ID, function (match, componentId, matchIndex) {
+    existingComponents.push({
+      componentId: componentId,
+      matchIndex: matchIndex
+    });
+    return match;
+  });
+  return existingComponents.map(function (_ref, i) {
+    var componentId = _ref.componentId,
+        matchIndex = _ref.matchIndex;
+    var nextComp = existingComponents[i + 1];
+    var cssFromDOM = nextComp ? css.slice(matchIndex, nextComp.matchIndex) : css.slice(matchIndex);
+    return {
+      componentId: componentId,
+      cssFromDOM: cssFromDOM
+    };
+  });
+}; // 
+
+
+var COMMENT_REGEX = /^\s*\/\/.*$/gm; // NOTE: This stylis instance is only used to split rules from SSR'd style tags
+
+var stylisSplitter = new _stylis.default({
+  global: false,
+  cascade: true,
+  keyframe: false,
+  prefix: false,
+  compress: false,
+  semicolon: true
+});
+var stylis = new _stylis.default({
+  global: false,
+  cascade: true,
+  keyframe: false,
+  prefix: true,
+  compress: false,
+  semicolon: false // NOTE: This means "autocomplete missing semicolons"
+
+}); // Wrap `insertRulePlugin to build a list of rules,
+// and then make our own plugin to return the rules. This
+// makes it easier to hook into the existing SSR architecture
+
+var parsingRules = []; // eslint-disable-next-line consistent-return
+
+var returnRulesPlugin = function returnRulesPlugin(context) {
+  if (context === -2) {
+    var parsedRules = parsingRules;
+    parsingRules = [];
+    return parsedRules;
+  }
+};
+
+var parseRulesPlugin = (0, _stylisRuleSheet.default)(function (rule) {
+  parsingRules.push(rule);
+});
+
+var _componentId = void 0;
+
+var _selector = void 0;
+
+var _selectorRegexp = void 0;
+
+var selfReferenceReplacer = function selfReferenceReplacer(match, offset, string) {
+  if ( // the first self-ref is always untouched
+  offset > 0 && // there should be at least two self-refs to do a replacement (.b > .b)
+  string.slice(0, offset).indexOf(_selector) !== -1 && // no consecutive self refs (.b.b); that is a precedence boost and treated differently
+  string.slice(offset - _selector.length, offset) !== _selector) {
+    return '.' + _componentId;
+  }
+
+  return match;
+};
+/**
+ * When writing a style like
+ *
+ * & + & {
+ *   color: red;
+ * }
+ *
+ * The second ampersand should be a reference to the static component class. stylis
+ * has no knowledge of static class so we have to intelligently replace the base selector.
+ */
+
+
+var selfReferenceReplacementPlugin = function selfReferenceReplacementPlugin(context, _, selectors) {
+  if (context === 2 && selectors.length && selectors[0].lastIndexOf(_selector) > 0) {
+    // eslint-disable-next-line no-param-reassign
+    selectors[0] = selectors[0].replace(_selectorRegexp, selfReferenceReplacer);
+  }
+};
+
+stylis.use([selfReferenceReplacementPlugin, parseRulesPlugin, returnRulesPlugin]);
+stylisSplitter.use([parseRulesPlugin, returnRulesPlugin]);
+
+var splitByRules = function splitByRules(css) {
+  return stylisSplitter('', css);
+};
+
+function stringifyRules(rules, selector, prefix) {
+  var componentId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '&';
+  var flatCSS = rules.join('').replace(COMMENT_REGEX, ''); // replace JS comments
+
+  var cssStr = selector && prefix ? prefix + ' ' + selector + ' { ' + flatCSS + ' }' : flatCSS; // stylis has no concept of state to be passed to plugins
+  // but since JS is single=threaded, we can rely on that to ensure
+  // these properties stay in sync with the current stylis run
+
+  _componentId = componentId;
+  _selector = selector;
+  _selectorRegexp = new RegExp('\\' + _selector + '\\b', 'g');
+  return stylis(prefix || !selector ? '' : selector, cssStr);
+} // 
+
+/* eslint-disable camelcase, no-undef */
+
+
+var getNonce = function () {
+  return typeof __webpack_nonce__ !== 'undefined' ? __webpack_nonce__ : null;
+}; // 
+
+/* These are helpers for the StyleTags to keep track of the injected
+ * rule names for each (component) ID that they're keeping track of.
+ * They're crucial for detecting whether a name has already been
+ * injected.
+ * (This excludes rehydrated names) */
+
+/* adds a new ID:name pairing to a names dictionary */
+
+
+var addNameForId = function addNameForId(names, id, name) {
+  if (name) {
+    // eslint-disable-next-line no-param-reassign
+    var namesForId = names[id] || (names[id] = Object.create(null));
+    namesForId[name] = true;
+  }
+};
+/* resets an ID entirely by overwriting it in the dictionary */
+
+
+var resetIdNames = function resetIdNames(names, id) {
+  // eslint-disable-next-line no-param-reassign
+  names[id] = Object.create(null);
+};
+/* factory for a names dictionary checking the existance of an ID:name pairing */
+
+
+var hasNameForId = function hasNameForId(names) {
+  return function (id, name) {
+    return names[id] !== undefined && names[id][name];
+  };
+};
+/* stringifies names for the html/element output */
+
+
+var stringifyNames = function stringifyNames(names) {
+  var str = ''; // eslint-disable-next-line guard-for-in
+
+  for (var id in names) {
+    str += Object.keys(names[id]).join(' ') + ' ';
+  }
+
+  return str.trim();
+};
+/* clones the nested names dictionary */
+
+
+var cloneNames = function cloneNames(names) {
+  var clone = Object.create(null); // eslint-disable-next-line guard-for-in
+
+  for (var id in names) {
+    clone[id] = _extends({}, names[id]);
+  }
+
+  return clone;
+}; // 
+
+/* These are helpers that deal with the insertRule (aka speedy) API
+ * They are used in the StyleTags and specifically the speedy tag
+ */
+
+/* retrieve a sheet for a given style tag */
+
+
+var sheetForTag = function sheetForTag(tag) {
+  // $FlowFixMe
+  if (tag.sheet) return tag.sheet;
+  /* Firefox quirk requires us to step through all stylesheets to find one owned by the given tag */
+
+  var size = document.styleSheets.length;
+
+  for (var i = 0; i < size; i += 1) {
+    var sheet = document.styleSheets[i]; // $FlowFixMe
+
+    if (sheet.ownerNode === tag) return sheet;
+  }
+  /* we should always be able to find a tag */
+
+
+  throw new StyledComponentsError(10);
+};
+/* insert a rule safely and return whether it was actually injected */
+
+
+var safeInsertRule = function safeInsertRule(sheet, cssRule, index) {
+  /* abort early if cssRule string is falsy */
+  if (!cssRule) return false;
+  var maxIndex = sheet.cssRules.length;
+
+  try {
+    /* use insertRule and cap passed index with maxIndex (no of cssRules) */
+    sheet.insertRule(cssRule, index <= maxIndex ? index : maxIndex);
+  } catch (err) {
+    /* any error indicates an invalid rule */
+    return false;
+  }
+
+  return true;
+};
+/* deletes `size` rules starting from `removalIndex` */
+
+
+var deleteRules = function deleteRules(sheet, removalIndex, size) {
+  var lowerBound = removalIndex - size;
+
+  for (var i = removalIndex; i > lowerBound; i -= 1) {
+    sheet.deleteRule(i);
+  }
+}; // 
+
+/* this marker separates component styles and is important for rehydration */
+
+
+var makeTextMarker = function makeTextMarker(id) {
+  return '\n/* sc-component-id: ' + id + ' */\n';
+};
+/* add up all numbers in array up until and including the index */
+
+
+var addUpUntilIndex = function addUpUntilIndex(sizes, index) {
+  var totalUpToIndex = 0;
+
+  for (var i = 0; i <= index; i += 1) {
+    totalUpToIndex += sizes[i];
+  }
+
+  return totalUpToIndex;
+};
+/* create a new style tag after lastEl */
+
+
+var makeStyleTag = function makeStyleTag(target, tagEl, insertBefore) {
+  var el = document.createElement('style');
+  el.setAttribute(SC_ATTR, '');
+  el.setAttribute(SC_VERSION_ATTR, "4.3.2");
+  var nonce = getNonce();
+
+  if (nonce) {
+    el.setAttribute('nonce', nonce);
+  }
+  /* Work around insertRule quirk in EdgeHTML */
+
+
+  el.appendChild(document.createTextNode(''));
+
+  if (target && !tagEl) {
+    /* Append to target when no previous element was passed */
+    target.appendChild(el);
+  } else {
+    if (!tagEl || !target || !tagEl.parentNode) {
+      throw new StyledComponentsError(6);
+    }
+    /* Insert new style tag after the previous one */
+
+
+    tagEl.parentNode.insertBefore(el, insertBefore ? tagEl : tagEl.nextSibling);
+  }
+
+  return el;
+};
+/* takes a css factory function and outputs an html styled tag factory */
+
+
+var wrapAsHtmlTag = function wrapAsHtmlTag(css, names) {
+  return function (additionalAttrs) {
+    var nonce = getNonce();
+    var attrs = [nonce && 'nonce="' + nonce + '"', SC_ATTR + '="' + stringifyNames(names) + '"', SC_VERSION_ATTR + '="' + "4.3.2" + '"', additionalAttrs];
+    var htmlAttr = attrs.filter(Boolean).join(' ');
+    return '<style ' + htmlAttr + '>' + css() + '</style>';
+  };
+};
+/* takes a css factory function and outputs an element factory */
+
+
+var wrapAsElement = function wrapAsElement(css, names) {
+  return function () {
+    var _props;
+
+    var props = (_props = {}, _props[SC_ATTR] = stringifyNames(names), _props[SC_VERSION_ATTR] = "4.3.2", _props);
+    var nonce = getNonce();
+
+    if (nonce) {
+      // $FlowFixMe
+      props.nonce = nonce;
+    } // eslint-disable-next-line react/no-danger
+
+
+    return _react.default.createElement('style', _extends({}, props, {
+      dangerouslySetInnerHTML: {
+        __html: css()
+      }
+    }));
+  };
+};
+
+var getIdsFromMarkersFactory = function getIdsFromMarkersFactory(markers) {
+  return function () {
+    return Object.keys(markers);
+  };
+};
+/* speedy tags utilise insertRule */
+
+
+var makeSpeedyTag = function makeSpeedyTag(el, getImportRuleTag) {
+  var names = Object.create(null);
+  var markers = Object.create(null);
+  var sizes = [];
+  var extractImport = getImportRuleTag !== undefined;
+  /* indicates whether getImportRuleTag was called */
+
+  var usedImportRuleTag = false;
+
+  var insertMarker = function insertMarker(id) {
+    var prev = markers[id];
+
+    if (prev !== undefined) {
+      return prev;
+    }
+
+    markers[id] = sizes.length;
+    sizes.push(0);
+    resetIdNames(names, id);
+    return markers[id];
+  };
+
+  var insertRules = function insertRules(id, cssRules, name) {
+    var marker = insertMarker(id);
+    var sheet = sheetForTag(el);
+    var insertIndex = addUpUntilIndex(sizes, marker);
+    var injectedRules = 0;
+    var importRules = [];
+    var cssRulesSize = cssRules.length;
+
+    for (var i = 0; i < cssRulesSize; i += 1) {
+      var cssRule = cssRules[i];
+      var mayHaveImport = extractImport;
+      /* @import rules are reordered to appear first */
+
+      if (mayHaveImport && cssRule.indexOf('@import') !== -1) {
+        importRules.push(cssRule);
+      } else if (safeInsertRule(sheet, cssRule, insertIndex + injectedRules)) {
+        mayHaveImport = false;
+        injectedRules += 1;
+      }
+    }
+
+    if (extractImport && importRules.length > 0) {
+      usedImportRuleTag = true; // $FlowFixMe
+
+      getImportRuleTag().insertRules(id + '-import', importRules);
+    }
+
+    sizes[marker] += injectedRules;
+    /* add up no of injected rules */
+
+    addNameForId(names, id, name);
+  };
+
+  var removeRules = function removeRules(id) {
+    var marker = markers[id];
+    if (marker === undefined) return;
+    var size = sizes[marker];
+    var sheet = sheetForTag(el);
+    var removalIndex = addUpUntilIndex(sizes, marker) - 1;
+    deleteRules(sheet, removalIndex, size);
+    sizes[marker] = 0;
+    resetIdNames(names, id);
+
+    if (extractImport && usedImportRuleTag) {
+      // $FlowFixMe
+      getImportRuleTag().removeRules(id + '-import');
+    }
+  };
+
+  var css = function css() {
+    var _sheetForTag = sheetForTag(el),
+        cssRules = _sheetForTag.cssRules;
+
+    var str = ''; // eslint-disable-next-line guard-for-in
+
+    for (var id in markers) {
+      str += makeTextMarker(id);
+      var marker = markers[id];
+      var end = addUpUntilIndex(sizes, marker);
+      var size = sizes[marker];
+
+      for (var i = end - size; i < end; i += 1) {
+        var rule = cssRules[i];
+
+        if (rule !== undefined) {
+          str += rule.cssText;
+        }
+      }
+    }
+
+    return str;
+  };
+
+  return {
+    clone: function clone() {
+      throw new StyledComponentsError(5);
+    },
+    css: css,
+    getIds: getIdsFromMarkersFactory(markers),
+    hasNameForId: hasNameForId(names),
+    insertMarker: insertMarker,
+    insertRules: insertRules,
+    removeRules: removeRules,
+    sealed: false,
+    styleTag: el,
+    toElement: wrapAsElement(css, names),
+    toHTML: wrapAsHtmlTag(css, names)
+  };
+};
+
+var makeTextNode = function makeTextNode(id) {
+  return document.createTextNode(makeTextMarker(id));
+};
+
+var makeBrowserTag = function makeBrowserTag(el, getImportRuleTag) {
+  var names = Object.create(null);
+  var markers = Object.create(null);
+  var extractImport = getImportRuleTag !== undefined;
+  /* indicates whether getImportRuleTag was called */
+
+  var usedImportRuleTag = false;
+
+  var insertMarker = function insertMarker(id) {
+    var prev = markers[id];
+
+    if (prev !== undefined) {
+      return prev;
+    }
+
+    markers[id] = makeTextNode(id);
+    el.appendChild(markers[id]);
+    names[id] = Object.create(null);
+    return markers[id];
+  };
+
+  var insertRules = function insertRules(id, cssRules, name) {
+    var marker = insertMarker(id);
+    var importRules = [];
+    var cssRulesSize = cssRules.length;
+
+    for (var i = 0; i < cssRulesSize; i += 1) {
+      var rule = cssRules[i];
+      var mayHaveImport = extractImport;
+
+      if (mayHaveImport && rule.indexOf('@import') !== -1) {
+        importRules.push(rule);
+      } else {
+        mayHaveImport = false;
+        var separator = i === cssRulesSize - 1 ? '' : ' ';
+        marker.appendData('' + rule + separator);
+      }
+    }
+
+    addNameForId(names, id, name);
+
+    if (extractImport && importRules.length > 0) {
+      usedImportRuleTag = true; // $FlowFixMe
+
+      getImportRuleTag().insertRules(id + '-import', importRules);
+    }
+  };
+
+  var removeRules = function removeRules(id) {
+    var marker = markers[id];
+    if (marker === undefined) return;
+    /* create new empty text node and replace the current one */
+
+    var newMarker = makeTextNode(id);
+    el.replaceChild(newMarker, marker);
+    markers[id] = newMarker;
+    resetIdNames(names, id);
+
+    if (extractImport && usedImportRuleTag) {
+      // $FlowFixMe
+      getImportRuleTag().removeRules(id + '-import');
+    }
+  };
+
+  var css = function css() {
+    var str = ''; // eslint-disable-next-line guard-for-in
+
+    for (var id in markers) {
+      str += markers[id].data;
+    }
+
+    return str;
+  };
+
+  return {
+    clone: function clone() {
+      throw new StyledComponentsError(5);
+    },
+    css: css,
+    getIds: getIdsFromMarkersFactory(markers),
+    hasNameForId: hasNameForId(names),
+    insertMarker: insertMarker,
+    insertRules: insertRules,
+    removeRules: removeRules,
+    sealed: false,
+    styleTag: el,
+    toElement: wrapAsElement(css, names),
+    toHTML: wrapAsHtmlTag(css, names)
+  };
+};
+
+var makeServerTag = function makeServerTag(namesArg, markersArg) {
+  var names = namesArg === undefined ? Object.create(null) : namesArg;
+  var markers = markersArg === undefined ? Object.create(null) : markersArg;
+
+  var insertMarker = function insertMarker(id) {
+    var prev = markers[id];
+
+    if (prev !== undefined) {
+      return prev;
+    }
+
+    return markers[id] = [''];
+  };
+
+  var insertRules = function insertRules(id, cssRules, name) {
+    var marker = insertMarker(id);
+    marker[0] += cssRules.join(' ');
+    addNameForId(names, id, name);
+  };
+
+  var removeRules = function removeRules(id) {
+    var marker = markers[id];
+    if (marker === undefined) return;
+    marker[0] = '';
+    resetIdNames(names, id);
+  };
+
+  var css = function css() {
+    var str = ''; // eslint-disable-next-line guard-for-in
+
+    for (var id in markers) {
+      var cssForId = markers[id][0];
+
+      if (cssForId) {
+        str += makeTextMarker(id) + cssForId;
+      }
+    }
+
+    return str;
+  };
+
+  var clone = function clone() {
+    var namesClone = cloneNames(names);
+    var markersClone = Object.create(null); // eslint-disable-next-line guard-for-in
+
+    for (var id in markers) {
+      markersClone[id] = [markers[id][0]];
+    }
+
+    return makeServerTag(namesClone, markersClone);
+  };
+
+  var tag = {
+    clone: clone,
+    css: css,
+    getIds: getIdsFromMarkersFactory(markers),
+    hasNameForId: hasNameForId(names),
+    insertMarker: insertMarker,
+    insertRules: insertRules,
+    removeRules: removeRules,
+    sealed: false,
+    styleTag: null,
+    toElement: wrapAsElement(css, names),
+    toHTML: wrapAsHtmlTag(css, names)
+  };
+  return tag;
+};
+
+var makeTag = function makeTag(target, tagEl, forceServer, insertBefore, getImportRuleTag) {
+  if (IS_BROWSER && !forceServer) {
+    var el = makeStyleTag(target, tagEl, insertBefore);
+
+    if (DISABLE_SPEEDY) {
+      return makeBrowserTag(el, getImportRuleTag);
+    } else {
+      return makeSpeedyTag(el, getImportRuleTag);
+    }
+  }
+
+  return makeServerTag();
+};
+
+var rehydrate = function rehydrate(tag, els, extracted) {
+  /* add all extracted components to the new tag */
+  for (var i = 0, len = extracted.length; i < len; i += 1) {
+    var _extracted$i = extracted[i],
+        componentId = _extracted$i.componentId,
+        cssFromDOM = _extracted$i.cssFromDOM;
+    var cssRules = splitByRules(cssFromDOM);
+    tag.insertRules(componentId, cssRules);
+  }
+  /* remove old HTMLStyleElements, since they have been rehydrated */
+
+
+  for (var _i = 0, _len = els.length; _i < _len; _i += 1) {
+    var el = els[_i];
+
+    if (el.parentNode) {
+      el.parentNode.removeChild(el);
+    }
+  }
+}; // 
+
+
+var SPLIT_REGEX = /\s+/;
+/* determine the maximum number of components before tags are sharded */
+
+var MAX_SIZE = void 0;
+
+if (IS_BROWSER) {
+  /* in speedy mode we can keep a lot more rules in a sheet before a slowdown can be expected */
+  MAX_SIZE = DISABLE_SPEEDY ? 40 : 1000;
+} else {
+  /* for servers we do not need to shard at all */
+  MAX_SIZE = -1;
+}
+
+var sheetRunningId = 0;
+var master = void 0;
+
+var StyleSheet = function () {
+  /* a map from ids to tags */
+
+  /* deferred rules for a given id */
+
+  /* this is used for not reinjecting rules via hasNameForId() */
+
+  /* when rules for an id are removed using remove() we have to ignore rehydratedNames for it */
+
+  /* a list of tags belonging to this StyleSheet */
+
+  /* a tag for import rules */
+
+  /* current capacity until a new tag must be created */
+
+  /* children (aka clones) of this StyleSheet inheriting all and future injections */
+  function StyleSheet() {
+    var _this = this;
+
+    var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : IS_BROWSER ? document.head : null;
+    var forceServer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    classCallCheck(this, StyleSheet);
+
+    this.getImportRuleTag = function () {
+      var importRuleTag = _this.importRuleTag;
+
+      if (importRuleTag !== undefined) {
+        return importRuleTag;
+      }
+
+      var firstTag = _this.tags[0];
+      var insertBefore = true;
+      return _this.importRuleTag = makeTag(_this.target, firstTag ? firstTag.styleTag : null, _this.forceServer, insertBefore);
+    };
+
+    sheetRunningId += 1;
+    this.id = sheetRunningId;
+    this.forceServer = forceServer;
+    this.target = forceServer ? null : target;
+    this.tagMap = {};
+    this.deferred = {};
+    this.rehydratedNames = {};
+    this.ignoreRehydratedNames = {};
+    this.tags = [];
+    this.capacity = 1;
+    this.clones = [];
+  }
+  /* rehydrate all SSR'd style tags */
+
+
+  StyleSheet.prototype.rehydrate = function rehydrate$$1() {
+    if (!IS_BROWSER || this.forceServer) return this;
+    var els = [];
+    var extracted = [];
+    var isStreamed = false;
+    /* retrieve all of our SSR style elements from the DOM */
+
+    var nodes = document.querySelectorAll('style[' + SC_ATTR + '][' + SC_VERSION_ATTR + '="' + "4.3.2" + '"]');
+    var nodesSize = nodes.length;
+    /* abort rehydration if no previous style tags were found */
+
+    if (!nodesSize) return this;
+
+    for (var i = 0; i < nodesSize; i += 1) {
+      var el = nodes[i];
+      /* check if style tag is a streamed tag */
+
+      if (!isStreamed) isStreamed = !!el.getAttribute(SC_STREAM_ATTR);
+      /* retrieve all component names */
+
+      var elNames = (el.getAttribute(SC_ATTR) || '').trim().split(SPLIT_REGEX);
+      var elNamesSize = elNames.length;
+
+      for (var j = 0, name; j < elNamesSize; j += 1) {
+        name = elNames[j];
+        /* add rehydrated name to sheet to avoid re-adding styles */
+
+        this.rehydratedNames[name] = true;
+      }
+      /* extract all components and their CSS */
+
+
+      extracted.push.apply(extracted, extractComps(el.textContent));
+      /* store original HTMLStyleElement */
+
+      els.push(el);
+    }
+    /* abort rehydration if nothing was extracted */
+
+
+    var extractedSize = extracted.length;
+    if (!extractedSize) return this;
+    /* create a tag to be used for rehydration */
+
+    var tag = this.makeTag(null);
+    rehydrate(tag, els, extracted);
+    /* reset capacity and adjust MAX_SIZE by the initial size of the rehydration */
+
+    this.capacity = Math.max(1, MAX_SIZE - extractedSize);
+    this.tags.push(tag);
+    /* retrieve all component ids */
+
+    for (var _j = 0; _j < extractedSize; _j += 1) {
+      this.tagMap[extracted[_j].componentId] = tag;
+    }
+
+    return this;
+  };
+  /* retrieve a "master" instance of StyleSheet which is typically used when no other is available
+   * The master StyleSheet is targeted by createGlobalStyle, keyframes, and components outside of any
+    * StyleSheetManager's context */
+
+  /* reset the internal "master" instance */
+
+
+  StyleSheet.reset = function reset() {
+    var forceServer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    master = new StyleSheet(undefined, forceServer).rehydrate();
+  };
+  /* adds "children" to the StyleSheet that inherit all of the parents' rules
+   * while their own rules do not affect the parent */
+
+
+  StyleSheet.prototype.clone = function clone() {
+    var sheet = new StyleSheet(this.target, this.forceServer);
+    /* add to clone array */
+
+    this.clones.push(sheet);
+    /* clone all tags */
+
+    sheet.tags = this.tags.map(function (tag) {
+      var ids = tag.getIds();
+      var newTag = tag.clone();
+      /* reconstruct tagMap */
+
+      for (var i = 0; i < ids.length; i += 1) {
+        sheet.tagMap[ids[i]] = newTag;
+      }
+
+      return newTag;
+    });
+    /* clone other maps */
+
+    sheet.rehydratedNames = _extends({}, this.rehydratedNames);
+    sheet.deferred = _extends({}, this.deferred);
+    return sheet;
+  };
+  /* force StyleSheet to create a new tag on the next injection */
+
+
+  StyleSheet.prototype.sealAllTags = function sealAllTags() {
+    this.capacity = 1;
+    this.tags.forEach(function (tag) {
+      // eslint-disable-next-line no-param-reassign
+      tag.sealed = true;
+    });
+  };
+
+  StyleSheet.prototype.makeTag = function makeTag$$1(tag) {
+    var lastEl = tag ? tag.styleTag : null;
+    var insertBefore = false;
+    return makeTag(this.target, lastEl, this.forceServer, insertBefore, this.getImportRuleTag);
+  };
+  /* get a tag for a given componentId, assign the componentId to one, or shard */
+
+
+  StyleSheet.prototype.getTagForId = function getTagForId(id) {
+    /* simply return a tag, when the componentId was already assigned one */
+    var prev = this.tagMap[id];
+
+    if (prev !== undefined && !prev.sealed) {
+      return prev;
+    }
+
+    var tag = this.tags[this.tags.length - 1];
+    /* shard (create a new tag) if the tag is exhausted (See MAX_SIZE) */
+
+    this.capacity -= 1;
+
+    if (this.capacity === 0) {
+      this.capacity = MAX_SIZE;
+      tag = this.makeTag(tag);
+      this.tags.push(tag);
+    }
+
+    return this.tagMap[id] = tag;
+  };
+  /* mainly for createGlobalStyle to check for its id */
+
+
+  StyleSheet.prototype.hasId = function hasId(id) {
+    return this.tagMap[id] !== undefined;
+  };
+  /* caching layer checking id+name to already have a corresponding tag and injected rules */
+
+
+  StyleSheet.prototype.hasNameForId = function hasNameForId(id, name) {
+    /* exception for rehydrated names which are checked separately */
+    if (this.ignoreRehydratedNames[id] === undefined && this.rehydratedNames[name]) {
+      return true;
+    }
+
+    var tag = this.tagMap[id];
+    return tag !== undefined && tag.hasNameForId(id, name);
+  };
+  /* registers a componentId and registers it on its tag */
+
+
+  StyleSheet.prototype.deferredInject = function deferredInject(id, cssRules) {
+    /* don't inject when the id is already registered */
+    if (this.tagMap[id] !== undefined) return;
+    var clones = this.clones;
+
+    for (var i = 0; i < clones.length; i += 1) {
+      clones[i].deferredInject(id, cssRules);
+    }
+
+    this.getTagForId(id).insertMarker(id);
+    this.deferred[id] = cssRules;
+  };
+  /* injects rules for a given id with a name that will need to be cached */
+
+
+  StyleSheet.prototype.inject = function inject(id, cssRules, name) {
+    var clones = this.clones;
+
+    for (var i = 0; i < clones.length; i += 1) {
+      clones[i].inject(id, cssRules, name);
+    }
+
+    var tag = this.getTagForId(id);
+    /* add deferred rules for component */
+
+    if (this.deferred[id] !== undefined) {
+      // Combine passed cssRules with previously deferred CSS rules
+      // NOTE: We cannot mutate the deferred array itself as all clones
+      // do the same (see clones[i].inject)
+      var rules = this.deferred[id].concat(cssRules);
+      tag.insertRules(id, rules, name);
+      this.deferred[id] = undefined;
+    } else {
+      tag.insertRules(id, cssRules, name);
+    }
+  };
+  /* removes all rules for a given id, which doesn't remove its marker but resets it */
+
+
+  StyleSheet.prototype.remove = function remove(id) {
+    var tag = this.tagMap[id];
+    if (tag === undefined) return;
+    var clones = this.clones;
+
+    for (var i = 0; i < clones.length; i += 1) {
+      clones[i].remove(id);
+    }
+    /* remove all rules from the tag */
+
+
+    tag.removeRules(id);
+    /* ignore possible rehydrated names */
+
+    this.ignoreRehydratedNames[id] = true;
+    /* delete possible deferred rules */
+
+    this.deferred[id] = undefined;
+  };
+
+  StyleSheet.prototype.toHTML = function toHTML() {
+    return this.tags.map(function (tag) {
+      return tag.toHTML();
+    }).join('');
+  };
+
+  StyleSheet.prototype.toReactElements = function toReactElements() {
+    var id = this.id;
+    return this.tags.map(function (tag, i) {
+      var key = 'sc-' + id + '-' + i;
+      return (0, _react.cloneElement)(tag.toElement(), {
+        key: key
+      });
+    });
+  };
+
+  createClass(StyleSheet, null, [{
+    key: 'master',
+    get: function get$$1() {
+      return master || (master = new StyleSheet().rehydrate());
+    }
+    /* NOTE: This is just for backwards-compatibility with jest-styled-components */
+
+  }, {
+    key: 'instance',
+    get: function get$$1() {
+      return StyleSheet.master;
+    }
+  }]);
+  return StyleSheet;
+}(); // 
+
+
+var Keyframes = function () {
+  function Keyframes(name, rules) {
+    var _this = this;
+
+    classCallCheck(this, Keyframes);
+
+    this.inject = function (styleSheet) {
+      if (!styleSheet.hasNameForId(_this.id, _this.name)) {
+        styleSheet.inject(_this.id, _this.rules, _this.name);
+      }
+    };
+
+    this.toString = function () {
+      throw new StyledComponentsError(12, String(_this.name));
+    };
+
+    this.name = name;
+    this.rules = rules;
+    this.id = 'sc-keyframes-' + name;
+  }
+
+  Keyframes.prototype.getName = function getName() {
+    return this.name;
+  };
+
+  return Keyframes;
+}(); // 
+
+/**
+ * inlined version of
+ * https://github.com/facebook/fbjs/blob/master/packages/fbjs/src/core/hyphenateStyleName.js
+ */
+
+
+var uppercasePattern = /([A-Z])/g;
+var msPattern = /^ms-/;
+/**
+ * Hyphenates a camelcased CSS property name, for example:
+ *
+ *   > hyphenateStyleName('backgroundColor')
+ *   < "background-color"
+ *   > hyphenateStyleName('MozTransition')
+ *   < "-moz-transition"
+ *   > hyphenateStyleName('msTransition')
+ *   < "-ms-transition"
+ *
+ * As Modernizr suggests (http://modernizr.com/docs/#prefixed), an `ms` prefix
+ * is converted to `-ms-`.
+ *
+ * @param {string} string
+ * @return {string}
+ */
+
+function hyphenateStyleName(string) {
+  return string.replace(uppercasePattern, '-$1').toLowerCase().replace(msPattern, '-ms-');
+} // 
+// Taken from https://github.com/facebook/react/blob/b87aabdfe1b7461e7331abb3601d9e6bb27544bc/packages/react-dom/src/shared/dangerousStyleValue.js
+
+
+function addUnitIfNeeded(name, value) {
+  // https://github.com/amilajack/eslint-plugin-flowtype-errors/issues/133
+  // $FlowFixMe
+  if (value == null || typeof value === 'boolean' || value === '') {
+    return '';
+  }
+
+  if (typeof value === 'number' && value !== 0 && !(name in _unitless.default)) {
+    return value + 'px'; // Presumes implicit 'px' suffix for unitless numbers
+  }
+
+  return String(value).trim();
+} // 
+
+/**
+ * It's falsish not falsy because 0 is allowed.
+ */
+
+
+var isFalsish = function isFalsish(chunk) {
+  return chunk === undefined || chunk === null || chunk === false || chunk === '';
+};
+
+var objToCssArray = function objToCssArray(obj, prevKey) {
+  var rules = [];
+  var keys = Object.keys(obj);
+  keys.forEach(function (key) {
+    if (!isFalsish(obj[key])) {
+      if (isPlainObject(obj[key])) {
+        rules.push.apply(rules, objToCssArray(obj[key], key));
+        return rules;
+      } else if (isFunction(obj[key])) {
+        rules.push(hyphenateStyleName(key) + ':', obj[key], ';');
+        return rules;
+      }
+
+      rules.push(hyphenateStyleName(key) + ': ' + addUnitIfNeeded(key, obj[key]) + ';');
+    }
+
+    return rules;
+  });
+  return prevKey ? [prevKey + ' {'].concat(rules, ['}']) : rules;
+};
+
+function flatten(chunk, executionContext, styleSheet) {
+  if (Array.isArray(chunk)) {
+    var ruleSet = [];
+
+    for (var i = 0, len = chunk.length, result; i < len; i += 1) {
+      result = flatten(chunk[i], executionContext, styleSheet);
+      if (result === null) continue;else if (Array.isArray(result)) ruleSet.push.apply(ruleSet, result);else ruleSet.push(result);
+    }
+
+    return ruleSet;
+  }
+
+  if (isFalsish(chunk)) {
+    return null;
+  }
+  /* Handle other components */
+
+
+  if (isStyledComponent(chunk)) {
+    return '.' + chunk.styledComponentId;
+  }
+  /* Either execute or defer the function */
+
+
+  if (isFunction(chunk)) {
+    if (isStatelessFunction(chunk) && executionContext) {
+      var _result = chunk(executionContext);
+
+      if ("development" !== 'production' && (0, _reactIs.isElement)(_result)) {
+        // eslint-disable-next-line no-console
+        console.warn(getComponentName(chunk) + ' is not a styled component and cannot be referred to via component selector. See https://www.styled-components.com/docs/advanced#referring-to-other-components for more details.');
+      }
+
+      return flatten(_result, executionContext, styleSheet);
+    } else return chunk;
+  }
+
+  if (chunk instanceof Keyframes) {
+    if (styleSheet) {
+      chunk.inject(styleSheet);
+      return chunk.getName();
+    } else return chunk;
+  }
+  /* Handle objects */
+
+
+  return isPlainObject(chunk) ? objToCssArray(chunk) : chunk.toString();
+} // 
+
+
+function css(styles) {
+  for (var _len = arguments.length, interpolations = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    interpolations[_key - 1] = arguments[_key];
+  }
+
+  if (isFunction(styles) || isPlainObject(styles)) {
+    // $FlowFixMe
+    return flatten(interleave(EMPTY_ARRAY, [styles].concat(interpolations)));
+  } // $FlowFixMe
+
+
+  return flatten(interleave(styles, interpolations));
+} // 
+
+
+function constructWithOptions(componentConstructor, tag) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : EMPTY_OBJECT;
+
+  if (!(0, _reactIs.isValidElementType)(tag)) {
+    throw new StyledComponentsError(1, String(tag));
+  }
+  /* This is callable directly as a template function */
+  // $FlowFixMe: Not typed to avoid destructuring arguments
+
+
+  var templateFunction = function templateFunction() {
+    return componentConstructor(tag, options, css.apply(undefined, arguments));
+  };
+  /* If config methods are called, wrap up a new template function and merge options */
+
+
+  templateFunction.withConfig = function (config) {
+    return constructWithOptions(componentConstructor, tag, _extends({}, options, config));
+  };
+  /* Modify/inject new props at runtime */
+
+
+  templateFunction.attrs = function (attrs) {
+    return constructWithOptions(componentConstructor, tag, _extends({}, options, {
+      attrs: Array.prototype.concat(options.attrs, attrs).filter(Boolean)
+    }));
+  };
+
+  return templateFunction;
+} // 
+// Source: https://github.com/garycourt/murmurhash-js/blob/master/murmurhash2_gc.js
+
+
+function murmurhash(c) {
+  for (var e = c.length | 0, a = e | 0, d = 0, b; e >= 4;) {
+    b = c.charCodeAt(d) & 255 | (c.charCodeAt(++d) & 255) << 8 | (c.charCodeAt(++d) & 255) << 16 | (c.charCodeAt(++d) & 255) << 24, b = 1540483477 * (b & 65535) + ((1540483477 * (b >>> 16) & 65535) << 16), b ^= b >>> 24, b = 1540483477 * (b & 65535) + ((1540483477 * (b >>> 16) & 65535) << 16), a = 1540483477 * (a & 65535) + ((1540483477 * (a >>> 16) & 65535) << 16) ^ b, e -= 4, ++d;
+  }
+
+  switch (e) {
+    case 3:
+      a ^= (c.charCodeAt(d + 2) & 255) << 16;
+
+    case 2:
+      a ^= (c.charCodeAt(d + 1) & 255) << 8;
+
+    case 1:
+      a ^= c.charCodeAt(d) & 255, a = 1540483477 * (a & 65535) + ((1540483477 * (a >>> 16) & 65535) << 16);
+  }
+
+  a ^= a >>> 13;
+  a = 1540483477 * (a & 65535) + ((1540483477 * (a >>> 16) & 65535) << 16);
+  return (a ^ a >>> 15) >>> 0;
+} // 
+
+/* eslint-disable no-bitwise */
+
+/* This is the "capacity" of our alphabet i.e. 2x26 for all letters plus their capitalised
+ * counterparts */
+
+
+var charsLength = 52;
+/* start at 75 for 'a' until 'z' (25) and then start at 65 for capitalised letters */
+
+var getAlphabeticChar = function getAlphabeticChar(code) {
+  return String.fromCharCode(code + (code > 25 ? 39 : 97));
+};
+/* input a number, usually a hash and convert it to base-52 */
+
+
+function generateAlphabeticName(code) {
+  var name = '';
+  var x = void 0;
+  /* get a char and divide by alphabet-length */
+
+  for (x = code; x > charsLength; x = Math.floor(x / charsLength)) {
+    name = getAlphabeticChar(x % charsLength) + name;
+  }
+
+  return getAlphabeticChar(x % charsLength) + name;
+} // 
+
+
+function hasFunctionObjectKey(obj) {
+  // eslint-disable-next-line guard-for-in, no-restricted-syntax
+  for (var key in obj) {
+    if (isFunction(obj[key])) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function isStaticRules(rules, attrs) {
+  for (var i = 0; i < rules.length; i += 1) {
+    var rule = rules[i]; // recursive case
+
+    if (Array.isArray(rule) && !isStaticRules(rule, attrs)) {
+      return false;
+    } else if (isFunction(rule) && !isStyledComponent(rule)) {
+      // functions are allowed to be static if they're just being
+      // used to get the classname of a nested styled component
+      return false;
+    }
+  }
+
+  if (attrs.some(function (x) {
+    return isFunction(x) || hasFunctionObjectKey(x);
+  })) return false;
+  return true;
+} // 
+
+
+var isHMREnabled = "development" !== 'production' && typeof module !== 'undefined' && module.hot;
+/* combines hashStr (murmurhash) and nameGenerator for convenience */
+
+var hasher = function hasher(str) {
+  return generateAlphabeticName(murmurhash(str));
+};
+/*
+ ComponentStyle is all the CSS-specific stuff, not
+ the React-specific stuff.
+ */
+
+
+var ComponentStyle = function () {
+  function ComponentStyle(rules, attrs, componentId) {
+    classCallCheck(this, ComponentStyle);
+    this.rules = rules;
+    this.isStatic = !isHMREnabled && isStaticRules(rules, attrs);
+    this.componentId = componentId;
+
+    if (!StyleSheet.master.hasId(componentId)) {
+      StyleSheet.master.deferredInject(componentId, []);
+    }
+  }
+  /*
+     * Flattens a rule set into valid CSS
+     * Hashes it, wraps the whole chunk in a .hash1234 {}
+     * Returns the hash to be injected on render()
+     * */
+
+
+  ComponentStyle.prototype.generateAndInjectStyles = function generateAndInjectStyles(executionContext, styleSheet) {
+    var isStatic = this.isStatic,
+        componentId = this.componentId,
+        lastClassName = this.lastClassName;
+
+    if (IS_BROWSER && isStatic && typeof lastClassName === 'string' && styleSheet.hasNameForId(componentId, lastClassName)) {
+      return lastClassName;
+    }
+
+    var flatCSS = flatten(this.rules, executionContext, styleSheet);
+    var name = hasher(this.componentId + flatCSS.join(''));
+
+    if (!styleSheet.hasNameForId(componentId, name)) {
+      styleSheet.inject(this.componentId, stringifyRules(flatCSS, '.' + name, undefined, componentId), name);
+    }
+
+    this.lastClassName = name;
+    return name;
+  };
+
+  ComponentStyle.generateName = function generateName(str) {
+    return hasher(str);
+  };
+
+  return ComponentStyle;
+}(); // 
+
+
+var LIMIT = 200;
+
+var createWarnTooManyClasses = function (displayName) {
+  var generatedClasses = {};
+  var warningSeen = false;
+  return function (className) {
+    if (!warningSeen) {
+      generatedClasses[className] = true;
+
+      if (Object.keys(generatedClasses).length >= LIMIT) {
+        // Unable to find latestRule in test environment.
+
+        /* eslint-disable no-console, prefer-template */
+        console.warn('Over ' + LIMIT + ' classes were generated for component ' + displayName + '. \n' + 'Consider using the attrs method, together with a style object for frequently changed styles.\n' + 'Example:\n' + '  const Component = styled.div.attrs({\n' + '    style: ({ background }) => ({\n' + '      background,\n' + '    }),\n' + '  })`width: 100%;`\n\n' + '  <Component />');
+        warningSeen = true;
+        generatedClasses = {};
+      }
+    }
+  };
+}; // 
+
+
+var determineTheme = function (props, fallbackTheme) {
+  var defaultProps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : EMPTY_OBJECT; // Props should take precedence over ThemeProvider, which should take precedence over
+  // defaultProps, but React automatically puts defaultProps on props.
+
+  /* eslint-disable react/prop-types, flowtype-errors/show-errors */
+
+  var isDefaultTheme = defaultProps ? props.theme === defaultProps.theme : false;
+  var theme = props.theme && !isDefaultTheme ? props.theme : fallbackTheme || defaultProps.theme;
+  /* eslint-enable */
+
+  return theme;
+}; // 
+
+
+var escapeRegex = /[[\].#*$><+~=|^:(),"'`-]+/g;
+var dashesAtEnds = /(^-|-$)/g;
+/**
+ * TODO: Explore using CSS.escape when it becomes more available
+ * in evergreen browsers.
+ */
+
+function escape(str) {
+  return str // Replace all possible CSS selectors
+  .replace(escapeRegex, '-') // Remove extraneous hyphens at the start and end
+  .replace(dashesAtEnds, '');
+} // 
+
+
+function isTag(target) {
+  return typeof target === 'string' && ("development" !== 'production' ? target.charAt(0) === target.charAt(0).toLowerCase() : true);
+} // 
+
+
+function generateDisplayName(target) {
+  // $FlowFixMe
+  return isTag(target) ? 'styled.' + target : 'Styled(' + getComponentName(target) + ')';
+}
+
+var _TYPE_STATICS;
+
+var REACT_STATICS = {
+  childContextTypes: true,
+  contextTypes: true,
+  defaultProps: true,
+  displayName: true,
+  getDerivedStateFromProps: true,
+  propTypes: true,
+  type: true
+};
+var KNOWN_STATICS = {
+  name: true,
+  length: true,
+  prototype: true,
+  caller: true,
+  callee: true,
+  arguments: true,
+  arity: true
+};
+var TYPE_STATICS = (_TYPE_STATICS = {}, _TYPE_STATICS[_reactIs.ForwardRef] = {
+  $$typeof: true,
+  render: true
+}, _TYPE_STATICS);
+var defineProperty$1 = Object.defineProperty,
+    getOwnPropertyNames = Object.getOwnPropertyNames,
+    _Object$getOwnPropert = Object.getOwnPropertySymbols,
+    getOwnPropertySymbols = _Object$getOwnPropert === undefined ? function () {
+  return [];
+} : _Object$getOwnPropert,
+    getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor,
+    getPrototypeOf = Object.getPrototypeOf,
+    objectPrototype = Object.prototype;
+var arrayPrototype = Array.prototype;
+
+function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+  if (typeof sourceComponent !== 'string') {
+    // don't hoist over string (html) components
+    var inheritedComponent = getPrototypeOf(sourceComponent);
+
+    if (inheritedComponent && inheritedComponent !== objectPrototype) {
+      hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+    }
+
+    var keys = arrayPrototype.concat(getOwnPropertyNames(sourceComponent), // $FlowFixMe
+    getOwnPropertySymbols(sourceComponent));
+    var targetStatics = TYPE_STATICS[targetComponent.$$typeof] || REACT_STATICS;
+    var sourceStatics = TYPE_STATICS[sourceComponent.$$typeof] || REACT_STATICS;
+    var i = keys.length;
+    var descriptor = void 0;
+    var key = void 0; // eslint-disable-next-line no-plusplus
+
+    while (i--) {
+      key = keys[i];
+
+      if ( // $FlowFixMe
+      !KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && // $FlowFixMe
+      !(targetStatics && targetStatics[key])) {
+        descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+
+        if (descriptor) {
+          try {
+            // Avoid failures from read-only properties
+            defineProperty$1(targetComponent, key, descriptor);
+          } catch (e) {
+            /* fail silently */
+          }
+        }
+      }
+    }
+
+    return targetComponent;
+  }
+
+  return targetComponent;
+} // 
+
+
+function isDerivedReactComponent(fn) {
+  return !!(fn && fn.prototype && fn.prototype.isReactComponent);
+} // 
+// Helper to call a given function, only once
+
+
+var once = function (cb) {
+  var called = false;
+  return function () {
+    if (!called) {
+      called = true;
+      cb.apply(undefined, arguments);
+    }
+  };
+}; // 
+
+
+var ThemeContext = (0, _react.createContext)();
+exports.ThemeContext = ThemeContext;
+var ThemeConsumer = ThemeContext.Consumer;
+/**
+ * Provide a theme to an entire react component tree via context
+ */
+
+exports.ThemeConsumer = ThemeConsumer;
+
+var ThemeProvider = function (_Component) {
+  inherits(ThemeProvider, _Component);
+
+  function ThemeProvider(props) {
+    classCallCheck(this, ThemeProvider);
+
+    var _this = possibleConstructorReturn(this, _Component.call(this, props));
+
+    _this.getContext = (0, _memoizeOne.default)(_this.getContext.bind(_this));
+    _this.renderInner = _this.renderInner.bind(_this);
+    return _this;
+  }
+
+  ThemeProvider.prototype.render = function render() {
+    if (!this.props.children) return null;
+    return _react.default.createElement(ThemeContext.Consumer, null, this.renderInner);
+  };
+
+  ThemeProvider.prototype.renderInner = function renderInner(outerTheme) {
+    var context = this.getContext(this.props.theme, outerTheme);
+    return _react.default.createElement(ThemeContext.Provider, {
+      value: context
+    }, _react.default.Children.only(this.props.children));
+  };
+  /**
+   * Get the theme from the props, supporting both (outerTheme) => {}
+   * as well as object notation
+   */
+
+
+  ThemeProvider.prototype.getTheme = function getTheme(theme, outerTheme) {
+    if (isFunction(theme)) {
+      var mergedTheme = theme(outerTheme);
+
+      if ("development" !== 'production' && (mergedTheme === null || Array.isArray(mergedTheme) || (typeof mergedTheme === 'undefined' ? 'undefined' : _typeof(mergedTheme)) !== 'object')) {
+        throw new StyledComponentsError(7);
+      }
+
+      return mergedTheme;
+    }
+
+    if (theme === null || Array.isArray(theme) || (typeof theme === 'undefined' ? 'undefined' : _typeof(theme)) !== 'object') {
+      throw new StyledComponentsError(8);
+    }
+
+    return _extends({}, outerTheme, theme);
+  };
+
+  ThemeProvider.prototype.getContext = function getContext(theme, outerTheme) {
+    return this.getTheme(theme, outerTheme);
+  };
+
+  return ThemeProvider;
+}(_react.Component); // 
+
+
+exports.ThemeProvider = ThemeProvider;
+var CLOSING_TAG_R = /^\s*<\/[a-z]/i;
+
+var ServerStyleSheet = function () {
+  function ServerStyleSheet() {
+    classCallCheck(this, ServerStyleSheet);
+    /* The master sheet might be reset, so keep a reference here */
+
+    this.masterSheet = StyleSheet.master;
+    this.instance = this.masterSheet.clone();
+    this.sealed = false;
+  }
+  /**
+   * Mark the ServerStyleSheet as being fully emitted and manually GC it from the
+   * StyleSheet singleton.
+   */
+
+
+  ServerStyleSheet.prototype.seal = function seal() {
+    if (!this.sealed) {
+      /* Remove sealed StyleSheets from the master sheet */
+      var index = this.masterSheet.clones.indexOf(this.instance);
+      this.masterSheet.clones.splice(index, 1);
+      this.sealed = true;
+    }
+  };
+
+  ServerStyleSheet.prototype.collectStyles = function collectStyles(children) {
+    if (this.sealed) {
+      throw new StyledComponentsError(2);
+    }
+
+    return _react.default.createElement(StyleSheetManager, {
+      sheet: this.instance
+    }, children);
+  };
+
+  ServerStyleSheet.prototype.getStyleTags = function getStyleTags() {
+    this.seal();
+    return this.instance.toHTML();
+  };
+
+  ServerStyleSheet.prototype.getStyleElement = function getStyleElement() {
+    this.seal();
+    return this.instance.toReactElements();
+  };
+
+  ServerStyleSheet.prototype.interleaveWithNodeStream = function interleaveWithNodeStream(readableStream) {
+    var _this = this;
+
+    {
+      throw new StyledComponentsError(3);
+    }
+    /* the tag index keeps track of which tags have already been emitted */
+
+    var instance = this.instance;
+    var instanceTagIndex = 0;
+    var streamAttr = SC_STREAM_ATTR + '="true"';
+    var transformer = new stream.Transform({
+      transform: function appendStyleChunks(chunk,
+      /* encoding */
+      _, callback) {
+        var tags = instance.tags;
+        var html = '';
+        /* retrieve html for each new style tag */
+
+        for (; instanceTagIndex < tags.length; instanceTagIndex += 1) {
+          var tag = tags[instanceTagIndex];
+          html += tag.toHTML(streamAttr);
+        }
+        /* force our StyleSheets to emit entirely new tags */
+
+
+        instance.sealAllTags();
+        var renderedHtml = chunk.toString();
+        /* prepend style html to chunk, unless the start of the chunk is a closing tag in which case append right after that */
+
+        if (CLOSING_TAG_R.test(renderedHtml)) {
+          var endOfClosingTag = renderedHtml.indexOf('>');
+          this.push(renderedHtml.slice(0, endOfClosingTag + 1) + html + renderedHtml.slice(endOfClosingTag + 1));
+        } else this.push(html + renderedHtml);
+
+        callback();
+      }
+    });
+    readableStream.on('end', function () {
+      return _this.seal();
+    });
+    readableStream.on('error', function (err) {
+      _this.seal(); // forward the error to the transform stream
+
+
+      transformer.emit('error', err);
+    });
+    return readableStream.pipe(transformer);
+  };
+
+  return ServerStyleSheet;
+}(); // 
+
+
+exports.ServerStyleSheet = ServerStyleSheet;
+var StyleSheetContext = (0, _react.createContext)();
+exports.StyleSheetContext = StyleSheetContext;
+var StyleSheetConsumer = StyleSheetContext.Consumer;
+exports.StyleSheetConsumer = StyleSheetConsumer;
+
+var StyleSheetManager = function (_Component) {
+  inherits(StyleSheetManager, _Component);
+
+  function StyleSheetManager(props) {
+    classCallCheck(this, StyleSheetManager);
+
+    var _this = possibleConstructorReturn(this, _Component.call(this, props));
+
+    _this.getContext = (0, _memoizeOne.default)(_this.getContext);
+    return _this;
+  }
+
+  StyleSheetManager.prototype.getContext = function getContext(sheet, target) {
+    if (sheet) {
+      return sheet;
+    } else if (target) {
+      return new StyleSheet(target);
+    } else {
+      throw new StyledComponentsError(4);
+    }
+  };
+
+  StyleSheetManager.prototype.render = function render() {
+    var _props = this.props,
+        children = _props.children,
+        sheet = _props.sheet,
+        target = _props.target;
+    return _react.default.createElement(StyleSheetContext.Provider, {
+      value: this.getContext(sheet, target)
+    }, "development" !== 'production' ? _react.default.Children.only(children) : children);
+  };
+
+  return StyleSheetManager;
+}(_react.Component);
+
+exports.StyleSheetManager = StyleSheetManager;
+"development" !== "production" ? StyleSheetManager.propTypes = {
+  sheet: _propTypes.default.oneOfType([_propTypes.default.instanceOf(StyleSheet), _propTypes.default.instanceOf(ServerStyleSheet)]),
+  target: _propTypes.default.shape({
+    appendChild: _propTypes.default.func.isRequired
+  })
+} : void 0; // 
+
+var identifiers = {};
+/* We depend on components having unique IDs */
+
+function generateId(_ComponentStyle, _displayName, parentComponentId) {
+  var displayName = typeof _displayName !== 'string' ? 'sc' : escape(_displayName);
+  /**
+   * This ensures uniqueness if two components happen to share
+   * the same displayName.
+   */
+
+  var nr = (identifiers[displayName] || 0) + 1;
+  identifiers[displayName] = nr;
+
+  var componentId = displayName + '-' + _ComponentStyle.generateName(displayName + nr);
+
+  return parentComponentId ? parentComponentId + '-' + componentId : componentId;
+} // $FlowFixMe
+
+
+var StyledComponent = function (_Component) {
+  inherits(StyledComponent, _Component);
+
+  function StyledComponent() {
+    classCallCheck(this, StyledComponent);
+
+    var _this = possibleConstructorReturn(this, _Component.call(this));
+
+    _this.attrs = {};
+    _this.renderOuter = _this.renderOuter.bind(_this);
+    _this.renderInner = _this.renderInner.bind(_this);
+
+    if ("development" !== 'production') {
+      _this.warnInnerRef = once(function (displayName) {
+        return (// eslint-disable-next-line no-console
+          console.warn('The "innerRef" API has been removed in styled-components v4 in favor of React 16 ref forwarding, use "ref" instead like a typical component. "innerRef" was detected on component "' + displayName + '".')
+        );
+      });
+      _this.warnAttrsFnObjectKeyDeprecated = once(function (key, displayName) {
+        return (// eslint-disable-next-line no-console
+          console.warn('Functions as object-form attrs({}) keys are now deprecated and will be removed in a future version of styled-components. Switch to the new attrs(props => ({})) syntax instead for easier and more powerful composition. The attrs key in question is "' + key + '" on component "' + displayName + '".', '\n ' + new Error().stack)
+        );
+      });
+      _this.warnNonStyledComponentAttrsObjectKey = once(function (key, displayName) {
+        return (// eslint-disable-next-line no-console
+          console.warn('It looks like you\'ve used a non styled-component as the value for the "' + key + '" prop in an object-form attrs constructor of "' + displayName + '".\n' + 'You should use the new function-form attrs constructor which avoids this issue: attrs(props => ({ yourStuff }))\n' + "To continue using the deprecated object syntax, you'll need to wrap your component prop in a function to make it available inside the styled component (you'll still get the deprecation warning though.)\n" + ('For example, { ' + key + ': () => InnerComponent } instead of { ' + key + ': InnerComponent }'))
+        );
+      });
+    }
+
+    return _this;
+  }
+
+  StyledComponent.prototype.render = function render() {
+    return _react.default.createElement(StyleSheetConsumer, null, this.renderOuter);
+  };
+
+  StyledComponent.prototype.renderOuter = function renderOuter() {
+    var styleSheet = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : StyleSheet.master;
+    this.styleSheet = styleSheet; // No need to subscribe a static component to theme changes, it won't change anything
+
+    if (this.props.forwardedComponent.componentStyle.isStatic) return this.renderInner();
+    return _react.default.createElement(ThemeConsumer, null, this.renderInner);
+  };
+
+  StyledComponent.prototype.renderInner = function renderInner(theme) {
+    var _props$forwardedCompo = this.props.forwardedComponent,
+        componentStyle = _props$forwardedCompo.componentStyle,
+        defaultProps = _props$forwardedCompo.defaultProps,
+        displayName = _props$forwardedCompo.displayName,
+        foldedComponentIds = _props$forwardedCompo.foldedComponentIds,
+        styledComponentId = _props$forwardedCompo.styledComponentId,
+        target = _props$forwardedCompo.target;
+    var generatedClassName = void 0;
+
+    if (componentStyle.isStatic) {
+      generatedClassName = this.generateAndInjectStyles(EMPTY_OBJECT, this.props);
+    } else {
+      generatedClassName = this.generateAndInjectStyles(determineTheme(this.props, theme, defaultProps) || EMPTY_OBJECT, this.props);
+    }
+
+    var elementToBeCreated = this.props.as || this.attrs.as || target;
+    var isTargetTag = isTag(elementToBeCreated);
+    var propsForElement = {};
+
+    var computedProps = _extends({}, this.attrs, this.props);
+
+    var key = void 0; // eslint-disable-next-line guard-for-in
+
+    for (key in computedProps) {
+      if ("development" !== 'production' && key === 'innerRef' && isTargetTag) {
+        this.warnInnerRef(displayName);
+      }
+
+      if (key === 'forwardedComponent' || key === 'as') {
+        continue;
+      } else if (key === 'forwardedRef') propsForElement.ref = computedProps[key];else if (key === 'forwardedAs') propsForElement.as = computedProps[key];else if (!isTargetTag || (0, _isPropValid.default)(key)) {
+        // Don't pass through non HTML tags through to HTML elements
+        propsForElement[key] = computedProps[key];
+      }
+    }
+
+    if (this.props.style && this.attrs.style) {
+      propsForElement.style = _extends({}, this.attrs.style, this.props.style);
+    }
+
+    propsForElement.className = Array.prototype.concat(foldedComponentIds, this.props.className, styledComponentId, this.attrs.className, generatedClassName).filter(Boolean).join(' ');
+    return (0, _react.createElement)(elementToBeCreated, propsForElement);
+  };
+
+  StyledComponent.prototype.buildExecutionContext = function buildExecutionContext(theme, props, attrs) {
+    var _this2 = this;
+
+    var context = _extends({}, props, {
+      theme: theme
+    });
+
+    if (!attrs.length) return context;
+    this.attrs = {};
+    attrs.forEach(function (attrDef) {
+      var resolvedAttrDef = attrDef;
+      var attrDefWasFn = false;
+      var attr = void 0;
+      var key = void 0;
+
+      if (isFunction(resolvedAttrDef)) {
+        // $FlowFixMe
+        resolvedAttrDef = resolvedAttrDef(context);
+        attrDefWasFn = true;
+      }
+      /* eslint-disable guard-for-in */
+      // $FlowFixMe
+
+
+      for (key in resolvedAttrDef) {
+        attr = resolvedAttrDef[key];
+
+        if (!attrDefWasFn) {
+          if (isFunction(attr) && !isDerivedReactComponent(attr) && !isStyledComponent(attr)) {
+            if ("development" !== 'production') {
+              _this2.warnAttrsFnObjectKeyDeprecated(key, props.forwardedComponent.displayName);
+            }
+
+            attr = attr(context);
+
+            if ("development" !== 'production' && _react.default.isValidElement(attr)) {
+              _this2.warnNonStyledComponentAttrsObjectKey(key, props.forwardedComponent.displayName);
+            }
+          }
+        }
+
+        _this2.attrs[key] = attr;
+        context[key] = attr;
+      }
+      /* eslint-enable */
+
+    });
+    return context;
+  };
+
+  StyledComponent.prototype.generateAndInjectStyles = function generateAndInjectStyles(theme, props) {
+    var _props$forwardedCompo2 = props.forwardedComponent,
+        attrs = _props$forwardedCompo2.attrs,
+        componentStyle = _props$forwardedCompo2.componentStyle,
+        warnTooManyClasses = _props$forwardedCompo2.warnTooManyClasses; // statically styled-components don't need to build an execution context object,
+    // and shouldn't be increasing the number of class names
+
+    if (componentStyle.isStatic && !attrs.length) {
+      return componentStyle.generateAndInjectStyles(EMPTY_OBJECT, this.styleSheet);
+    }
+
+    var className = componentStyle.generateAndInjectStyles(this.buildExecutionContext(theme, props, attrs), this.styleSheet);
+    if ("development" !== 'production' && warnTooManyClasses) warnTooManyClasses(className);
+    return className;
+  };
+
+  return StyledComponent;
+}(_react.Component);
+
+function createStyledComponent(target, options, rules) {
+  var isTargetStyledComp = isStyledComponent(target);
+  var isClass = !isTag(target);
+  var _options$displayName = options.displayName,
+      displayName = _options$displayName === undefined ? generateDisplayName(target) : _options$displayName,
+      _options$componentId = options.componentId,
+      componentId = _options$componentId === undefined ? generateId(ComponentStyle, options.displayName, options.parentComponentId) : _options$componentId,
+      _options$ParentCompon = options.ParentComponent,
+      ParentComponent = _options$ParentCompon === undefined ? StyledComponent : _options$ParentCompon,
+      _options$attrs = options.attrs,
+      attrs = _options$attrs === undefined ? EMPTY_ARRAY : _options$attrs;
+  var styledComponentId = options.displayName && options.componentId ? escape(options.displayName) + '-' + options.componentId : options.componentId || componentId; // fold the underlying StyledComponent attrs up (implicit extend)
+
+  var finalAttrs = // $FlowFixMe
+  isTargetStyledComp && target.attrs ? Array.prototype.concat(target.attrs, attrs).filter(Boolean) : attrs;
+  var componentStyle = new ComponentStyle(isTargetStyledComp ? // fold the underlying StyledComponent rules up (implicit extend)
+  // $FlowFixMe
+  target.componentStyle.rules.concat(rules) : rules, finalAttrs, styledComponentId);
+  /**
+   * forwardRef creates a new interim component, which we'll take advantage of
+   * instead of extending ParentComponent to create _another_ interim class
+   */
+
+  var WrappedStyledComponent = void 0;
+
+  var forwardRef = function forwardRef(props, ref) {
+    return _react.default.createElement(ParentComponent, _extends({}, props, {
+      forwardedComponent: WrappedStyledComponent,
+      forwardedRef: ref
+    }));
+  };
+
+  forwardRef.displayName = displayName;
+  WrappedStyledComponent = _react.default.forwardRef(forwardRef);
+  WrappedStyledComponent.displayName = displayName; // $FlowFixMe
+
+  WrappedStyledComponent.attrs = finalAttrs; // $FlowFixMe
+
+  WrappedStyledComponent.componentStyle = componentStyle; // $FlowFixMe
+
+  WrappedStyledComponent.foldedComponentIds = isTargetStyledComp ? // $FlowFixMe
+  Array.prototype.concat(target.foldedComponentIds, target.styledComponentId) : EMPTY_ARRAY; // $FlowFixMe
+
+  WrappedStyledComponent.styledComponentId = styledComponentId; // fold the underlying StyledComponent target up since we folded the styles
+  // $FlowFixMe
+
+  WrappedStyledComponent.target = isTargetStyledComp ? target.target : target; // $FlowFixMe
+
+  WrappedStyledComponent.withComponent = function withComponent(tag) {
+    var previousComponentId = options.componentId,
+        optionsToCopy = objectWithoutProperties(options, ['componentId']);
+    var newComponentId = previousComponentId && previousComponentId + '-' + (isTag(tag) ? tag : escape(getComponentName(tag)));
+
+    var newOptions = _extends({}, optionsToCopy, {
+      attrs: finalAttrs,
+      componentId: newComponentId,
+      ParentComponent: ParentComponent
+    });
+
+    return createStyledComponent(tag, newOptions, rules);
+  }; // $FlowFixMe
+
+
+  Object.defineProperty(WrappedStyledComponent, 'defaultProps', {
+    get: function get$$1() {
+      return this._foldedDefaultProps;
+    },
+    set: function set$$1(obj) {
+      // $FlowFixMe
+      this._foldedDefaultProps = isTargetStyledComp ? (0, _mergeAnything.default)(target.defaultProps, obj) : obj;
+    }
+  });
+
+  if ("development" !== 'production') {
+    // $FlowFixMe
+    WrappedStyledComponent.warnTooManyClasses = createWarnTooManyClasses(displayName);
+  } // $FlowFixMe
+
+
+  WrappedStyledComponent.toString = function () {
+    return '.' + WrappedStyledComponent.styledComponentId;
+  };
+
+  if (isClass) {
+    hoistNonReactStatics(WrappedStyledComponent, target, {
+      // all SC-specific things should not be hoisted
+      attrs: true,
+      componentStyle: true,
+      displayName: true,
+      foldedComponentIds: true,
+      styledComponentId: true,
+      target: true,
+      withComponent: true
+    });
+  }
+
+  return WrappedStyledComponent;
+} // 
+// Thanks to ReactDOMFactories for this handy list!
+
+
+var domElements = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b', 'base', 'bdi', 'bdo', 'big', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'cite', 'code', 'col', 'colgroup', 'data', 'datalist', 'dd', 'del', 'details', 'dfn', 'dialog', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'keygen', 'label', 'legend', 'li', 'link', 'main', 'map', 'mark', 'marquee', 'menu', 'menuitem', 'meta', 'meter', 'nav', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'picture', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul', 'var', 'video', 'wbr', // SVG
+'circle', 'clipPath', 'defs', 'ellipse', 'foreignObject', 'g', 'image', 'line', 'linearGradient', 'marker', 'mask', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'stop', 'svg', 'text', 'tspan']; // 
+
+var styled = function styled(tag) {
+  return constructWithOptions(createStyledComponent, tag);
+}; // Shorthands for all valid HTML Elements
+
+
+domElements.forEach(function (domElement) {
+  styled[domElement] = styled(domElement);
+}); // 
+
+var GlobalStyle = function () {
+  function GlobalStyle(rules, componentId) {
+    classCallCheck(this, GlobalStyle);
+    this.rules = rules;
+    this.componentId = componentId;
+    this.isStatic = isStaticRules(rules, EMPTY_ARRAY);
+
+    if (!StyleSheet.master.hasId(componentId)) {
+      StyleSheet.master.deferredInject(componentId, []);
+    }
+  }
+
+  GlobalStyle.prototype.createStyles = function createStyles(executionContext, styleSheet) {
+    var flatCSS = flatten(this.rules, executionContext, styleSheet);
+    var css = stringifyRules(flatCSS, '');
+    styleSheet.inject(this.componentId, css);
+  };
+
+  GlobalStyle.prototype.removeStyles = function removeStyles(styleSheet) {
+    var componentId = this.componentId;
+
+    if (styleSheet.hasId(componentId)) {
+      styleSheet.remove(componentId);
+    }
+  }; // TODO: overwrite in-place instead of remove+create?
+
+
+  GlobalStyle.prototype.renderStyles = function renderStyles(executionContext, styleSheet) {
+    this.removeStyles(styleSheet);
+    this.createStyles(executionContext, styleSheet);
+  };
+
+  return GlobalStyle;
+}(); // 
+// place our cache into shared context so it'll persist between HMRs
+
+
+if (IS_BROWSER) {
+  window.scCGSHMRCache = {};
+}
+
+function createGlobalStyle(strings) {
+  for (var _len = arguments.length, interpolations = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    interpolations[_key - 1] = arguments[_key];
+  }
+
+  var rules = css.apply(undefined, [strings].concat(interpolations));
+  var id = 'sc-global-' + murmurhash(JSON.stringify(rules));
+  var style = new GlobalStyle(rules, id);
+
+  var GlobalStyleComponent = function (_React$Component) {
+    inherits(GlobalStyleComponent, _React$Component);
+
+    function GlobalStyleComponent(props) {
+      classCallCheck(this, GlobalStyleComponent);
+
+      var _this = possibleConstructorReturn(this, _React$Component.call(this, props));
+
+      var _this$constructor = _this.constructor,
+          globalStyle = _this$constructor.globalStyle,
+          styledComponentId = _this$constructor.styledComponentId;
+
+      if (IS_BROWSER) {
+        window.scCGSHMRCache[styledComponentId] = (window.scCGSHMRCache[styledComponentId] || 0) + 1;
+      }
+      /**
+       * This fixes HMR compatibility. Don't ask me why, but this combination of
+       * caching the closure variables via statics and then persisting the statics in
+       * state works across HMR where no other combination did. ¯\_(ツ)_/¯
+       */
+
+
+      _this.state = {
+        globalStyle: globalStyle,
+        styledComponentId: styledComponentId
+      };
+      return _this;
+    }
+
+    GlobalStyleComponent.prototype.componentWillUnmount = function componentWillUnmount() {
+      if (window.scCGSHMRCache[this.state.styledComponentId]) {
+        window.scCGSHMRCache[this.state.styledComponentId] -= 1;
+      }
+      /**
+       * Depending on the order "render" is called this can cause the styles to be lost
+       * until the next render pass of the remaining instance, which may
+       * not be immediate.
+       */
+
+
+      if (window.scCGSHMRCache[this.state.styledComponentId] === 0) {
+        this.state.globalStyle.removeStyles(this.styleSheet);
+      }
+    };
+
+    GlobalStyleComponent.prototype.render = function render() {
+      var _this2 = this;
+
+      if ("development" !== 'production' && _react.default.Children.count(this.props.children)) {
+        // eslint-disable-next-line no-console
+        console.warn('The global style component ' + this.state.styledComponentId + ' was given child JSX. createGlobalStyle does not render children.');
+      }
+
+      return _react.default.createElement(StyleSheetConsumer, null, function (styleSheet) {
+        _this2.styleSheet = styleSheet || StyleSheet.master;
+        var globalStyle = _this2.state.globalStyle;
+
+        if (globalStyle.isStatic) {
+          globalStyle.renderStyles(STATIC_EXECUTION_CONTEXT, _this2.styleSheet);
+          return null;
+        } else {
+          return _react.default.createElement(ThemeConsumer, null, function (theme) {
+            // $FlowFixMe
+            var defaultProps = _this2.constructor.defaultProps;
+
+            var context = _extends({}, _this2.props);
+
+            if (typeof theme !== 'undefined') {
+              context.theme = determineTheme(_this2.props, theme, defaultProps);
+            }
+
+            globalStyle.renderStyles(context, _this2.styleSheet);
+            return null;
+          });
+        }
+      });
+    };
+
+    return GlobalStyleComponent;
+  }(_react.default.Component);
+
+  GlobalStyleComponent.globalStyle = style;
+  GlobalStyleComponent.styledComponentId = id;
+  return GlobalStyleComponent;
+} // 
+
+
+var replaceWhitespace = function replaceWhitespace(str) {
+  return str.replace(/\s|\\n/g, '');
+};
+
+function keyframes(strings) {
+  /* Warning if you've used keyframes on React Native */
+  if ("development" !== 'production' && typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+    // eslint-disable-next-line no-console
+    console.warn('`keyframes` cannot be used on ReactNative, only on the web. To do animation in ReactNative please use Animated.');
+  }
+
+  for (var _len = arguments.length, interpolations = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    interpolations[_key - 1] = arguments[_key];
+  }
+
+  var rules = css.apply(undefined, [strings].concat(interpolations));
+  var name = generateAlphabeticName(murmurhash(replaceWhitespace(JSON.stringify(rules))));
+  return new Keyframes(name, stringifyRules(rules, name, '@keyframes'));
+} // 
+
+
+var withTheme = function (Component$$1) {
+  var WithTheme = _react.default.forwardRef(function (props, ref) {
+    return _react.default.createElement(ThemeConsumer, null, function (theme) {
+      // $FlowFixMe
+      var defaultProps = Component$$1.defaultProps;
+      var themeProp = determineTheme(props, theme, defaultProps);
+
+      if ("development" !== 'production' && themeProp === undefined) {
+        // eslint-disable-next-line no-console
+        console.warn('[withTheme] You are not using a ThemeProvider nor passing a theme prop or a theme in defaultProps in component class "' + getComponentName(Component$$1) + '"');
+      }
+
+      return _react.default.createElement(Component$$1, _extends({}, props, {
+        theme: themeProp,
+        ref: ref
+      }));
+    });
+  });
+
+  hoistNonReactStatics(WithTheme, Component$$1);
+  WithTheme.displayName = 'WithTheme(' + getComponentName(Component$$1) + ')';
+  return WithTheme;
+}; // 
+
+/* eslint-disable */
+
+
+exports.withTheme = withTheme;
+var __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS = {
+  StyleSheet: StyleSheet
+}; // 
+
+/* Warning if you've imported this file on React Native */
+
+exports.__DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS = __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS;
+
+if ("development" !== 'production' && typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+  // eslint-disable-next-line no-console
+  console.warn("It looks like you've imported 'styled-components' on React Native.\n" + "Perhaps you're looking to import 'styled-components/native'?\n" + 'Read more about this at https://www.styled-components.com/docs/basics#react-native');
+}
+/* Warning if there are several instances of styled-components */
+
+
+if ("development" !== 'production' && "development" !== 'test' && typeof window !== 'undefined' && typeof navigator !== 'undefined' && typeof navigator.userAgent === 'string' && navigator.userAgent.indexOf('Node.js') === -1 && navigator.userAgent.indexOf('jsdom') === -1) {
+  window['__styled-components-init__'] = window['__styled-components-init__'] || 0;
+
+  if (window['__styled-components-init__'] === 1) {
+    // eslint-disable-next-line no-console
+    console.warn("It looks like there are several instances of 'styled-components' initialized in this application. " + 'This may cause dynamic styles not rendering properly, errors happening during rehydration process ' + 'and makes your application bigger without a good reason.\n\n' + 'See https://s-c.sh/2BAXzed for more info.');
+  }
+
+  window['__styled-components-init__'] += 1;
+} //
+
+
+var _default = styled;
+exports.default = _default;
+},{"stylis/stylis.min":"../../node_modules/stylis/stylis.min.js","stylis-rule-sheet":"../../node_modules/stylis-rule-sheet/index.js","react":"../../node_modules/react/index.js","@emotion/unitless":"../../node_modules/@emotion/unitless/dist/unitless.browser.esm.js","react-is":"../../node_modules/react-is/index.js","memoize-one":"../../node_modules/memoize-one/dist/memoize-one.esm.js","prop-types":"../../node_modules/prop-types/index.js","@emotion/is-prop-valid":"../../node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js","merge-anything":"../../node_modules/merge-anything/dist/index.esm.js","process":"../../node_modules/process/browser.js"}],"StyledComponents.tsx":[function(require,module,exports) {
+"use strict";
+
+var _taggedTemplateLiteral2 = _interopRequireDefault(require("@babel/runtime/helpers/taggedTemplateLiteral"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _templateObject3() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n  border: 2px solid blue;\n  flex: 1;\n  padding: 5px;\n"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n  border: 2px solid grey;\n  flex: 0;\n  padding: 5px;\n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n  height: 100vh;\n  width: 100vw;\n  border: 2px solid black;\n  display: flex;\n  flex-direction: column;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+var __importDefault = void 0 && (void 0).__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var styled_components_1 = __importDefault(require("styled-components")); // so we can do flexbox / split panels with all the space
+
+
+exports.FullViewPort = styled_components_1.default.div(_templateObject());
+exports.ViewPortNav = styled_components_1.default.div(_templateObject2());
+exports.ViewPortMainContent = styled_components_1.default.div(_templateObject3());
+},{"@babel/runtime/helpers/taggedTemplateLiteral":"../../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js","styled-components":"../../node_modules/styled-components/dist/styled-components.browser.esm.js"}],"../../node_modules/regenerator-runtime/runtime.js":[function(require,module,exports) {
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var runtime = (function (exports) {
+  "use strict";
+
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  exports.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
+
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+
+  // This is a polyfill for %IteratorPrototype% for environments that
+  // don't natively support it.
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
+
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    // This environment has a native %IteratorPrototype%; use it instead
+    // of the polyfill.
+    IteratorPrototype = NativeIteratorPrototype;
+  }
+
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunctionPrototype[toStringTagSymbol] =
+    GeneratorFunction.displayName = "GeneratorFunction";
+
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      prototype[method] = function(arg) {
+        return this._invoke(method, arg);
+      };
+    });
+  }
+
+  exports.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+
+  exports.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      if (!(toStringTagSymbol in genFun)) {
+        genFun[toStringTagSymbol] = "GeneratorFunction";
+      }
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `hasOwn.call(value, "__await")` to determine if the yielded value is
+  // meant to be awaited.
+  exports.awrap = function(arg) {
+    return { __await: arg };
+  };
+
+  function AsyncIterator(generator) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return Promise.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
+
+        return Promise.resolve(value).then(function(unwrapped) {
+          // When a yielded Promise is resolved, its final value becomes
+          // the .value of the Promise<{value,done}> result for the
+          // current iteration.
+          result.value = unwrapped;
+          resolve(result);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+    }
+
+    var previousPromise;
+
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new Promise(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  exports.AsyncIterator = AsyncIterator;
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  exports.async = function(innerFn, outerFn, self, tryLocsList) {
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList)
+    );
+
+    return exports.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      context.method = method;
+      context.arg = arg;
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
+
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+
+          context.dispatchException(context.arg);
+
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        // Note: ["return"] must be used for ES3 parsing compatibility.
+        if (delegate.iterator["return"]) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+    // The delegate iterator is finished, so forget it and continue with
+    // the outer generator.
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  Gp[toStringTagSymbol] = "Generator";
+
+  // A Generator should always return itself as the iterator object when the
+  // @@iterator function is called on it. Some browsers' implementations of the
+  // iterator prototype chain incorrectly implement this, causing the Generator
+  // object to not be returned from this call. This ensures that doesn't happen.
+  // See https://github.com/facebook/regenerator/issues/274 for more details.
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  exports.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  exports.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      // Resetting context._sent for legacy support of Babel's
+      // function.sent implementation.
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.method = "next";
+      this.arg = undefined;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+
+        if (caught) {
+          // If the dispatched exception was caught by a catch block,
+          // then let that catch block handle the exception normally.
+          context.method = "next";
+          context.arg = undefined;
+        }
+
+        return !! caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+
+      return this.complete(record);
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+
+      return ContinueSentinel;
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      if (this.method === "next") {
+        // Deliberately forget the last sent value so that we don't
+        // accidentally pass it on to the delegate.
+        this.arg = undefined;
+      }
+
+      return ContinueSentinel;
+    }
+  };
+
+  // Regardless of whether this script is executing as a CommonJS module
+  // or not, return the runtime object so that we can declare the variable
+  // regeneratorRuntime in the outer scope, which allows this module to be
+  // injected easily by `bin/regenerator --include-runtime script.js`.
+  return exports;
+
+}(
+  // If this script is executing as a CommonJS module, use module.exports
+  // as the regeneratorRuntime namespace. Otherwise create a new empty
+  // object. Either way, the resulting object will be used to initialize
+  // the regeneratorRuntime variable at the top of this file.
+  typeof module === "object" ? module.exports : {}
+));
+
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  // This module should not be running in strict mode, so the above
+  // assignment should always work unless something is misconfigured. Just
+  // in case runtime.js accidentally runs in strict mode, we can escape
+  // strict mode using a global Function call. This could conceivably fail
+  // if a Content Security Policy forbids using Function, but in that case
+  // the proper solution is to fix the accidental strict mode problem. If
+  // you've misconfigured your bundler to force strict mode and applied a
+  // CSP to forbid Function, and you're not willing to fix either of those
+  // problems, please detail your unique predicament in a GitHub issue.
+  Function("r", "regeneratorRuntime = r")(runtime);
+}
+
+},{}],"../../node_modules/@babel/runtime/regenerator/index.js":[function(require,module,exports) {
+module.exports = require("regenerator-runtime");
+
+},{"regenerator-runtime":"../../node_modules/regenerator-runtime/runtime.js"}],"../../node_modules/@babel/runtime/helpers/defineProperty.js":[function(require,module,exports) {
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+},{}],"../../node_modules/@babel/runtime/helpers/objectSpread.js":[function(require,module,exports) {
+var defineProperty = require("./defineProperty");
+
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    var ownKeys = Object.keys(source);
+
+    if (typeof Object.getOwnPropertySymbols === 'function') {
+      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+      }));
+    }
+
+    ownKeys.forEach(function (key) {
+      defineProperty(target, key, source[key]);
+    });
+  }
+
+  return target;
+}
+
+module.exports = _objectSpread;
+},{"./defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js"}],"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js":[function(require,module,exports) {
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+        args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+
+      _next(undefined);
+    });
+  };
+}
+
+module.exports = _asyncToGenerator;
+},{}],"../../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":[function(require,module,exports) {
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+module.exports = _arrayWithoutHoles;
+},{}],"../../node_modules/@babel/runtime/helpers/iterableToArray.js":[function(require,module,exports) {
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+},{}],"../../node_modules/@babel/runtime/helpers/nonIterableSpread.js":[function(require,module,exports) {
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+module.exports = _nonIterableSpread;
+},{}],"../../node_modules/@babel/runtime/helpers/toConsumableArray.js":[function(require,module,exports) {
+var arrayWithoutHoles = require("./arrayWithoutHoles");
+
+var iterableToArray = require("./iterableToArray");
+
+var nonIterableSpread = require("./nonIterableSpread");
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+},{"./arrayWithoutHoles":"../../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js","./iterableToArray":"../../node_modules/@babel/runtime/helpers/iterableToArray.js","./nonIterableSpread":"../../node_modules/@babel/runtime/helpers/nonIterableSpread.js"}],"pdfText/json/textToDisplay-page0001.json":[function(require,module,exports) {
+module.exports = {
+  "pageNumber": 1,
+  "text": [{
+    "str": " ",
+    "dir": "ltr",
+    "width": 3,
+    "height": 12,
+    "transform": [12, 0, 0, 12, 72.744, 24.264],
+    "fontName": "Times New Roman",
+    "id": "0001-0000",
+    "top": 755.736,
+    "left": 72.744,
+    "fontHeight": 12,
+    "fontWidth": 12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "Scented Widgets: Improving Navigation Cues ",
+    "dir": "ltr",
+    "width": 378.30600000000004,
+    "height": 18,
+    "transform": [18, 0, 0, 18, 99.648, 719.98],
+    "fontName": "Helvetica",
+    "id": "0001-0001",
+    "top": 54.01999999999998,
+    "left": 99.648,
+    "fontHeight": 18,
+    "fontWidth": 18,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "with ",
+    "dir": "ltr",
+    "width": 37.81799999999999,
+    "height": 18,
+    "transform": [18, 0, 0, 18, 479.45, 719.98],
+    "fontName": "Helvetica",
+    "id": "0001-0002",
+    "top": 54.01999999999998,
+    "left": 479.45,
+    "fontHeight": 18,
+    "fontWidth": 18,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Embedded",
+    "dir": "ltr",
+    "width": 89.04599999999998,
+    "height": 18,
+    "transform": [18, 0, 0, 18, 201.67, 691.9],
+    "fontName": "Helvetica",
+    "id": "0001-0003",
+    "top": 82.10000000000002,
+    "left": 201.67,
+    "fontHeight": 18,
+    "fontWidth": 18,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 5.0040000000000004,
+    "height": 18,
+    "transform": [18, 0, 0, 18, 291.22, 691.9],
+    "fontName": "Helvetica",
+    "id": "0001-0004",
+    "top": 82.10000000000002,
+    "left": 291.22,
+    "fontHeight": 18,
+    "fontWidth": 18,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Visualization",
+    "dir": "ltr",
+    "width": 104.11199999999997,
+    "height": 18,
+    "transform": [18, 0, 0, 18, 296.52, 691.9],
+    "fontName": "Helvetica",
+    "id": "0001-0005",
+    "top": 82.10000000000002,
+    "left": 296.52,
+    "fontHeight": 18,
+    "fontWidth": 18,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "s",
+    "dir": "ltr",
+    "width": 9,
+    "height": 18,
+    "transform": [18, 0, 0, 18, 401.18, 691.9],
+    "fontName": "Helvetica",
+    "id": "0001-0006",
+    "top": 82.10000000000002,
+    "left": 401.18,
+    "fontHeight": 18,
+    "fontWidth": 18,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.8022400000000003,
+    "height": 10.08,
+    "transform": [10.08, 0, 0, 10.08, 410.3, 691.9],
+    "fontName": "Helvetica",
+    "id": "0001-0007",
+    "top": 90.01999999999998,
+    "left": 410.3,
+    "fontHeight": 10.08,
+    "fontWidth": 10.08,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Wesley Willett, Jeffrey Heer, and Maneesh Agrawala",
+    "dir": "ltr",
+    "width": 243.69408,
+    "height": 10.08,
+    "transform": [10.08, 0, 0, 10.08, 183.91, 664.99],
+    "fontName": "Helvetica",
+    "id": "0001-0008",
+    "top": 116.92999999999995,
+    "left": 183.91,
+    "fontHeight": 10.08,
+    "fontWidth": 10.08,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.8022400000000003,
+    "height": 10.08,
+    "transform": [10.08, 0, 0, 10.08, 428.33, 664.99],
+    "fontName": "Helvetica",
+    "id": "0001-0009",
+    "top": 116.92999999999995,
+    "left": 428.33,
+    "fontHeight": 10.08,
+    "fontWidth": 10.08,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Abstract",
+    "dir": "ltr",
+    "width": 32.131440000000005,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 77.784, 639.79],
+    "fontName": "Helvetica",
+    "id": "0001-0010",
+    "top": 144.29000000000008,
+    "left": 77.784,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "—",
+    "dir": "ltr",
+    "width": 7.92,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 110.21, 639.79],
+    "fontName": "g_d5_f26",
+    "id": "0001-0011",
+    "top": 144.29000000000008,
+    "left": 110.21,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.9052734375,
+      "descent": -0.2119140625,
+      "vertical": false
+    }
+  }, {
+    "str": "This  paper  presents ",
+    "dir": "ltr",
+    "width": 74.34504000000001,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 118.13, 639.79],
+    "fontName": "Helvetica",
+    "id": "0001-0012",
+    "top": 144.29000000000008,
+    "left": 118.13,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "scented  widgets",
+    "dir": "ltr",
+    "width": 57.90312000000001,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 193.51, 639.79],
+    "fontName": "Helvetica",
+    "id": "0001-0013",
+    "top": 144.29000000000008,
+    "left": 193.51,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": ",  graphical  user  interface  controls  enhanced  with  embedded  visualizations  that ",
+    "dir": "ltr",
+    "width": 286.6802399999998,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 251.62, 639.79],
+    "fontName": "Helvetica",
+    "id": "0001-0014",
+    "top": 144.29000000000008,
+    "left": 251.62,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "facilita",
+    "dir": "ltr",
+    "width": 22.60368,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 77.784, 629.47],
+    "fontName": "Helvetica",
+    "id": "0001-0015",
+    "top": 154.61,
+    "left": 77.784,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "te  navigation  in  information  spaces.  We  describe  design  guidelines  for  adding  visual  cues  to  common  user  interface ",
+    "dir": "ltr",
+    "width": 437.84927999999974,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 100.13, 629.47],
+    "fontName": "Helvetica",
+    "id": "0001-0016",
+    "top": 154.61,
+    "left": 100.13,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "widgets  such  as  radio  buttons,  sliders,  and  combo  boxes  and  contribute  a  general  software  framework  for  applying  scented ",
+    "dir": "ltr",
+    "width": 460.2470399999994,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 77.784, 618.91],
+    "fontName": "Helvetica",
+    "id": "0001-0017",
+    "top": 165.17000000000007,
+    "left": 77.784,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "widgets within appli",
+    "dir": "ltr",
+    "width": 68.86440000000002,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 77.784, 608.35],
+    "fontName": "Helvetica",
+    "id": "0001-0018",
+    "top": 175.73000000000002,
+    "left": 77.784,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "cations with minimal modifications to existing source code. ",
+    "dir": "ltr",
+    "width": 209.94335999999996,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 146.69, 608.35],
+    "fontName": "Helvetica",
+    "id": "0001-0019",
+    "top": 175.73000000000002,
+    "left": 146.69,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "We provide a number of example applications and ",
+    "dir": "ltr",
+    "width": 181.21751999999998,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 357.26, 608.35],
+    "fontName": "Helvetica",
+    "id": "0001-0020",
+    "top": 175.73000000000002,
+    "left": 357.26,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "describe  a  controlled  experiment  which  finds  that  users  exploring  unfamiliar  data  make  up  to  twice  as  many  unique  discoveries",
+    "dir": "ltr",
+    "width": 457.4116799999997,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 77.784, 597.79],
+    "fontName": "Helvetica",
+    "id": "0001-0021",
+    "top": 186.29000000000008,
+    "left": 77.784,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.20176,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 536.59, 597.79],
+    "fontName": "Helvetica",
+    "id": "0001-0022",
+    "top": 186.29000000000008,
+    "left": 536.59,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "using widgets imbued w",
+    "dir": "ltr",
+    "width": 84.57768,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 77.784, 587.47],
+    "fontName": "Helvetica",
+    "id": "0001-0023",
+    "top": 196.61,
+    "left": 77.784,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "ith social navigation data. However, these differences equalize as familiarity with the data increases.",
+    "dir": "ltr",
+    "width": 352.3766399999997,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 162.55, 587.47],
+    "fontName": "Helvetica",
+    "id": "0001-0024",
+    "top": 196.61,
+    "left": 162.55,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.20176,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 515.71, 587.47],
+    "fontName": "Helvetica",
+    "id": "0001-0025",
+    "top": 196.61,
+    "left": 515.71,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Index  Terms",
+    "dir": "ltr",
+    "width": 48.28824,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 77.784, 572.81],
+    "fontName": "Helvetica",
+    "id": "0001-0026",
+    "top": 211.2700000000001,
+    "left": 77.784,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "—",
+    "dir": "ltr",
+    "width": 7.92,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 126.05, 572.81],
+    "fontName": "g_d5_f26",
+    "id": "0001-0027",
+    "top": 211.2700000000001,
+    "left": 126.05,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.9052734375,
+      "descent": -0.2119140625,
+      "vertical": false
+    }
+  }, {
+    "str": "Information  visualization,  user  interface  toolkits,  information  foraging,",
+    "dir": "ltr",
+    "width": 254.54879999999997,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 134.21, 572.81],
+    "fontName": "Helvetica",
+    "id": "0001-0028",
+    "top": 211.2700000000001,
+    "left": 134.21,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.20176,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 389.18, 572.81],
+    "fontName": "Helvetica",
+    "id": "0001-0029",
+    "top": 211.2700000000001,
+    "left": 389.18,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "social  navigation,  social  data  analysis.",
+    "dir": "ltr",
+    "width": 142.84512000000004,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 393.26, 572.81],
+    "fontName": "Helvetica",
+    "id": "0001-0030",
+    "top": 211.2700000000001,
+    "left": 393.26,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 63.144, 558.89],
+    "fontName": "g_d5_f28",
+    "id": "0001-0031",
+    "top": 223.99,
+    "left": 63.144,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "1",
+    "dir": "ltr",
+    "width": 5.07072,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 536.81],
+    "fontName": "Helvetica",
+    "id": "0001-0032",
+    "top": 246.07000000000005,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 59.064, 536.81],
+    "fontName": "Helvetica",
+    "id": "0001-0033",
+    "top": 246.07000000000005,
+    "left": 59.064,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "I",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 75.624, 536.81],
+    "fontName": "Helvetica",
+    "id": "0001-0034",
+    "top": 246.07000000000005,
+    "left": 75.624,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "NTRODUCTION",
+    "dir": "ltr",
+    "width": 51.323040000000006,
+    "height": 6.96,
+    "transform": [6.96, 0, 0, 6.96, 78.264, 536.81],
+    "fontName": "Helvetica",
+    "id": "0001-0035",
+    "top": 248.23000000000002,
+    "left": 78.264,
+    "fontHeight": 6.96,
+    "fontWidth": 6.96,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 129.89, 536.81],
+    "fontName": "Helvetica",
+    "id": "0001-0036",
+    "top": 246.07000000000005,
+    "left": 129.89,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "The  success  of  an  interactive  visualization  depends  not  only  on  the ",
+    "dir": "ltr",
+    "width": 251.98559999999986,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 522.89],
+    "fontName": "g_d5_f28",
+    "id": "0001-0037",
+    "top": 259.99,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "visual  encodings",
+    "dir": "ltr",
+    "width": 62.298719999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 512.81],
+    "fontName": "g_d5_f28",
+    "id": "0001-0038",
+    "top": 270.07000000000005,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ",  b",
+    "dir": "ltr",
+    "width": 11.500319999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 116.45, 512.81],
+    "fontName": "g_d5_f28",
+    "id": "0001-0039",
+    "top": 270.07000000000005,
+    "left": 116.45,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "ut  also  on  the ",
+    "dir": "ltr",
+    "width": 57.182399999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 127.73, 512.81],
+    "fontName": "g_d5_f28",
+    "id": "0001-0040",
+    "top": 270.07000000000005,
+    "left": 127.73,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "mechanisms  for  navigating  the ",
+    "dir": "ltr",
+    "width": 119.04336,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 187.27, 512.81],
+    "fontName": "g_d5_f28",
+    "id": "0001-0041",
+    "top": 270.07000000000005,
+    "left": 187.27,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "visualized ",
+    "dir": "ltr",
+    "width": 38.94239999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 502.73],
+    "fontName": "g_d5_f28",
+    "id": "0001-0042",
+    "top": 280.15,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "information  space. ",
+    "dir": "ltr",
+    "width": 71.30928000000002,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 95.064, 502.73],
+    "fontName": "g_d5_f28",
+    "id": "0001-0043",
+    "top": 280.15,
+    "left": 95.064,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "These",
+    "dir": "ltr",
+    "width": 21.31344,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 168.55, 502.73],
+    "fontName": "g_d5_f28",
+    "id": "0001-0044",
+    "top": 280.15,
+    "left": 168.55,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 189.91, 502.73],
+    "fontName": "g_d5_f28",
+    "id": "0001-0045",
+    "top": 280.15,
+    "left": 189.91,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "navigational ",
+    "dir": "ltr",
+    "width": 46.849439999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 194.23, 502.73],
+    "fontName": "g_d5_f28",
+    "id": "0001-0046",
+    "top": 280.15,
+    "left": 194.23,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "mechanisms ",
+    "dir": "ltr",
+    "width": 46.6488,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 243.22, 502.73],
+    "fontName": "g_d5_f28",
+    "id": "0001-0047",
+    "top": 280.15,
+    "left": 243.22,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "can ",
+    "dir": "ltr",
+    "width": 14.509919999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 291.96, 502.73],
+    "fontName": "g_d5_f28",
+    "id": "0001-0048",
+    "top": 280.15,
+    "left": 291.96,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "take  many  forms,  including  panning  and  zooming,  text  queries, ",
+    "dir": "ltr",
+    "width": 236.21711999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 492.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0049",
+    "top": 290.02,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "and ",
+    "dir": "ltr",
+    "width": 15.002399999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 291.46, 492.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0050",
+    "top": 290.02,
+    "left": 291.46,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "dynamic  query  widgets.  However,  effective  navigation ",
+    "dir": "ltr",
+    "width": 213.69071999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 482.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0051",
+    "top": 300.1,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "relies  on ",
+    "dir": "ltr",
+    "width": 35.58624,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 270.82, 482.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0052",
+    "top": 300.1,
+    "left": 270.82,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "more than input te",
+    "dir": "ltr",
+    "width": 65.892,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 472.7],
+    "fontName": "g_d5_f28",
+    "id": "0001-0053",
+    "top": 310.18,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "chniques alone; ",
+    "dir": "ltr",
+    "width": 58.377119999999984,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 120.05, 472.7],
+    "fontName": "g_d5_f28",
+    "id": "0001-0054",
+    "top": 310.18,
+    "left": 120.05,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "appropriate visual navigation cues ",
+    "dir": "ltr",
+    "width": 127.68911999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 178.63, 472.7],
+    "fontName": "g_d5_f30",
+    "id": "0001-0055",
+    "top": 310.18,
+    "left": 178.63,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "can aid users by guiding and refining their exploration.",
+    "dir": "ltr",
+    "width": 200.08367999999993,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 462.86],
+    "fontName": "g_d5_f30",
+    "id": "0001-0056",
+    "top": 320.02,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 254.5, 462.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0057",
+    "top": 320.02,
+    "left": 254.5,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 256.66, 462.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0058",
+    "top": 320.02,
+    "left": 256.66,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Both   psychological   and   sociological   considerations   suggest ",
+    "dir": "ltr",
+    "width": 242.9750399999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 63.144, 452.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0059",
+    "top": 330.1,
+    "left": 63.144,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "approaches ",
+    "dir": "ltr",
+    "width": 43.02815999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 442.7],
+    "fontName": "g_d5_f28",
+    "id": "0001-0060",
+    "top": 340.18,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "for   improving",
+    "dir": "ltr",
+    "width": 54.43728,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 101.33, 442.7],
+    "fontName": "g_d5_f28",
+    "id": "0001-0061",
+    "top": 340.18,
+    "left": 101.33,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 155.57, 442.7],
+    "fontName": "g_d5_f28",
+    "id": "0001-0062",
+    "top": 340.18,
+    "left": 155.57,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "navigation  cues.  Pirolli  and  Card’s ",
+    "dir": "ltr",
+    "width": 144.1871999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 162.07, 442.7],
+    "fontName": "g_d5_f31",
+    "id": "0001-0063",
+    "top": 340.18,
+    "left": 162.07,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375,
+      "vertical": false
+    }
+  }, {
+    "str": "information foraging theory",
+    "dir": "ltr",
+    "width": 101.37791999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 432.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0064",
+    "top": 350.02,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 155.33, 432.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0065",
+    "top": 350.02,
+    "left": 155.33,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "[17] models the cost structure of human ",
+    "dir": "ltr",
+    "width": 148.21823999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 157.97, 432.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0066",
+    "top": 350.02,
+    "left": 157.97,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "information  gathering  analogously  to  that  of  animals  foraging  for ",
+    "dir": "ltr",
+    "width": 251.9764799999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 422.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0067",
+    "top": 360.1,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "food. ",
+    "dir": "ltr",
+    "width": 20.994239999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 412.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0068",
+    "top": 370.2,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "One result of this",
+    "dir": "ltr",
+    "width": 62.745599999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 75.144, 412.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0069",
+    "top": 370.2,
+    "left": 75.144,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 138.05, 412.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0070",
+    "top": 370.2,
+    "left": 138.05,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "theory is the",
+    "dir": "ltr",
+    "width": 44.76095999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 140.45, 412.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0071",
+    "top": 370.2,
+    "left": 140.45,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 185.35, 412.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0072",
+    "top": 370.2,
+    "left": 185.35,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "concept",
+    "dir": "ltr",
+    "width": 27.724799999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 187.75, 412.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0073",
+    "top": 370.2,
+    "left": 187.75,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 215.59, 412.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0074",
+    "top": 370.2,
+    "left": 215.59,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "of ",
+    "dir": "ltr",
+    "width": 9.4848,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 217.99, 412.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0075",
+    "top": 370.2,
+    "left": 217.99,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "information scent",
+    "dir": "ltr",
+    "width": 63.66672,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 227.62, 412.68],
+    "fontName": "g_d5_f30",
+    "id": "0001-0076",
+    "top": 370.2,
+    "left": 227.62,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "—",
+    "dir": "ltr",
+    "width": 9.12,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 291.22, 412.68],
+    "fontName": "g_d5_f31",
+    "id": "0001-0077",
+    "top": 370.2,
+    "left": 291.22,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375,
+      "vertical": false
+    }
+  }, {
+    "str": "a ",
+    "dir": "ltr",
+    "width": 5.91128,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 300.36, 412.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0078",
+    "top": 370.2,
+    "left": 300.36,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "user’s  ―(imperfect)  perception  of  the  value,  cost,  or  access  path  of ",
+    "dir": "ltr",
+    "width": 251.97647999999992,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 402.84],
+    "fontName": "g_d5_f31",
+    "id": "0001-0079",
+    "top": 380.04,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375,
+      "vertical": false
+    }
+  }, {
+    "str": "informatio",
+    "dir": "ltr",
+    "width": 38.34048,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 392.76],
+    "fontName": "g_d5_f28",
+    "id": "0001-0080",
+    "top": 390.12,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "n  sources",
+    "dir": "ltr",
+    "width": 34.94784,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 92.184, 392.76],
+    "fontName": "g_d5_f28",
+    "id": "0001-0081",
+    "top": 390.12,
+    "left": 92.184,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 127.25, 392.76],
+    "fontName": "g_d5_f28",
+    "id": "0001-0082",
+    "top": 390.12,
+    "left": 127.25,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "obtained ",
+    "dir": "ltr",
+    "width": 32.97791999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 130.85, 392.76],
+    "fontName": "g_d5_f28",
+    "id": "0001-0083",
+    "top": 390.12,
+    "left": 130.85,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "from  proximal  cues‖  [17].",
+    "dir": "ltr",
+    "width": 97.47455999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 165.19, 392.76],
+    "fontName": "g_d5_f31",
+    "id": "0001-0084",
+    "top": 390.12,
+    "left": 165.19,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375,
+      "vertical": false
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 262.9, 392.76],
+    "fontName": "g_d5_f28",
+    "id": "0001-0085",
+    "top": 390.12,
+    "left": 262.9,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Improving",
+    "dir": "ltr",
+    "width": 37.902719999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 266.5, 392.76],
+    "fontName": "g_d5_f28",
+    "id": "0001-0086",
+    "top": 390.12,
+    "left": 266.5,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 304.2, 392.76],
+    "fontName": "g_d5_f28",
+    "id": "0001-0087",
+    "top": 390.12,
+    "left": 304.2,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "information ",
+    "dir": "ltr",
+    "width": 44.94336,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 382.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0088",
+    "top": 400.2,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "scent",
+    "dir": "ltr",
+    "width": 18.35856,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 102.05, 382.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0089",
+    "top": 400.2,
+    "left": 102.05,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 120.53, 382.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0090",
+    "top": 400.2,
+    "left": 120.53,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "through  better  proximal  cues",
+    "dir": "ltr",
+    "width": 112.85087999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 125.81, 382.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0091",
+    "top": 400.2,
+    "left": 125.81,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 238.9, 382.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0092",
+    "top": 400.2,
+    "left": 238.9,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "lower",
+    "dir": "ltr",
+    "width": 20.53824,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 244.18, 382.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0093",
+    "top": 400.2,
+    "left": 244.18,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "s",
+    "dir": "ltr",
+    "width": 3.5476799999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 264.82, 382.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0094",
+    "top": 400.2,
+    "left": 264.82,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 268.42, 382.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0095",
+    "top": 400.2,
+    "left": 268.42,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "the  cost ",
+    "dir": "ltr",
+    "width": 32.95967999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 273.46, 382.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0096",
+    "top": 400.2,
+    "left": 273.46,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "structure of information foraging",
+    "dir": "ltr",
+    "width": 118.89743999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 372.84],
+    "fontName": "g_d5_f28",
+    "id": "0001-0097",
+    "top": 410.04,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 172.87, 372.84],
+    "fontName": "g_d5_f28",
+    "id": "0001-0098",
+    "top": 410.04,
+    "left": 172.87,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "and improves information access",
+    "dir": "ltr",
+    "width": 118.37759999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 175.27, 372.84],
+    "fontName": "g_d5_f28",
+    "id": "0001-0099",
+    "top": 410.04,
+    "left": 175.27,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ".",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 293.88, 372.84],
+    "fontName": "g_d5_f28",
+    "id": "0001-0100",
+    "top": 410.04,
+    "left": 293.88,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 296.04, 372.84],
+    "fontName": "g_d5_f28",
+    "id": "0001-0101",
+    "top": 410.04,
+    "left": 296.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "While  effective  information  scent  cues  may  be  based  upon  the ",
+    "dir": "ltr",
+    "width": 242.88384000000005,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 63.144, 362.76],
+    "fontName": "g_d5_f28",
+    "id": "0001-0102",
+    "top": 420.12,
+    "left": 63.144,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "underlying",
+    "dir": "ltr",
+    "width": 39.0792,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 352.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0103",
+    "top": 430.2,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 92.904, 352.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0104",
+    "top": 430.2,
+    "left": 92.904,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "information   content   (e.g.,   when   the   text   in   a   web ",
+    "dir": "ltr",
+    "width": 207.18815999999993,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 98.928, 352.68],
+    "fontName": "g_d5_f28",
+    "id": "0001-0105",
+    "top": 430.2,
+    "left": 98.928,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "hyperlink describes the content of the linked document, it serves as a ",
+    "dir": "ltr",
+    "width": 251.95824000000007,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 342.84],
+    "fontName": "g_d5_f28",
+    "id": "0001-0106",
+    "top": 440.04,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "scent),  others  may  involve  various  forms  of  metadata,  including ",
+    "dir": "ltr",
+    "width": 252.00384,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 332.76],
+    "fontName": "g_d5_f28",
+    "id": "0001-0107",
+    "top": 450.12,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "usage patterns. In the physical world, we often navigate in response ",
+    "dir": "ltr",
+    "width": 251.97647999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 322.66],
+    "fontName": "g_d5_f28",
+    "id": "0001-0108",
+    "top": 460.21999999999997,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "t",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 312.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0109",
+    "top": 470.06,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "o the activity of  others. When a crowd forms we may join in to see ",
+    "dir": "ltr",
+    "width": 249.35903999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 56.664, 312.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0110",
+    "top": 470.06,
+    "left": 56.664,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "what  the  source  of  interest  is.  Alternatively,  we  may  intentionally ",
+    "dir": "ltr",
+    "width": 251.93087999999986,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 302.74],
+    "fontName": "g_d5_f28",
+    "id": "0001-0111",
+    "top": 480.14,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "avoid  crowds  or  well",
+    "dir": "ltr",
+    "width": 84.29616,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 292.66],
+    "fontName": "g_d5_f28",
+    "id": "0001-0112",
+    "top": 490.21999999999997,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 138.53, 292.66],
+    "fontName": "g_d5_f28",
+    "id": "0001-0113",
+    "top": 490.21999999999997,
+    "left": 138.53,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "worn  thoroughfares,  taking  ―the  road  less ",
+    "dir": "ltr",
+    "width": 164.80752,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 141.41, 292.66],
+    "fontName": "g_d5_f31",
+    "id": "0001-0114",
+    "top": 490.21999999999997,
+    "left": 141.41,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375,
+      "vertical": false
+    }
+  }, {
+    "str": "travelled‖ to uncover lesser",
+    "dir": "ltr",
+    "width": 101.04047999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 282.82],
+    "fontName": "g_d5_f31",
+    "id": "0001-0115",
+    "top": 500.06,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375,
+      "vertical": false
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 155.33, 282.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0116",
+    "top": 500.06,
+    "left": 155.33,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "known places  of  interest. ",
+    "dir": "ltr",
+    "width": 94.32816,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 158.21, 282.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0117",
+    "top": 500.06,
+    "left": 158.21,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "In ",
+    "dir": "ltr",
+    "width": 9.47568,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 253.54, 282.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0118",
+    "top": 500.06,
+    "left": 253.54,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "the  context ",
+    "dir": "ltr",
+    "width": 42.55391999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 263.86, 282.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0119",
+    "top": 500.06,
+    "left": 263.86,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "of information spaces, such",
+    "dir": "ltr",
+    "width": 99.45360000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 272.74],
+    "fontName": "g_d5_f28",
+    "id": "0001-0120",
+    "top": 510.14,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 153.65, 272.74],
+    "fontName": "g_d5_f28",
+    "id": "0001-0121",
+    "top": 510.14,
+    "left": 153.65,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "social navigation",
+    "dir": "ltr",
+    "width": 62.34431999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 156.05, 272.74],
+    "fontName": "g_d5_f30",
+    "id": "0001-0122",
+    "top": 510.14,
+    "left": 156.05,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 218.47, 272.74],
+    "fontName": "g_d5_f28",
+    "id": "0001-0123",
+    "top": 510.14,
+    "left": 218.47,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "can direct our attention ",
+    "dir": "ltr",
+    "width": 85.43615999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 220.87, 272.74],
+    "fontName": "g_d5_f28",
+    "id": "0001-0124",
+    "top": 510.14,
+    "left": 220.87,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "to hot spots of interest or to under",
+    "dir": "ltr",
+    "width": 121.66992000000002,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 262.66],
+    "fontName": "g_d5_f28",
+    "id": "0001-0125",
+    "top": 520.22,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 175.99, 262.66],
+    "fontName": "g_d5_f28",
+    "id": "0001-0126",
+    "top": 520.22,
+    "left": 175.99,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "explored regions.",
+    "dir": "ltr",
+    "width": 62.44464,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 178.87, 262.66],
+    "fontName": "g_d5_f28",
+    "id": "0001-0127",
+    "top": 520.22,
+    "left": 178.87,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 241.3, 262.66],
+    "fontName": "g_d5_f28",
+    "id": "0001-0128",
+    "top": 520.22,
+    "left": 241.3,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Our current interest in",
+    "dir": "ltr",
+    "width": 81.95231999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 63.144, 252.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0129",
+    "top": 530.06,
+    "left": 63.144,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 145.25, 252.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0130",
+    "top": 530.06,
+    "left": 145.25,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "visual",
+    "dir": "ltr",
+    "width": 21.4776,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 148.13, 252.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0131",
+    "top": 530.06,
+    "left": 148.13,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 169.75, 252.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0132",
+    "top": 530.06,
+    "left": 169.75,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "navigation cues is motivated by  our ",
+    "dir": "ltr",
+    "width": 133.61711999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 172.63, 252.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0133",
+    "top": 530.06,
+    "left": 172.63,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "experience   building   and   deploying   asynchronous   coll",
+    "dir": "ltr",
+    "width": 216.38111999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 242.71],
+    "fontName": "g_d5_f28",
+    "id": "0001-0134",
+    "top": 540.17,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "aborative ",
+    "dir": "ltr",
+    "width": 35.59535999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 270.82, 242.71],
+    "fontName": "g_d5_f28",
+    "id": "0001-0135",
+    "top": 540.17,
+    "left": 270.82,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "visualization  systems,  in  which  groups  of  users  perform  visual  data ",
+    "dir": "ltr",
+    "width": 252.01295999999982,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 232.63],
+    "fontName": "g_d5_f28",
+    "id": "0001-0136",
+    "top": 550.25,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "analysis   by   authoring   comments   and   annotations ",
+    "dir": "ltr",
+    "width": 203.39424000000002,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 222.79],
+    "fontName": "g_d5_f28",
+    "id": "0001-0137",
+    "top": 560.09,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "within",
+    "dir": "ltr",
+    "width": 23.027999999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 262.9, 222.79],
+    "fontName": "g_d5_f28",
+    "id": "0001-0138",
+    "top": 560.09,
+    "left": 262.9,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 285.94, 222.79],
+    "fontName": "g_d5_f28",
+    "id": "0001-0139",
+    "top": 560.09,
+    "left": 285.94,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "the ",
+    "dir": "ltr",
+    "width": 13.078079999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 293.4, 222.79],
+    "fontName": "g_d5_f28",
+    "id": "0001-0140",
+    "top": 560.09,
+    "left": 293.4,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "visualizations",
+    "dir": "ltr",
+    "width": 49.55807999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 212.71],
+    "fontName": "g_d5_f28",
+    "id": "0001-0141",
+    "top": 570.17,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 103.73, 212.71],
+    "fontName": "g_d5_f28",
+    "id": "0001-0142",
+    "top": 570.17,
+    "left": 103.73,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "[12,  20].  Usage  studies  of  the  sense.us  collaborative ",
+    "dir": "ltr",
+    "width": 198.82512,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 107.33, 212.71],
+    "fontName": "g_d5_f28",
+    "id": "0001-0143",
+    "top": 570.17,
+    "left": 107.33,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "visualization  system  [12] ",
+    "dir": "ltr",
+    "width": 97.19184,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 202.63],
+    "fontName": "g_d5_f28",
+    "id": "0001-0144",
+    "top": 580.25,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "show",
+    "dir": "ltr",
+    "width": 18.82368,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 153.65, 202.63],
+    "fontName": "g_d5_f28",
+    "id": "0001-0145",
+    "top": 580.25,
+    "left": 153.65,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 172.39, 202.63],
+    "fontName": "g_d5_f28",
+    "id": "0001-0146",
+    "top": 580.25,
+    "left": 172.39,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "that  users  fluidly ",
+    "dir": "ltr",
+    "width": 66.97728,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 176.95, 202.63],
+    "fontName": "g_d5_f28",
+    "id": "0001-0147",
+    "top": 580.25,
+    "left": 176.95,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "s",
+    "dir": "ltr",
+    "width": 3.5476799999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 246.34, 202.63],
+    "fontName": "g_d5_f28",
+    "id": "0001-0148",
+    "top": 580.25,
+    "left": 246.34,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "witch",
+    "dir": "ltr",
+    "width": 19.90896,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 249.94, 202.63],
+    "fontName": "g_d5_f28",
+    "id": "0001-0149",
+    "top": 580.25,
+    "left": 249.94,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 269.86, 202.63],
+    "fontName": "g_d5_f28",
+    "id": "0001-0150",
+    "top": 580.25,
+    "left": 269.86,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "between ",
+    "dir": "ltr",
+    "width": 32.02032,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 274.42, 202.63],
+    "fontName": "g_d5_f28",
+    "id": "0001-0151",
+    "top": 580.25,
+    "left": 274.42,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "data",
+    "dir": "ltr",
+    "width": 15.075359999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 192.79],
+    "fontName": "g_d5_f28",
+    "id": "0001-0152",
+    "top": 590.09,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 69.144, 192.79],
+    "fontName": "g_d5_f28",
+    "id": "0001-0153",
+    "top": 590.09,
+    "left": 69.144,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "centric analysis and social navigation. After exhausting a line of ",
+    "dir": "ltr",
+    "width": 233.98271999999992,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 72.024, 192.79],
+    "fontName": "g_d5_f28",
+    "id": "0001-0154",
+    "top": 590.09,
+    "left": 72.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "inquiry, participants mine listings of comments left by other users to ",
+    "dir": "ltr",
+    "width": 251.90351999999987,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 182.71],
+    "fontName": "g_d5_f28",
+    "id": "0001-0155",
+    "top": 600.17,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "find  new  views  of  potential  interest  and  to  understand  which  areas ",
+    "dir": "ltr",
+    "width": 251.99471999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 172.63],
+    "fontName": "g_d5_f28",
+    "id": "0001-0156",
+    "top": 610.25,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "ha",
+    "dir": "ltr",
+    "width": 8.609279999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 162.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0157",
+    "top": 620.11,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "ve",
+    "dir": "ltr",
+    "width": 8.129279999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 62.664, 162.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0158",
+    "top": 620.11,
+    "left": 62.664,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 71.064, 162.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0159",
+    "top": 620.11,
+    "left": 71.064,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "been  explored.",
+    "dir": "ltr",
+    "width": 55.48608,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 75.864, 162.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0160",
+    "top": 620.11,
+    "left": 75.864,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 131.57, 162.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0161",
+    "top": 620.11,
+    "left": 131.57,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "However,  wi",
+    "dir": "ltr",
+    "width": 49.05647999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 136.37, 162.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0162",
+    "top": 620.11,
+    "left": 136.37,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "thout  explicit  social  navigation ",
+    "dir": "ltr",
+    "width": 120.90383999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 185.35, 162.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0163",
+    "top": 620.11,
+    "left": 185.35,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "cues, users must",
+    "dir": "ltr",
+    "width": 59.097599999999986,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 152.69],
+    "fontName": "g_d5_f28",
+    "id": "0001-0164",
+    "top": 630.19,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 113.33, 152.69],
+    "fontName": "g_d5_f28",
+    "id": "0001-0165",
+    "top": 630.19,
+    "left": 113.33,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "continuously ",
+    "dir": "ltr",
+    "width": 48.31776,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 115.73, 152.69],
+    "fontName": "g_d5_f28",
+    "id": "0001-0166",
+    "top": 630.19,
+    "left": 115.73,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "switch",
+    "dir": "ltr",
+    "width": 23.73024,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 164.23, 152.69],
+    "fontName": "g_d5_f28",
+    "id": "0001-0167",
+    "top": 630.19,
+    "left": 164.23,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 187.99, 152.69],
+    "fontName": "g_d5_f28",
+    "id": "0001-0168",
+    "top": 630.19,
+    "left": 187.99,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "between the visualization and ",
+    "dir": "ltr",
+    "width": 109.63151999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 190.39, 152.69],
+    "fontName": "g_d5_f28",
+    "id": "0001-0169",
+    "top": 630.19,
+    "left": 190.39,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "a ",
+    "dir": "ltr",
+    "width": 5.91128,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 300.36, 152.69],
+    "fontName": "g_d5_f28",
+    "id": "0001-0170",
+    "top": 630.19,
+    "left": 300.36,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "separate ",
+    "dir": "ltr",
+    "width": 31.75584,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.024, 142.61],
+    "fontName": "g_d5_f28",
+    "id": "0001-0171",
+    "top": 640.27,
+    "left": 54.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "list of comments",
+    "dir": "ltr",
+    "width": 59.88191999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 85.944, 142.61],
+    "fontName": "g_d5_f28",
+    "id": "0001-0172",
+    "top": 640.27,
+    "left": 85.944,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ". ",
+    "dir": "ltr",
+    "width": 4.8,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 145.73, 142.61],
+    "fontName": "g_d5_f28",
+    "id": "0001-0173",
+    "top": 640.27,
+    "left": 145.73,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 150.29, 142.61],
+    "fontName": "g_d5_f28",
+    "id": "0001-0174",
+    "top": 640.27,
+    "left": 150.29,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "In  this  paper  we  show",
+    "dir": "ltr",
+    "width": 82.55424000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 63.144, 132.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0175",
+    "top": 650.11,
+    "left": 63.144,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 145.73, 132.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0176",
+    "top": 650.11,
+    "left": 145.73,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "that ",
+    "dir": "ltr",
+    "width": 16.16064,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 148.85, 132.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0177",
+    "top": 650.11,
+    "left": 148.85,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "social  activity",
+    "dir": "ltr",
+    "width": 51.25439999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 165.67, 132.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0178",
+    "top": 650.11,
+    "left": 165.67,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 216.55, 132.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0179",
+    "top": 650.11,
+    "left": 216.55,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "cues ",
+    "dir": "ltr",
+    "width": 18.34032,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 219.91, 132.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0180",
+    "top": 650.11,
+    "left": 219.91,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "can",
+    "dir": "ltr",
+    "width": 12.467039999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 239.14, 132.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0181",
+    "top": 650.11,
+    "left": 239.14,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 251.62, 132.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0182",
+    "top": 650.11,
+    "left": 251.62,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "improve ",
+    "dir": "ltr",
+    "width": 32.24831999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 254.74, 132.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0183",
+    "top": 650.11,
+    "left": 254.74,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "such ",
+    "dir": "ltr",
+    "width": 18.595679999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 287.86, 132.77],
+    "fontName": "g_d5_f28",
+    "id": "0001-0184",
+    "top": 650.11,
+    "left": 287.86,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "social data analysis",
+    "dir": "ltr",
+    "width": 70.13279999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 449.9],
+    "fontName": "g_d5_f28",
+    "id": "0001-0185",
+    "top": 332.98,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 387.02, 449.9],
+    "fontName": "g_d5_f28",
+    "id": "0001-0186",
+    "top": 332.98,
+    "left": 387.02,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "by enabling social navigation within the",
+    "dir": "ltr",
+    "width": 146.12063999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 389.66, 449.9],
+    "fontName": "g_d5_f28",
+    "id": "0001-0187",
+    "top": 332.98,
+    "left": 389.66,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 536.11, 449.9],
+    "fontName": "g_d5_f28",
+    "id": "0001-0188",
+    "top": 332.98,
+    "left": 536.11,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "analytic ",
+    "dir": "ltr",
+    "width": 30.54288,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 538.51, 449.9],
+    "fontName": "g_d5_f28",
+    "id": "0001-0189",
+    "top": 332.98,
+    "left": 538.51,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "environment  of  the  visualization.  W",
+    "dir": "ltr",
+    "width": 141.64271999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 439.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0190",
+    "top": 343.06,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "e",
+    "dir": "ltr",
+    "width": 4.0492799999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 458.33, 439.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0191",
+    "top": 343.06,
+    "left": 458.33,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 462.41, 439.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0192",
+    "top": 343.06,
+    "left": 462.41,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "introduce",
+    "dir": "ltr",
+    "width": 34.0176,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 466.73, 439.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0193",
+    "top": 343.06,
+    "left": 466.73,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 500.83, 439.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0194",
+    "top": 343.06,
+    "left": 500.83,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "scented",
+    "dir": "ltr",
+    "width": 27.086399999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 505.39, 439.82],
+    "fontName": "g_d5_f30",
+    "id": "0001-0195",
+    "top": 343.06,
+    "left": 505.39,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 532.51, 439.82],
+    "fontName": "g_d5_f30",
+    "id": "0001-0196",
+    "top": 343.06,
+    "left": 532.51,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "widgets",
+    "dir": "ltr",
+    "width": 27.29616,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 537.07, 439.82],
+    "fontName": "g_d5_f30",
+    "id": "0001-0197",
+    "top": 343.06,
+    "left": 537.07,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ";",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 564.46, 439.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0198",
+    "top": 343.06,
+    "left": 564.46,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 566.86, 439.82],
+    "fontName": "g_d5_f28",
+    "id": "0001-0199",
+    "top": 343.06,
+    "left": 566.86,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "enhanced  user  interface  widgets",
+    "dir": "ltr",
+    "width": 119.54495999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 429.74],
+    "fontName": "g_d5_f28",
+    "id": "0001-0200",
+    "top": 353.14,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 436.49, 429.74],
+    "fontName": "g_d5_f28",
+    "id": "0001-0201",
+    "top": 353.14,
+    "left": 436.49,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "with  embedded  visualizations  that ",
+    "dir": "ltr",
+    "width": 128.84735999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 440.09, 429.74],
+    "fontName": "g_d5_f28",
+    "id": "0001-0202",
+    "top": 353.14,
+    "left": 440.09,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "provide  information  scent  cues  for  navigating  information  spaces",
+    "dir": "ltr",
+    "width": 249.96095999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 419.9],
+    "fontName": "g_d5_f28",
+    "id": "0001-0203",
+    "top": 362.98,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 566.86, 419.9],
+    "fontName": "g_d5_f28",
+    "id": "0001-0204",
+    "top": 362.98,
+    "left": 566.86,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "(see  Figure  1  for  examples)",
+    "dir": "ltr",
+    "width": 110.41584,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 409.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0205",
+    "top": 373.08,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ". ",
+    "dir": "ltr",
+    "width": 4.8,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 427.13, 409.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0206",
+    "top": 373.08,
+    "left": 427.13,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "W",
+    "dir": "ltr",
+    "width": 8.60928,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 434.57, 409.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0207",
+    "top": 373.08,
+    "left": 434.57,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "e",
+    "dir": "ltr",
+    "width": 4.0492799999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 442.97, 409.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0208",
+    "top": 373.08,
+    "left": 442.97,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 447.05, 409.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0209",
+    "top": 373.08,
+    "left": 447.05,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "propose",
+    "dir": "ltr",
+    "width": 28.51824,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 452.09, 409.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0210",
+    "top": 373.08,
+    "left": 452.09,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 480.65, 409.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0211",
+    "top": 373.08,
+    "left": 480.65,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "design  guid",
+    "dir": "ltr",
+    "width": 44.5968,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 485.69, 409.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0212",
+    "top": 373.08,
+    "left": 485.69,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "elines  for ",
+    "dir": "ltr",
+    "width": 38.714400000000005,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 530.35, 409.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0213",
+    "top": 373.08,
+    "left": 530.35,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "adding  embedded  visualizations  to  common  user  interface  controls ",
+    "dir": "ltr",
+    "width": 252.0494399999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 399.72],
+    "fontName": "g_d5_f28",
+    "id": "0001-0214",
+    "top": 383.15999999999997,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "such  as  radio  buttons,  sliders,  and  combo  boxes",
+    "dir": "ltr",
+    "width": 177.09216000000004,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 389.88],
+    "fontName": "g_d5_f28",
+    "id": "0001-0215",
+    "top": 393,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ".",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 494.11, 389.88],
+    "fontName": "g_d5_f28",
+    "id": "0001-0216",
+    "top": 393,
+    "left": 494.11,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 496.51, 389.88],
+    "fontName": "g_d5_f28",
+    "id": "0001-0217",
+    "top": 393,
+    "left": 496.51,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "We  then  present ",
+    "dir": "ltr",
+    "width": 62.44463999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 499.63, 389.88],
+    "fontName": "g_d5_f28",
+    "id": "0001-0218",
+    "top": 393,
+    "left": 499.63,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "a ",
+    "dir": "ltr",
+    "width": 5.91128,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 563.02, 389.88],
+    "fontName": "g_d5_f28",
+    "id": "0001-0219",
+    "top": 393,
+    "left": 563.02,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Java",
+    "dir": "ltr",
+    "width": 16.03296,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 379.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0220",
+    "top": 403.08,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 332.76, 379.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0221",
+    "top": 403.08,
+    "left": 332.76,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "based toolkit",
+    "dir": "ltr",
+    "width": 46.402559999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 335.64, 379.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0222",
+    "top": 403.08,
+    "left": 335.64,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 382.22, 379.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0223",
+    "top": 403.08,
+    "left": 382.22,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "level software framework, developed ",
+    "dir": "ltr",
+    "width": 136.71792,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 385.1, 379.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0224",
+    "top": 403.08,
+    "left": 385.1,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "according",
+    "dir": "ltr",
+    "width": 35.48591999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 522.19, 379.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0225",
+    "top": 403.08,
+    "left": 522.19,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 557.5, 379.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0226",
+    "top": 403.08,
+    "left": 557.5,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "to",
+    "dir": "ltr",
+    "width": 7.30536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 559.9, 379.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0227",
+    "top": 403.08,
+    "left": 559.9,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 566.86, 379.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0228",
+    "top": 403.08,
+    "left": 566.86,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "these  guidelines,  that  allows  scented  widgets",
+    "dir": "ltr",
+    "width": 170.35247999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 369.72],
+    "fontName": "g_d5_f28",
+    "id": "0001-0229",
+    "top": 413.15999999999997,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 487.39, 369.72],
+    "fontName": "g_d5_f28",
+    "id": "0001-0230",
+    "top": 413.15999999999997,
+    "left": 487.39,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "to  be  added  to ",
+    "dir": "ltr",
+    "width": 58.58688,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 491.47, 369.72],
+    "fontName": "g_d5_f28",
+    "id": "0001-0231",
+    "top": 413.15999999999997,
+    "left": 491.47,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "user ",
+    "dir": "ltr",
+    "width": 17.145599999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 551.98, 369.72],
+    "fontName": "g_d5_f28",
+    "id": "0001-0232",
+    "top": 413.15999999999997,
+    "left": 551.98,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "interfaces",
+    "dir": "ltr",
+    "width": 35.16672,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 359.88],
+    "fontName": "g_d5_f28",
+    "id": "0001-0233",
+    "top": 423,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 351.72, 359.88],
+    "fontName": "g_d5_f28",
+    "id": "0001-0234",
+    "top": 423,
+    "left": 351.72,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "and bound to backing data sources",
+    "dir": "ltr",
+    "width": 124.61567999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 354.12, 359.88],
+    "fontName": "g_d5_f28",
+    "id": "0001-0235",
+    "top": 423,
+    "left": 354.12,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ". This framework allows ",
+    "dir": "ltr",
+    "width": 90.2424,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 478.73, 359.88],
+    "fontName": "g_d5_f28",
+    "id": "0001-0236",
+    "top": 423,
+    "left": 478.73,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "visual  navigation  aids  to  be  added  to  existing  applications  with ",
+    "dir": "ltr",
+    "width": 251.96735999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 349.8],
+    "fontName": "g_d5_f28",
+    "id": "0001-0237",
+    "top": 433.08,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "minimal  modifications  to  application  source  code. ",
+    "dir": "ltr",
+    "width": 187.99967999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 339.72],
+    "fontName": "g_d5_f28",
+    "id": "0001-0238",
+    "top": 443.15999999999997,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "We  also  provide ",
+    "dir": "ltr",
+    "width": 62.928000000000004,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 506.11, 339.72],
+    "fontName": "g_d5_f28",
+    "id": "0001-0239",
+    "top": 443.15999999999997,
+    "left": 506.11,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "results from",
+    "dir": "ltr",
+    "width": 43.99488000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 329.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0240",
+    "top": 453.02,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 360.62, 329.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0241",
+    "top": 453.02,
+    "left": 360.62,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "a",
+    "dir": "ltr",
+    "width": 4.0492799999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 363.5, 329.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0242",
+    "top": 453.02,
+    "left": 363.5,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "n",
+    "dir": "ltr",
+    "width": 4.56,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 367.58, 329.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0243",
+    "top": 453.02,
+    "left": 367.58,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 372.14, 329.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0244",
+    "top": 453.02,
+    "left": 372.14,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "initial",
+    "dir": "ltr",
+    "width": 21.21312,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 375.02, 329.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0245",
+    "top": 453.02,
+    "left": 375.02,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 396.38, 329.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0246",
+    "top": 453.02,
+    "left": 396.38,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "evaluation o",
+    "dir": "ltr",
+    "width": 44.824799999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 399.26, 329.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0247",
+    "top": 453.02,
+    "left": 399.26,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "f scented widgets in a social data ",
+    "dir": "ltr",
+    "width": 124.96223999999992,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 443.93, 329.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0248",
+    "top": 453.02,
+    "left": 443.93,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "analysis  application",
+    "dir": "ltr",
+    "width": 72.11183999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 319.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0249",
+    "top": 463.1,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ".  The  results show",
+    "dir": "ltr",
+    "width": 67.93487999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 388.7, 319.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0250",
+    "top": 463.1,
+    "left": 388.7,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 456.65, 319.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0251",
+    "top": 463.1,
+    "left": 456.65,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "that ",
+    "dir": "ltr",
+    "width": 15.932639999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 459.77, 319.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0252",
+    "top": 463.1,
+    "left": 459.77,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "using  scented  widgets to ",
+    "dir": "ltr",
+    "width": 92.64095999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 476.33, 319.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0253",
+    "top": 463.1,
+    "left": 476.33,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "provide social navigation",
+    "dir": "ltr",
+    "width": 92.02079999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 309.7],
+    "fontName": "g_d5_f28",
+    "id": "0001-0254",
+    "top": 473.18,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 408.86, 309.7],
+    "fontName": "g_d5_f28",
+    "id": "0001-0255",
+    "top": 473.18,
+    "left": 408.86,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "cues help",
+    "dir": "ltr",
+    "width": 34.5192,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 411.74, 309.7],
+    "fontName": "g_d5_f28",
+    "id": "0001-0256",
+    "top": 473.18,
+    "left": 411.74,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 446.33, 309.7],
+    "fontName": "g_d5_f28",
+    "id": "0001-0257",
+    "top": 473.18,
+    "left": 446.33,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "users make up to twice as many",
+    "dir": "ltr",
+    "width": 117.92159999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 448.97, 309.7],
+    "fontName": "g_d5_f28",
+    "id": "0001-0258",
+    "top": 473.18,
+    "left": 448.97,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 566.86, 309.7],
+    "fontName": "g_d5_f28",
+    "id": "0001-0259",
+    "top": 473.18,
+    "left": 566.86,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "unique  discoveries  in  unfamiliar  datasets",
+    "dir": "ltr",
+    "width": 156.92784000000006,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 299.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0260",
+    "top": 483.02,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ",  but  that  these  benefits ",
+    "dir": "ltr",
+    "width": 95.24015999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 473.69, 299.86],
+    "fontName": "g_d5_f28",
+    "id": "0001-0261",
+    "top": 483.02,
+    "left": 473.69,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "equalize as users ",
+    "dir": "ltr",
+    "width": 62.663520000000005,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 289.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0262",
+    "top": 493.1,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "become more familiar with the data",
+    "dir": "ltr",
+    "width": 127.95359999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 379.58, 289.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0263",
+    "top": 493.1,
+    "left": 379.58,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ".",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 507.79, 289.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0264",
+    "top": 493.1,
+    "left": 507.79,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 509.95, 289.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0265",
+    "top": 493.1,
+    "left": 509.95,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "2",
+    "dir": "ltr",
+    "width": 5.07072,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 267.7],
+    "fontName": "Helvetica",
+    "id": "0001-0266",
+    "top": 515.1800000000001,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 321.72, 267.7],
+    "fontName": "Helvetica",
+    "id": "0001-0267",
+    "top": 515.1800000000001,
+    "left": 321.72,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "R",
+    "dir": "ltr",
+    "width": 6.584639999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 338.28, 267.7],
+    "fontName": "Helvetica",
+    "id": "0001-0268",
+    "top": 515.1800000000001,
+    "left": 338.28,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "ELATED ",
+    "dir": "ltr",
+    "width": 29.74008,
+    "height": 6.96,
+    "transform": [6.96, 0, 0, 6.96, 344.76, 267.7],
+    "fontName": "Helvetica",
+    "id": "0001-0269",
+    "top": 517.34,
+    "left": 344.76,
+    "fontHeight": 6.96,
+    "fontWidth": 6.96,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "W",
+    "dir": "ltr",
+    "width": 8.60928,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 374.54, 267.7],
+    "fontName": "Helvetica",
+    "id": "0001-0270",
+    "top": 515.1800000000001,
+    "left": 374.54,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "ORK",
+    "dir": "ltr",
+    "width": 15.33288,
+    "height": 6.96,
+    "transform": [6.96, 0, 0, 6.96, 383.18, 267.7],
+    "fontName": "Helvetica",
+    "id": "0001-0271",
+    "top": 517.34,
+    "left": 383.18,
+    "fontHeight": 6.96,
+    "fontWidth": 6.96,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 398.78, 267.7],
+    "fontName": "Helvetica",
+    "id": "0001-0272",
+    "top": 515.1800000000001,
+    "left": 398.78,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Numerous  navigation  mechanisms  have  been  proposed  to  improve ",
+    "dir": "ltr",
+    "width": 252.08591999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 253.78],
+    "fontName": "g_d5_f28",
+    "id": "0001-0273",
+    "top": 529.1,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "human",
+    "dir": "ltr",
+    "width": 24.706079999999993,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 243.67],
+    "fontName": "g_d5_f28",
+    "id": "0001-0274",
+    "top": 539.21,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 341.4, 243.67],
+    "fontName": "g_d5_f28",
+    "id": "0001-0275",
+    "top": 539.21,
+    "left": 341.4,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "information   interaction.   In   such   interfaces,   users   may ",
+    "dir": "ltr",
+    "width": 224.50704000000002,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 344.28, 243.67],
+    "fontName": "g_d5_f28",
+    "id": "0001-0276",
+    "top": 539.21,
+    "left": 344.28,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "navigate along both ",
+    "dir": "ltr",
+    "width": 73.92671999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 233.83],
+    "fontName": "g_d5_f28",
+    "id": "0001-0277",
+    "top": 549.05,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "spatial",
+    "dir": "ltr",
+    "width": 24.3504,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 391.1, 233.83],
+    "fontName": "g_d5_f30",
+    "id": "0001-0278",
+    "top": 549.05,
+    "left": 391.1,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 415.58, 233.83],
+    "fontName": "g_d5_f28",
+    "id": "0001-0279",
+    "top": 549.05,
+    "left": 415.58,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "and ",
+    "dir": "ltr",
+    "width": 15.467519999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 417.98, 233.83],
+    "fontName": "g_d5_f28",
+    "id": "0001-0280",
+    "top": 549.05,
+    "left": 417.98,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "semantic",
+    "dir": "ltr",
+    "width": 32.11152,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 433.61, 233.83],
+    "fontName": "g_d5_f30",
+    "id": "0001-0281",
+    "top": 549.05,
+    "left": 433.61,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 465.77, 233.83],
+    "fontName": "g_d5_f28",
+    "id": "0001-0282",
+    "top": 549.05,
+    "left": 465.77,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "data dimensions. Examples ",
+    "dir": "ltr",
+    "width": 100.80336,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 468.17, 233.83],
+    "fontName": "g_d5_f28",
+    "id": "0001-0283",
+    "top": 549.05,
+    "left": 468.17,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "of",
+    "dir": "ltr",
+    "width": 7.11696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0284",
+    "top": 559.13,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 323.88, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0285",
+    "top": 559.13,
+    "left": 323.88,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "spatial",
+    "dir": "ltr",
+    "width": 23.8488,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 327.24, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0286",
+    "top": 559.13,
+    "left": 327.24,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 351.24, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0287",
+    "top": 559.13,
+    "left": 351.24,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "navigat",
+    "dir": "ltr",
+    "width": 26.502719999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 354.6, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0288",
+    "top": 559.13,
+    "left": 354.6,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "ion",
+    "dir": "ltr",
+    "width": 11.50944,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 381.02, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0289",
+    "top": 559.13,
+    "left": 381.02,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 392.54, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0290",
+    "top": 559.13,
+    "left": 392.54,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "include",
+    "dir": "ltr",
+    "width": 26.584799999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 395.9, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0291",
+    "top": 559.13,
+    "left": 395.9,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 422.57, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0292",
+    "top": 559.13,
+    "left": 422.57,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "maps",
+    "dir": "ltr",
+    "width": 18.896639999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 425.93, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0293",
+    "top": 559.13,
+    "left": 425.93,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 444.89, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0294",
+    "top": 559.13,
+    "left": 444.89,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "and",
+    "dir": "ltr",
+    "width": 13.18752,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 448.25, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0295",
+    "top": 559.13,
+    "left": 448.25,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 461.45, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0296",
+    "top": 559.13,
+    "left": 461.45,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "virtual",
+    "dir": "ltr",
+    "width": 23.38368,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 464.81, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0297",
+    "top": 559.13,
+    "left": 464.81,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 488.35, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0298",
+    "top": 559.13,
+    "left": 488.35,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "worlds;",
+    "dir": "ltr",
+    "width": 27.00432,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 491.71, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0299",
+    "top": 559.13,
+    "left": 491.71,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 518.59, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0300",
+    "top": 559.13,
+    "left": 518.59,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "examples  of ",
+    "dir": "ltr",
+    "width": 47.09568000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 521.95, 223.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0301",
+    "top": 559.13,
+    "left": 521.95,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "semantic",
+    "dir": "ltr",
+    "width": 32.31215999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 213.67],
+    "fontName": "g_d5_f28",
+    "id": "0001-0302",
+    "top": 569.21,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 348.84, 213.67],
+    "fontName": "g_d5_f28",
+    "id": "0001-0303",
+    "top": 569.21,
+    "left": 348.84,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "navigation  include  web  hyperlinks  and  dynamic  query ",
+    "dir": "ltr",
+    "width": 214.66655999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 354.12, 213.67],
+    "fontName": "g_d5_f28",
+    "id": "0001-0304",
+    "top": 569.21,
+    "left": 354.12,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "filters  [1].  Navigation  cues  may  be  derived  from  the  information ",
+    "dir": "ltr",
+    "width": 252.0676799999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 203.83],
+    "fontName": "g_d5_f28",
+    "id": "0001-0305",
+    "top": 579.05,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "content being explored (e.g., data distribution or landmarks) or from ",
+    "dir": "ltr",
+    "width": 251.95823999999985,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 193.75],
+    "fontName": "g_d5_f28",
+    "id": "0001-0306",
+    "top": 589.13,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "metadata,  s",
+    "dir": "ltr",
+    "width": 41.62367999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 183.67],
+    "fontName": "g_d5_f28",
+    "id": "0001-0307",
+    "top": 599.21,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "uch  as  accumulated  usage  patterns.  This  last  scenario  is ",
+    "dir": "ltr",
+    "width": 210.25248,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 358.46, 183.67],
+    "fontName": "g_d5_f28",
+    "id": "0001-0308",
+    "top": 599.21,
+    "left": 358.46,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "an  example  of ",
+    "dir": "ltr",
+    "width": 56.44368,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 173.83],
+    "fontName": "g_d5_f28",
+    "id": "0001-0309",
+    "top": 609.05,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "social  navigation",
+    "dir": "ltr",
+    "width": 64.23216,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 374.78, 173.83],
+    "fontName": "g_d5_f30",
+    "id": "0001-0310",
+    "top": 609.05,
+    "left": 374.78,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 439.13, 173.83],
+    "fontName": "g_d5_f28",
+    "id": "0001-0311",
+    "top": 609.05,
+    "left": 439.13,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "[9],  in  which  aggregated  activity ",
+    "dir": "ltr",
+    "width": 125.93807999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 442.97, 173.83],
+    "fontName": "g_d5_f28",
+    "id": "0001-0312",
+    "top": 609.05,
+    "left": 442.97,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "patterns  are presented to  promote  awareness  of  other  users’  actions ",
+    "dir": "ltr",
+    "width": 251.99471999999992,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 163.73],
+    "fontName": "g_d5_f31",
+    "id": "0001-0313",
+    "top": 619.15,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375,
+      "vertical": false
+    }
+  }, {
+    "str": "within  the  information  space. ",
+    "dir": "ltr",
+    "width": 116.84543999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 153.65],
+    "fontName": "g_d5_f28",
+    "id": "0001-0314",
+    "top": 629.23,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "All  such",
+    "dir": "ltr",
+    "width": 33.07824,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 436.73, 153.65],
+    "fontName": "g_d5_f28",
+    "id": "0001-0315",
+    "top": 629.23,
+    "left": 436.73,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 469.85, 153.65],
+    "fontName": "g_d5_f28",
+    "id": "0001-0316",
+    "top": 629.23,
+    "left": 469.85,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "navigation",
+    "dir": "ltr",
+    "width": 37.87536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 475.13, 153.65],
+    "fontName": "g_d5_f28",
+    "id": "0001-0317",
+    "top": 629.23,
+    "left": 475.13,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 513.07, 153.65],
+    "fontName": "g_d5_f28",
+    "id": "0001-0318",
+    "top": 629.23,
+    "left": 513.07,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "cues ",
+    "dir": "ltr",
+    "width": 18.34032,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 518.35, 153.65],
+    "fontName": "g_d5_f28",
+    "id": "0001-0319",
+    "top": 629.23,
+    "left": 518.35,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "provide ",
+    "dir": "ltr",
+    "width": 29.38464,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 539.71, 153.65],
+    "fontName": "g_d5_f28",
+    "id": "0001-0320",
+    "top": 629.23,
+    "left": 539.71,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "pr",
+    "dir": "ltr",
+    "width": 7.596959999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 143.81],
+    "fontName": "g_d5_f28",
+    "id": "0001-0321",
+    "top": 639.0699999999999,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "oximal  information ",
+    "dir": "ltr",
+    "width": 73.47984,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 324.36, 143.81],
+    "fontName": "g_d5_f28",
+    "id": "0001-0322",
+    "top": 639.0699999999999,
+    "left": 324.36,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "that  help",
+    "dir": "ltr",
+    "width": 32.82288,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 399.5, 143.81],
+    "fontName": "g_d5_f28",
+    "id": "0001-0323",
+    "top": 639.0699999999999,
+    "left": 399.5,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "s",
+    "dir": "ltr",
+    "width": 3.5476799999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 432.41, 143.81],
+    "fontName": "g_d5_f28",
+    "id": "0001-0324",
+    "top": 639.0699999999999,
+    "left": 432.41,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 436.01, 143.81],
+    "fontName": "g_d5_f28",
+    "id": "0001-0325",
+    "top": 639.0699999999999,
+    "left": 436.01,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "users  stay  oriented  and  gauge  the ",
+    "dir": "ltr",
+    "width": 129.04800000000003,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 439.85, 143.81],
+    "fontName": "g_d5_f28",
+    "id": "0001-0326",
+    "top": 639.0699999999999,
+    "left": 439.85,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "relevance of distal information content.",
+    "dir": "ltr",
+    "width": 141.53328,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 133.73],
+    "fontName": "g_d5_f28",
+    "id": "0001-0327",
+    "top": 649.15,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 458.33, 133.73],
+    "fontName": "g_d5_f28",
+    "id": "0001-0328",
+    "top": 649.15,
+    "left": 458.33,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "One  class  of  navigation  aids  seeks  to  facilitate  browsing  in ",
+    "dir": "ltr",
+    "width": 242.86559999999986,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 325.8, 123.65],
+    "fontName": "g_d5_f28",
+    "id": "0001-0329",
+    "top": 659.23,
+    "left": 325.8,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "geometric spaces, such as zoomable 2D canvases. Overview displays ",
+    "dir": "ltr",
+    "width": 252.02208000000013,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 113.81],
+    "fontName": "g_d5_f28",
+    "id": "0001-0330",
+    "top": 669.0699999999999,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "are one common approach,",
+    "dir": "ltr",
+    "width": 97.69344,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 103.73],
+    "fontName": "g_d5_f28",
+    "id": "0001-0331",
+    "top": 679.15,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 414.62, 103.73],
+    "fontName": "g_d5_f28",
+    "id": "0001-0332",
+    "top": 679.15,
+    "left": 414.62,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "while other approaches embed navigation ",
+    "dir": "ltr",
+    "width": 151.85712,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 417.02, 103.73],
+    "fontName": "g_d5_f28",
+    "id": "0001-0333",
+    "top": 679.15,
+    "left": 417.02,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "cues directly in focal display regions. For example, Halo [2] and City ",
+    "dir": "ltr",
+    "width": 252.00384,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 93.648],
+    "fontName": "g_d5_f28",
+    "id": "0001-0334",
+    "top": 689.232,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Lights  [22]  use  marks  near  the  periphery  of  a  display  to  provide ",
+    "dir": "ltr",
+    "width": 251.99471999999986,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 83.808],
+    "fontName": "g_d5_f28",
+    "id": "0001-0335",
+    "top": 699.072,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "information about the relative position of off",
+    "dir": "ltr",
+    "width": 160.75824,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 73.704],
+    "fontName": "g_d5_f28",
+    "id": "0001-0336",
+    "top": 709.176,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 477.53, 73.704],
+    "fontName": "g_d5_f28",
+    "id": "0001-0337",
+    "top": 709.176,
+    "left": 477.53,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "sc",
+    "dir": "ltr",
+    "width": 7.701559999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 480.41, 73.704],
+    "fontName": "g_d5_f28",
+    "id": "0001-0338",
+    "top": 709.176,
+    "left": 480.41,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "r",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 487.87, 73.704],
+    "fontName": "g_d5_f28",
+    "id": "0001-0339",
+    "top": 709.176,
+    "left": 487.87,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "een elements. ",
+    "dir": "ltr",
+    "width": 51.40943999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 490.99, 73.704],
+    "fontName": "g_d5_f28",
+    "id": "0001-0340",
+    "top": 709.176,
+    "left": 490.99,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 542.35, 73.704],
+    "fontName": "g_d5_f28",
+    "id": "0001-0341",
+    "top": 709.176,
+    "left": 542.35,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Semantic   navig",
+    "dir": "ltr",
+    "width": 61.12224,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 325.8, 63.624],
+    "fontName": "g_d5_f28",
+    "id": "0001-0342",
+    "top": 719.256,
+    "left": 325.8,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "ation   examples   provide   cues   based   on   the ",
+    "dir": "ltr",
+    "width": 182.07168,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 386.78, 63.624],
+    "fontName": "g_d5_f28",
+    "id": "0001-0343",
+    "top": 719.256,
+    "left": 386.78,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "information content itself. In visualization, h",
+    "dir": "ltr",
+    "width": 163.4304,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 316.68, 53.784],
+    "fontName": "g_d5_f28",
+    "id": "0001-0344",
+    "top": 729.096,
+    "left": 316.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "istogram sliders [8] ",
+    "dir": "ltr",
+    "width": 73.21535999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 480.17, 53.784],
+    "fontName": "g_d5_f28",
+    "id": "0001-0345",
+    "top": 729.096,
+    "left": 480.17,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "and ",
+    "dir": "ltr",
+    "width": 15.002399999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 554.14, 53.784],
+    "fontName": "g_d5_f28",
+    "id": "0001-0346",
+    "top": 729.096,
+    "left": 554.14,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 1.98,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 57.624, 118.61],
+    "fontName": "Times New Roman",
+    "id": "0001-0347",
+    "top": 665.47,
+    "left": 57.624,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 61.704, 109.49],
+    "fontName": "Helvetica",
+    "id": "0001-0348",
+    "top": 673.39,
+    "left": 61.704,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Wesley Willet",
+    "dir": "ltr",
+    "width": 42.25320000000001,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 66.264, 109.49],
+    "fontName": "Times New Roman",
+    "id": "0001-0349",
+    "top": 674.59,
+    "left": 66.264,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "t",
+    "dir": "ltr",
+    "width": 2.20176,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 108.53, 109.49],
+    "fontName": "Times New Roman",
+    "id": "0001-0350",
+    "top": 674.59,
+    "left": 108.53,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": ", Jeff",
+    "dir": "ltr",
+    "width": 15.380640000000001,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 110.69, 109.49],
+    "fontName": "Times New Roman",
+    "id": "0001-0351",
+    "top": 674.59,
+    "left": 110.69,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "rey Heer, and Maneesh Agrawala are",
+    "dir": "ltr",
+    "width": 119.75039999999994,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 126.05, 109.49],
+    "fontName": "Times New Roman",
+    "id": "0001-0352",
+    "top": 674.59,
+    "left": 126.05,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 1.98,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 246.1, 109.49],
+    "fontName": "Times New Roman",
+    "id": "0001-0353",
+    "top": 674.59,
+    "left": 246.1,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "with ",
+    "dir": "ltr",
+    "width": 15.649920000000003,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 248.02, 109.49],
+    "fontName": "Times New Roman",
+    "id": "0001-0354",
+    "top": 674.59,
+    "left": 248.02,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "the ",
+    "dir": "ltr",
+    "width": 11.808720000000001,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 263.62, 109.49],
+    "fontName": "Times New Roman",
+    "id": "0001-0355",
+    "top": 674.59,
+    "left": 263.62,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "Computer Science Division at the ",
+    "dir": "ltr",
+    "width": 109.35936,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 66.264, 100.61],
+    "fontName": "Times New Roman",
+    "id": "0001-0356",
+    "top": 683.47,
+    "left": 66.264,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "U",
+    "dir": "ltr",
+    "width": 5.71824,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 175.75, 100.61],
+    "fontName": "Times New Roman",
+    "id": "0001-0357",
+    "top": 683.47,
+    "left": 175.75,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "niversity of ",
+    "dir": "ltr",
+    "width": 37.699200000000005,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 181.51, 100.61],
+    "fontName": "Times New Roman",
+    "id": "0001-0358",
+    "top": 683.47,
+    "left": 181.51,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "C",
+    "dir": "ltr",
+    "width": 5.282640000000001,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 219.19, 100.61],
+    "fontName": "Times New Roman",
+    "id": "0001-0359",
+    "top": 683.47,
+    "left": 219.19,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "alifornia at Berkeley",
+    "dir": "ltr",
+    "width": 66.32208000000001,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 224.47, 100.61],
+    "fontName": "Times New Roman",
+    "id": "0001-0360",
+    "top": 683.47,
+    "left": 224.47,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": ", ",
+    "dir": "ltr",
+    "width": 3.84,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 290.5, 100.61],
+    "fontName": "Times New Roman",
+    "id": "0001-0361",
+    "top": 683.47,
+    "left": 290.5,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "  ",
+    "dir": "ltr",
+    "width": 3.84,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 294.36, 100.61],
+    "fontName": "Times New Roman",
+    "id": "0001-0362",
+    "top": 683.47,
+    "left": 294.36,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "E",
+    "dir": "ltr",
+    "width": 4.839119999999999,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 66.264, 91.488],
+    "fontName": "Times New Roman",
+    "id": "0001-0363",
+    "top": 692.592,
+    "left": 66.264,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 2.63736,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 71.064, 91.488],
+    "fontName": "Times New Roman",
+    "id": "0001-0364",
+    "top": 692.592,
+    "left": 71.064,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "Mail: ",
+    "dir": "ltr",
+    "width": 19.720799999999997,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 73.704, 91.488],
+    "fontName": "Times New Roman",
+    "id": "0001-0365",
+    "top": 692.592,
+    "left": 73.704,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "{",
+    "dir": "ltr",
+    "width": 3.168,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 93.384, 91.488],
+    "fontName": "Times New Roman",
+    "id": "0001-0366",
+    "top": 692.592,
+    "left": 93.384,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "willettw",
+    "dir": "ltr",
+    "width": 25.193520000000003,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 96.744, 91.488],
+    "fontName": "Times New Roman",
+    "id": "0001-0367",
+    "top": 692.592,
+    "left": 96.744,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": ", jheer, maneesh}",
+    "dir": "ltr",
+    "width": 54.67968000000002,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 121.49, 91.488],
+    "fontName": "Times New Roman",
+    "id": "0001-0368",
+    "top": 692.592,
+    "left": 121.49,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "@cs.berkeley.edu.",
+    "dir": "ltr",
+    "width": 58.30704000000001,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 176.23, 91.488],
+    "fontName": "Times New Roman",
+    "id": "0001-0369",
+    "top": 692.592,
+    "left": 176.23,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 1.98,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 234.58, 91.488],
+    "fontName": "Times New Roman",
+    "id": "0001-0370",
+    "top": 692.592,
+    "left": 234.58,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 1.98,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 57.624, 82.608],
+    "fontName": "Times New Roman",
+    "id": "0001-0371",
+    "top": 701.472,
+    "left": 57.624,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "Manuscript  received  31  March  2007;  accepted  1  August  2007;  posted ",
+    "dir": "ltr",
+    "width": 245.42496000000006,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 57.624, 73.944],
+    "fontName": "Times New Roman",
+    "id": "0001-0372",
+    "top": 710.136,
+    "left": 57.624,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "online",
+    "dir": "ltr",
+    "width": 20.053440000000002,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 57.624, 65.544],
+    "fontName": "Times New Roman",
+    "id": "0001-0373",
+    "top": 718.5360000000001,
+    "left": 57.624,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 1.98,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 77.784, 65.544],
+    "fontName": "Times New Roman",
+    "id": "0001-0374",
+    "top": 718.5360000000001,
+    "left": 77.784,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "2",
+    "dir": "ltr",
+    "width": 3.96,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 79.704, 65.544],
+    "fontName": "Times New Roman",
+    "id": "0001-0375",
+    "top": 718.5360000000001,
+    "left": 79.704,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "7",
+    "dir": "ltr",
+    "width": 3.96,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 83.784, 65.544],
+    "fontName": "Times New Roman",
+    "id": "0001-0376",
+    "top": 718.5360000000001,
+    "left": 83.784,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 1.98,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 87.864, 65.544],
+    "fontName": "Times New Roman",
+    "id": "0001-0377",
+    "top": 718.5360000000001,
+    "left": 87.864,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "October",
+    "dir": "ltr",
+    "width": 26.32608,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 89.784, 65.544],
+    "fontName": "Times New Roman",
+    "id": "0001-0378",
+    "top": 718.5360000000001,
+    "left": 89.784,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 1.98,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 116.21, 65.544],
+    "fontName": "Times New Roman",
+    "id": "0001-0379",
+    "top": 718.5360000000001,
+    "left": 116.21,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "2007. ",
+    "dir": "ltr",
+    "width": 19.7208,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 118.13, 65.544],
+    "fontName": "Times New Roman",
+    "id": "0001-0380",
+    "top": 718.5360000000001,
+    "left": 118.13,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 1.98,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 137.81, 65.544],
+    "fontName": "Times New Roman",
+    "id": "0001-0381",
+    "top": 718.5360000000001,
+    "left": 137.81,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "For information on obtaining reprints of this article, please send e",
+    "dir": "ltr",
+    "width": 215.10719999999992,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 57.624, 57.144],
+    "fontName": "Times New Roman",
+    "id": "0001-0382",
+    "top": 726.936,
+    "left": 57.624,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 2.63736,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 273.22, 57.144],
+    "fontName": "Times New Roman",
+    "id": "0001-0383",
+    "top": 726.936,
+    "left": 273.22,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "mail to: ",
+    "dir": "ltr",
+    "width": 27.624960000000005,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 275.86, 57.144],
+    "fontName": "Times New Roman",
+    "id": "0001-0384",
+    "top": 726.936,
+    "left": 275.86,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "tvcg@computer.org",
+    "dir": "ltr",
+    "width": 62.93232000000001,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 57.624, 48.504],
+    "fontName": "Times New Roman",
+    "id": "0001-0385",
+    "top": 735.576,
+    "left": 57.624,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": ".",
+    "dir": "ltr",
+    "width": 1.98,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 120.77, 48.504],
+    "fontName": "Times New Roman",
+    "id": "0001-0386",
+    "top": 735.576,
+    "left": 120.77,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 1.98,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 122.45, 48.504],
+    "fontName": "Times New Roman",
+    "id": "0001-0387",
+    "top": 735.576,
+    "left": 122.45,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 3.024676224972,
+    "height": 11.938319725042764,
+    "transform": [12.098704899888, 0, 0, 11.925783246287999, 315.47, 478.33303646968],
+    "fontName": "Times New Roman",
+    "id": "0001-0388",
+    "top": 301.741180284032,
+    "left": 315.47,
+    "fontHeight": 11.925783246287999,
+    "fontWidth": 12.098704899888,
+    "scaleX": 1.0144998152346787,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 3,
+    "height": 12,
+    "transform": [12, 0, 0, 12, 568.54, 489.02],
+    "fontName": "Times New Roman",
+    "id": "0001-0389",
+    "top": 290.98,
+    "left": 568.54,
+    "fontHeight": 12,
+    "fontWidth": 12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "Figure 1. Widgets with visual information scent cues.",
+    "dir": "ltr",
+    "width": 201.47687999999994,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 315.48, 475.1],
+    "fontName": "Helvetica",
+    "id": "0001-0390",
+    "top": 308.97999999999996,
+    "left": 315.48,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "  ",
+    "dir": "ltr",
+    "width": 4.319920000000001,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 517.15, 475.1],
+    "fontName": "Helvetica",
+    "id": "0001-0391",
+    "top": 308.97999999999996,
+    "left": 517.15,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Left",
+    "dir": "ltr",
+    "width": 14.39064,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 521.71, 475.1],
+    "fontName": "Helvetica",
+    "id": "0001-0392",
+    "top": 308.97999999999996,
+    "left": 521.71,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": ": Radio ",
+    "dir": "ltr",
+    "width": 27.379440000000006,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 536.35, 475.1],
+    "fontName": "Helvetica",
+    "id": "0001-0393",
+    "top": 308.97999999999996,
+    "left": 536.35,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "buttons with comment counts. ",
+    "dir": "ltr",
+    "width": 107.67240000000001,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 315.48, 465.02],
+    "fontName": "Helvetica",
+    "id": "0001-0394",
+    "top": 319.06,
+    "left": 315.48,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Right",
+    "dir": "ltr",
+    "width": 20.37816,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 423.29, 465.02],
+    "fontName": "Helvetica",
+    "id": "0001-0395",
+    "top": 319.06,
+    "left": 423.29,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": ": ",
+    "dir": "ltr",
+    "width": 4.319920000000001,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 443.93, 465.02],
+    "fontName": "Helvetica",
+    "id": "0001-0396",
+    "top": 319.06,
+    "left": 443.93,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Histogram s",
+    "dir": "ltr",
+    "width": 42.54624000000001,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 448.25, 465.02],
+    "fontName": "Helvetica",
+    "id": "0001-0397",
+    "top": 319.06,
+    "left": 448.25,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "lider with data totals.",
+    "dir": "ltr",
+    "width": 72.87984,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 490.99, 465.02],
+    "fontName": "Helvetica",
+    "id": "0001-0398",
+    "top": 319.06,
+    "left": 490.99,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.20176,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 563.98, 465.02],
+    "fontName": "Helvetica",
+    "id": "0001-0399",
+    "top": 319.06,
+    "left": 563.98,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }],
+  "viewportFlat": {
+    "width": 612,
+    "height": 792,
+    "xMin": 0,
+    "yMin": 0,
+    "xMax": 612,
+    "yMax": 792
+  }
+};
+},{}],"../../node_modules/approx-string-match/dist/index.js":[function(require,module,exports) {
+"use strict";
+/**
+ * Implementation of Myers' online approximate string matching algorithm [1],
+ * with additional optimizations suggested by [2].
+ *
+ * This has O((k/w) * n) complexity where `n` is the length of the text, `k` is
+ * the maximum number of errors allowed (always <= the pattern length) and `w`
+ * is the word size. Because JS only supports bitwise operations on 32 bit
+ * integers, `w` is 32.
+ *
+ * As far as I am aware, there aren't any online algorithms which are
+ * significantly better for a wide range of input parameters. The problem can be
+ * solved faster using "filter then verify" approaches which first filter out
+ * regions of the text that cannot match using a "cheap" check and then verify
+ * the remaining potential matches. The verify step requires an algorithm such
+ * as this one however.
+ *
+ * The algorithm's approach is essentially to optimize the classic dynamic
+ * programming solution to the problem by computing columns of the matrix in
+ * word-sized chunks (ie. dealing with 32 chars of the pattern at a time) and
+ * avoiding calculating regions of the matrix where the minimum error count is
+ * guaranteed to exceed the input threshold.
+ *
+ * The paper consists of two parts, the first describes the core algorithm for
+ * matching patterns <= the size of a word (implemented by `advanceBlock` here).
+ * The second uses the core algorithm as part of a larger block-based algorithm
+ * to handle longer patterns.
+ *
+ * [1] G. Myers, “A Fast Bit-Vector Algorithm for Approximate String Matching
+ * Based on Dynamic Programming,” vol. 46, no. 3, pp. 395–415, 1999.
+ *
+ * [2] Šošić, M. (2014). An simd dynamic programming c/c++ library (Doctoral
+ * dissertation, Fakultet Elektrotehnike i računarstva, Sveučilište u Zagrebu).
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+function reverse(s) {
+    return s
+        .split("")
+        .reverse()
+        .join("");
+}
+/**
+ * Given the ends of approximate matches for `pattern` in `text`, find
+ * the start of the matches.
+ *
+ * @param findEndFn - Function for finding the end of matches in
+ * text.
+ * @return Matches with the `start` property set.
+ */
+function findMatchStarts(text, pattern, matches) {
+    var patRev = reverse(pattern);
+    return matches.map(function (m) {
+        // Find start of each match by reversing the pattern and matching segment
+        // of text and searching for an approx match with the same number of
+        // errors.
+        var minStart = Math.max(0, m.end - pattern.length - m.errors);
+        var textRev = reverse(text.slice(minStart, m.end));
+        // If there are multiple possible start points, choose the one that
+        // maximizes the length of the match.
+        var start = findMatchEnds(textRev, patRev, m.errors).reduce(function (min, rm) {
+            if (m.end - rm.end < min) {
+                return m.end - rm.end;
+            }
+            return min;
+        }, m.end);
+        return {
+            start: start,
+            end: m.end,
+            errors: m.errors
+        };
+    });
+}
+/**
+ * Return 1 if a number is non-zero or zero otherwise, without using
+ * conditional operators.
+ *
+ * This should get inlined into `advanceBlock` below by the JIT.
+ *
+ * Adapted from https://stackoverflow.com/a/3912218/434243
+ */
+function oneIfNotZero(n) {
+    return ((n | -n) >> 31) & 1;
+}
+/**
+ * Block calculation step of the algorithm.
+ *
+ * From Fig 8. on p. 408 of [1], additionally optimized to replace conditional
+ * checks with bitwise operations as per Section 4.2.3 of [2].
+ *
+ * @param ctx - The pattern context object
+ * @param peq - The `peq` array for the current character (`ctx.peq.get(ch)`)
+ * @param b - The block level
+ * @param hIn - Horizontal input delta ∈ {1,0,-1}
+ * @return Horizontal output delta ∈ {1,0,-1}
+ */
+function advanceBlock(ctx, peq, b, hIn) {
+    var pV = ctx.P[b];
+    var mV = ctx.M[b];
+    var hInIsNegative = hIn >>> 31; // 1 if hIn < 0 or 0 otherwise.
+    var eq = peq[b] | hInIsNegative;
+    // Step 1: Compute horizontal deltas.
+    var xV = eq | mV;
+    var xH = (((eq & pV) + pV) ^ pV) | eq;
+    var pH = mV | ~(xH | pV);
+    var mH = pV & xH;
+    // Step 2: Update score (value of last row of this block).
+    var hOut = oneIfNotZero(pH & ctx.lastRowMask[b]) -
+        oneIfNotZero(mH & ctx.lastRowMask[b]);
+    // Step 3: Update vertical deltas for use when processing next char.
+    pH <<= 1;
+    mH <<= 1;
+    mH |= hInIsNegative;
+    pH |= oneIfNotZero(hIn) - hInIsNegative; // set pH[0] if hIn > 0
+    pV = mH | ~(xV | pH);
+    mV = pH & xV;
+    ctx.P[b] = pV;
+    ctx.M[b] = mV;
+    return hOut;
+}
+/**
+ * Find the ends and error counts for matches of `pattern` in `text`.
+ *
+ * Only the matches with the lowest error count are reported. Other matches
+ * with error counts <= maxErrors are discarded.
+ *
+ * This is the block-based search algorithm from Fig. 9 on p.410 of [1].
+ */
+function findMatchEnds(text, pattern, maxErrors) {
+    if (pattern.length === 0) {
+        return [];
+    }
+    // Clamp error count so we can rely on the `maxErrors` and `pattern.length`
+    // rows being in the same block below.
+    maxErrors = Math.min(maxErrors, pattern.length);
+    var matches = [];
+    // Word size.
+    var w = 32;
+    // Index of maximum block level.
+    var bMax = Math.ceil(pattern.length / w) - 1;
+    // Context used across block calculations.
+    var ctx = {
+        P: new Uint32Array(bMax + 1),
+        M: new Uint32Array(bMax + 1),
+        lastRowMask: new Uint32Array(bMax + 1)
+    };
+    ctx.lastRowMask.fill(1 << 31);
+    ctx.lastRowMask[bMax] = 1 << (pattern.length - 1) % w;
+    // Dummy "peq" array for chars in the text which do not occur in the pattern.
+    var emptyPeq = new Uint32Array(bMax + 1);
+    // Map of UTF-16 character code to bit vector indicating positions in the
+    // pattern that equal that character.
+    var peq = new Map();
+    // Version of `peq` that only stores mappings for small characters. This
+    // allows faster lookups when iterating through the text because a simple
+    // array lookup can be done instead of a hash table lookup.
+    var asciiPeq = [];
+    for (var i = 0; i < 256; i++) {
+        asciiPeq.push(emptyPeq);
+    }
+    // Calculate `ctx.peq` - a map of character values to bitmasks indicating
+    // positions of that character within the pattern, where each bit represents
+    // a position in the pattern.
+    for (var c = 0; c < pattern.length; c += 1) {
+        var val = pattern.charCodeAt(c);
+        if (peq.has(val)) {
+            // Duplicate char in pattern.
+            continue;
+        }
+        var charPeq = new Uint32Array(bMax + 1);
+        peq.set(val, charPeq);
+        if (val < asciiPeq.length) {
+            asciiPeq[val] = charPeq;
+        }
+        for (var b = 0; b <= bMax; b += 1) {
+            charPeq[b] = 0;
+            // Set all the bits where the pattern matches the current char (ch).
+            // For indexes beyond the end of the pattern, always set the bit as if the
+            // pattern contained a wildcard char in that position.
+            for (var r = 0; r < w; r += 1) {
+                var idx = b * w + r;
+                if (idx >= pattern.length) {
+                    continue;
+                }
+                var match = pattern.charCodeAt(idx) === val;
+                if (match) {
+                    charPeq[b] |= 1 << r;
+                }
+            }
+        }
+    }
+    // Index of last-active block level in the column.
+    var y = Math.max(0, Math.ceil(maxErrors / w) - 1);
+    // Initialize maximum error count at bottom of each block.
+    var score = new Uint32Array(bMax + 1);
+    for (var b = 0; b <= y; b += 1) {
+        score[b] = (b + 1) * w;
+    }
+    score[bMax] = pattern.length;
+    // Initialize vertical deltas for each block.
+    for (var b = 0; b <= y; b += 1) {
+        ctx.P[b] = ~0;
+        ctx.M[b] = 0;
+    }
+    // Process each char of the text, computing the error count for `w` chars of
+    // the pattern at a time.
+    for (var j = 0; j < text.length; j += 1) {
+        // Lookup the bitmask representing the positions of the current char from
+        // the text within the pattern.
+        var charCode = text.charCodeAt(j);
+        var charPeq = void 0;
+        if (charCode < asciiPeq.length) {
+            // Fast array lookup.
+            charPeq = asciiPeq[charCode];
+        }
+        else {
+            // Slower hash table lookup.
+            charPeq = peq.get(charCode);
+            if (typeof charPeq === "undefined") {
+                charPeq = emptyPeq;
+            }
+        }
+        // Calculate error count for blocks that we definitely have to process for
+        // this column.
+        var carry = 0;
+        for (var b = 0; b <= y; b += 1) {
+            carry = advanceBlock(ctx, charPeq, b, carry);
+            score[b] += carry;
+        }
+        // Check if we also need to compute an additional block, or if we can reduce
+        // the number of blocks processed for the next column.
+        if (score[y] - carry <= maxErrors &&
+            y < bMax &&
+            (charPeq[y + 1] & 1 || carry < 0)) {
+            // Error count for bottom block is under threshold, increase the number of
+            // blocks processed for this column & next by 1.
+            y += 1;
+            ctx.P[y] = ~0;
+            ctx.M[y] = 0;
+            var maxBlockScore = y === bMax ? pattern.length % w : w;
+            score[y] =
+                score[y - 1] +
+                    maxBlockScore -
+                    carry +
+                    advanceBlock(ctx, charPeq, y, carry);
+        }
+        else {
+            // Error count for bottom block exceeds threshold, reduce the number of
+            // blocks processed for the next column.
+            while (y > 0 && score[y] >= maxErrors + w) {
+                y -= 1;
+            }
+        }
+        // If error count is under threshold, report a match.
+        if (y === bMax && score[y] <= maxErrors) {
+            if (score[y] < maxErrors) {
+                // Discard any earlier, worse matches.
+                matches.splice(0, matches.length);
+            }
+            matches.push({
+                start: -1,
+                end: j + 1,
+                errors: score[y]
+            });
+            // Because `search` only reports the matches with the lowest error count,
+            // we can "ratchet down" the max error threshold whenever a match is
+            // encountered and thereby save a small amount of work for the remainder
+            // of the text.
+            maxErrors = score[y];
+        }
+    }
+    return matches;
+}
+/**
+ * Search for matches for `pattern` in `text` allowing up to `maxErrors` errors.
+ *
+ * Returns the start, and end positions and error counts for each lowest-cost
+ * match. Only the "best" matches are returned.
+ */
+function search(text, pattern, maxErrors) {
+    var matches = findMatchEnds(text, pattern, maxErrors);
+    return findMatchStarts(text, pattern, matches);
+}
+exports.default = search;
+
+},{}],"pdfText/PageText.tsx":[function(require,module,exports) {
+"use strict";
+
+var _taggedTemplateLiteral2 = _interopRequireDefault(require("@babel/runtime/helpers/taggedTemplateLiteral"));
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _templateObject2() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n  /* border: 1px solid lightblue; */\n  transform: scale(1);\n  transform-origin: left top;\n  user-select: none;\n  pointer-events: none;\n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n  user-select: text;\n  pointer-events: all;\n\n  /* border: 1px solid lightgray; */\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+var __importDefault = void 0 && (void 0).__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+var __importStar = void 0 && (void 0).__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var textToDisplay_page0001_json_1 = __importDefault(require("./json/textToDisplay-page0001.json"));
+
+var React = __importStar(require("react"));
+
+var react_1 = require("react");
+
+var styled_components_1 = __importDefault(require("styled-components"));
+
+var approx_string_match_1 = __importDefault(require("approx-string-match"));
+
+var numberRange = function numberRange(start, end) {
+  return (0, _toConsumableArray2.default)(Array(end + 1 - start).keys()).map(function (k) {
+    return k + start;
+  });
+};
+
+var pageOfTextItems = textToDisplay_page0001_json_1.default.text;
+var pageString = pageOfTextItems.reduce(function (fullString, textItem, ix) {
+  fullString += textItem.str;
+  return fullString;
+}, "");
+
+function getRegexIndexes(str, regex) {
+  var re = regex;
+  var match;
+  var results = [];
+
+  do {
+    match = re.exec(str);
+
+    if (match) {
+      results.push(match.index);
+    }
+  } while (match);
+
+  return results;
+}
+
+exports.getRegexIndexes = getRegexIndexes;
+
+var test =
+/*#__PURE__*/
+function () {
+  var _ref = (0, _asyncToGenerator2.default)(
+  /*#__PURE__*/
+  _regenerator.default.mark(function _callee() {
+    var pageString, offsets, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, textItem, newString, _startIx, id, sampleOrig, sampleNew, _sampleNew$charRangeI, startIx, endIx, findStr, matches, hightlightIxs, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _loop, _iterator2, _step2;
+
+    return _regenerator.default.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            pageString = pageOfTextItems[0].str;
+            offsets = [{
+              id: pageOfTextItems[0].id,
+              charRangeInclusive: [0, pageOfTextItems[0].str.length - 1]
+            }];
+            _iteratorNormalCompletion = true;
+            _didIteratorError = false;
+            _iteratorError = undefined;
+            _context.prev = 5;
+
+            for (_iterator = pageOfTextItems.slice(1)[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              textItem = _step.value;
+              newString = textItem.str.toLowerCase();
+              _startIx = pageString.length;
+              pageString += newString;
+              offsets.push({
+                id: textItem.id,
+                charRangeInclusive: [_startIx, pageString.length - 1]
+              });
+            } //@ts-ignore
+            // const doc = nlp(pageString).sentences().out('array')
+            // given an id, find the text in the pagestring
+
+
+            _context.next = 13;
+            break;
+
+          case 9:
+            _context.prev = 9;
+            _context.t0 = _context["catch"](5);
+            _didIteratorError = true;
+            _iteratorError = _context.t0;
+
+          case 13:
+            _context.prev = 13;
+            _context.prev = 14;
+
+            if (!_iteratorNormalCompletion && _iterator.return != null) {
+              _iterator.return();
+            }
+
+          case 16:
+            _context.prev = 16;
+
+            if (!_didIteratorError) {
+              _context.next = 19;
+              break;
+            }
+
+            throw _iteratorError;
+
+          case 19:
+            return _context.finish(16);
+
+          case 20:
+            return _context.finish(13);
+
+          case 21:
+            id = "0001-0037";
+            sampleOrig = pageOfTextItems.find(function (t) {
+              return t.id === id;
+            });
+            sampleNew = offsets.find(function (t) {
+              return t.id === id;
+            });
+            _sampleNew$charRangeI = (0, _slicedToArray2.default)(sampleNew.charRangeInclusive, 2), startIx = _sampleNew$charRangeI[0], endIx = _sampleNew$charRangeI[1]; //given a string in pagestring, get ids that contain it
+
+            findStr = "scent".toLowerCase();
+            matches = approx_string_match_1.default(pageString, findStr, 6
+            /* max errors */
+            );
+            console.log("matches: ", matches);
+            hightlightIxs = [];
+            _iteratorNormalCompletion2 = true;
+            _didIteratorError2 = false;
+            _iteratorError2 = undefined;
+            _context.prev = 32;
+
+            _loop = function _loop() {
+              var match = _step2.value;
+              var ixStart = -1;
+              var ixEnd = -1;
+              var charStart = -1;
+              var charEnd = -1;
+              var _iteratorNormalCompletion3 = true;
+              var _didIteratorError3 = false;
+              var _iteratorError3 = undefined;
+
+              try {
+                for (var _iterator3 = offsets.entries()[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                  var _step3$value = (0, _slicedToArray2.default)(_step3.value, 2),
+                      offsetIx = _step3$value[0],
+                      _offset = _step3$value[1];
+
+                  var offset = offsets[offsetIx];
+
+                  if (ixStart === -1) {
+                    var isStartInOffset = match.start >= offset.charRangeInclusive[0] && match.start <= offset.charRangeInclusive[1];
+
+                    if (isStartInOffset) {
+                      ixStart = offsetIx;
+                      charStart = match.start - offset.charRangeInclusive[0];
+                    }
+                  }
+
+                  if (ixStart > -1) {
+                    var isEndInOffset = match.end >= offset.charRangeInclusive[0] && match.end <= offset.charRangeInclusive[1];
+
+                    if (isEndInOffset) {
+                      ixEnd = offsetIx;
+                    }
+                  }
+
+                  if (ixEnd > -1) {
+                    charEnd = match.end - offset.charRangeInclusive[0];
+                    if (charStart === -1) charStart = 0;
+                    break;
+                  }
+                }
+              } catch (err) {
+                _didIteratorError3 = true;
+                _iteratorError3 = err;
+              } finally {
+                try {
+                  if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
+                    _iterator3.return();
+                  }
+                } finally {
+                  if (_didIteratorError3) {
+                    throw _iteratorError3;
+                  }
+                }
+              }
+
+              var allNumbers = numberRange(ixStart, ixEnd);
+              var highlights = allNumbers.map(function (num, i) {
+                var res = {
+                  ix: num,
+                  charStart: 0,
+                  charEnd: Infinity
+                };
+                if (i === 0) res = (0, _objectSpread2.default)({}, res, {
+                  charStart: charStart
+                });
+                if (i === allNumbers.length - 1) res = (0, _objectSpread2.default)({}, res, {
+                  charEnd: charEnd
+                });
+                return res;
+              });
+              hightlightIxs.push.apply(hightlightIxs, (0, _toConsumableArray2.default)(highlights));
+            };
+
+            for (_iterator2 = matches[Symbol.iterator](); !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+              _loop();
+            } // where 0,Infinity means 0 to end, can do slice (start, end)
+
+
+            _context.next = 41;
+            break;
+
+          case 37:
+            _context.prev = 37;
+            _context.t1 = _context["catch"](32);
+            _didIteratorError2 = true;
+            _iteratorError2 = _context.t1;
+
+          case 41:
+            _context.prev = 41;
+            _context.prev = 42;
+
+            if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+              _iterator2.return();
+            }
+
+          case 44:
+            _context.prev = 44;
+
+            if (!_didIteratorError2) {
+              _context.next = 47;
+              break;
+            }
+
+            throw _iteratorError2;
+
+          case 47:
+            return _context.finish(44);
+
+          case 48:
+            return _context.finish(41);
+
+          case 49:
+            return _context.abrupt("return", hightlightIxs.reduce(function (all, val, ix) {
+              return (0, _objectSpread2.default)({}, all, (0, _defineProperty2.default)({}, val.ix, {
+                charStart: val.charStart,
+                charEnd: val.charEnd
+              }));
+            }, {}));
+
+          case 50:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[5, 9, 13, 21], [14,, 16, 20], [32, 37, 41, 49], [42,, 44, 48]]);
+  }));
+
+  return function test() {
+    return _ref.apply(this, arguments);
+  };
+}(); // hightlight multiple matches
+// highlight part of fragment
+
+
+var computeStyle = function computeStyle(textItem, scale, scaleX, hightlight) {
+  return {
+    height: "1em",
+    fontFamily: "".concat(textItem.fontName, ", ").concat(textItem.fallbackFontName, "}"),
+    fontSize: "".concat(textItem.fontHeight * scale, "px"),
+    position: "absolute",
+    top: textItem.top * scale + 1 + Math.round(textItem.style.ascent * scale),
+    left: textItem.left * scale,
+    transform: "scaleX(".concat(scaleX, ")"),
+    transformOrigin: "left bottom",
+    whiteSpace: "pre",
+    color: "black",
+    backgroundColor: hightlight ? "lightblue" : "white" // userSelect: "none",
+    // outline: '1px solid lightgrey',
+
+  };
+};
+
+exports.PageText = function () {
+  var ref = react_1.useRef(null);
+
+  var _react_1$useState = react_1.useState([]),
+      _react_1$useState2 = (0, _slicedToArray2.default)(_react_1$useState, 2),
+      highlights = _react_1$useState2[0],
+      _setHighlights = _react_1$useState2[1];
+
+  var setHighlights =
+  /*#__PURE__*/
+  function () {
+    var _ref2 = (0, _asyncToGenerator2.default)(
+    /*#__PURE__*/
+    _regenerator.default.mark(function _callee2() {
+      return _regenerator.default.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.t0 = _setHighlights;
+              _context2.next = 3;
+              return test();
+
+            case 3:
+              _context2.t1 = _context2.sent;
+              (0, _context2.t0)(_context2.t1);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function setHighlights() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  react_1.useEffect(function () {
+    setHighlights();
+  }, []);
+  return React.createElement(exports.Div100vh, {
+    ref: ref
+  }, pageOfTextItems.map(function (text, ix) {
+    return React.createElement(CanvasAdjustedTextFragment, {
+      key: text.id // style={computeStyle(text, 1, 1)}
+      ,
+      textItem: text,
+      highlight: highlights[ix]
+    }, text.str);
+  }));
+};
+
+var styleScaleX = function styleScaleX(style, scaleX) {
+  return (0, _objectSpread2.default)({}, style, {
+    transform: "scaleX(".concat(scaleX, ")")
+  });
+};
+
+var SpansFromHighlight = function SpansFromHighlight(text, highlight) {
+  console.log("highlight: ", highlight);
+  if (!highlight || !text) return text;
+  var charStart = highlight.charStart,
+      charEnd = highlight.charEnd;
+
+  if (charStart + charEnd === 0) {
+    return text;
+  } else if (charStart === 0 && charEnd === Infinity) {
+    return React.createElement("span", {
+      style: {
+        fontWeight: "bold"
+      }
+    }, text);
+  } else {
+    return React.createElement(React.Fragment, null, text.slice(0, charStart), React.createElement("span", {
+      key: "1",
+      style: {
+        fontWeight: "bold",
+        color: "blue"
+      }
+    }, text.slice(charStart, charEnd)), React.createElement("span", {
+      key: "2"
+    }, text.slice(charEnd)));
+  }
+};
+
+var CanvasAdjustedTextFragment = function CanvasAdjustedTextFragment(props) {
+  var ref = react_1.useRef(null);
+
+  var _react_1$useState3 = react_1.useState(1),
+      _react_1$useState4 = (0, _slicedToArray2.default)(_react_1$useState3, 2),
+      scaleX = _react_1$useState4[0],
+      setScaleX = _react_1$useState4[1];
+
+  react_1.useLayoutEffect(function () {
+    var domWidth = ref.current.getBoundingClientRect()["width"];
+    setScaleX(props.textItem.width / domWidth); // textItem.width from canvas render
+  }, []);
+  return React.createElement(exports.TextDiv, {
+    ref: ref,
+    id: props.textItem.id,
+    key: props.textItem.id,
+    style: computeStyle(props.textItem, 1, scaleX, !!props.highlight),
+    title: props.textItem.width + ""
+  }, SpansFromHighlight(props.textItem.str, props.highlight));
+};
+
+exports.TextDiv = styled_components_1.default.div(_templateObject());
+exports.Div100vh = styled_components_1.default.div(_templateObject2());
+},{"@babel/runtime/helpers/taggedTemplateLiteral":"../../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js","@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/objectSpread":"../../node_modules/@babel/runtime/helpers/objectSpread.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/toConsumableArray":"../../node_modules/@babel/runtime/helpers/toConsumableArray.js","./json/textToDisplay-page0001.json":"pdfText/json/textToDisplay-page0001.json","react":"../../node_modules/react/index.js","styled-components":"../../node_modules/styled-components/dist/styled-components.browser.esm.js","approx-string-match":"../../node_modules/approx-string-match/dist/index.js"}],"router.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importStar = this && this.__importStar || function (mod) {
@@ -29935,30 +47218,53 @@ var React = __importStar(require("react"));
 
 var react_router_dom_1 = require("react-router-dom");
 
-var Start_1 = require("./Start");
-
 var FreeformCanvas_1 = require("./FreeformCanvas");
+
+var ListWithGestures_1 = require("./ListWithGestures");
+
+var StyledComponents_1 = require("./StyledComponents");
+
+var PageText_1 = require("./pdfText/PageText");
+
+var linkRoute = [{
+  to: "/",
+  label: "pdftext",
+  component: PageText_1.PageText
+}, {
+  to: "/GestureList",
+  label: "GestureList",
+  component: ListWithGestures_1.ListWithGestures
+}, {
+  to: "/freeform",
+  label: "freeform",
+  component: FreeformCanvas_1.FreeformCanvas
+}];
 
 exports.default = function () {
   return React.createElement(react_router_dom_1.HashRouter, {
     hashType: "noslash"
-  }, React.createElement(react_router_dom_1.Link, {
-    to: "/"
-  }, "hey"), React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, {
-    exact: true,
-    path: "/",
-    component: FreeformCanvas_1.FreeformCanvas
-  }), React.createElement(react_router_dom_1.Route, {
-    exact: true,
-    path: "/start",
-    component: Start_1.Start
+  }, React.createElement(StyledComponents_1.FullViewPort, null, React.createElement(StyledComponents_1.ViewPortNav, null, linkRoute.map(function (lr) {
+    return React.createElement(react_router_dom_1.Link, {
+      key: lr.label,
+      to: lr.to,
+      style: {
+        margin: 5
+      }
+    }, lr.label);
+  })), React.createElement(StyledComponents_1.ViewPortMainContent, null, React.createElement(react_router_dom_1.Switch, null, linkRoute.map(function (lr) {
+    return React.createElement(react_router_dom_1.Route, {
+      key: lr.label,
+      exact: true,
+      path: lr.to,
+      component: lr.component
+    });
   }), React.createElement(react_router_dom_1.Route, {
     component: function component() {
       return React.createElement("h1", null, "No Content");
     }
-  })));
+  })))));
 };
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./Start":"Start.tsx","./FreeformCanvas":"FreeformCanvas.tsx"}],"index.tsx":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./FreeformCanvas":"FreeformCanvas.tsx","./ListWithGestures":"ListWithGestures.tsx","./StyledComponents":"StyledComponents.tsx","./pdfText/PageText":"pdfText/PageText.tsx"}],"index.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importStar = this && this.__importStar || function (mod) {
@@ -30020,7 +47326,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58859" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55719" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

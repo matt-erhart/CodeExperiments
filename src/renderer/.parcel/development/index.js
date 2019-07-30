@@ -1,4 +1,4 @@
-process.env.HMR_PORT=55718;process.env.HMR_HOSTNAME="localhost";// modules are defined as an array
+// modules are defined as an array
 // [ module function, map of requires ]
 //
 // map of requires is short require name -> numeric require
@@ -117,51 +117,76 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"main.ts":[function(require,module,exports) {
-"use strict";
+})({"../../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-const {
-  format
-} = require('url');
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
 
-const {
-  BrowserWindow,
-  app
-} = require('electron');
+  return bundleURL;
+}
 
-const isDev = require('electron-is-dev');
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
 
-const {
-  resolve
-} = require('app-root-path');
-
-app.on('ready', async () => {
-  const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    show: false
-  });
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.show();
-
-    if (isDev) {
-      mainWindow.webContents.openDevTools();
+    if (matches) {
+      return getBaseURL(matches[0]);
     }
-  });
-  const devPath = 'http://localhost:1124';
-  const prodPath = format({
-    pathname: resolve('app/renderer/.parcel/production/index.html'),
-    protocol: 'file:',
-    slashes: true
-  });
-  const url = isDev ? devPath : prodPath;
-  mainWindow.setMenu(null);
-  mainWindow.loadURL(url);
-});
-app.on('window-all-closed', app.quit);
-},{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
-var OVERLAY_ID = '__parcel__error__overlay__';
+  }
 
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var global = arguments[3];
+var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
 
 function Module(moduleName) {
@@ -177,47 +202,44 @@ function Module(moduleName) {
       this._disposeCallbacks.push(fn);
     }
   };
-
   module.bundle.hotData = null;
 }
 
 module.bundle.Module = Module;
 var checkedAssets, assetsToAccept;
-
 var parent = module.bundle.parent;
+
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = process.env.HMR_HOSTNAME || location.hostname;
+  var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + process.env.HMR_PORT + '/');
-  ws.onmessage = function(event) {
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55719" + '/');
+
+  ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
-
     var data = JSON.parse(event.data);
 
     if (data.type === 'update') {
       var handled = false;
-      data.assets.forEach(function(asset) {
+      data.assets.forEach(function (asset) {
         if (!asset.isNew) {
           var didAccept = hmrAcceptCheck(global.parcelRequire, asset.id);
+
           if (didAccept) {
             handled = true;
           }
         }
-      });
+      }); // Enable HMR for CSS by default.
 
-      // Enable HMR for CSS by default.
-      handled = handled || data.assets.every(function(asset) {
+      handled = handled || data.assets.every(function (asset) {
         return asset.type === 'css' && asset.generated.js;
       });
 
       if (handled) {
         console.clear();
-
         data.assets.forEach(function (asset) {
           hmrApply(global.parcelRequire, asset);
         });
-
         assetsToAccept.forEach(function (v) {
           hmrAcceptRun(v[0], v[1]);
         });
@@ -228,22 +250,20 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
 
     if (data.type === 'reload') {
       ws.close();
+
       ws.onclose = function () {
         location.reload();
-      }
+      };
     }
 
     if (data.type === 'error-resolved') {
       console.log('[parcel] ✨ Error resolved');
-
       removeErrorOverlay();
     }
 
     if (data.type === 'error') {
       console.error('[parcel] 🚨  ' + data.error.message + '\n' + data.error.stack);
-
       removeErrorOverlay();
-
       var overlay = createErrorOverlay(data);
       document.body.appendChild(overlay);
     }
@@ -252,6 +272,7 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
 
 function removeErrorOverlay() {
   var overlay = document.getElementById(OVERLAY_ID);
+
   if (overlay) {
     overlay.remove();
   }
@@ -259,29 +280,19 @@ function removeErrorOverlay() {
 
 function createErrorOverlay(data) {
   var overlay = document.createElement('div');
-  overlay.id = OVERLAY_ID;
+  overlay.id = OVERLAY_ID; // html encode message and stack trace
 
-  // html encode message and stack trace
   var message = document.createElement('div');
   var stackTrace = document.createElement('pre');
   message.innerText = data.error.message;
   stackTrace.innerText = data.error.stack;
-
-  overlay.innerHTML = (
-    '<div style="background: black; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; opacity: 0.85; font-family: Menlo, Consolas, monospace; z-index: 9999;">' +
-      '<span style="background: red; padding: 2px 4px; border-radius: 2px;">ERROR</span>' +
-      '<span style="top: 2px; margin-left: 5px; position: relative;">🚨</span>' +
-      '<div style="font-size: 18px; font-weight: bold; margin-top: 20px;">' + message.innerHTML + '</div>' +
-      '<pre>' + stackTrace.innerHTML + '</pre>' +
-    '</div>'
-  );
-
+  overlay.innerHTML = '<div style="background: black; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; opacity: 0.85; font-family: Menlo, Consolas, monospace; z-index: 9999;">' + '<span style="background: red; padding: 2px 4px; border-radius: 2px;">ERROR</span>' + '<span style="top: 2px; margin-left: 5px; position: relative;">🚨</span>' + '<div style="font-size: 18px; font-weight: bold; margin-top: 20px;">' + message.innerHTML + '</div>' + '<pre>' + stackTrace.innerHTML + '</pre>' + '</div>';
   return overlay;
-
 }
 
 function getParents(bundle, id) {
   var modules = bundle.modules;
+
   if (!modules) {
     return [];
   }
@@ -292,7 +303,8 @@ function getParents(bundle, id) {
   for (k in modules) {
     for (d in modules[k][1]) {
       dep = modules[k][1][d];
-      if (dep === id || (Array.isArray(dep) && dep[dep.length - 1] === id)) {
+
+      if (dep === id || Array.isArray(dep) && dep[dep.length - 1] === id) {
         parents.push(k);
       }
     }
@@ -307,6 +319,7 @@ function getParents(bundle, id) {
 
 function hmrApply(bundle, asset) {
   var modules = bundle.modules;
+
   if (!modules) {
     return;
   }
@@ -322,6 +335,7 @@ function hmrApply(bundle, asset) {
 
 function hmrAcceptCheck(bundle, id) {
   var modules = bundle.modules;
+
   if (!modules) {
     return;
   }
@@ -333,10 +347,9 @@ function hmrAcceptCheck(bundle, id) {
   if (checkedAssets[id]) {
     return;
   }
+
   checkedAssets[id] = true;
-
   var cached = bundle.cache[id];
-
   assetsToAccept.push([bundle, id]);
 
   if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
@@ -344,13 +357,14 @@ function hmrAcceptCheck(bundle, id) {
   }
 
   return getParents(global.parcelRequire, id).some(function (id) {
-    return hmrAcceptCheck(global.parcelRequire, id)
+    return hmrAcceptCheck(global.parcelRequire, id);
   });
 }
 
 function hmrAcceptRun(bundle, id) {
   var cached = bundle.cache[id];
   bundle.hotData = {};
+
   if (cached) {
     cached.hot.data = bundle.hotData;
   }
@@ -363,15 +377,15 @@ function hmrAcceptRun(bundle, id) {
 
   delete bundle.cache[id];
   bundle(id);
-
   cached = bundle.cache[id];
+
   if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
     cached.hot._acceptCallbacks.forEach(function (cb) {
       cb();
     });
+
     return true;
   }
 }
-
-},{}]},{},["../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.ts"], null)
-//# sourceMappingURL=/main.js.map
+},{}]},{},["../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/index.js.map
