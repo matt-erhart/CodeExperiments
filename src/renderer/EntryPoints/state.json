@@ -1,0 +1,496 @@
+{
+  "app": {
+    "featureToggles": {
+      "canAdjustPdfSegment": true,
+      "canExpandPdfSegmentInGraph": true,
+      "canJumpBackToPdf": true
+    },
+    "current": {
+      "pdfRootDir": "C:\\Users\\mattj\\dev\\pdfs"
+    },
+    "settings": {
+      "appearance": {
+        "windowStyleOnOpen": {
+          "x": 0,
+          "y": 0,
+          "width": 1000,
+          "height": 1000
+        },
+        "panels": {}
+      },
+      "keyboardShortcuts": {}
+    },
+    "panels": {
+      "mainPdfReader": {
+        "left": 0,
+        "top": 0,
+        "width": 2029,
+        "height": "100%",
+        "scale": 3.5000000000000013,
+        "scrollToPageNumber": 0,
+        "pdfDir": "31ae378f02136be889a6c4b4b81fdd20"
+      },
+      "graphContainer": {
+        "left": 0,
+        "top": 0,
+        "width": "50vw",
+        "height": "100%",
+        "scale": 1
+      },
+      "rightPanel": "graphContainer"
+    },
+    "portals": [],
+    "nextNodeLocation": {
+      "left": 139,
+      "top": 450,
+      "width": 300,
+      "height": 200
+    }
+  },
+  "graph": {
+    "nodes": {
+      "0a3681899d15872644fd07d0d4d6230f": {
+        "id": "0a3681899d15872644fd07d0d4d6230f",
+        "data": {
+          "type": "pdf.publication",
+          "publicationType": "",
+          "pdfDir": "0a3681899d15872644fd07d0d4d6230f",
+          "fileExt": ".pdf",
+          "title": "",
+          "venue": "",
+          "authors": [],
+          "year": null,
+          "volume": "",
+          "issue": "",
+          "url": "",
+          "arxivId": "",
+          "pmid": "",
+          "doi": "",
+          "isbn": "",
+          "issn": "",
+          "published": true,
+          "originalFileName": "Understanding the Group Size Effect in Electronic Brainstorming.pdf",
+          "numPages": 21
+        },
+        "style": {
+          "id": "0a3681899d15872644fd07d0d4d6230f",
+          "left": 55.96464917326734,
+          "top": 210.8099242720168,
+          "width": 200,
+          "height": 200,
+          "fill": "grey",
+          "stroke": "red",
+          "modes": [
+            "min",
+            "max"
+          ],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "x": 149.18977289353103,
+          "y": 1717.0541499666956
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565302868196,
+          "timeUpdated": 1565302868196
+        }
+      },
+      "31ae378f02136be889a6c4b4b81fdd20": {
+        "id": "31ae378f02136be889a6c4b4b81fdd20",
+        "data": {
+          "type": "pdf.publication",
+          "publicationType": "",
+          "pdfDir": "31ae378f02136be889a6c4b4b81fdd20",
+          "fileExt": ".pdf",
+          "title": "",
+          "venue": "",
+          "authors": [],
+          "year": null,
+          "volume": "",
+          "issue": "",
+          "url": "",
+          "arxivId": "",
+          "pmid": "",
+          "doi": "",
+          "isbn": "",
+          "issn": "",
+          "published": true,
+          "originalFileName": "impact of group membership change on group creativity.pdf",
+          "numPages": 12
+        },
+        "style": {
+          "id": "31ae378f02136be889a6c4b4b81fdd20",
+          "left": 55.96464917326734,
+          "top": 210.8099242720168,
+          "width": 200,
+          "height": 200,
+          "fill": "grey",
+          "stroke": "red",
+          "modes": [
+            "min",
+            "max"
+          ],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "x": 136.9900023435717,
+          "y": 4220.210428231926
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565302868196,
+          "timeUpdated": 1565302868196
+        }
+      },
+      "1085e040-ba2b-11e9-8c37-b1ed03acfdd9": {
+        "id": "1085e040-ba2b-11e9-8c37-b1ed03acfdd9",
+        "data": {
+          "type": "userDoc",
+          "base64": "JTdCJTIyb2JqZWN0JTIyJTNBJTIydmFsdWUlMjIlMkMlMjJkb2N1bWVudCUyMiUzQSU3QiUyMm9iamVjdCUyMiUzQSUyMmRvY3VtZW50JTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIyYmxvY2slMjIlMkMlMjJ0eXBlJTIyJTNBJTIycGFyYWdyYXBoJTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIydGV4dCUyMiUyQyUyMmxlYXZlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMmxlYWYlMjIlMkMlMjJ0ZXh0JTIyJTNBJTIySWRlYXMlMjBiZWNvbWUlMjBtb3JlJTIwb3JpZ2luYWwlMjBhbmQlMjBsZXNzJTIwdXNlZnVsJTIwb3ZlciUyMHRoZSUyMGNvdXJzZSUyMG9mJTIwYSUyMGJyYWluc3Rvcm1pbmclMjBzZXNzaW9uLiUyMCUyMiUyQyUyMm1hcmtzJTIyJTNBJTVCJTVEJTdEJTVEJTdEJTVEJTdEJTVEJTdEJTdE",
+          "text": "Ideas become more original and less useful over the course of a brainstorming session. ",
+          "useTextForAutocomplete": false,
+          "isEntryPoint": true,
+          "isKeyword": false
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565302868208,
+          "timeUpdated": 1565304546148
+        },
+        "style": {
+          "min": {
+            "left": 167,
+            "top": 402,
+            "width": 300,
+            "height": 110
+          },
+          "max": {
+            "left": 141,
+            "top": 247,
+            "width": 525,
+            "height": 102
+          },
+          "modes": [
+            "max",
+            "min"
+          ],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "fontSize": 26
+        }
+      },
+      "f9f23c00-ba2c-11e9-9650-293398fcda5b": {
+        "id": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+        "data": {
+          "left": 33.42857142857143,
+          "top": 462,
+          "height": 27.714285714285722,
+          "width": 326.2857142857143,
+          "userId": "default",
+          "pdfDir": "0a3681899d15872644fd07d0d4d6230f",
+          "pageNumber": 15,
+          "type": "pdf.segment.viewbox",
+          "scale": 1,
+          "scalePreview": 3.5000000000000013
+        },
+        "style": {
+          "id": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+          "min": {
+            "id": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+            "left": 139,
+            "top": 385,
+            "width": 516,
+            "height": 45
+          },
+          "max": {
+            "id": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+            "left": 139,
+            "top": 385,
+            "width": 1333.0000000000005,
+            "height": 193.00000000000017,
+            "scrollToLeft": 0,
+            "scrollToTop": 457.4285714285713
+          },
+          "modes": [
+            "min",
+            "max"
+          ],
+          "modeIx": 0,
+          "lockedCorner": "nw"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303794624,
+          "timeUpdated": 1565304157305
+        }
+      },
+      "05fa9140-ba2e-11e9-9650-293398fcda5b": {
+        "id": "05fa9140-ba2e-11e9-9650-293398fcda5b",
+        "data": {
+          "type": "userDoc",
+          "base64": "JTdCJTIyb2JqZWN0JTIyJTNBJTIydmFsdWUlMjIlMkMlMjJkb2N1bWVudCUyMiUzQSU3QiUyMm9iamVjdCUyMiUzQSUyMmRvY3VtZW50JTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIyYmxvY2slMjIlMkMlMjJ0eXBlJTIyJTNBJTIycGFyYWdyYXBoJTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIydGV4dCUyMiUyQyUyMmxlYXZlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMmxlYWYlMjIlMkMlMjJ0ZXh0JTIyJTNBJTIySWRlYW9ycyUyMHdpdGglMjBsb3clMjBleHBlcnRpc2UlMkMlMjBsaW1pdGVkJTIwZXhwZXJpZW5jZSUyQyUyMG9yJTIwYSUyMGRpZmZlcmVudCUyMHBlcnNwZWN0JTIwY2FuJTIwaW1wcm92ZSUyMGdyb3VwJTIwYnJhaW5zdG9ybWluZyUyMHBlcmZvcm1hbmNlLiUyMiUyQyUyMm1hcmtzJTIyJTNBJTVCJTVEJTdEJTVEJTdEJTVEJTdEJTVEJTdEJTdE",
+          "text": "Ideaors with low expertise, limited experience, or a different perspect can improve group brainstorming performance.",
+          "useTextForAutocomplete": false,
+          "isEntryPoint": true,
+          "isKeyword": false
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172330,
+          "timeUpdated": 1565304717026
+        },
+        "style": {
+          "min": {
+            "left": 143,
+            "top": 712,
+            "width": 300,
+            "height": 110
+          },
+          "max": {
+            "left": 143,
+            "top": 711,
+            "width": 729,
+            "height": 105
+          },
+          "modes": [
+            "max",
+            "min"
+          ],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "fontSize": 26
+        }
+      },
+      "6b2d1790-ba2e-11e9-9650-293398fcda5b": {
+        "id": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
+        "data": {
+          "left": 305.7142857142857,
+          "top": 625.7142857142857,
+          "height": 77.14285714285722,
+          "width": 252.28571428571428,
+          "userId": "default",
+          "pdfDir": "31ae378f02136be889a6c4b4b81fdd20",
+          "pageNumber": 8,
+          "type": "pdf.segment.viewbox",
+          "scale": 1,
+          "scalePreview": 3.5000000000000013
+        },
+        "style": {
+          "id": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
+          "min": {
+            "id": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
+            "left": 135,
+            "top": 839,
+            "width": 445,
+            "height": 51
+          },
+          "max": {
+            "id": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
+            "left": 420,
+            "top": 1091,
+            "width": 956.0000000000005,
+            "height": 400.00000000000057,
+            "scrollToLeft": 298.8571428571427,
+            "scrollToTop": 608.2857142857141
+          },
+          "modes": [
+            "min",
+            "max"
+          ],
+          "modeIx": 0,
+          "lockedCorner": "nw"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565304414089,
+          "timeUpdated": 1565304454305
+        }
+      },
+      "af0e9060-ba2e-11e9-9650-293398fcda5b": {
+        "id": "af0e9060-ba2e-11e9-9650-293398fcda5b",
+        "data": {
+          "type": "userDoc",
+          "base64": "JTdCJTIyb2JqZWN0JTIyJTNBJTIydmFsdWUlMjIlMkMlMjJkb2N1bWVudCUyMiUzQSU3QiUyMm9iamVjdCUyMiUzQSUyMmRvY3VtZW50JTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIyYmxvY2slMjIlMkMlMjJ0eXBlJTIyJTNBJTIycGFyYWdyYXBoJTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIydGV4dCUyMiUyQyUyMmxlYXZlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMmxlYWYlMjIlMkMlMjJ0ZXh0JTIyJTNBJTIyZGlmJTIwZnJvbSUyMHRoZSUyMHBhcGVycyUyMGNvbmNsdXNpb24lMjBhZnRlciUyMGJyaWVmJTIwcmVhZCUyMiUyQyUyMm1hcmtzJTIyJTNBJTVCJTVEJTdEJTVEJTdEJTVEJTdEJTVEJTdEJTdE",
+          "text": "dif from the papers conclusion after brief read",
+          "useTextForAutocomplete": false,
+          "isEntryPoint": false,
+          "isKeyword": false
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172330,
+          "timeUpdated": 1565304725431
+        },
+        "style": {
+          "min": {
+            "left": 787,
+            "top": 892,
+            "width": 300,
+            "height": 110
+          },
+          "max": {
+            "left": 614,
+            "top": 842,
+            "width": 300,
+            "height": 110
+          },
+          "modes": [
+            "max",
+            "min"
+          ],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "fontSize": 26
+        }
+      }
+    },
+    "links": {
+      "link-f9f23c01-ba2c-11e9-9650-293398fcda5b": {
+        "id": "link-f9f23c01-ba2c-11e9-9650-293398fcda5b",
+        "data": {
+          "text": "",
+          "html": "",
+          "type": "more"
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172316,
+          "timeUpdated": 1565303172316
+        },
+        "source": "0a3681899d15872644fd07d0d4d6230f",
+        "target": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+        "isDirected": true
+      },
+      "link-1870a180-ba2d-11e9-9650-293398fcda5b": {
+        "id": "link-1870a180-ba2d-11e9-9650-293398fcda5b",
+        "data": {
+          "text": "",
+          "html": ""
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172316,
+          "timeUpdated": 1565303172316
+        },
+        "source": "1085e040-ba2b-11e9-8c37-b1ed03acfdd9",
+        "target": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+        "isDirected": true
+      },
+      "link-6b2d1791-ba2e-11e9-9650-293398fcda5b": {
+        "id": "link-6b2d1791-ba2e-11e9-9650-293398fcda5b",
+        "data": {
+          "text": "",
+          "html": "",
+          "type": "more"
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172316,
+          "timeUpdated": 1565303172316
+        },
+        "source": "31ae378f02136be889a6c4b4b81fdd20",
+        "target": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
+        "isDirected": true
+      },
+      "link-7349a920-ba2e-11e9-9650-293398fcda5b": {
+        "id": "link-7349a920-ba2e-11e9-9650-293398fcda5b",
+        "data": {
+          "text": "",
+          "html": ""
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172316,
+          "timeUpdated": 1565303172316
+        },
+        "source": "05fa9140-ba2e-11e9-9650-293398fcda5b",
+        "target": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
+        "isDirected": true
+      },
+      "link-af0f53b0-ba2e-11e9-9650-293398fcda5b": {
+        "id": "link-af0f53b0-ba2e-11e9-9650-293398fcda5b",
+        "data": {
+          "text": "",
+          "html": ""
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172316,
+          "timeUpdated": 1565303172316
+        },
+        "source": "05fa9140-ba2e-11e9-9650-293398fcda5b",
+        "target": "af0e9060-ba2e-11e9-9650-293398fcda5b",
+        "isDirected": true
+      }
+    },
+    "selectedNodes": [
+      "af0e9060-ba2e-11e9-9650-293398fcda5b"
+    ],
+    "selectedLinks": [],
+    "patches": [
+      {
+        "op": "replace",
+        "path": [
+          "nodes",
+          "af0e9060-ba2e-11e9-9650-293398fcda5b"
+        ],
+        "value": {
+          "id": "af0e9060-ba2e-11e9-9650-293398fcda5b",
+          "data": {
+            "type": "userDoc",
+            "base64": "JTdCJTIyb2JqZWN0JTIyJTNBJTIydmFsdWUlMjIlMkMlMjJkb2N1bWVudCUyMiUzQSU3QiUyMm9iamVjdCUyMiUzQSUyMmRvY3VtZW50JTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIyYmxvY2slMjIlMkMlMjJ0eXBlJTIyJTNBJTIycGFyYWdyYXBoJTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIydGV4dCUyMiUyQyUyMmxlYXZlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMmxlYWYlMjIlMkMlMjJ0ZXh0JTIyJTNBJTIyZGlmJTIwZnJvbSUyMHRoZSUyMHBhcGVycyUyMGNvbmNsdXNpb24lMjBhZnRlciUyMGJyaWVmJTIwcmVhZCUyMiUyQyUyMm1hcmtzJTIyJTNBJTVCJTVEJTdEJTVEJTdEJTVEJTdEJTVEJTdEJTdE",
+            "text": "dif from the papers conclusion after brief read",
+            "useTextForAutocomplete": false,
+            "isEntryPoint": false,
+            "isKeyword": false
+          },
+          "meta": {
+            "createdBy": "defaultUser",
+            "timeCreated": 1565303172330,
+            "timeUpdated": 1565304725431
+          },
+          "style": {
+            "min": {
+              "left": 787,
+              "top": 892,
+              "width": 300,
+              "height": 110
+            },
+            "max": {
+              "left": 614,
+              "top": 842,
+              "width": 300,
+              "height": 110
+            },
+            "modes": [
+              "max",
+              "min"
+            ],
+            "modeIx": 0,
+            "lockedCorner": "nw",
+            "fontSize": 26
+          }
+        }
+      }
+    ]
+  },
+  "featureToggles": {
+    "canAdjustPdfSegment": true,
+    "canExpandPdfSegmentInGraph": true,
+    "canJumpBackToPdf": true
+  }
+}

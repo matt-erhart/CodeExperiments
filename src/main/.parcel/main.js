@@ -1,4 +1,4 @@
-process.env.HMR_PORT=55718;process.env.HMR_HOSTNAME="localhost";// modules are defined as an array
+process.env.HMR_PORT=54153;process.env.HMR_HOSTNAME="localhost";// modules are defined as an array
 // [ module function, map of requires ]
 //
 // map of requires is short require name -> numeric require
@@ -122,43 +122,64 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
 const {
   format
-} = require('url');
+} = require("url");
 
 const {
   BrowserWindow,
-  app
-} = require('electron');
+  app,
+  globalShortcut
+} = require("electron");
 
-const isDev = require('electron-is-dev');
+const isDev = require("electron-is-dev");
 
 const {
   resolve
-} = require('app-root-path');
+} = require("app-root-path");
 
-app.on('ready', async () => {
+app.on("ready", async () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    show: false
+    show: false,
+    webPreferences: {
+      nodeIntegration: true,
+      plugins: true
+    }
   });
-  mainWindow.once('ready-to-show', () => {
+  mainWindow.once("ready-to-show", () => {
     mainWindow.show();
 
     if (isDev) {
       mainWindow.webContents.openDevTools();
     }
   });
-  const devPath = 'http://localhost:1124';
+  const devPath = "http://localhost:1124";
   const prodPath = format({
-    pathname: resolve('app/renderer/.parcel/production/index.html'),
-    protocol: 'file:',
+    pathname: resolve("app/renderer/.parcel/production/index.html"),
+    protocol: "file:",
     slashes: true
   });
   const url = isDev ? devPath : prodPath;
   mainWindow.setMenu(null);
   mainWindow.loadURL(url);
+  mainWindow.on("focus", () => {
+    globalShortcut.register("CommandOrControl+F", function () {
+      if (mainWindow && mainWindow.webContents) {
+        mainWindow.webContents.send("on-find", "");
+      }
+    });
+  });
+  mainWindow.on("blur", () => {
+    globalShortcut.unregister("CommandOrControl+F");
+  });
 });
-app.on('window-all-closed', app.quit);
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
+
+  globalShortcut.unregister("CommandOrControl+F");
+});
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var OVERLAY_ID = '__parcel__error__overlay__';
 

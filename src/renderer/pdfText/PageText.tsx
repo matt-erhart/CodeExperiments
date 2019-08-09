@@ -1,4 +1,6 @@
 import jsonText from "./json/textToDisplay-page0001.json";
+import jsonText2 from "./json/textToDisplay-page0002.json";
+
 import * as React from "react";
 import {
   useState,
@@ -11,19 +13,21 @@ import styled from "styled-components";
 import search from "approx-string-match";
 const numberRange = (start, end) =>
   [...Array(end + 1 - start).keys()].map(k => k + start);
-import nlp from "compromise";
-import * as use from "@tensorflow-models/universal-sentence-encoder";
+import { getElementScale } from "../../utils";
 
-const pageOfTextItems: TextItem[] = (jsonText as {
+const pagesOfText = [jsonText, jsonText2];
+
+const pageOfTextItems = (jsonText as {
   text: TextItem[];
   pageNumber: number;
   viewportFlat: ViewportFlat;
 }).text;
 
-const pageString = pageOfTextItems.reduce((fullString, textItem, ix) => {
-  fullString += textItem.str;
-  return fullString;
-}, "");
+const viewportFlat = (jsonText as {
+  text: TextItem[];
+  pageNumber: number;
+  viewportFlat: ViewportFlat;
+}).viewportFlat;
 
 export function getRegexIndexes(str: string, regex: RegExp): number[] {
   var re = regex;
@@ -38,7 +42,7 @@ export function getRegexIndexes(str: string, regex: RegExp): number[] {
   return results;
 }
 
-const test = async () => {
+const pageOfTextItemsToString = pageOfTextItems => {
   let pageString = pageOfTextItems[0].str;
   let offsets = [
     {
@@ -55,21 +59,15 @@ const test = async () => {
       charRangeInclusive: [startIx, pageString.length - 1]
     });
   }
-  //@ts-ignore
-  // const doc = nlp(pageString).sentences().out('array')
+  return { pageString, textItemLocations: offsets };
+};
 
-  // given an id, find the text in the pagestring
-  const id = "0001-0037";
-  const sampleOrig = pageOfTextItems.find(t => t.id === id);
-  const sampleNew = offsets.find(t => t.id === id);
-  const [startIx, endIx] = sampleNew.charRangeInclusive;
-
-  //given a string in pagestring, get ids that contain it
-  const findStr = "scent".toLowerCase();
-  var matches = search(pageString, findStr, 6 /* max errors */);
-  console.log("matches: ", matches);
-
-  const hightlightIxs = [];
+const matchToHighlightIxs = (matches: ReturnType<typeof search>, offsets) => {
+  const hightlightIxs: {
+    ix: number;
+    charStart: number;
+    charEnd: number;
+  }[] = [];
   for (let match of matches) {
     let ixStart = -1;
     let ixEnd = -1;
@@ -108,21 +106,29 @@ const test = async () => {
       if (i === allNumbers.length - 1) res = { ...res, charEnd };
       return res;
     });
-
     hightlightIxs.push(...highlights);
   }
+  return hightlightIxs;
+};
 
-  // where 0,Infinity means 0 to end, can do slice (start, end)
+const test = (stringToFind = "work") => {
+  const findStr = stringToFind.toLowerCase();
+
+  let { pageString, textItemLocations: offsets } = pageOfTextItemsToString(
+    pagesOfText[0].text
+  );
+
+  var matches = search(pageString, findStr, 6 /* max errors */);
+
+  const hightlightIxs = matchToHighlightIxs(matches, offsets);
+
   return hightlightIxs.reduce((all, val, ix) => {
     return {
       ...all,
       [val.ix]: { charStart: val.charStart, charEnd: val.charEnd }
     };
-  }, {});
+  }, {}) as { [id: number]: { charStart: number; charEnd: number } };
 };
-
-// hightlight multiple matches
-// highlight part of fragment
 
 const computeStyle = (
   textItem: TextItem,
@@ -140,8 +146,8 @@ const computeStyle = (
     transform: `scaleX(${scaleX})`,
     transformOrigin: "left bottom",
     whiteSpace: "pre",
-    color: "black",
-    backgroundColor: hightlight ? "lightblue" : "white"
+    color: "black"
+    // backgroundColor: hightlight ? "lightblue" : "white"
     // userSelect: "none",
     // outline: '1px solid lightgrey',
   };
@@ -149,18 +155,18 @@ const computeStyle = (
 
 export const PageText = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const [highlights, _setHighlights] = useState([]);
-
-  const setHighlights = async () => {
-    _setHighlights(await test());
-  };
+  const [highlights, setHighlights] = useState({});
 
   useEffect(() => {
-    setHighlights();
+    const highlight = test();
+    setHighlights(highlight);
   }, []);
 
   return (
-    <Div100vh ref={ref}>
+    <Div100vh
+      style={{ width: viewportFlat.width, height: viewportFlat.height }}
+      ref={ref}
+    >
       {pageOfTextItems.map((text, ix) => {
         return (
           <CanvasAdjustedTextFragment
@@ -183,7 +189,6 @@ const styleScaleX = (style, scaleX: number) => ({
 });
 
 const SpansFromHighlight = (text, highlight) => {
-  console.log("highlight: ", highlight);
   if (!highlight || !text) return text;
   const { charStart, charEnd } = highlight;
 
@@ -212,8 +217,8 @@ const CanvasAdjustedTextFragment = (props: {
   const ref = useRef<HTMLDivElement>(null);
   const [scaleX, setScaleX] = useState(1);
   useLayoutEffect(() => {
-    const domWidth = ref.current.getBoundingClientRect()["width"];
-    setScaleX(props.textItem.width / domWidth); // textItem.width from canvas render
+    const { elementRect, ...scale } = getElementScale(ref.current);
+    setScaleX((props.textItem.width * scale.scaleX) / elementRect["width"]); // textItem.width from canvas render
   }, []);
 
   return (
@@ -237,8 +242,8 @@ export const TextDiv = styled.div`
 `;
 
 export const Div100vh = styled.div`
-  /* border: 1px solid lightblue; */
-  transform: scale(1);
+  border: 1px solid green;
+  transform: scale(2);
   transform-origin: left top;
   user-select: none;
   pointer-events: none;

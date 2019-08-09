@@ -107,6 +107,7 @@
     "electron-is-dev": "^1.1.0",
     "lodash-es": "^4.17.15",
     "lodash-move": "^1.1.1",
+    "natural": "^0.6.3",
     "prop-types": "15.x.x",
     "react": ">= 16.0.0",
     "react-dom": ">= 16.0.0",

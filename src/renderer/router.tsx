@@ -11,8 +11,10 @@ import {
 } from "./StyledComponents";
 
 import { PageText } from "./pdfText/PageText";
+import {InfiniTab} from "./EntryPoints/EntryPoints"
 const linkRoute = [
-  { to: "/", label: "pdftext", component: PageText },
+  { to: "/", label: "entryPoints", component: InfiniTab },
+  { to: "/pdftext", label: "pdftext", component: PageText },
   { to: "/GestureList", label: "GestureList", component: ListWithGestures },
   { to: "/freeform", label: "freeform", component: FreeformCanvas }
 ];

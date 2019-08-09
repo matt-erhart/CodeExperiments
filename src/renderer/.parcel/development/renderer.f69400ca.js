@@ -37993,738 +37993,47 @@ var styled_components_1 = __importDefault(require("styled-components")); // so w
 exports.FullViewPort = styled_components_1.default.div(_templateObject());
 exports.ViewPortNav = styled_components_1.default.div(_templateObject2());
 exports.ViewPortMainContent = styled_components_1.default.div(_templateObject3());
-},{"@babel/runtime/helpers/taggedTemplateLiteral":"../../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js","styled-components":"../../node_modules/styled-components/dist/styled-components.browser.esm.js"}],"../../node_modules/regenerator-runtime/runtime.js":[function(require,module,exports) {
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
+},{"@babel/runtime/helpers/taggedTemplateLiteral":"../../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js","styled-components":"../../node_modules/styled-components/dist/styled-components.browser.esm.js"}],"../../node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js":[function(require,module,exports) {
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
 
-var runtime = (function (exports) {
-  "use strict";
-
-  var Op = Object.prototype;
-  var hasOwn = Op.hasOwnProperty;
-  var undefined; // More compressible than void 0.
-  var $Symbol = typeof Symbol === "function" ? Symbol : {};
-  var iteratorSymbol = $Symbol.iterator || "@@iterator";
-  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
-  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
-    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
-    var generator = Object.create(protoGenerator.prototype);
-    var context = new Context(tryLocsList || []);
-
-    // The ._invoke method unifies the implementations of the .next,
-    // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
-
-    return generator;
-  }
-  exports.wrap = wrap;
-
-  // Try/catch helper to minimize deoptimizations. Returns a completion
-  // record like context.tryEntries[i].completion. This interface could
-  // have been (and was previously) designed to take a closure to be
-  // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
-  // to create a new function object. We can even get away with assuming
-  // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
-  // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
-  function tryCatch(fn, obj, arg) {
-    try {
-      return { type: "normal", arg: fn.call(obj, arg) };
-    } catch (err) {
-      return { type: "throw", arg: err };
-    }
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
   }
 
-  var GenStateSuspendedStart = "suspendedStart";
-  var GenStateSuspendedYield = "suspendedYield";
-  var GenStateExecuting = "executing";
-  var GenStateCompleted = "completed";
-
-  // Returning this object from the innerFn has the same effect as
-  // breaking out of the dispatch switch statement.
-  var ContinueSentinel = {};
-
-  // Dummy constructor functions that we use as the .constructor and
-  // .constructor.prototype properties for functions that return Generator
-  // objects. For full spec compliance, you may wish to configure your
-  // minifier not to mangle the names of these two functions.
-  function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
-
-  // This is a polyfill for %IteratorPrototype% for environments that
-  // don't natively support it.
-  var IteratorPrototype = {};
-  IteratorPrototype[iteratorSymbol] = function () {
-    return this;
-  };
-
-  var getProto = Object.getPrototypeOf;
-  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  if (NativeIteratorPrototype &&
-      NativeIteratorPrototype !== Op &&
-      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
-    // This environment has a native %IteratorPrototype%; use it instead
-    // of the polyfill.
-    IteratorPrototype = NativeIteratorPrototype;
-  }
-
-  var Gp = GeneratorFunctionPrototype.prototype =
-    Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
-  GeneratorFunctionPrototype[toStringTagSymbol] =
-    GeneratorFunction.displayName = "GeneratorFunction";
-
-  // Helper for defining the .next, .throw, and .return methods of the
-  // Iterator interface in terms of a single ._invoke method.
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function(method) {
-      prototype[method] = function(arg) {
-        return this._invoke(method, arg);
-      };
-    });
-  }
-
-  exports.isGeneratorFunction = function(genFun) {
-    var ctor = typeof genFun === "function" && genFun.constructor;
-    return ctor
-      ? ctor === GeneratorFunction ||
-        // For the native GeneratorFunction constructor, the best we can
-        // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction"
-      : false;
-  };
-
-  exports.mark = function(genFun) {
-    if (Object.setPrototypeOf) {
-      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-    } else {
-      genFun.__proto__ = GeneratorFunctionPrototype;
-      if (!(toStringTagSymbol in genFun)) {
-        genFun[toStringTagSymbol] = "GeneratorFunction";
-      }
-    }
-    genFun.prototype = Object.create(Gp);
-    return genFun;
-  };
-
-  // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-  // `hasOwn.call(value, "__await")` to determine if the yielded value is
-  // meant to be awaited.
-  exports.awrap = function(arg) {
-    return { __await: arg };
-  };
-
-  function AsyncIterator(generator) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-      if (record.type === "throw") {
-        reject(record.arg);
-      } else {
-        var result = record.arg;
-        var value = result.value;
-        if (value &&
-            typeof value === "object" &&
-            hasOwn.call(value, "__await")) {
-          return Promise.resolve(value.__await).then(function(value) {
-            invoke("next", value, resolve, reject);
-          }, function(err) {
-            invoke("throw", err, resolve, reject);
-          });
-        }
-
-        return Promise.resolve(value).then(function(unwrapped) {
-          // When a yielded Promise is resolved, its final value becomes
-          // the .value of the Promise<{value,done}> result for the
-          // current iteration.
-          result.value = unwrapped;
-          resolve(result);
-        }, function(error) {
-          // If a rejected Promise was yielded, throw the rejection back
-          // into the async generator function so it can be handled there.
-          return invoke("throw", error, resolve, reject);
-        });
-      }
-    }
-
-    var previousPromise;
-
-    function enqueue(method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new Promise(function(resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
-      }
-
-      return previousPromise =
-        // If enqueue has been called before, then we want to wait until
-        // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
-        // enqueue has not been called before, then it is important to
-        // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
-        // any necessary setup in a predictable way. This predictability
-        // is why the Promise constructor synchronously invokes its
-        // executor callback, and why async functions synchronously
-        // execute code before the first await. Since we implement simple
-        // async functions in terms of async generators, it is especially
-        // important to get this right, even though it requires care.
-        previousPromise ? previousPromise.then(
-          callInvokeWithMethodAndArg,
-          // Avoid propagating failures to Promises returned by later
-          // invocations of the iterator.
-          callInvokeWithMethodAndArg
-        ) : callInvokeWithMethodAndArg();
-    }
-
-    // Define the unified helper method that is used to implement .next,
-    // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
-  }
-
-  defineIteratorMethods(AsyncIterator.prototype);
-  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
-    return this;
-  };
-  exports.AsyncIterator = AsyncIterator;
-
-  // Note that simple async functions are implemented on top of
-  // AsyncIterator objects; they just return a Promise for the value of
-  // the final result produced by the iterator.
-  exports.async = function(innerFn, outerFn, self, tryLocsList) {
-    var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList)
-    );
-
-    return exports.isGeneratorFunction(outerFn)
-      ? iter // If outerFn is a generator, return the full iterator.
-      : iter.next().then(function(result) {
-          return result.done ? result.value : iter.next();
-        });
-  };
-
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = GenStateSuspendedStart;
-
-    return function invoke(method, arg) {
-      if (state === GenStateExecuting) {
-        throw new Error("Generator is already running");
-      }
-
-      if (state === GenStateCompleted) {
-        if (method === "throw") {
-          throw arg;
-        }
-
-        // Be forgiving, per 25.3.3.3.3 of the spec:
-        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-        return doneResult();
-      }
-
-      context.method = method;
-      context.arg = arg;
-
-      while (true) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-
-        if (context.method === "next") {
-          // Setting context._sent for legacy support of Babel's
-          // function.sent implementation.
-          context.sent = context._sent = context.arg;
-
-        } else if (context.method === "throw") {
-          if (state === GenStateSuspendedStart) {
-            state = GenStateCompleted;
-            throw context.arg;
-          }
-
-          context.dispatchException(context.arg);
-
-        } else if (context.method === "return") {
-          context.abrupt("return", context.arg);
-        }
-
-        state = GenStateExecuting;
-
-        var record = tryCatch(innerFn, self, context);
-        if (record.type === "normal") {
-          // If an exception is thrown from innerFn, we leave state ===
-          // GenStateExecuting and loop back for another invocation.
-          state = context.done
-            ? GenStateCompleted
-            : GenStateSuspendedYield;
-
-          if (record.arg === ContinueSentinel) {
-            continue;
-          }
-
-          return {
-            value: record.arg,
-            done: context.done
-          };
-
-        } else if (record.type === "throw") {
-          state = GenStateCompleted;
-          // Dispatch the exception by looping back around to the
-          // context.dispatchException(context.arg) call above.
-          context.method = "throw";
-          context.arg = record.arg;
-        }
-      }
-    };
-  }
-
-  // Call delegate.iterator[context.method](context.arg) and handle the
-  // result, either by returning a { value, done } result from the
-  // delegate iterator, or by modifying context.method and context.arg,
-  // setting context.delegate to null, and returning the ContinueSentinel.
-  function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
-    if (method === undefined) {
-      // A .throw or .return when the delegate iterator has no .throw
-      // method always terminates the yield* loop.
-      context.delegate = null;
-
-      if (context.method === "throw") {
-        // Note: ["return"] must be used for ES3 parsing compatibility.
-        if (delegate.iterator["return"]) {
-          // If the delegate iterator has a return method, give it a
-          // chance to clean up.
-          context.method = "return";
-          context.arg = undefined;
-          maybeInvokeDelegate(delegate, context);
-
-          if (context.method === "throw") {
-            // If maybeInvokeDelegate(context) changed context.method from
-            // "return" to "throw", let that override the TypeError below.
-            return ContinueSentinel;
-          }
-        }
-
-        context.method = "throw";
-        context.arg = new TypeError(
-          "The iterator does not provide a 'throw' method");
-      }
-
-      return ContinueSentinel;
-    }
-
-    var record = tryCatch(method, delegate.iterator, context.arg);
-
-    if (record.type === "throw") {
-      context.method = "throw";
-      context.arg = record.arg;
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    var info = record.arg;
-
-    if (! info) {
-      context.method = "throw";
-      context.arg = new TypeError("iterator result is not an object");
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    if (info.done) {
-      // Assign the result of the finished delegate to the temporary
-      // variable specified by delegate.resultName (see delegateYield).
-      context[delegate.resultName] = info.value;
-
-      // Resume execution at the desired location (see delegateYield).
-      context.next = delegate.nextLoc;
-
-      // If context.method was "throw" but the delegate handled the
-      // exception, let the outer generator proceed normally. If
-      // context.method was "next", forget context.arg since it has been
-      // "consumed" by the delegate iterator. If context.method was
-      // "return", allow the original .return call to continue in the
-      // outer generator.
-      if (context.method !== "return") {
-        context.method = "next";
-        context.arg = undefined;
-      }
-
-    } else {
-      // Re-yield the result returned by the delegate method.
-      return info;
-    }
-
-    // The delegate iterator is finished, so forget it and continue with
-    // the outer generator.
-    context.delegate = null;
-    return ContinueSentinel;
-  }
-
-  // Define Generator.prototype.{next,throw,return} in terms of the
-  // unified ._invoke helper method.
-  defineIteratorMethods(Gp);
-
-  Gp[toStringTagSymbol] = "Generator";
-
-  // A Generator should always return itself as the iterator object when the
-  // @@iterator function is called on it. Some browsers' implementations of the
-  // iterator prototype chain incorrectly implement this, causing the Generator
-  // object to not be returned from this call. This ensures that doesn't happen.
-  // See https://github.com/facebook/regenerator/issues/274 for more details.
-  Gp[iteratorSymbol] = function() {
-    return this;
-  };
-
-  Gp.toString = function() {
-    return "[object Generator]";
-  };
-
-  function pushTryEntry(locs) {
-    var entry = { tryLoc: locs[0] };
-
-    if (1 in locs) {
-      entry.catchLoc = locs[1];
-    }
-
-    if (2 in locs) {
-      entry.finallyLoc = locs[2];
-      entry.afterLoc = locs[3];
-    }
-
-    this.tryEntries.push(entry);
-  }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal";
-    delete record.arg;
-    entry.completion = record;
-  }
-
-  function Context(tryLocsList) {
-    // The root entry object (effectively a try statement without a catch
-    // or a finally block) gives us a place to store values thrown from
-    // locations where there is no enclosing try statement.
-    this.tryEntries = [{ tryLoc: "root" }];
-    tryLocsList.forEach(pushTryEntry, this);
-    this.reset(true);
-  }
-
-  exports.keys = function(object) {
-    var keys = [];
-    for (var key in object) {
-      keys.push(key);
-    }
-    keys.reverse();
-
-    // Rather than returning an object with a next method, we keep
-    // things simple and return the next function itself.
-    return function next() {
-      while (keys.length) {
-        var key = keys.pop();
-        if (key in object) {
-          next.value = key;
-          next.done = false;
-          return next;
-        }
-      }
-
-      // To avoid creating an additional object, we just hang the .value
-      // and .done properties off the next function object itself. This
-      // also ensures that the minifier will not anonymize the function.
-      next.done = true;
-      return next;
-    };
-  };
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) {
-        return iteratorMethod.call(iterable);
-      }
-
-      if (typeof iterable.next === "function") {
-        return iterable;
-      }
-
-      if (!isNaN(iterable.length)) {
-        var i = -1, next = function next() {
-          while (++i < iterable.length) {
-            if (hasOwn.call(iterable, i)) {
-              next.value = iterable[i];
-              next.done = false;
-              return next;
-            }
-          }
-
-          next.value = undefined;
-          next.done = true;
-
-          return next;
-        };
-
-        return next.next = next;
-      }
-    }
-
-    // Return an iterator with no values.
-    return { next: doneResult };
-  }
-  exports.values = values;
-
-  function doneResult() {
-    return { value: undefined, done: true };
-  }
-
-  Context.prototype = {
-    constructor: Context,
-
-    reset: function(skipTempReset) {
-      this.prev = 0;
-      this.next = 0;
-      // Resetting context._sent for legacy support of Babel's
-      // function.sent implementation.
-      this.sent = this._sent = undefined;
-      this.done = false;
-      this.delegate = null;
-
-      this.method = "next";
-      this.arg = undefined;
-
-      this.tryEntries.forEach(resetTryEntry);
-
-      if (!skipTempReset) {
-        for (var name in this) {
-          // Not sure about the optimal order of these conditions:
-          if (name.charAt(0) === "t" &&
-              hasOwn.call(this, name) &&
-              !isNaN(+name.slice(1))) {
-            this[name] = undefined;
-          }
-        }
-      }
-    },
-
-    stop: function() {
-      this.done = true;
-
-      var rootEntry = this.tryEntries[0];
-      var rootRecord = rootEntry.completion;
-      if (rootRecord.type === "throw") {
-        throw rootRecord.arg;
-      }
-
-      return this.rval;
-    },
-
-    dispatchException: function(exception) {
-      if (this.done) {
-        throw exception;
-      }
-
-      var context = this;
-      function handle(loc, caught) {
-        record.type = "throw";
-        record.arg = exception;
-        context.next = loc;
-
-        if (caught) {
-          // If the dispatched exception was caught by a catch block,
-          // then let that catch block handle the exception normally.
-          context.method = "next";
-          context.arg = undefined;
-        }
-
-        return !! caught;
-      }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        var record = entry.completion;
-
-        if (entry.tryLoc === "root") {
-          // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
-          // throw the exception.
-          return handle("end");
-        }
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc");
-          var hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            } else if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            }
-
-          } else if (hasFinally) {
-            if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else {
-            throw new Error("try statement without catch or finally");
-          }
-        }
-      }
-    },
-
-    abrupt: function(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc <= this.prev &&
-            hasOwn.call(entry, "finallyLoc") &&
-            this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
-          break;
-        }
-      }
-
-      if (finallyEntry &&
-          (type === "break" ||
-           type === "continue") &&
-          finallyEntry.tryLoc <= arg &&
-          arg <= finallyEntry.finallyLoc) {
-        // Ignore the finally entry if control is not jumping to a
-        // location outside the try/catch block.
-        finallyEntry = null;
-      }
-
-      var record = finallyEntry ? finallyEntry.completion : {};
-      record.type = type;
-      record.arg = arg;
-
-      if (finallyEntry) {
-        this.method = "next";
-        this.next = finallyEntry.finallyLoc;
-        return ContinueSentinel;
-      }
-
-      return this.complete(record);
-    },
-
-    complete: function(record, afterLoc) {
-      if (record.type === "throw") {
-        throw record.arg;
-      }
-
-      if (record.type === "break" ||
-          record.type === "continue") {
-        this.next = record.arg;
-      } else if (record.type === "return") {
-        this.rval = this.arg = record.arg;
-        this.method = "return";
-        this.next = "end";
-      } else if (record.type === "normal" && afterLoc) {
-        this.next = afterLoc;
-      }
-
-      return ContinueSentinel;
-    },
-
-    finish: function(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) {
-          this.complete(entry.completion, entry.afterLoc);
-          resetTryEntry(entry);
-          return ContinueSentinel;
-        }
-      }
-    },
-
-    "catch": function(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-          if (record.type === "throw") {
-            var thrown = record.arg;
-            resetTryEntry(entry);
-          }
-          return thrown;
-        }
-      }
-
-      // The context.catch method must only be called with a location
-      // argument that corresponds to a known catch block.
-      throw new Error("illegal catch attempt");
-    },
-
-    delegateYield: function(iterable, resultName, nextLoc) {
-      this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      };
-
-      if (this.method === "next") {
-        // Deliberately forget the last sent value so that we don't
-        // accidentally pass it on to the delegate.
-        this.arg = undefined;
-      }
-
-      return ContinueSentinel;
-    }
-  };
-
-  // Regardless of whether this script is executing as a CommonJS module
-  // or not, return the runtime object so that we can declare the variable
-  // regeneratorRuntime in the outer scope, which allows this module to be
-  // injected easily by `bin/regenerator --include-runtime script.js`.
-  return exports;
-
-}(
-  // If this script is executing as a CommonJS module, use module.exports
-  // as the regeneratorRuntime namespace. Otherwise create a new empty
-  // object. Either way, the resulting object will be used to initialize
-  // the regeneratorRuntime variable at the top of this file.
-  typeof module === "object" ? module.exports : {}
-));
-
-try {
-  regeneratorRuntime = runtime;
-} catch (accidentalStrictMode) {
-  // This module should not be running in strict mode, so the above
-  // assignment should always work unless something is misconfigured. Just
-  // in case runtime.js accidentally runs in strict mode, we can escape
-  // strict mode using a global Function call. This could conceivably fail
-  // if a Content Security Policy forbids using Function, but in that case
-  // the proper solution is to fix the accidental strict mode problem. If
-  // you've misconfigured your bundler to force strict mode and applied a
-  // CSP to forbid Function, and you're not willing to fix either of those
-  // problems, please detail your unique predicament in a GitHub issue.
-  Function("r", "regeneratorRuntime = r")(runtime);
+  return target;
 }
 
-},{}],"../../node_modules/@babel/runtime/regenerator/index.js":[function(require,module,exports) {
-module.exports = require("regenerator-runtime");
+module.exports = _objectWithoutPropertiesLoose;
+},{}],"../../node_modules/@babel/runtime/helpers/objectWithoutProperties.js":[function(require,module,exports) {
+var objectWithoutPropertiesLoose = require("./objectWithoutPropertiesLoose");
 
-},{"regenerator-runtime":"../../node_modules/regenerator-runtime/runtime.js"}],"../../node_modules/@babel/runtime/helpers/defineProperty.js":[function(require,module,exports) {
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutProperties;
+},{"./objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"}],"../../node_modules/@babel/runtime/helpers/defineProperty.js":[function(require,module,exports) {
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -38764,45 +38073,7 @@ function _objectSpread(target) {
 }
 
 module.exports = _objectSpread;
-},{"./defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js"}],"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js":[function(require,module,exports) {
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
-  };
-}
-
-module.exports = _asyncToGenerator;
-},{}],"../../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":[function(require,module,exports) {
+},{"./defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js"}],"../../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":[function(require,module,exports) {
 function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) {
     for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
@@ -46460,6 +45731,5991 @@ module.exports = {
     "yMax": 792
   }
 };
+},{}],"pdfText/json/textToDisplay-page0002.json":[function(require,module,exports) {
+module.exports = {
+  "pageNumber": 2,
+  "text": [{
+    "str": " ",
+    "dir": "ltr",
+    "width": 3,
+    "height": 12,
+    "transform": [12, 0, 0, 12, 45.384, 756.72],
+    "fontName": "Times New Roman",
+    "id": "0002-0000",
+    "top": 23.279999999999973,
+    "left": 45.384,
+    "fontHeight": 12,
+    "fontWidth": 12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "other data",
+    "dir": "ltr",
+    "width": 36.15168,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 734.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0001",
+    "top": 48.5,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 81.624, 734.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0002",
+    "top": 48.5,
+    "left": 81.624,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "driven ",
+    "dir": "ltr",
+    "width": 25.289759999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 84.504, 734.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0003",
+    "top": 48.5,
+    "left": 84.504,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "variants [10] facilitate navigation to data regions of ",
+    "dir": "ltr",
+    "width": 187.49807999999993,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 109.97, 734.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0004",
+    "top": 48.5,
+    "left": 109.97,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "interest  by  summarizing  the  data  distribution  queried  by ",
+    "dir": "ltr",
+    "width": 211.97615999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 724.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0005",
+    "top": 58.58000000000004,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "the",
+    "dir": "ltr",
+    "width": 11.235839999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 258.82, 724.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0006",
+    "top": 58.58000000000004,
+    "left": 258.82,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 270.1, 724.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0007",
+    "top": 58.58000000000004,
+    "left": 270.1,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "slider. ",
+    "dir": "ltr",
+    "width": 24.332160000000005,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 273.46, 724.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0008",
+    "top": 58.58000000000004,
+    "left": 273.46,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "O",
+    "dir": "ltr",
+    "width": 6.584639999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 714.46],
+    "fontName": "g_d5_f28",
+    "id": "0002-0009",
+    "top": 68.41999999999996,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "n  web  pages, ",
+    "dir": "ltr",
+    "width": 51.901920000000004,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 51.864, 714.46],
+    "fontName": "g_d5_f28",
+    "id": "0002-0010",
+    "top": 68.41999999999996,
+    "left": 51.864,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "hyperlink  text ",
+    "dir": "ltr",
+    "width": 53.78976,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 105.17, 714.46],
+    "fontName": "g_d5_f28",
+    "id": "0002-0011",
+    "top": 68.41999999999996,
+    "left": 105.17,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "usually ",
+    "dir": "ltr",
+    "width": 27.92544,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 160.37, 714.46],
+    "fontName": "g_d5_f28",
+    "id": "0002-0012",
+    "top": 68.41999999999996,
+    "left": 160.37,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "offers  navigation  cues  about ",
+    "dir": "ltr",
+    "width": 107.99904000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 189.67, 714.46],
+    "fontName": "g_d5_f28",
+    "id": "0002-0013",
+    "top": 68.41999999999996,
+    "left": 189.67,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "the  content  of  the  link  target",
+    "dir": "ltr",
+    "width": 110.36111999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 704.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0014",
+    "top": 78.5,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ".  This  is  the  reason  that ",
+    "dir": "ltr",
+    "width": 94.29167999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 156.05, 704.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0015",
+    "top": 78.5,
+    "left": 156.05,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "human  web ",
+    "dir": "ltr",
+    "width": 45.444959999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 252.34, 704.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0016",
+    "top": 78.5,
+    "left": 252.34,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "surfers and modern web search indices",
+    "dir": "ltr",
+    "width": 143.04719999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 694.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0017",
+    "top": 88.58000000000004,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 188.71, 694.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0018",
+    "top": 88.58000000000004,
+    "left": 188.71,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "rely  on link text",
+    "dir": "ltr",
+    "width": 59.32559999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 191.35, 694.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0019",
+    "top": 88.58000000000004,
+    "left": 191.35,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ". Olston and ",
+    "dir": "ltr",
+    "width": 47.12303999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 250.66, 694.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0020",
+    "top": 88.58000000000004,
+    "left": 250.66,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Chi’s ScentTrails system [16] ",
+    "dir": "ltr",
+    "width": 110.36111999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 684.46],
+    "fontName": "g_d5_f31",
+    "id": "0002-0021",
+    "top": 98.41999999999996,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375,
+      "vertical": false
+    }
+  }, {
+    "str": "facilitates",
+    "dir": "ltr",
+    "width": 34.92048,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 156.29, 684.46],
+    "fontName": "g_d5_f28",
+    "id": "0002-0022",
+    "top": 98.41999999999996,
+    "left": 156.29,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 191.11, 684.46],
+    "fontName": "g_d5_f28",
+    "id": "0002-0023",
+    "top": 98.41999999999996,
+    "left": 191.11,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "search and brow",
+    "dir": "ltr",
+    "width": 59.316480000000006,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 193.75, 684.46],
+    "fontName": "g_d5_f28",
+    "id": "0002-0024",
+    "top": 98.41999999999996,
+    "left": 193.75,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "sing of web ",
+    "dir": "ltr",
+    "width": 44.715360000000004,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 253.06, 684.46],
+    "fontName": "g_d5_f28",
+    "id": "0002-0025",
+    "top": 98.41999999999996,
+    "left": 253.06,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "sites  by  scoring  documents ",
+    "dir": "ltr",
+    "width": 105.82848,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 674.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0026",
+    "top": 108.5,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "in  response",
+    "dir": "ltr",
+    "width": 42.90048,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 153.41, 674.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0027",
+    "top": 108.5,
+    "left": 153.41,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 196.39, 674.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0028",
+    "top": 108.5,
+    "left": 196.39,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "to  a  text  query  and  then ",
+    "dir": "ltr",
+    "width": 97.17360000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 200.47, 674.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0029",
+    "top": 108.5,
+    "left": 200.47,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "enlarging",
+    "dir": "ltr",
+    "width": 34.27296,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 664.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0030",
+    "top": 118.61000000000001,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 79.464, 664.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0031",
+    "top": 118.61000000000001,
+    "left": 79.464,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "hyperlink   text   to   indicate   paths",
+    "dir": "ltr",
+    "width": 131.97551999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 86.904, 664.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0032",
+    "top": 118.61000000000001,
+    "left": 86.904,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 219.19, 664.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0033",
+    "top": 118.61000000000001,
+    "left": 219.19,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "to   highly   ranked ",
+    "dir": "ltr",
+    "width": 71.31840000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 226.39, 664.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0034",
+    "top": 118.61000000000001,
+    "left": 226.39,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "documents.  ScentTrails ",
+    "dir": "ltr",
+    "width": 89.05679999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 654.43],
+    "fontName": "g_d5_f28",
+    "id": "0002-0035",
+    "top": 128.45000000000005,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "outperforms  both  searching  and  browsing ",
+    "dir": "ltr",
+    "width": 160.78559999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 136.85, 654.43],
+    "fontName": "g_d5_f28",
+    "id": "0002-0036",
+    "top": 128.45000000000005,
+    "left": 136.85,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "alone",
+    "dir": "ltr",
+    "width": 19.626239999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 644.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0037",
+    "top": 138.52999999999997,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 65.064, 644.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0038",
+    "top": 138.52999999999997,
+    "left": 65.064,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "in",
+    "dir": "ltr",
+    "width": 7.30536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 67.224, 644.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0039",
+    "top": 138.52999999999997,
+    "left": 67.224,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 74.184, 644.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0040",
+    "top": 138.52999999999997,
+    "left": 74.184,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "information",
+    "dir": "ltr",
+    "width": 42.43536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 76.584, 644.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0041",
+    "top": 138.52999999999997,
+    "left": 76.584,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 119.09, 644.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0042",
+    "top": 138.52999999999997,
+    "left": 119.09,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "seeking tasks. ",
+    "dir": "ltr",
+    "width": 52.14815999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 121.97, 644.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0043",
+    "top": 138.52999999999997,
+    "left": 121.97,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 174.07, 644.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0044",
+    "top": 138.52999999999997,
+    "left": 174.07,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Another ",
+    "dir": "ltr",
+    "width": 31.992959999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.504, 634.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0045",
+    "top": 148.61,
+    "left": 54.504,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "strategy",
+    "dir": "ltr",
+    "width": 28.518239999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 88.104, 634.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0046",
+    "top": 148.61,
+    "left": 88.104,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 116.21, 634.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0047",
+    "top": 148.61,
+    "left": 116.21,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "is ",
+    "dir": "ltr",
+    "width": 8.499839999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 120.29, 634.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0048",
+    "top": 148.61,
+    "left": 120.29,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "to  provide  information  scent  cues  based  on ",
+    "dir": "ltr",
+    "width": 166.95071999999993,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 130.61, 634.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0049",
+    "top": 148.61,
+    "left": 130.61,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "metadata.   For   example,   social   navigation   is   often   based   on ",
+    "dir": "ltr",
+    "width": 251.97647999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 624.43],
+    "fontName": "g_d5_f28",
+    "id": "0002-0050",
+    "top": 158.45000000000005,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "displaying aggregated activity patterns. Blogs and discussion forums ",
+    "dir": "ltr",
+    "width": 251.94912,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 614.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0051",
+    "top": 168.52999999999997,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "regularly",
+    "dir": "ltr",
+    "width": 32.822880000000005,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 604.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0052",
+    "top": 178.61,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 77.784, 604.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0053",
+    "top": 178.61,
+    "left": 77.784,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "include the number",
+    "dir": "ltr",
+    "width": 70.86239999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 80.664, 604.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0054",
+    "top": 178.61,
+    "left": 80.664,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 151.73, 604.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0055",
+    "top": 178.61,
+    "left": 151.73,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "of posted comments in the link ",
+    "dir": "ltr",
+    "width": 116.60831999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 154.61, 604.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0056",
+    "top": 178.61,
+    "left": 154.61,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "text of ",
+    "dir": "ltr",
+    "width": 25.982879999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 271.78, 604.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0057",
+    "top": 178.61,
+    "left": 271.78,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "hyperlinks  to  dis",
+    "dir": "ltr",
+    "width": 62.73648000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 594.43],
+    "fontName": "g_d5_f28",
+    "id": "0002-0058",
+    "top": 188.45000000000005,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "cussions,  while  the  del.icio.us  social  bookmarking ",
+    "dir": "ltr",
+    "width": 189.25823999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 108.29, 594.43],
+    "fontName": "g_d5_f28",
+    "id": "0002-0059",
+    "top": 188.45000000000005,
+    "left": 108.29,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "service ",
+    "dir": "ltr",
+    "width": 27.9072,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 584.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0060",
+    "top": 198.52999999999997,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "encodes",
+    "dir": "ltr",
+    "width": 28.96511999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 74.184, 584.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0061",
+    "top": 198.52999999999997,
+    "left": 74.184,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 103.25, 584.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0062",
+    "top": 198.52999999999997,
+    "left": 103.25,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "the number  of  users  who  share  a  web  bookmark ",
+    "dir": "ltr",
+    "width": 181.59743999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 106.13, 584.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0063",
+    "top": 198.52999999999997,
+    "left": 106.13,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "in ",
+    "dir": "ltr",
+    "width": 9.22944,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 288.58, 584.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0064",
+    "top": 198.52999999999997,
+    "left": 288.58,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "gradated red backgrounds for link text",
+    "dir": "ltr",
+    "width": 138.67871999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 574.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0065",
+    "top": 208.63,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ". Hill et al [14] explore the use ",
+    "dir": "ltr",
+    "width": 113.43455999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 184.15, 574.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0066",
+    "top": 208.63,
+    "left": 184.15,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "of   social   navigation   cues  in  a   document  editor,   placing   usage ",
+    "dir": "ltr",
+    "width": 252.04943999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 564.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0067",
+    "top": 218.47000000000003,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "histogr",
+    "dir": "ltr",
+    "width": 24.851999999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 554.33],
+    "fontName": "g_d5_f28",
+    "id": "0002-0068",
+    "top": 228.54999999999995,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "ams within the scroll bar to indicate the prevalence of reading ",
+    "dir": "ltr",
+    "width": 227.01504,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 70.344, 554.33],
+    "fontName": "g_d5_f28",
+    "id": "0002-0069",
+    "top": 228.54999999999995,
+    "left": 70.344,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "and  editing  activity  throughout  the  document. ",
+    "dir": "ltr",
+    "width": 172.65071999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 544.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0070",
+    "top": 238.63,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Similarly",
+    "dir": "ltr",
+    "width": 33.7896,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 219.43, 544.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0071",
+    "top": 238.63,
+    "left": 219.43,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ", ",
+    "dir": "ltr",
+    "width": 4.8,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 252.82, 544.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0072",
+    "top": 238.63,
+    "left": 252.82,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Björk  and ",
+    "dir": "ltr",
+    "width": 39.20688,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 258.58, 544.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0073",
+    "top": 238.63,
+    "left": 258.58,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Redström  [5] ",
+    "dir": "ltr",
+    "width": 51.91104,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 534.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0074",
+    "top": 248.47000000000003,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "use",
+    "dir": "ltr",
+    "width": 11.96544,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 99.168, 534.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0075",
+    "top": 248.47000000000003,
+    "left": 99.168,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 111.17, 534.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0076",
+    "top": 248.47000000000003,
+    "left": 111.17,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "color  marks  to  indicate  edits  and  search  results ",
+    "dir": "ltr",
+    "width": 182.23584000000005,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 115.25, 534.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0077",
+    "top": 248.47000000000003,
+    "left": 115.25,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "along all edges of document frames. ",
+    "dir": "ltr",
+    "width": 135.54144,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 524.33],
+    "fontName": "g_d5_f28",
+    "id": "0002-0078",
+    "top": 258.54999999999995,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 181.75, 524.33],
+    "fontName": "g_d5_f28",
+    "id": "0002-0079",
+    "top": 258.54999999999995,
+    "left": 181.75,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "In the domain of colla",
+    "dir": "ltr",
+    "width": 81.47807999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 184.63, 524.33],
+    "fontName": "g_d5_f28",
+    "id": "0002-0080",
+    "top": 258.54999999999995,
+    "left": 184.63,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "borative ",
+    "dir": "ltr",
+    "width": 31.527839999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 266.26, 524.33],
+    "fontName": "g_d5_f28",
+    "id": "0002-0081",
+    "top": 258.54999999999995,
+    "left": 266.26,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "visualization, Wattenberg and Kriss [20] gray",
+    "dir": "ltr",
+    "width": 164.70719999999992,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 514.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0082",
+    "top": 268.63,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 209.83, 514.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0083",
+    "top": 268.63,
+    "left": 209.83,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "out visited regions of a ",
+    "dir": "ltr",
+    "width": 84.73391999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 212.95, 514.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0084",
+    "top": 268.63,
+    "left": 212.95,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "visualization  to  provide  ―anti",
+    "dir": "ltr",
+    "width": 112.27632,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 504.41],
+    "fontName": "g_d5_f31",
+    "id": "0002-0085",
+    "top": 278.47,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375,
+      "vertical": false
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 157.97, 504.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0086",
+    "top": 278.47,
+    "left": 157.97,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "social  navigation‖  cues  to  promote ",
+    "dir": "ltr",
+    "width": 136.73615999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 160.85, 504.41],
+    "fontName": "g_d5_f31",
+    "id": "0002-0087",
+    "top": 278.47,
+    "left": 160.85,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375,
+      "vertical": false
+    }
+  }, {
+    "str": "analysis of unexplored regions.",
+    "dir": "ltr",
+    "width": 112.54079999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 494.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0088",
+    "top": 288.58,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 157.97, 494.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0089",
+    "top": 288.58,
+    "left": 157.97,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Our  work  generalizes  techniques  such  as  histogram  sliders  and ",
+    "dir": "ltr",
+    "width": 242.8929599999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.504, 484.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0090",
+    "top": 298.65999999999997,
+    "left": 54.504,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Hill’s  read  and ",
+    "dir": "ltr",
+    "width": 60.2832,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 474.38],
+    "fontName": "g_d5_f31",
+    "id": "0002-0091",
+    "top": 308.5,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375,
+      "vertical": false
+    }
+  }, {
+    "str": "edit  wear,  providing  design  considerations  and  a ",
+    "dir": "ltr",
+    "width": 189.5136,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 108.05, 474.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0092",
+    "top": 308.5,
+    "left": 108.05,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "toolkit",
+    "dir": "ltr",
+    "width": 23.620800000000003,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 464.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0093",
+    "top": 318.58,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 69.144, 464.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0094",
+    "top": 318.58,
+    "left": 69.144,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "level  framework  for  embedding  navigation  cues  in  a  variety ",
+    "dir": "ltr",
+    "width": 225.4190399999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 72.024, 464.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0095",
+    "top": 318.58,
+    "left": 72.024,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "of  interface  widgets. ",
+    "dir": "ltr",
+    "width": 78.46847999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 454.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0096",
+    "top": 328.65999999999997,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "We  contribute  a  general  framework  providing ",
+    "dir": "ltr",
+    "width": 172.45007999999993,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 125.09, 454.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0097",
+    "top": 328.65999999999997,
+    "left": 125.09,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "both  data",
+    "dir": "ltr",
+    "width": 34.491839999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 444.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0098",
+    "top": 338.5,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 79.944, 444.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0099",
+    "top": 338.5,
+    "left": 79.944,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 82.824, 444.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0100",
+    "top": 338.5,
+    "left": 82.824,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "and  metadata",
+    "dir": "ltr",
+    "width": 48.86495999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 86.184, 444.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0101",
+    "top": 338.5,
+    "left": 86.184,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 135.17, 444.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0102",
+    "top": 338.5,
+    "left": 135.17,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "driven  visual  cues  for  navigating  semantic ",
+    "dir": "ltr",
+    "width": 159.49056,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 138.05, 444.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0103",
+    "top": 338.5,
+    "left": 138.05,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "dimensi",
+    "dir": "ltr",
+    "width": 28.66416,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 434.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0104",
+    "top": 348.58,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "ons in an information space.",
+    "dir": "ltr",
+    "width": 101.53296,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 74.184, 434.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0105",
+    "top": 348.58,
+    "left": 74.184,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 175.75, 434.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0106",
+    "top": 348.58,
+    "left": 175.75,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Though not  focused on navigation cues, a few additional projects ",
+    "dir": "ltr",
+    "width": 242.94768,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 54.504, 424.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0107",
+    "top": 358.65999999999997,
+    "left": 54.504,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "share   commonalities   with   scented   widgets. ",
+    "dir": "ltr",
+    "width": 177.2472,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 414.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0108",
+    "top": 368.52,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Baudisch   et   al’s ",
+    "dir": "ltr",
+    "width": 69.64943999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 228.1, 414.36],
+    "fontName": "g_d5_f31",
+    "id": "0002-0109",
+    "top": 368.52,
+    "left": 228.1,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375,
+      "vertical": false
+    }
+  }, {
+    "str": "Phosphor  [3]  design  provides  real",
+    "dir": "ltr",
+    "width": 125.76479999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 404.28],
+    "fontName": "g_d5_f28",
+    "id": "0002-0110",
+    "top": 378.6,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 171.43, 404.28],
+    "fontName": "g_d5_f28",
+    "id": "0002-0111",
+    "top": 378.6,
+    "left": 171.43,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "time  collaboration  cues  by  using ",
+    "dir": "ltr",
+    "width": 123.28416,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 174.31, 404.28],
+    "fontName": "g_d5_f28",
+    "id": "0002-0112",
+    "top": 378.6,
+    "left": 174.31,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "afterglow effects to highlight widge",
+    "dir": "ltr",
+    "width": 129.37632,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 394.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0113",
+    "top": 388.68,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "t usage. ",
+    "dir": "ltr",
+    "width": 30.059519999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 175.03, 394.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0114",
+    "top": 388.68,
+    "left": 175.03,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Hill and Gutwin’s Multi",
+    "dir": "ltr",
+    "width": 87.17807999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 205.27, 394.2],
+    "fontName": "g_d5_f31",
+    "id": "0002-0115",
+    "top": 388.68,
+    "left": 205.27,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375,
+      "vertical": false
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 292.68, 394.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0116",
+    "top": 388.68,
+    "left": 292.68,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "User  Awareness  UI  [13]  provides  toolkit",
+    "dir": "ltr",
+    "width": 155.47775999999993,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 384.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0117",
+    "top": 398.52,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 201.19, 384.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0118",
+    "top": 398.52,
+    "left": 201.19,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "level  widget  support  for ",
+    "dir": "ltr",
+    "width": 93.58943999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 204.07, 384.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0119",
+    "top": 398.52,
+    "left": 204.07,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "synchronous collaboration, such that users can see in real",
+    "dir": "ltr",
+    "width": 206.71392,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 374.28],
+    "fontName": "g_d5_f28",
+    "id": "0002-0120",
+    "top": 408.6,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 252.58, 374.28],
+    "fontName": "g_d5_f28",
+    "id": "0002-0121",
+    "top": 408.6,
+    "left": 252.58,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "time which ",
+    "dir": "ltr",
+    "width": 42.325919999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 255.46, 374.28],
+    "fontName": "g_d5_f28",
+    "id": "0002-0122",
+    "top": 408.6,
+    "left": 255.46,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "interface   widgets   collaborators   are   using.   Our   scented   widgets ",
+    "dir": "ltr",
+    "width": 252.02207999999985,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 364.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0123",
+    "top": 418.68,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "framework ",
+    "dir": "ltr",
+    "width": 41.84255999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 354.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0124",
+    "top": 428.52,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "also",
+    "dir": "ltr",
+    "width": 14.619359999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 87.864, 354.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0125",
+    "top": 428.52,
+    "left": 87.864,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 102.29, 354.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0126",
+    "top": 428.52,
+    "left": 102.29,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "provides a",
+    "dir": "ltr",
+    "width": 37.857119999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 105.17, 354.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0127",
+    "top": 428.52,
+    "left": 105.17,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 143.09, 354.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0128",
+    "top": 428.52,
+    "left": 143.09,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "toolkit",
+    "dir": "ltr",
+    "width": 23.3928,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 145.73, 354.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0129",
+    "top": 428.52,
+    "left": 145.73,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 169.27, 354.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0130",
+    "top": 428.52,
+    "left": 169.27,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "level augmented widget suite, but ",
+    "dir": "ltr",
+    "width": 125.44559999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 172.15, 354.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0131",
+    "top": 428.52,
+    "left": 172.15,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "one  targeted  at  visual  navigation  cues  rather  than  synchronous ",
+    "dir": "ltr",
+    "width": 252.00383999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 344.28],
+    "fontName": "g_d5_f28",
+    "id": "0002-0132",
+    "top": 438.6,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "activity awareness",
+    "dir": "ltr",
+    "width": 66.31151999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 334.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0133",
+    "top": 448.68,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 111.65, 334.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0134",
+    "top": 448.68,
+    "left": 111.65,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "3",
+    "dir": "ltr",
+    "width": 5.07072,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 312.34],
+    "fontName": "Helvetica",
+    "id": "0002-0135",
+    "top": 470.54,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 50.424, 312.34],
+    "fontName": "Helvetica",
+    "id": "0002-0136",
+    "top": 470.54,
+    "left": 50.424,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "D",
+    "dir": "ltr",
+    "width": 6.584639999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 66.984, 312.34],
+    "fontName": "Helvetica",
+    "id": "0002-0137",
+    "top": 470.54,
+    "left": 66.984,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "ESIGN ",
+    "dir": "ltr",
+    "width": 23.51088,
+    "height": 6.96,
+    "transform": [6.96, 0, 0, 6.96, 73.464, 312.34],
+    "fontName": "Helvetica",
+    "id": "0002-0138",
+    "top": 472.70000000000005,
+    "left": 73.464,
+    "fontHeight": 6.96,
+    "fontWidth": 6.96,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "C",
+    "dir": "ltr",
+    "width": 6.584639999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 96.984, 312.34],
+    "fontName": "Helvetica",
+    "id": "0002-0139",
+    "top": 470.54,
+    "left": 96.984,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "ONSIDERATIONS",
+    "dir": "ltr",
+    "width": 58.12296,
+    "height": 6.96,
+    "transform": [6.96, 0, 0, 6.96, 103.73, 312.34],
+    "fontName": "Helvetica",
+    "id": "0002-0140",
+    "top": 472.70000000000005,
+    "left": 103.73,
+    "fontHeight": 6.96,
+    "fontWidth": 6.96,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 162.07, 312.34],
+    "fontName": "Helvetica",
+    "id": "0002-0141",
+    "top": 470.54,
+    "left": 162.07,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "In  designing  a  framework  for  encoding  scent  within  widgets  we ",
+    "dir": "ltr",
+    "width": 252.09503999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 298.18],
+    "fontName": "g_d5_f28",
+    "id": "0002-0142",
+    "top": 484.7,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "consider",
+    "dir": "ltr",
+    "width": 30.60672,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 288.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0143",
+    "top": 494.54,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ";",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 76.104, 288.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0144",
+    "top": 494.54,
+    "left": 76.104,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 78.504, 288.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0145",
+    "top": 494.54,
+    "left": 78.504,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "(1)  the  types  of ",
+    "dir": "ltr",
+    "width": 64.09536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 83.304, 288.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0146",
+    "top": 494.54,
+    "left": 83.304,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "information  metrics",
+    "dir": "ltr",
+    "width": 73.99967999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 150.05, 288.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0147",
+    "top": 494.54,
+    "left": 150.05,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 224.23, 288.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0148",
+    "top": 494.54,
+    "left": 224.23,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "that  can  serve  as ",
+    "dir": "ltr",
+    "width": 68.87424000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 228.82, 288.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0149",
+    "top": 494.54,
+    "left": 228.82,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "navigation   cues   in",
+    "dir": "ltr",
+    "width": 72.39456,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 278.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0150",
+    "top": 504.62,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 117.89, 278.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0151",
+    "top": 504.62,
+    "left": 117.89,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "scented",
+    "dir": "ltr",
+    "width": 27.0864,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 123.41, 278.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0152",
+    "top": 504.62,
+    "left": 123.41,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 150.53, 278.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0153",
+    "top": 504.62,
+    "left": 150.53,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "widgets",
+    "dir": "ltr",
+    "width": 27.989279999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 156.29, 278.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0154",
+    "top": 504.62,
+    "left": 156.29,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ",",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 184.15, 278.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0155",
+    "top": 504.62,
+    "left": 184.15,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 186.55, 278.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0156",
+    "top": 504.62,
+    "left": 186.55,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "(2)  the   matching   of   these ",
+    "dir": "ltr",
+    "width": 105.60959999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 192.07, 278.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0157",
+    "top": 504.62,
+    "left": 192.07,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "encodings with the navigation models of the set of standard widgets, ",
+    "dir": "ltr",
+    "width": 251.99471999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 268.18],
+    "fontName": "g_d5_f28",
+    "id": "0002-0158",
+    "top": 514.7,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "(3)",
+    "dir": "ltr",
+    "width": 10.70688,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 258.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0159",
+    "top": 524.54,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 56.184, 258.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0160",
+    "top": 524.54,
+    "left": 56.184,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "the kinds of visual encodings used to convey this data",
+    "dir": "ltr",
+    "width": 193.72703999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 58.344, 258.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0161",
+    "top": 524.54,
+    "left": 58.344,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ",",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 252.1, 258.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0162",
+    "top": 524.54,
+    "left": 252.1,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 254.5, 258.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0163",
+    "top": 524.54,
+    "left": 254.5,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "and (4) the ",
+    "dir": "ltr",
+    "width": 41.13119999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 256.66, 258.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0164",
+    "top": 524.54,
+    "left": 256.66,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "modification of the standard widge",
+    "dir": "ltr",
+    "width": 125.83775999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 248.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0165",
+    "top": 534.62,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "ts to accommodate scenting.",
+    "dir": "ltr",
+    "width": 101.75183999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 171.43, 248.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0166",
+    "top": 534.62,
+    "left": 171.43,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 273.46, 248.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0167",
+    "top": 534.62,
+    "left": 273.46,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "3.1",
+    "dir": "ltr",
+    "width": 12.740639999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 229.27],
+    "fontName": "Helvetica",
+    "id": "0002-0168",
+    "top": 553.61,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 57.864, 229.27],
+    "fontName": "Helvetica",
+    "id": "0002-0169",
+    "top": 553.61,
+    "left": 57.864,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Information Scent Metrics",
+    "dir": "ltr",
+    "width": 110.58911999999992,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 74.184, 229.27],
+    "fontName": "Helvetica",
+    "id": "0002-0170",
+    "top": 553.61,
+    "left": 74.184,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 184.63, 229.27],
+    "fontName": "Helvetica",
+    "id": "0002-0171",
+    "top": 553.61,
+    "left": 184.63,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "The  first  step  in  providing  navigation  cues  is  selecting  the  data ",
+    "dir": "ltr",
+    "width": 251.99472,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 216.31],
+    "fontName": "g_d5_f28",
+    "id": "0002-0172",
+    "top": 566.5699999999999,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "source  from  which  the  cues  will  be  derived.  While  the  appropriate ",
+    "dir": "ltr",
+    "width": 251.95824,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 45.384, 206.23],
+    "fontName": "g_d5_f28",
+    "id": "0002-0173",
+    "top": 576.65,
+    "left": 45.384,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "data  source  usually  depends  on  the  specifics  of  the  application, ",
+    "dir": "ltr",
+    "width": 251.98559999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 734.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0174",
+    "top": 48.5,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "sever",
+    "dir": "ltr",
+    "width": 19.08816,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 724.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0175",
+    "top": 58.58000000000004,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "al kinds of data and metadata can be useful aids for navigation. ",
+    "dir": "ltr",
+    "width": 232.76975999999988,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 327.24, 724.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0176",
+    "top": 58.58000000000004,
+    "left": 327.24,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "One  approach  is  to  derive  metrics  directly  from  the  information ",
+    "dir": "ltr",
+    "width": 251.9855999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 714.46],
+    "fontName": "g_d5_f28",
+    "id": "0002-0177",
+    "top": 68.41999999999996,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "content. For example, a simple metric for interactive visualization is ",
+    "dir": "ltr",
+    "width": 251.8761599999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 704.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0178",
+    "top": 78.5,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "the  number  of  visible  data  elements  in  each  application ",
+    "dir": "ltr",
+    "width": 210.5352,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 694.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0179",
+    "top": 88.58000000000004,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "state.  This ",
+    "dir": "ltr",
+    "width": 40.13712000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 520.27, 694.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0180",
+    "top": 88.58000000000004,
+    "left": 520.27,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "metric provides a sense of the density of data across the information ",
+    "dir": "ltr",
+    "width": 251.92175999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 684.46],
+    "fontName": "g_d5_f28",
+    "id": "0002-0181",
+    "top": 98.41999999999996,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "space.  More  complicated  metrics  can  be  computed  from  the  data ",
+    "dir": "ltr",
+    "width": 252.08592000000002,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 674.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0182",
+    "top": 108.5,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "itself,  and  may  involve  input  from  the  user.  Users  might  type  in ",
+    "dir": "ltr",
+    "width": 252.04943999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 664.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0183",
+    "top": 118.61000000000001,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "queries,  as  in  ScentTrails  [16],  and  be  given  s",
+    "dir": "ltr",
+    "width": 184.48847999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 654.43],
+    "fontName": "g_d5_f28",
+    "id": "0002-0184",
+    "top": 128.45000000000005,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "centing  cues  that ",
+    "dir": "ltr",
+    "width": 67.46976000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 492.91, 654.43],
+    "fontName": "g_d5_f28",
+    "id": "0002-0185",
+    "top": 128.45000000000005,
+    "left": 492.91,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "indicate relevance scores. Alternatively, advanced users might use an ",
+    "dir": "ltr",
+    "width": 251.93999999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 644.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0186",
+    "top": 138.52999999999997,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "expression   language   to   enter   in  their   own   calculations   over   a ",
+    "dir": "ltr",
+    "width": 252.0494399999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 634.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0187",
+    "top": 148.61,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "visualized data set.",
+    "dir": "ltr",
+    "width": 68.17200000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 624.43],
+    "fontName": "g_d5_f28",
+    "id": "0002-0188",
+    "top": 158.45000000000005,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 376.22, 624.43],
+    "fontName": "g_d5_f28",
+    "id": "0002-0189",
+    "top": 158.45000000000005,
+    "left": 376.22,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Social activity metrics are another potential data source, providing ",
+    "dir": "ltr",
+    "width": 242.79263999999992,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 317.16, 614.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0190",
+    "top": 168.52999999999997,
+    "left": 317.16,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "cues for social ",
+    "dir": "ltr",
+    "width": 54.984479999999984,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 604.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0191",
+    "top": 178.61,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "navigation. Interactive visualization applications such ",
+    "dir": "ltr",
+    "width": 196.60896,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 363.5, 604.27],
+    "fontName": "g_d5_f28",
+    "id": "0002-0192",
+    "top": 178.61,
+    "left": 363.5,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "as  sense.us  [12]  capture a  number  of  social  activity  metrics that are ",
+    "dir": "ltr",
+    "width": 251.93999999999988,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 594.43],
+    "fontName": "g_d5_f28",
+    "id": "0002-0193",
+    "top": 188.45000000000005,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "typically  invisible  to  users,  but  which  could  serve  as  valuable ",
+    "dir": "ltr",
+    "width": 251.97648,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 584.35],
+    "fontName": "g_d5_f28",
+    "id": "0002-0194",
+    "top": 198.52999999999997,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "navigation  cues.  For  example,  displaying  the  number  of  visits  to  a",
+    "dir": "ltr",
+    "width": 249.96095999999986,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 574.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0195",
+    "top": 208.63,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 558.22, 574.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0196",
+    "top": 208.63,
+    "left": 558.22,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "view,  comments  on  a  view,  or  edits  of  a  view,  could  guide  users ",
+    "dir": "ltr",
+    "width": 252.0129599999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 564.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0197",
+    "top": 218.47000000000003,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "towards the relevant or most interesting views. Similarly, indicating ",
+    "dir": "ltr",
+    "width": 251.95824,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 554.33],
+    "fontName": "g_d5_f28",
+    "id": "0002-0198",
+    "top": 228.54999999999995,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "the  author  of  a  comment  or  an  edit  could  help  users  navigate  to ",
+    "dir": "ltr",
+    "width": 251.93087999999992,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 544.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0199",
+    "top": 238.63,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "useful  views. ",
+    "dir": "ltr",
+    "width": 52.84128,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 534.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0200",
+    "top": 248.47000000000003,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Temporal  data  regarding  changes  in  any  of  t",
+    "dir": "ltr",
+    "width": 177.99503999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 363.74, 534.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0201",
+    "top": 248.47000000000003,
+    "left": 363.74,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "hese ",
+    "dir": "ltr",
+    "width": 18.340320000000002,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 542.11, 534.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0202",
+    "top": 248.47000000000003,
+    "left": 542.11,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "measures",
+    "dir": "ltr",
+    "width": 33.73487999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 524.33],
+    "fontName": "g_d5_f28",
+    "id": "0002-0203",
+    "top": 258.54999999999995,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 341.64, 524.33],
+    "fontName": "g_d5_f28",
+    "id": "0002-0204",
+    "top": 258.54999999999995,
+    "left": 341.64,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "(e.g. ",
+    "dir": "ltr",
+    "width": 18.103199999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 344.28, 524.33],
+    "fontName": "g_d5_f28",
+    "id": "0002-0205",
+    "top": 258.54999999999995,
+    "left": 344.28,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "recency or frequency information",
+    "dir": "ltr",
+    "width": 121.25951999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 362.78, 524.33],
+    "fontName": "g_d5_f28",
+    "id": "0002-0206",
+    "top": 258.54999999999995,
+    "left": 362.78,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ") ",
+    "dir": "ltr",
+    "width": 5.48296,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 484.25, 524.33],
+    "fontName": "g_d5_f28",
+    "id": "0002-0207",
+    "top": 258.54999999999995,
+    "left": 484.25,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "are also candidates ",
+    "dir": "ltr",
+    "width": 70.57055999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 489.79, 524.33],
+    "fontName": "g_d5_f28",
+    "id": "0002-0208",
+    "top": 258.54999999999995,
+    "left": 489.79,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "for display",
+    "dir": "ltr",
+    "width": 39.535199999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 514.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0209",
+    "top": 268.63,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ", as is location",
+    "dir": "ltr",
+    "width": 53.14224,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 347.16, 514.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0210",
+    "top": 268.63,
+    "left": 347.16,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 400.46, 514.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0211",
+    "top": 268.63,
+    "left": 400.46,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "based metadata. ",
+    "dir": "ltr",
+    "width": 60.26495999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 403.34, 514.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0212",
+    "top": 268.63,
+    "left": 403.34,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Our approach is premised ",
+    "dir": "ltr",
+    "width": 96.216,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 464.09, 514.25],
+    "fontName": "g_d5_f28",
+    "id": "0002-0213",
+    "top": 268.63,
+    "left": 464.09,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "on the notion that surfacing these sorts ",
+    "dir": "ltr",
+    "width": 145.0900799999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 504.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0214",
+    "top": 278.47,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "of activity metrics",
+    "dir": "ltr",
+    "width": 66.31151999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 454.01, 504.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0215",
+    "top": 278.47,
+    "left": 454.01,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 520.51, 504.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0216",
+    "top": 278.47,
+    "left": 520.51,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "facilitates ",
+    "dir": "ltr",
+    "width": 37.00896,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 523.39, 504.41],
+    "fontName": "g_d5_f28",
+    "id": "0002-0217",
+    "top": 278.47,
+    "left": 523.39,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "navigation",
+    "dir": "ltr",
+    "width": 38.10336,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 494.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0218",
+    "top": 288.58,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ".",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 346.2, 494.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0219",
+    "top": 288.58,
+    "left": 346.2,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 348.36, 494.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0220",
+    "top": 288.58,
+    "left": 348.36,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "3.2",
+    "dir": "ltr",
+    "width": 12.740639999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 475.34],
+    "fontName": "Helvetica",
+    "id": "0002-0221",
+    "top": 307.54,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 320.52, 475.34],
+    "fontName": "Helvetica",
+    "id": "0002-0222",
+    "top": 307.54,
+    "left": 320.52,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Navigation and the Display o",
+    "dir": "ltr",
+    "width": 123.05615999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 336.84, 475.34],
+    "fontName": "Helvetica",
+    "id": "0002-0223",
+    "top": 307.54,
+    "left": 336.84,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "f Visual Scent",
+    "dir": "ltr",
+    "width": 58.93343999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 460.01, 475.34],
+    "fontName": "Helvetica",
+    "id": "0002-0224",
+    "top": 307.54,
+    "left": 460.01,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 518.83, 475.34],
+    "fontName": "Helvetica",
+    "id": "0002-0225",
+    "top": 307.54,
+    "left": 518.83,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Scent  cues  are  specifically  designed  to  aid  navigation.  Therefore ",
+    "dir": "ltr",
+    "width": 252.00383999999988,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 462.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0226",
+    "top": 320.5,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "scent cues should only be a",
+    "dir": "ltr",
+    "width": 98.48688000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 452.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0227",
+    "top": 330.58,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "pplied to ",
+    "dir": "ltr",
+    "width": 33.9264,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 406.7, 452.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0228",
+    "top": 330.58,
+    "left": 406.7,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "interface ",
+    "dir": "ltr",
+    "width": 33.67104,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 440.81, 452.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0229",
+    "top": 330.58,
+    "left": 440.81,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "elements that ",
+    "dir": "ltr",
+    "width": 49.968479999999985,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 474.65, 452.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0230",
+    "top": 330.58,
+    "left": 474.65,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "provide a",
+    "dir": "ltr",
+    "width": 33.78048,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 524.59, 452.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0231",
+    "top": 330.58,
+    "left": 524.59,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 558.22, 452.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0232",
+    "top": 330.58,
+    "left": 558.22,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "way to",
+    "dir": "ltr",
+    "width": 24.222720000000002,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 442.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0233",
+    "top": 340.65999999999997,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 332.04, 442.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0234",
+    "top": 340.65999999999997,
+    "left": 332.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "navigat",
+    "dir": "ltr",
+    "width": 26.748959999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 334.2, 442.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0235",
+    "top": 340.65999999999997,
+    "left": 334.2,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "e",
+    "dir": "ltr",
+    "width": 4.0492799999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 361.1, 442.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0236",
+    "top": 340.65999999999997,
+    "left": 361.1,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 365.18, 442.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0237",
+    "top": 340.65999999999997,
+    "left": 365.18,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "(i.e. change views) ",
+    "dir": "ltr",
+    "width": 70.35167999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 367.34, 442.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0238",
+    "top": 340.65999999999997,
+    "left": 367.34,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "within the ",
+    "dir": "ltr",
+    "width": 38.47728,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 437.69, 442.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0239",
+    "top": 340.65999999999997,
+    "left": 437.69,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "application",
+    "dir": "ltr",
+    "width": 40.01856000000001,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 476.09, 442.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0240",
+    "top": 340.65999999999997,
+    "left": 476.09,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ". ",
+    "dir": "ltr",
+    "width": 4.8,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 516.19, 442.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0241",
+    "top": 340.65999999999997,
+    "left": 516.19,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "Moreover,",
+    "dir": "ltr",
+    "width": 37.7568,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 520.51, 442.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0242",
+    "top": 340.65999999999997,
+    "left": 520.51,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 558.22, 442.22],
+    "fontName": "g_d5_f28",
+    "id": "0002-0243",
+    "top": 340.65999999999997,
+    "left": 558.22,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "widgets  that  represent  a  single  na",
+    "dir": "ltr",
+    "width": 127.224,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 432.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0244",
+    "top": 350.5,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "vigation  choice",
+    "dir": "ltr",
+    "width": 56.315999999999974,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 435.53, 432.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0245",
+    "top": 350.5,
+    "left": 435.53,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ",  such  as",
+    "dir": "ltr",
+    "width": 33.98111999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 491.95, 432.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0246",
+    "top": 350.5,
+    "left": 491.95,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 526.03, 432.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0247",
+    "top": 350.5,
+    "left": 526.03,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "buttons",
+    "dir": "ltr",
+    "width": 26.329439999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 529.63, 432.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0248",
+    "top": 350.5,
+    "left": 529.63,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": ",",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 556.06, 432.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0249",
+    "top": 350.5,
+    "left": 556.06,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 558.22, 432.38],
+    "fontName": "g_d5_f28",
+    "id": "0002-0250",
+    "top": 350.5,
+    "left": 558.22,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "should",
+    "dir": "ltr",
+    "width": 24.22272,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 422.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0251",
+    "top": 360.58,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 332.28, 422.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0252",
+    "top": 360.58,
+    "left": 332.28,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "display  only  one  scent  value,  while  widgets ",
+    "dir": "ltr",
+    "width": 165.95664,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 335.64, 422.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0253",
+    "top": 360.58,
+    "left": 335.64,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "such  as",
+    "dir": "ltr",
+    "width": 27.515039999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 502.99, 422.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0254",
+    "top": 360.58,
+    "left": 502.99,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 530.59, 422.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0255",
+    "top": 360.58,
+    "left": 530.59,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "combo ",
+    "dir": "ltr",
+    "width": 26.51184,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 533.95, 422.3],
+    "fontName": "g_d5_f28",
+    "id": "0002-0256",
+    "top": 360.58,
+    "left": 533.95,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "boxes  and  sliders  that  offer  multiple  navigation  choices ",
+    "dir": "ltr",
+    "width": 222.7833599999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 412.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0257",
+    "top": 370.68,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "should",
+    "dir": "ltr",
+    "width": 24.22272,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 534.19, 412.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0258",
+    "top": 370.68,
+    "left": 534.19,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 558.22, 412.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0259",
+    "top": 370.68,
+    "left": 558.22,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "include scent cues corresponding to each potential choice.  ",
+    "dir": "ltr",
+    "width": 213.20736,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 402.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0260",
+    "top": 380.52,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 521.47, 402.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0261",
+    "top": 380.52,
+    "left": 521.47,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "3.3",
+    "dir": "ltr",
+    "width": 12.740639999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 383.4],
+    "fontName": "Helvetica",
+    "id": "0002-0262",
+    "top": 399.48,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 320.52, 383.4],
+    "fontName": "Helvetica",
+    "id": "0002-0263",
+    "top": 399.48,
+    "left": 320.52,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Visual Encodings",
+    "dir": "ltr",
+    "width": 75.33119999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 336.84, 383.4],
+    "fontName": "Helvetica",
+    "id": "0002-0264",
+    "top": 399.48,
+    "left": 336.84,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.53536,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 411.98, 383.4],
+    "fontName": "Helvetica",
+    "id": "0002-0265",
+    "top": 399.48,
+    "left": 411.98,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "Scented  widgets",
+    "dir": "ltr",
+    "width": 59.635679999999994,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 370.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0266",
+    "top": 412.68,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 367.82, 370.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0267",
+    "top": 412.68,
+    "left": 367.82,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "embed  a  visualization  of  information  scent  metrics ",
+    "dir": "ltr",
+    "width": 189.22175999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 370.94, 370.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0268",
+    "top": 412.68,
+    "left": 370.94,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "within a standard interface widget such as a slider, button, or combo ",
+    "dir": "ltr",
+    "width": 251.93088000000003,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 360.36],
+    "fontName": "g_d5_f28",
+    "id": "0002-0269",
+    "top": 422.52,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "box.  Standard  widgets  are  usually  designed  to  fit  within  a  small ",
+    "dir": "ltr",
+    "width": 252.0403199999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 350.28],
+    "fontName": "g_d5_f28",
+    "id": "0002-0270",
+    "top": 432.6,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "screen",
+    "dir": "ltr",
+    "width": 23.237759999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 340.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0271",
+    "top": 442.68,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "-",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 331.32, 340.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0272",
+    "top": 442.68,
+    "left": 331.32,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "space  and  a  goal  of  our  scented  widgets  designs  is  to  add ",
+    "dir": "ltr",
+    "width": 225.87503999999993,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 334.2, 340.2],
+    "fontName": "g_d5_f28",
+    "id": "0002-0273",
+    "top": 442.68,
+    "left": 334.2,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "info",
+    "dir": "ltr",
+    "width": 14.62848,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 330.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0274",
+    "top": 452.54,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "rmation   to   these   widgets   without   adversely   impacting   user ",
+    "dir": "ltr",
+    "width": 237.65807999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 322.44, 330.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0275",
+    "top": 452.54,
+    "left": 322.44,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "interface design. ",
+    "dir": "ltr",
+    "width": 61.72416,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 320.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0276",
+    "top": 462.62,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 369.74, 320.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0277",
+    "top": 462.62,
+    "left": 369.74,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "We begin by considering a basic language of visual encodings for ",
+    "dir": "ltr",
+    "width": 242.90207999999993,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 317.16, 310.18],
+    "fontName": "g_d5_f28",
+    "id": "0002-0278",
+    "top": 472.7,
+    "left": 317.16,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "data.  These  include  visual ",
+    "dir": "ltr",
+    "width": 101.71535999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 300.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0279",
+    "top": 482.54,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "variables ",
+    "dir": "ltr",
+    "width": 34.85664,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 411.74, 300.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0280",
+    "top": 482.54,
+    "left": 411.74,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "such  as  position,  size,  angle, ",
+    "dir": "ltr",
+    "width": 111.79295999999998,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 448.49, 300.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0281",
+    "top": 482.54,
+    "left": 448.49,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "color, and shape",
+    "dir": "ltr",
+    "width": 58.96079999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 290.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0282",
+    "top": 492.62,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 367.1, 290.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0283",
+    "top": 492.62,
+    "left": 367.1,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "[4, 6, 15",
+    "dir": "ltr",
+    "width": 29.968319999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 369.5, 290.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0284",
+    "top": 492.62,
+    "left": 369.5,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "]. As noted by Cleve",
+    "dir": "ltr",
+    "width": 74.27328,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 399.5, 290.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0285",
+    "top": 492.62,
+    "left": 399.5,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "land",
+    "dir": "ltr",
+    "width": 15.586079999999999,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 473.93, 290.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0286",
+    "top": 492.62,
+    "left": 473.93,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 489.55, 290.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0287",
+    "top": 492.62,
+    "left": 489.55,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "[",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 491.95, 290.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0288",
+    "top": 492.62,
+    "left": 491.95,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "7] and Mackinlay ",
+    "dir": "ltr",
+    "width": 65.58192,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 494.83, 290.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0289",
+    "top": 492.62,
+    "left": 494.83,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "[",
+    "dir": "ltr",
+    "width": 3.03696,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 280.18],
+    "fontName": "g_d5_f28",
+    "id": "0002-0290",
+    "top": 502.7,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "15],  some  encodings  are  more  suitable  than  others  for  displaying ",
+    "dir": "ltr",
+    "width": 249.14015999999987,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 310.92, 280.18],
+    "fontName": "g_d5_f28",
+    "id": "0002-0291",
+    "top": 502.7,
+    "left": 310.92,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "different  types  of  information.  For  example,  position  encodings  are ",
+    "dir": "ltr",
+    "width": 252.01295999999996,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 270.34],
+    "fontName": "g_d5_f28",
+    "id": "0002-0292",
+    "top": 512.54,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "more  accurate than  length  encodings  for  quantitative  data,  which in ",
+    "dir": "ltr",
+    "width": 252.00383999999985,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 260.26],
+    "fontName": "g_d5_f28",
+    "id": "0002-0293",
+    "top": 522.62,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "turn are more accurate than are",
+    "dir": "ltr",
+    "width": 114.98495999999997,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 250.18],
+    "fontName": "g_d5_f28",
+    "id": "0002-0294",
+    "top": 532.7,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "a encodings. ",
+    "dir": "ltr",
+    "width": 48.062400000000004,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 423.29, 250.18],
+    "fontName": "g_d5_f28",
+    "id": "0002-0295",
+    "top": 532.7,
+    "left": 423.29,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "For nominal data, color ",
+    "dir": "ltr",
+    "width": 88.34543999999995,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 472.01, 250.18],
+    "fontName": "g_d5_f28",
+    "id": "0002-0296",
+    "top": 532.7,
+    "left": 472.01,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": "encodings are better than position. ",
+    "dir": "ltr",
+    "width": 125.96544,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 308.04, 240.31],
+    "fontName": "g_d5_f28",
+    "id": "0002-0297",
+    "top": 542.5699999999999,
+    "left": 308.04,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.28,
+    "height": 9.12,
+    "transform": [9.12, 0, 0, 9.12, 434.09, 240.31],
+    "fontName": "g_d5_f28",
+    "id": "0002-0298",
+    "top": 542.5699999999999,
+    "left": 434.09,
+    "fontHeight": 9.12,
+    "fontWidth": 9.12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.89111328125,
+      "descent": -0.21630859375
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 3,
+    "height": 12,
+    "transform": [12, 0, 0, 12, 546.91, 86.208],
+    "fontName": "Times New Roman",
+    "id": "0002-0299",
+    "top": 693.792,
+    "left": 546.91,
+    "fontHeight": 12,
+    "fontWidth": 12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": "Figure 2. Examples of several scent encodings.",
+    "dir": "ltr",
+    "width": 179.64936000000006,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 49.224, 72.264],
+    "fontName": "Helvetica",
+    "id": "0002-0300",
+    "top": 711.816,
+    "left": 49.224,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.20176,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 229.06, 72.264],
+    "fontName": "Helvetica",
+    "id": "0002-0301",
+    "top": 711.816,
+    "left": 229.06,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "From left to right: 1. A slider with visit totals encoded as a bar chart with recency encoded as ",
+    "dir": "ltr",
+    "width": 328.1731199999997,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 231.46, 72.264],
+    "fontName": "Helvetica",
+    "id": "0002-0302",
+    "top": 711.816,
+    "left": 231.46,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "opacity. 2. Checkboxes with star rankings encode",
+    "dir": "ltr",
+    "width": 175.31712,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 49.224, 62.424],
+    "fontName": "Helvetica",
+    "id": "0002-0303",
+    "top": 721.656,
+    "left": 49.224,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "d using icons and rank ",
+    "dir": "ltr",
+    "width": 82.2492,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 224.71, 62.424],
+    "fontName": "Helvetica",
+    "id": "0002-0304",
+    "top": 721.656,
+    "left": 224.71,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "values displayed a",
+    "dir": "ltr",
+    "width": 65.75184000000002,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 307.32, 62.424],
+    "fontName": "Helvetica",
+    "id": "0002-0305",
+    "top": 721.656,
+    "left": 307.32,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "s text. 3. A list box with dataset sizes encoded using ",
+    "dir": "ltr",
+    "width": 186.53184,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 372.86, 62.424],
+    "fontName": "Helvetica",
+    "id": "0002-0306",
+    "top": 721.656,
+    "left": 372.86,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "opacity and a visited/not visited value encoded using an icon. 4. A tree with author categories encoded using hue and edit to",
+    "dir": "ltr",
+    "width": 438.2294399999997,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 49.224, 52.344],
+    "fontName": "Helvetica",
+    "id": "0002-0307",
+    "top": 731.736,
+    "left": 49.224,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": "tals encoded as text.",
+    "dir": "ltr",
+    "width": 73.14120000000003,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 488.11, 52.344],
+    "fontName": "Helvetica",
+    "id": "0002-0308",
+    "top": 731.736,
+    "left": 488.11,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 2.20176,
+    "height": 7.92,
+    "transform": [7.92, 0, 0, 7.92, 561.58, 52.344],
+    "fontName": "Helvetica",
+    "id": "0002-0309",
+    "top": 731.736,
+    "left": 561.58,
+    "fontHeight": 7.92,
+    "fontWidth": 7.92,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.905,
+      "descent": -0.21
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 3,
+    "height": 12,
+    "transform": [12, 0, 0, 12, 49.224, 30.504],
+    "fontName": "Times New Roman",
+    "id": "0002-0310",
+    "top": 749.496,
+    "left": 49.224,
+    "fontHeight": 12,
+    "fontWidth": 12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 3,
+    "height": 12,
+    "transform": [12, 0, 0, 12, 49.224, 16.584],
+    "fontName": "Times New Roman",
+    "id": "0002-0311",
+    "top": 763.416,
+    "left": 49.224,
+    "fontHeight": 12,
+    "fontWidth": 12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 3,
+    "height": 12,
+    "transform": [12, 0, 0, 12, 49.224, 2.904],
+    "fontName": "Times New Roman",
+    "id": "0002-0312",
+    "top": 777.096,
+    "left": 49.224,
+    "fontHeight": 12,
+    "fontWidth": 12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }, {
+    "str": " ",
+    "dir": "ltr",
+    "width": 3,
+    "height": 12,
+    "transform": [12, 0, 0, 12, 546.91, -107.06],
+    "fontName": "Times New Roman",
+    "id": "0002-0313",
+    "top": 887.06,
+    "left": 546.91,
+    "fontHeight": 12,
+    "fontWidth": 12,
+    "scaleX": 1,
+    "fallbackFontName": "sans-serif",
+    "style": {
+      "fontFamily": "sans-serif",
+      "ascent": 0.891,
+      "descent": -0.216
+    }
+  }],
+  "viewportFlat": {
+    "width": 612,
+    "height": 792,
+    "xMin": 0,
+    "yMin": 0,
+    "xMax": 612,
+    "yMax": 792
+  }
+};
 },{}],"../../node_modules/approx-string-match/dist/index.js":[function(require,module,exports) {
 "use strict";
 /**
@@ -46745,27 +52001,44 @@ function search(text, pattern, maxErrors) {
 }
 exports.default = search;
 
+},{}],"../utils.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.getElementScale = function (element) {
+  // from leaflet utils
+  // use this or you'll need to track n-levels of zoom to correct drag movement
+  var elementRect = element.getBoundingClientRect();
+  var scaleX = elementRect.width / element.offsetWidth || 1;
+  var scaleY = elementRect.height / element.offsetHeight || 1;
+  return {
+    scaleX: scaleX,
+    scaleY: scaleY,
+    elementRect: elementRect
+  };
+};
 },{}],"pdfText/PageText.tsx":[function(require,module,exports) {
 "use strict";
 
 var _taggedTemplateLiteral2 = _interopRequireDefault(require("@babel/runtime/helpers/taggedTemplateLiteral"));
 
-var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
-var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread"));
-
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 
-var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread"));
 
 var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _templateObject2() {
-  var data = (0, _taggedTemplateLiteral2.default)(["\n  /* border: 1px solid lightblue; */\n  transform: scale(1);\n  transform-origin: left top;\n  user-select: none;\n  pointer-events: none;\n"]);
+  var data = (0, _taggedTemplateLiteral2.default)(["\n  border: 1px solid green;\n  transform: scale(2);\n  transform-origin: left top;\n  user-select: none;\n  pointer-events: none;\n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -46806,6 +52079,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var textToDisplay_page0001_json_1 = __importDefault(require("./json/textToDisplay-page0001.json"));
 
+var textToDisplay_page0002_json_1 = __importDefault(require("./json/textToDisplay-page0002.json"));
+
 var React = __importStar(require("react"));
 
 var react_1 = require("react");
@@ -46820,11 +52095,11 @@ var numberRange = function numberRange(start, end) {
   });
 };
 
+var utils_1 = require("../../utils");
+
+var pagesOfText = [textToDisplay_page0001_json_1.default, textToDisplay_page0002_json_1.default];
 var pageOfTextItems = textToDisplay_page0001_json_1.default.text;
-var pageString = pageOfTextItems.reduce(function (fullString, textItem, ix) {
-  fullString += textItem.str;
-  return fullString;
-}, "");
+var viewportFlat = textToDisplay_page0001_json_1.default.viewportFlat;
 
 function getRegexIndexes(str, regex) {
   var re = regex;
@@ -46844,230 +52119,169 @@ function getRegexIndexes(str, regex) {
 
 exports.getRegexIndexes = getRegexIndexes;
 
-var test =
-/*#__PURE__*/
-function () {
-  var _ref = (0, _asyncToGenerator2.default)(
-  /*#__PURE__*/
-  _regenerator.default.mark(function _callee() {
-    var pageString, offsets, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, textItem, newString, _startIx, id, sampleOrig, sampleNew, _sampleNew$charRangeI, startIx, endIx, findStr, matches, hightlightIxs, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _loop, _iterator2, _step2;
+var pageOfTextItemsToString = function pageOfTextItemsToString(pageOfTextItems) {
+  var pageString = pageOfTextItems[0].str;
+  var offsets = [{
+    id: pageOfTextItems[0].id,
+    charRangeInclusive: [0, pageOfTextItems[0].str.length - 1]
+  }];
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
 
-    return _regenerator.default.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            pageString = pageOfTextItems[0].str;
-            offsets = [{
-              id: pageOfTextItems[0].id,
-              charRangeInclusive: [0, pageOfTextItems[0].str.length - 1]
-            }];
-            _iteratorNormalCompletion = true;
-            _didIteratorError = false;
-            _iteratorError = undefined;
-            _context.prev = 5;
+  try {
+    for (var _iterator = pageOfTextItems.slice(1)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var textItem = _step.value;
+      var newString = textItem.str.toLowerCase();
+      var startIx = pageString.length;
+      pageString += newString;
+      offsets.push({
+        id: textItem.id,
+        charRangeInclusive: [startIx, pageString.length - 1]
+      });
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return != null) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
 
-            for (_iterator = pageOfTextItems.slice(1)[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              textItem = _step.value;
-              newString = textItem.str.toLowerCase();
-              _startIx = pageString.length;
-              pageString += newString;
-              offsets.push({
-                id: textItem.id,
-                charRangeInclusive: [_startIx, pageString.length - 1]
-              });
-            } //@ts-ignore
-            // const doc = nlp(pageString).sentences().out('array')
-            // given an id, find the text in the pagestring
+  return {
+    pageString: pageString,
+    textItemLocations: offsets
+  };
+};
 
+var matchToHighlightIxs = function matchToHighlightIxs(matches, offsets) {
+  var hightlightIxs = [];
+  var _iteratorNormalCompletion2 = true;
+  var _didIteratorError2 = false;
+  var _iteratorError2 = undefined;
 
-            _context.next = 13;
+  try {
+    var _loop = function _loop() {
+      var match = _step2.value;
+      var ixStart = -1;
+      var ixEnd = -1;
+      var charStart = -1;
+      var charEnd = -1;
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
+
+      try {
+        for (var _iterator3 = offsets.entries()[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var _step3$value = (0, _slicedToArray2.default)(_step3.value, 2),
+              offsetIx = _step3$value[0],
+              _offset = _step3$value[1];
+
+          var offset = offsets[offsetIx];
+
+          if (ixStart === -1) {
+            var isStartInOffset = match.start >= offset.charRangeInclusive[0] && match.start <= offset.charRangeInclusive[1];
+
+            if (isStartInOffset) {
+              ixStart = offsetIx;
+              charStart = match.start - offset.charRangeInclusive[0];
+            }
+          }
+
+          if (ixStart > -1) {
+            var isEndInOffset = match.end >= offset.charRangeInclusive[0] && match.end <= offset.charRangeInclusive[1];
+
+            if (isEndInOffset) {
+              ixEnd = offsetIx;
+            }
+          }
+
+          if (ixEnd > -1) {
+            charEnd = match.end - offset.charRangeInclusive[0];
+            if (charStart === -1) charStart = 0;
             break;
-
-          case 9:
-            _context.prev = 9;
-            _context.t0 = _context["catch"](5);
-            _didIteratorError = true;
-            _iteratorError = _context.t0;
-
-          case 13:
-            _context.prev = 13;
-            _context.prev = 14;
-
-            if (!_iteratorNormalCompletion && _iterator.return != null) {
-              _iterator.return();
-            }
-
-          case 16:
-            _context.prev = 16;
-
-            if (!_didIteratorError) {
-              _context.next = 19;
-              break;
-            }
-
-            throw _iteratorError;
-
-          case 19:
-            return _context.finish(16);
-
-          case 20:
-            return _context.finish(13);
-
-          case 21:
-            id = "0001-0037";
-            sampleOrig = pageOfTextItems.find(function (t) {
-              return t.id === id;
-            });
-            sampleNew = offsets.find(function (t) {
-              return t.id === id;
-            });
-            _sampleNew$charRangeI = (0, _slicedToArray2.default)(sampleNew.charRangeInclusive, 2), startIx = _sampleNew$charRangeI[0], endIx = _sampleNew$charRangeI[1]; //given a string in pagestring, get ids that contain it
-
-            findStr = "scent".toLowerCase();
-            matches = approx_string_match_1.default(pageString, findStr, 6
-            /* max errors */
-            );
-            console.log("matches: ", matches);
-            hightlightIxs = [];
-            _iteratorNormalCompletion2 = true;
-            _didIteratorError2 = false;
-            _iteratorError2 = undefined;
-            _context.prev = 32;
-
-            _loop = function _loop() {
-              var match = _step2.value;
-              var ixStart = -1;
-              var ixEnd = -1;
-              var charStart = -1;
-              var charEnd = -1;
-              var _iteratorNormalCompletion3 = true;
-              var _didIteratorError3 = false;
-              var _iteratorError3 = undefined;
-
-              try {
-                for (var _iterator3 = offsets.entries()[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                  var _step3$value = (0, _slicedToArray2.default)(_step3.value, 2),
-                      offsetIx = _step3$value[0],
-                      _offset = _step3$value[1];
-
-                  var offset = offsets[offsetIx];
-
-                  if (ixStart === -1) {
-                    var isStartInOffset = match.start >= offset.charRangeInclusive[0] && match.start <= offset.charRangeInclusive[1];
-
-                    if (isStartInOffset) {
-                      ixStart = offsetIx;
-                      charStart = match.start - offset.charRangeInclusive[0];
-                    }
-                  }
-
-                  if (ixStart > -1) {
-                    var isEndInOffset = match.end >= offset.charRangeInclusive[0] && match.end <= offset.charRangeInclusive[1];
-
-                    if (isEndInOffset) {
-                      ixEnd = offsetIx;
-                    }
-                  }
-
-                  if (ixEnd > -1) {
-                    charEnd = match.end - offset.charRangeInclusive[0];
-                    if (charStart === -1) charStart = 0;
-                    break;
-                  }
-                }
-              } catch (err) {
-                _didIteratorError3 = true;
-                _iteratorError3 = err;
-              } finally {
-                try {
-                  if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
-                    _iterator3.return();
-                  }
-                } finally {
-                  if (_didIteratorError3) {
-                    throw _iteratorError3;
-                  }
-                }
-              }
-
-              var allNumbers = numberRange(ixStart, ixEnd);
-              var highlights = allNumbers.map(function (num, i) {
-                var res = {
-                  ix: num,
-                  charStart: 0,
-                  charEnd: Infinity
-                };
-                if (i === 0) res = (0, _objectSpread2.default)({}, res, {
-                  charStart: charStart
-                });
-                if (i === allNumbers.length - 1) res = (0, _objectSpread2.default)({}, res, {
-                  charEnd: charEnd
-                });
-                return res;
-              });
-              hightlightIxs.push.apply(hightlightIxs, (0, _toConsumableArray2.default)(highlights));
-            };
-
-            for (_iterator2 = matches[Symbol.iterator](); !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-              _loop();
-            } // where 0,Infinity means 0 to end, can do slice (start, end)
-
-
-            _context.next = 41;
-            break;
-
-          case 37:
-            _context.prev = 37;
-            _context.t1 = _context["catch"](32);
-            _didIteratorError2 = true;
-            _iteratorError2 = _context.t1;
-
-          case 41:
-            _context.prev = 41;
-            _context.prev = 42;
-
-            if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-              _iterator2.return();
-            }
-
-          case 44:
-            _context.prev = 44;
-
-            if (!_didIteratorError2) {
-              _context.next = 47;
-              break;
-            }
-
-            throw _iteratorError2;
-
-          case 47:
-            return _context.finish(44);
-
-          case 48:
-            return _context.finish(41);
-
-          case 49:
-            return _context.abrupt("return", hightlightIxs.reduce(function (all, val, ix) {
-              return (0, _objectSpread2.default)({}, all, (0, _defineProperty2.default)({}, val.ix, {
-                charStart: val.charStart,
-                charEnd: val.charEnd
-              }));
-            }, {}));
-
-          case 50:
-          case "end":
-            return _context.stop();
+          }
+        }
+      } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
+            _iterator3.return();
+          }
+        } finally {
+          if (_didIteratorError3) {
+            throw _iteratorError3;
+          }
         }
       }
-    }, _callee, null, [[5, 9, 13, 21], [14,, 16, 20], [32, 37, 41, 49], [42,, 44, 48]]);
-  }));
 
-  return function test() {
-    return _ref.apply(this, arguments);
-  };
-}(); // hightlight multiple matches
-// highlight part of fragment
+      var allNumbers = numberRange(ixStart, ixEnd);
+      var highlights = allNumbers.map(function (num, i) {
+        var res = {
+          ix: num,
+          charStart: 0,
+          charEnd: Infinity
+        };
+        if (i === 0) res = (0, _objectSpread2.default)({}, res, {
+          charStart: charStart
+        });
+        if (i === allNumbers.length - 1) res = (0, _objectSpread2.default)({}, res, {
+          charEnd: charEnd
+        });
+        return res;
+      });
+      hightlightIxs.push.apply(hightlightIxs, (0, _toConsumableArray2.default)(highlights));
+    };
 
+    for (var _iterator2 = matches[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      _loop();
+    }
+  } catch (err) {
+    _didIteratorError2 = true;
+    _iteratorError2 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+        _iterator2.return();
+      }
+    } finally {
+      if (_didIteratorError2) {
+        throw _iteratorError2;
+      }
+    }
+  }
+
+  return hightlightIxs;
+};
+
+var test = function test() {
+  var stringToFind = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "work";
+  var findStr = stringToFind.toLowerCase();
+
+  var _pageOfTextItemsToStr = pageOfTextItemsToString(pagesOfText[0].text),
+      pageString = _pageOfTextItemsToStr.pageString,
+      offsets = _pageOfTextItemsToStr.textItemLocations;
+
+  var matches = approx_string_match_1.default(pageString, findStr, 6
+  /* max errors */
+  );
+  var hightlightIxs = matchToHighlightIxs(matches, offsets);
+  return hightlightIxs.reduce(function (all, val, ix) {
+    return (0, _objectSpread2.default)({}, all, (0, _defineProperty2.default)({}, val.ix, {
+      charStart: val.charStart,
+      charEnd: val.charEnd
+    }));
+  }, {});
+};
 
 var computeStyle = function computeStyle(textItem, scale, scaleX, hightlight) {
   return {
@@ -47080,8 +52294,8 @@ var computeStyle = function computeStyle(textItem, scale, scaleX, hightlight) {
     transform: "scaleX(".concat(scaleX, ")"),
     transformOrigin: "left bottom",
     whiteSpace: "pre",
-    color: "black",
-    backgroundColor: hightlight ? "lightblue" : "white" // userSelect: "none",
+    color: "black" // backgroundColor: hightlight ? "lightblue" : "white"
+    // userSelect: "none",
     // outline: '1px solid lightgrey',
 
   };
@@ -47090,46 +52304,20 @@ var computeStyle = function computeStyle(textItem, scale, scaleX, hightlight) {
 exports.PageText = function () {
   var ref = react_1.useRef(null);
 
-  var _react_1$useState = react_1.useState([]),
+  var _react_1$useState = react_1.useState({}),
       _react_1$useState2 = (0, _slicedToArray2.default)(_react_1$useState, 2),
       highlights = _react_1$useState2[0],
-      _setHighlights = _react_1$useState2[1];
-
-  var setHighlights =
-  /*#__PURE__*/
-  function () {
-    var _ref2 = (0, _asyncToGenerator2.default)(
-    /*#__PURE__*/
-    _regenerator.default.mark(function _callee2() {
-      return _regenerator.default.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.t0 = _setHighlights;
-              _context2.next = 3;
-              return test();
-
-            case 3:
-              _context2.t1 = _context2.sent;
-              (0, _context2.t0)(_context2.t1);
-
-            case 5:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2);
-    }));
-
-    return function setHighlights() {
-      return _ref2.apply(this, arguments);
-    };
-  }();
+      setHighlights = _react_1$useState2[1];
 
   react_1.useEffect(function () {
-    setHighlights();
+    var highlight = test();
+    setHighlights(highlight);
   }, []);
   return React.createElement(exports.Div100vh, {
+    style: {
+      width: viewportFlat.width,
+      height: viewportFlat.height
+    },
     ref: ref
   }, pageOfTextItems.map(function (text, ix) {
     return React.createElement(CanvasAdjustedTextFragment, {
@@ -47148,7 +52336,6 @@ var styleScaleX = function styleScaleX(style, scaleX) {
 };
 
 var SpansFromHighlight = function SpansFromHighlight(text, highlight) {
-  console.log("highlight: ", highlight);
   if (!highlight || !text) return text;
   var charStart = highlight.charStart,
       charEnd = highlight.charEnd;
@@ -47183,8 +52370,11 @@ var CanvasAdjustedTextFragment = function CanvasAdjustedTextFragment(props) {
       setScaleX = _react_1$useState4[1];
 
   react_1.useLayoutEffect(function () {
-    var domWidth = ref.current.getBoundingClientRect()["width"];
-    setScaleX(props.textItem.width / domWidth); // textItem.width from canvas render
+    var _utils_1$getElementSc = utils_1.getElementScale(ref.current),
+        elementRect = _utils_1$getElementSc.elementRect,
+        scale = (0, _objectWithoutProperties2.default)(_utils_1$getElementSc, ["elementRect"]);
+
+    setScaleX(props.textItem.width * scale.scaleX / elementRect["width"]); // textItem.width from canvas render
   }, []);
   return React.createElement(exports.TextDiv, {
     ref: ref,
@@ -47197,7 +52387,731 @@ var CanvasAdjustedTextFragment = function CanvasAdjustedTextFragment(props) {
 
 exports.TextDiv = styled_components_1.default.div(_templateObject());
 exports.Div100vh = styled_components_1.default.div(_templateObject2());
-},{"@babel/runtime/helpers/taggedTemplateLiteral":"../../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js","@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/objectSpread":"../../node_modules/@babel/runtime/helpers/objectSpread.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/toConsumableArray":"../../node_modules/@babel/runtime/helpers/toConsumableArray.js","./json/textToDisplay-page0001.json":"pdfText/json/textToDisplay-page0001.json","react":"../../node_modules/react/index.js","styled-components":"../../node_modules/styled-components/dist/styled-components.browser.esm.js","approx-string-match":"../../node_modules/approx-string-match/dist/index.js"}],"router.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/taggedTemplateLiteral":"../../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js","@babel/runtime/helpers/objectWithoutProperties":"../../node_modules/@babel/runtime/helpers/objectWithoutProperties.js","@babel/runtime/helpers/defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/objectSpread":"../../node_modules/@babel/runtime/helpers/objectSpread.js","@babel/runtime/helpers/toConsumableArray":"../../node_modules/@babel/runtime/helpers/toConsumableArray.js","./json/textToDisplay-page0001.json":"pdfText/json/textToDisplay-page0001.json","./json/textToDisplay-page0002.json":"pdfText/json/textToDisplay-page0002.json","react":"../../node_modules/react/index.js","styled-components":"../../node_modules/styled-components/dist/styled-components.browser.esm.js","approx-string-match":"../../node_modules/approx-string-match/dist/index.js","../../utils":"../utils.tsx"}],"EntryPoints/state.json":[function(require,module,exports) {
+module.exports = {
+  "app": {
+    "featureToggles": {
+      "canAdjustPdfSegment": true,
+      "canExpandPdfSegmentInGraph": true,
+      "canJumpBackToPdf": true
+    },
+    "current": {
+      "pdfRootDir": "C:\\Users\\mattj\\dev\\pdfs"
+    },
+    "settings": {
+      "appearance": {
+        "windowStyleOnOpen": {
+          "x": 0,
+          "y": 0,
+          "width": 1000,
+          "height": 1000
+        },
+        "panels": {}
+      },
+      "keyboardShortcuts": {}
+    },
+    "panels": {
+      "mainPdfReader": {
+        "left": 0,
+        "top": 0,
+        "width": 2029,
+        "height": "100%",
+        "scale": 3.5000000000000013,
+        "scrollToPageNumber": 0,
+        "pdfDir": "31ae378f02136be889a6c4b4b81fdd20"
+      },
+      "graphContainer": {
+        "left": 0,
+        "top": 0,
+        "width": "50vw",
+        "height": "100%",
+        "scale": 1
+      },
+      "rightPanel": "graphContainer"
+    },
+    "portals": [],
+    "nextNodeLocation": {
+      "left": 139,
+      "top": 450,
+      "width": 300,
+      "height": 200
+    }
+  },
+  "graph": {
+    "nodes": {
+      "0a3681899d15872644fd07d0d4d6230f": {
+        "id": "0a3681899d15872644fd07d0d4d6230f",
+        "data": {
+          "type": "pdf.publication",
+          "publicationType": "",
+          "pdfDir": "0a3681899d15872644fd07d0d4d6230f",
+          "fileExt": ".pdf",
+          "title": "",
+          "venue": "",
+          "authors": [],
+          "year": null,
+          "volume": "",
+          "issue": "",
+          "url": "",
+          "arxivId": "",
+          "pmid": "",
+          "doi": "",
+          "isbn": "",
+          "issn": "",
+          "published": true,
+          "originalFileName": "Understanding the Group Size Effect in Electronic Brainstorming.pdf",
+          "numPages": 21
+        },
+        "style": {
+          "id": "0a3681899d15872644fd07d0d4d6230f",
+          "left": 55.96464917326734,
+          "top": 210.8099242720168,
+          "width": 200,
+          "height": 200,
+          "fill": "grey",
+          "stroke": "red",
+          "modes": ["min", "max"],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "x": 149.18977289353103,
+          "y": 1717.0541499666956
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565302868196,
+          "timeUpdated": 1565302868196
+        }
+      },
+      "31ae378f02136be889a6c4b4b81fdd20": {
+        "id": "31ae378f02136be889a6c4b4b81fdd20",
+        "data": {
+          "type": "pdf.publication",
+          "publicationType": "",
+          "pdfDir": "31ae378f02136be889a6c4b4b81fdd20",
+          "fileExt": ".pdf",
+          "title": "",
+          "venue": "",
+          "authors": [],
+          "year": null,
+          "volume": "",
+          "issue": "",
+          "url": "",
+          "arxivId": "",
+          "pmid": "",
+          "doi": "",
+          "isbn": "",
+          "issn": "",
+          "published": true,
+          "originalFileName": "impact of group membership change on group creativity.pdf",
+          "numPages": 12
+        },
+        "style": {
+          "id": "31ae378f02136be889a6c4b4b81fdd20",
+          "left": 55.96464917326734,
+          "top": 210.8099242720168,
+          "width": 200,
+          "height": 200,
+          "fill": "grey",
+          "stroke": "red",
+          "modes": ["min", "max"],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "x": 136.9900023435717,
+          "y": 4220.210428231926
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565302868196,
+          "timeUpdated": 1565302868196
+        }
+      },
+      "1085e040-ba2b-11e9-8c37-b1ed03acfdd9": {
+        "id": "1085e040-ba2b-11e9-8c37-b1ed03acfdd9",
+        "data": {
+          "type": "userDoc",
+          "base64": "JTdCJTIyb2JqZWN0JTIyJTNBJTIydmFsdWUlMjIlMkMlMjJkb2N1bWVudCUyMiUzQSU3QiUyMm9iamVjdCUyMiUzQSUyMmRvY3VtZW50JTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIyYmxvY2slMjIlMkMlMjJ0eXBlJTIyJTNBJTIycGFyYWdyYXBoJTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIydGV4dCUyMiUyQyUyMmxlYXZlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMmxlYWYlMjIlMkMlMjJ0ZXh0JTIyJTNBJTIySWRlYXMlMjBiZWNvbWUlMjBtb3JlJTIwb3JpZ2luYWwlMjBhbmQlMjBsZXNzJTIwdXNlZnVsJTIwb3ZlciUyMHRoZSUyMGNvdXJzZSUyMG9mJTIwYSUyMGJyYWluc3Rvcm1pbmclMjBzZXNzaW9uLiUyMCUyMiUyQyUyMm1hcmtzJTIyJTNBJTVCJTVEJTdEJTVEJTdEJTVEJTdEJTVEJTdEJTdE",
+          "text": "Ideas become more original and less useful over the course of a brainstorming session. ",
+          "useTextForAutocomplete": false,
+          "isEntryPoint": true,
+          "isKeyword": false
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565302868208,
+          "timeUpdated": 1565304546148
+        },
+        "style": {
+          "min": {
+            "left": 167,
+            "top": 402,
+            "width": 300,
+            "height": 110
+          },
+          "max": {
+            "left": 141,
+            "top": 247,
+            "width": 525,
+            "height": 102
+          },
+          "modes": ["max", "min"],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "fontSize": 26
+        }
+      },
+      "f9f23c00-ba2c-11e9-9650-293398fcda5b": {
+        "id": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+        "data": {
+          "left": 33.42857142857143,
+          "top": 462,
+          "height": 27.714285714285722,
+          "width": 326.2857142857143,
+          "userId": "default",
+          "pdfDir": "0a3681899d15872644fd07d0d4d6230f",
+          "pageNumber": 15,
+          "type": "pdf.segment.viewbox",
+          "scale": 1,
+          "scalePreview": 3.5000000000000013
+        },
+        "style": {
+          "id": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+          "min": {
+            "id": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+            "left": 139,
+            "top": 385,
+            "width": 516,
+            "height": 45
+          },
+          "max": {
+            "id": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+            "left": 139,
+            "top": 385,
+            "width": 1333.0000000000005,
+            "height": 193.00000000000017,
+            "scrollToLeft": 0,
+            "scrollToTop": 457.4285714285713
+          },
+          "modes": ["min", "max"],
+          "modeIx": 0,
+          "lockedCorner": "nw"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303794624,
+          "timeUpdated": 1565304157305
+        }
+      },
+      "05fa9140-ba2e-11e9-9650-293398fcda5b": {
+        "id": "05fa9140-ba2e-11e9-9650-293398fcda5b",
+        "data": {
+          "type": "userDoc",
+          "base64": "JTdCJTIyb2JqZWN0JTIyJTNBJTIydmFsdWUlMjIlMkMlMjJkb2N1bWVudCUyMiUzQSU3QiUyMm9iamVjdCUyMiUzQSUyMmRvY3VtZW50JTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIyYmxvY2slMjIlMkMlMjJ0eXBlJTIyJTNBJTIycGFyYWdyYXBoJTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIydGV4dCUyMiUyQyUyMmxlYXZlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMmxlYWYlMjIlMkMlMjJ0ZXh0JTIyJTNBJTIySWRlYW9ycyUyMHdpdGglMjBsb3clMjBleHBlcnRpc2UlMkMlMjBsaW1pdGVkJTIwZXhwZXJpZW5jZSUyQyUyMG9yJTIwYSUyMGRpZmZlcmVudCUyMHBlcnNwZWN0JTIwY2FuJTIwaW1wcm92ZSUyMGdyb3VwJTIwYnJhaW5zdG9ybWluZyUyMHBlcmZvcm1hbmNlLiUyMiUyQyUyMm1hcmtzJTIyJTNBJTVCJTVEJTdEJTVEJTdEJTVEJTdEJTVEJTdEJTdE",
+          "text": "Ideaors with low expertise, limited experience, or a different perspect can improve group brainstorming performance.",
+          "useTextForAutocomplete": false,
+          "isEntryPoint": true,
+          "isKeyword": false
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172330,
+          "timeUpdated": 1565304717026
+        },
+        "style": {
+          "min": {
+            "left": 143,
+            "top": 712,
+            "width": 300,
+            "height": 110
+          },
+          "max": {
+            "left": 143,
+            "top": 711,
+            "width": 729,
+            "height": 105
+          },
+          "modes": ["max", "min"],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "fontSize": 26
+        }
+      },
+      "6b2d1790-ba2e-11e9-9650-293398fcda5b": {
+        "id": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
+        "data": {
+          "left": 305.7142857142857,
+          "top": 625.7142857142857,
+          "height": 77.14285714285722,
+          "width": 252.28571428571428,
+          "userId": "default",
+          "pdfDir": "31ae378f02136be889a6c4b4b81fdd20",
+          "pageNumber": 8,
+          "type": "pdf.segment.viewbox",
+          "scale": 1,
+          "scalePreview": 3.5000000000000013
+        },
+        "style": {
+          "id": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
+          "min": {
+            "id": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
+            "left": 135,
+            "top": 839,
+            "width": 445,
+            "height": 51
+          },
+          "max": {
+            "id": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
+            "left": 420,
+            "top": 1091,
+            "width": 956.0000000000005,
+            "height": 400.00000000000057,
+            "scrollToLeft": 298.8571428571427,
+            "scrollToTop": 608.2857142857141
+          },
+          "modes": ["min", "max"],
+          "modeIx": 0,
+          "lockedCorner": "nw"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565304414089,
+          "timeUpdated": 1565304454305
+        }
+      },
+      "af0e9060-ba2e-11e9-9650-293398fcda5b": {
+        "id": "af0e9060-ba2e-11e9-9650-293398fcda5b",
+        "data": {
+          "type": "userDoc",
+          "base64": "JTdCJTIyb2JqZWN0JTIyJTNBJTIydmFsdWUlMjIlMkMlMjJkb2N1bWVudCUyMiUzQSU3QiUyMm9iamVjdCUyMiUzQSUyMmRvY3VtZW50JTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIyYmxvY2slMjIlMkMlMjJ0eXBlJTIyJTNBJTIycGFyYWdyYXBoJTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIydGV4dCUyMiUyQyUyMmxlYXZlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMmxlYWYlMjIlMkMlMjJ0ZXh0JTIyJTNBJTIyZGlmJTIwZnJvbSUyMHRoZSUyMHBhcGVycyUyMGNvbmNsdXNpb24lMjBhZnRlciUyMGJyaWVmJTIwcmVhZCUyMiUyQyUyMm1hcmtzJTIyJTNBJTVCJTVEJTdEJTVEJTdEJTVEJTdEJTVEJTdEJTdE",
+          "text": "dif from the papers conclusion after brief read",
+          "useTextForAutocomplete": false,
+          "isEntryPoint": false,
+          "isKeyword": false
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172330,
+          "timeUpdated": 1565304725431
+        },
+        "style": {
+          "min": {
+            "left": 787,
+            "top": 892,
+            "width": 300,
+            "height": 110
+          },
+          "max": {
+            "left": 614,
+            "top": 842,
+            "width": 300,
+            "height": 110
+          },
+          "modes": ["max", "min"],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "fontSize": 26
+        }
+      }
+    },
+    "links": {
+      "link-f9f23c01-ba2c-11e9-9650-293398fcda5b": {
+        "id": "link-f9f23c01-ba2c-11e9-9650-293398fcda5b",
+        "data": {
+          "text": "",
+          "html": "",
+          "type": "more"
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172316,
+          "timeUpdated": 1565303172316
+        },
+        "source": "0a3681899d15872644fd07d0d4d6230f",
+        "target": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+        "isDirected": true
+      },
+      "link-1870a180-ba2d-11e9-9650-293398fcda5b": {
+        "id": "link-1870a180-ba2d-11e9-9650-293398fcda5b",
+        "data": {
+          "text": "",
+          "html": ""
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172316,
+          "timeUpdated": 1565303172316
+        },
+        "source": "1085e040-ba2b-11e9-8c37-b1ed03acfdd9",
+        "target": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+        "isDirected": true
+      },
+      "link-6b2d1791-ba2e-11e9-9650-293398fcda5b": {
+        "id": "link-6b2d1791-ba2e-11e9-9650-293398fcda5b",
+        "data": {
+          "text": "",
+          "html": "",
+          "type": "more"
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172316,
+          "timeUpdated": 1565303172316
+        },
+        "source": "31ae378f02136be889a6c4b4b81fdd20",
+        "target": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
+        "isDirected": true
+      },
+      "link-7349a920-ba2e-11e9-9650-293398fcda5b": {
+        "id": "link-7349a920-ba2e-11e9-9650-293398fcda5b",
+        "data": {
+          "text": "",
+          "html": ""
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172316,
+          "timeUpdated": 1565303172316
+        },
+        "source": "05fa9140-ba2e-11e9-9650-293398fcda5b",
+        "target": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
+        "isDirected": true
+      },
+      "link-af0f53b0-ba2e-11e9-9650-293398fcda5b": {
+        "id": "link-af0f53b0-ba2e-11e9-9650-293398fcda5b",
+        "data": {
+          "text": "",
+          "html": ""
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172316,
+          "timeUpdated": 1565303172316
+        },
+        "source": "05fa9140-ba2e-11e9-9650-293398fcda5b",
+        "target": "af0e9060-ba2e-11e9-9650-293398fcda5b",
+        "isDirected": true
+      }
+    },
+    "selectedNodes": ["af0e9060-ba2e-11e9-9650-293398fcda5b"],
+    "selectedLinks": [],
+    "patches": [{
+      "op": "replace",
+      "path": ["nodes", "af0e9060-ba2e-11e9-9650-293398fcda5b"],
+      "value": {
+        "id": "af0e9060-ba2e-11e9-9650-293398fcda5b",
+        "data": {
+          "type": "userDoc",
+          "base64": "JTdCJTIyb2JqZWN0JTIyJTNBJTIydmFsdWUlMjIlMkMlMjJkb2N1bWVudCUyMiUzQSU3QiUyMm9iamVjdCUyMiUzQSUyMmRvY3VtZW50JTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIyYmxvY2slMjIlMkMlMjJ0eXBlJTIyJTNBJTIycGFyYWdyYXBoJTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIydGV4dCUyMiUyQyUyMmxlYXZlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMmxlYWYlMjIlMkMlMjJ0ZXh0JTIyJTNBJTIyZGlmJTIwZnJvbSUyMHRoZSUyMHBhcGVycyUyMGNvbmNsdXNpb24lMjBhZnRlciUyMGJyaWVmJTIwcmVhZCUyMiUyQyUyMm1hcmtzJTIyJTNBJTVCJTVEJTdEJTVEJTdEJTVEJTdEJTVEJTdEJTdE",
+          "text": "dif from the papers conclusion after brief read",
+          "useTextForAutocomplete": false,
+          "isEntryPoint": false,
+          "isKeyword": false
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565303172330,
+          "timeUpdated": 1565304725431
+        },
+        "style": {
+          "min": {
+            "left": 787,
+            "top": 892,
+            "width": 300,
+            "height": 110
+          },
+          "max": {
+            "left": 614,
+            "top": 842,
+            "width": 300,
+            "height": 110
+          },
+          "modes": ["max", "min"],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "fontSize": 26
+        }
+      }
+    }]
+  },
+  "featureToggles": {
+    "canAdjustPdfSegment": true,
+    "canExpandPdfSegmentInGraph": true,
+    "canJumpBackToPdf": true
+  }
+};
+},{}],"EntryPoints/utils.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * from https://github.com/datorama/ts-safe-access/blob/master/src/ts-safe-access.ts
+ * @param {T} obj
+ * @param {(obj: T) => R} fn
+ * @param {R} defaultValue
+ * @param {boolean} excludeNull
+ * @returns {R}
+ *
+const data = {its: {really: {really: {really: {nested : undefined}}}}, nested: {value: null}};
+const result = get(data, data => data.its.really.really.really.nested, 'defaultValue');
+ */
+
+function get(obj, fn, defaultValue) {
+  var excludeNull = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+  try {
+    var result = fn(obj);
+    result = excludeNull ? result === null ? defaultValue : result : result;
+    return result === undefined ? defaultValue : result;
+  } catch (err) {
+    return defaultValue;
+  }
+}
+
+exports.get = get;
+},{}],"EntryPoints/graphUtils.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.getNeighborhood = function (nodeIds, nodes, links) {
+  var res = {
+    links: [],
+    nodes: []
+  };
+  Object.values(links).forEach(function (link) {
+    var sourceMatches = nodeIds.includes(link.source);
+    var targetMatches = nodeIds.includes(link.target);
+
+    if (sourceMatches || targetMatches) {
+      res.links.push(link);
+    }
+
+    if (sourceMatches) res.nodes.push(nodes[link.target]);
+    if (targetMatches) res.nodes.push(nodes[link.source]);
+  }); //   res.nodes = unique(res.nodes);
+
+  return res;
+};
+},{}],"EntryPoints/styled.tsx":[function(require,module,exports) {
+"use strict";
+
+var _taggedTemplateLiteral2 = _interopRequireDefault(require("@babel/runtime/helpers/taggedTemplateLiteral"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _templateObject() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n  margin: 5px 5px;\n  border: 1px solid lightblue;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+var __importDefault = void 0 && (void 0).__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var styled_components_1 = __importDefault(require("styled-components"));
+
+exports.NeighborLink = styled_components_1.default.span(_templateObject());
+},{"@babel/runtime/helpers/taggedTemplateLiteral":"../../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js","styled-components":"../../node_modules/styled-components/dist/styled-components.browser.esm.js"}],"EntryPoints/EntryPoints.tsx":[function(require,module,exports) {
+"use strict";
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var __importStar = void 0 && (void 0).__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+var __importDefault = void 0 && (void 0).__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var React = __importStar(require("react"));
+
+var react_1 = require("react");
+
+var state_json_1 = __importDefault(require("./state.json"));
+
+console.log("electronState: ", state_json_1.default);
+
+var utils_1 = require("./utils");
+
+var graphUtils_1 = require("./graphUtils");
+
+var styled_1 = require("./styled");
+/**
+ * tokenization
+ * wanted to link into a figure
+ * search for 'control'. a few are not what I want
+ * see its stroop. search stroop
+ * need better graph org rubric/heuristics. finacial stress - poverty - how they def. poverty
+ * hard vs easy conditions: no one could know what that means
+ */
+
+/**
+ * click entry2:userDoc
+ * path: ['userDocId']
+ * click entry2:userDoc:userDoc
+ * path: ['userDocId', 'userDocId']
+ * toggle by add delete from path
+ */
+
+
+var selectedNeighbors = [{
+  nodeId: "id",
+  neighbors: ["id", "id"],
+  isVisable: true
+}];
+
+var getNeighborNodeIds = function getNeighborNodeIds(id) {
+  return graphUtils_1.getNeighborhood([id], state_json_1.default.graph.nodes, state_json_1.default.graph.links).nodes.map(function (node) {
+    return node.id;
+  });
+};
+
+var getNodeType = function getNodeType(id) {
+  var nodeType = state_json_1.default.graph.nodes[id].data.type;
+  return nodeType;
+};
+
+var getText = function getText(id) {
+  return utils_1.get(state_json_1.default.graph.nodes[id], function (node) {
+    return node.data.text;
+  }, "");
+};
+
+var getNodeContext = function getNodeContext(id) {
+  var nodeType = getNodeType(id);
+};
+
+var Entry1 = function Entry1() {
+  var _react_1$useState = react_1.useState([]),
+      _react_1$useState2 = (0, _slicedToArray2.default)(_react_1$useState, 2),
+      entryIds = _react_1$useState2[0],
+      setEntryIds = _react_1$useState2[1];
+
+  var _react_1$useState3 = react_1.useState({}),
+      _react_1$useState4 = (0, _slicedToArray2.default)(_react_1$useState3, 2),
+      nodeToNeighbors = _react_1$useState4[0],
+      setNodeToNeighbors = _react_1$useState4[1]; //id lookup
+
+
+  var _react_1$useState5 = react_1.useState({}),
+      _react_1$useState6 = (0, _slicedToArray2.default)(_react_1$useState5, 2),
+      selectedNodePaths = _react_1$useState6[0],
+      setSelectedNodePaths = _react_1$useState6[1]; //id lookup
+
+
+  console.log("selectedNodePaths: ", selectedNodePaths);
+  react_1.useEffect(function () {
+    var nodeArr = Object.values(state_json_1.default.graph.nodes);
+    var entryNodeIds = nodeArr.filter(function (node) {
+      return utils_1.get(node, function (n) {
+        return n.data.isEntryPoint;
+      }, false);
+    }).map(function (n) {
+      return n.id;
+    });
+    setSelectedNodePaths(entryNodeIds.reduce(function (state, id, ix) {
+      // initialize to empty
+      return (0, _objectSpread2.default)({}, state, (0, _defineProperty2.default)({}, id, []));
+    }, {}));
+    var nodeNeighbors = entryNodeIds.reduce(function (state, id, ix) {
+      var nearestNeighbors = getNeighborNodeIds(id);
+      return (0, _objectSpread2.default)({}, state, (0, _defineProperty2.default)({}, id, nearestNeighbors));
+    }, {});
+    setNodeToNeighbors(nodeNeighbors);
+    setEntryIds(entryNodeIds);
+  }, []);
+  return React.createElement("div", null, entryIds.map(function (entryId) {
+    return React.createElement("div", {
+      key: entryId
+    }, React.createElement("div", null, getText(entryId)), React.createElement("div", null, nodeToNeighbors[entryId].map(function (neighborId) {
+      return React.createElement(styled_1.NeighborLink, {
+        key: neighborId,
+        style: {
+          color: selectedNodePaths[entryId][0] === neighborId ? "blue" : "black"
+        },
+        onClick: function onClick(e) {
+          return setSelectedNodePaths(function (state) {
+            return (0, _objectSpread2.default)({}, state, (0, _defineProperty2.default)({}, entryId, [neighborId]));
+          });
+        }
+      }, getNodeType(neighborId));
+    })), selectedNodePaths[entryId].map(function (x) {
+      return React.createElement("div", {
+        key: x
+      }, x);
+    }));
+  }));
+};
+
+exports.InfiniTab = function () {
+  return React.createElement("div", null, React.createElement(Entry1, null));
+};
+
+var links = [{
+  text: "Poverty",
+  charIxs: [0, 7]
+}, {
+  text: "Impedes",
+  charIxs: [8, 15]
+}, {
+  text: "Cognitive",
+  charIxs: [16, 16 + 9]
+}, {
+  text: "Function",
+  charIxs: [17 + 9]
+}, {
+  text: "Cognitive Function",
+  charIxs: [16]
+}];
+},{"@babel/runtime/helpers/defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js","@babel/runtime/helpers/objectSpread":"../../node_modules/@babel/runtime/helpers/objectSpread.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","./state.json":"EntryPoints/state.json","./utils":"EntryPoints/utils.ts","./graphUtils":"EntryPoints/graphUtils.ts","./styled":"EntryPoints/styled.tsx"}],"router.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importStar = this && this.__importStar || function (mod) {
@@ -47226,8 +53140,14 @@ var StyledComponents_1 = require("./StyledComponents");
 
 var PageText_1 = require("./pdfText/PageText");
 
+var EntryPoints_1 = require("./EntryPoints/EntryPoints");
+
 var linkRoute = [{
   to: "/",
+  label: "entryPoints",
+  component: EntryPoints_1.InfiniTab
+}, {
+  to: "/pdftext",
   label: "pdftext",
   component: PageText_1.PageText
 }, {
@@ -47264,7 +53184,7 @@ exports.default = function () {
     }
   })))));
 };
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./FreeformCanvas":"FreeformCanvas.tsx","./ListWithGestures":"ListWithGestures.tsx","./StyledComponents":"StyledComponents.tsx","./pdfText/PageText":"pdfText/PageText.tsx"}],"index.tsx":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./FreeformCanvas":"FreeformCanvas.tsx","./ListWithGestures":"ListWithGestures.tsx","./StyledComponents":"StyledComponents.tsx","./pdfText/PageText":"pdfText/PageText.tsx","./EntryPoints/EntryPoints":"EntryPoints/EntryPoints.tsx"}],"index.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importStar = this && this.__importStar || function (mod) {
@@ -47326,7 +53246,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55719" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54154" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
