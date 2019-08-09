@@ -3,6 +3,7 @@ export interface GraphNode {
   data: {
       isEntryPoint: boolean;
       text: string;
+      type: string;
   }
 }
 

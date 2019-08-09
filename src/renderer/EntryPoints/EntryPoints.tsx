@@ -7,8 +7,8 @@ import {
   useLayoutEffect
 } from "react";
 import electronState from "./state.json";
-console.log("electronState: ", electronState);
-import { get } from "./utils";
+
+import { get, updateArrayIndex } from "./utils";
 import { GraphNode, getNeighborhood } from "./graphUtils";
 import { NeighborLink } from "./styled";
 
@@ -36,12 +36,19 @@ const getNeighborNodeIds = id => {
     [id],
     electronState.graph.nodes,
     electronState.graph.links
-  ).nodes.map(node => node.id);
+  )
+    .nodes.filter(node => node.data.type !== "pdf.publication")
+    .map(node => node.id);
 };
 
 const getNodeType = id => {
   const nodeType = electronState.graph.nodes[id].data.type;
-  return nodeType;
+  const isEntryPoint = get(
+    electronState.graph.nodes[id].data,
+    data => data.isEntryPoint,
+    false
+  );
+  return isEntryPoint ? "Entry Point" : nodeType;
 };
 
 const getText = id => {
@@ -51,11 +58,12 @@ const getText = id => {
 const getNodeContext = id => {
   const nodeType = getNodeType(id);
 };
+
 const Entry1 = () => {
   const [entryIds, setEntryIds] = useState([] as string[]);
   const [nodeToNeighbors, setNodeToNeighbors] = useState({}); //id lookup
   const [selectedNodePaths, setSelectedNodePaths] = useState({}); //id lookup
-  console.log("selectedNodePaths: ", selectedNodePaths);
+
   useEffect(() => {
     const nodeArr: GraphNode[] = Object.values(electronState.graph.nodes);
     const entryNodeIds = nodeArr
@@ -79,37 +87,77 @@ const Entry1 = () => {
     setNodeToNeighbors(nodeNeighbors);
     setEntryIds(entryNodeIds);
   }, []);
+
+  const makeNeighborLinks = (entryId, nodeId = "", depth = -1) => {
+    let neighborIds = [] as string[];
+    if (!nodeToNeighbors.hasOwnProperty(nodeId)) {
+      // make it if we need it
+      neighborIds = getNeighborNodeIds(nodeId);
+      setNodeToNeighbors(state => ({ ...state, [nodeId]: neighborIds }));
+    } else {
+      // cache hit
+      neighborIds = nodeToNeighbors[nodeId];
+    }
+
+    const NeighborLinks = neighborIds.map(neighborId => {
+      return (
+        <NeighborLink
+          key={neighborId}
+          style={{
+            color:
+              selectedNodePaths[entryId][depth] === neighborId
+                ? "blue"
+                : "black"
+          }}
+          onClick={e =>
+            setSelectedNodePaths(state => {
+              let newPath = updateArrayIndex(
+                state[entryId],
+                depth,
+                neighborId
+              ).slice(0, depth + 1);
+              newPath;
+              if (neighborId === state[entryId][newPath.length - 1]) {
+                // console.log(neighborId, newPath[newPath.length - 1]);
+                newPath = newPath.splice(0, newPath.length - 1);
+              }
+
+              const newState = {
+                ...state,
+                [entryId]: newPath
+              };
+
+              return newState;
+            })
+          }
+        >
+          {getNodeType(neighborId)}
+        </NeighborLink>
+      );
+    });
+
+    return NeighborLinks;
+  };
+
   return (
     <div>
       {entryIds.map(entryId => {
         return (
           <div key={entryId}>
             <div>{getText(entryId)}</div>
+            <div>{makeNeighborLinks(entryId, entryId, 0)}</div>
             <div>
-              {nodeToNeighbors[entryId].map(neighborId => {
+              {selectedNodePaths[entryId].map((activeTabId, depth) => {
                 return (
-                  <NeighborLink
-                    key={neighborId}
-                    style={{
-                      color:
-                        selectedNodePaths[entryId][0] === neighborId
-                          ? "blue"
-                          : "black"
-                    }}
-                    onClick={e =>
-                      setSelectedNodePaths(state => {
-                        return { ...state, [entryId]: [neighborId] };
-                      })
-                    }
-                  >
-                    {getNodeType(neighborId)}
-                  </NeighborLink>
+                  <div>
+                    content
+                    <div>
+                      {makeNeighborLinks(entryId, activeTabId, depth + 1)}
+                    </div>
+                  </div>
                 );
               })}
             </div>
-            {selectedNodePaths[entryId].map(x => {
-              return <div key={x}>{x}</div>;
-            })}
           </div>
         );
       })}

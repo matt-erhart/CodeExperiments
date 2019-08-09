@@ -52414,7 +52414,7 @@ module.exports = {
       "mainPdfReader": {
         "left": 0,
         "top": 0,
-        "width": 2029,
+        "width": 905,
         "height": "100%",
         "scale": 3.5000000000000013,
         "scrollToPageNumber": 0,
@@ -52431,8 +52431,8 @@ module.exports = {
     },
     "portals": [],
     "nextNodeLocation": {
-      "left": 139,
-      "top": 450,
+      "left": 5.356435643564339,
+      "top": 33.93069306930698,
       "width": 300,
       "height": 200
     }
@@ -52538,7 +52538,7 @@ module.exports = {
         "meta": {
           "createdBy": "defaultUser",
           "timeCreated": 1565302868208,
-          "timeUpdated": 1565304546148
+          "timeUpdated": 1565383346478
         },
         "style": {
           "min": {
@@ -52548,8 +52548,8 @@ module.exports = {
             "height": 110
           },
           "max": {
-            "left": 141,
-            "top": 247,
+            "left": 5.356435643564339,
+            "top": 253.93069306930698,
             "width": 525,
             "height": 102
           },
@@ -52577,8 +52577,8 @@ module.exports = {
           "id": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
           "min": {
             "id": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
-            "left": 139,
-            "top": 385,
+            "left": 340.9801980198018,
+            "top": 399.851485148515,
             "width": 516,
             "height": 45
           },
@@ -52598,7 +52598,7 @@ module.exports = {
         "meta": {
           "createdBy": "defaultUser",
           "timeCreated": 1565303794624,
-          "timeUpdated": 1565304157305
+          "timeUpdated": 1565383535284
         }
       },
       "05fa9140-ba2e-11e9-9650-293398fcda5b": {
@@ -52614,7 +52614,7 @@ module.exports = {
         "meta": {
           "createdBy": "defaultUser",
           "timeCreated": 1565303172330,
-          "timeUpdated": 1565304717026
+          "timeUpdated": 1565383565574
         },
         "style": {
           "min": {
@@ -52624,8 +52624,8 @@ module.exports = {
             "height": 110
           },
           "max": {
-            "left": 143,
-            "top": 711,
+            "left": 22.207920792079168,
+            "top": 678.3267326732679,
             "width": 729,
             "height": 105
           },
@@ -52653,8 +52653,8 @@ module.exports = {
           "id": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
           "min": {
             "id": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
-            "left": 135,
-            "top": 839,
+            "left": 67.67326732673263,
+            "top": 911.2772277227727,
             "width": 445,
             "height": 51
           },
@@ -52674,7 +52674,7 @@ module.exports = {
         "meta": {
           "createdBy": "defaultUser",
           "timeCreated": 1565304414089,
-          "timeUpdated": 1565304454305
+          "timeUpdated": 1565383575390
         }
       },
       "af0e9060-ba2e-11e9-9650-293398fcda5b": {
@@ -52690,7 +52690,7 @@ module.exports = {
         "meta": {
           "createdBy": "defaultUser",
           "timeCreated": 1565303172330,
-          "timeUpdated": 1565304725431
+          "timeUpdated": 1565383577981
         },
         "style": {
           "min": {
@@ -52700,8 +52700,110 @@ module.exports = {
             "height": 110
           },
           "max": {
-            "left": 614,
-            "top": 842,
+            "left": 586.2772277227725,
+            "top": 905.3663366336631,
+            "width": 300,
+            "height": 127.82178217821783
+          },
+          "modes": ["max", "min"],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "fontSize": 26
+        }
+      },
+      "b5d0fc00-bae5-11e9-9d11-ad62e87aca06": {
+        "id": "b5d0fc00-bae5-11e9-9d11-ad62e87aca06",
+        "data": {
+          "type": "userDoc",
+          "base64": "JTdCJTIyb2JqZWN0JTIyJTNBJTIydmFsdWUlMjIlMkMlMjJkb2N1bWVudCUyMiUzQSU3QiUyMm9iamVjdCUyMiUzQSUyMmRvY3VtZW50JTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIyYmxvY2slMjIlMkMlMjJ0eXBlJTIyJTNBJTIycGFyYWdyYXBoJTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIydGV4dCUyMiUyQyUyMmxlYXZlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMmxlYWYlMjIlMkMlMjJ0ZXh0JTIyJTNBJTIyZW50cnklMkZzbGljZSUyRmRvYyUyMiUyQyUyMm1hcmtzJTIyJTNBJTVCJTVEJTdEJTVEJTdEJTVEJTdEJTVEJTdEJTdE",
+          "text": "entry/slice/doc",
+          "useTextForAutocomplete": false,
+          "isEntryPoint": false,
+          "isKeyword": false
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565383119913,
+          "timeUpdated": 1565383537226
+        },
+        "style": {
+          "min": {
+            "left": 388,
+            "top": 509,
+            "width": 300,
+            "height": 110
+          },
+          "max": {
+            "left": 613.7425742574259,
+            "top": 473.3564356435643,
+            "width": 300,
+            "height": 74.35643564356435
+          },
+          "modes": ["max", "min"],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "fontSize": 26
+        }
+      },
+      "ccb7de70-bae5-11e9-9d11-ad62e87aca06": {
+        "id": "ccb7de70-bae5-11e9-9d11-ad62e87aca06",
+        "data": {
+          "type": "userDoc",
+          "base64": "JTdCJTIyb2JqZWN0JTIyJTNBJTIydmFsdWUlMjIlMkMlMjJkb2N1bWVudCUyMiUzQSU3QiUyMm9iamVjdCUyMiUzQSUyMmRvY3VtZW50JTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIyYmxvY2slMjIlMkMlMjJ0eXBlJTIyJTNBJTIycGFyYWdyYXBoJTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIydGV4dCUyMiUyQyUyMmxlYXZlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMmxlYWYlMjIlMkMlMjJ0ZXh0JTIyJTNBJTIyZW50cnklMkZzbGljZSUyRmRvYyUyRmRvYyUyMiUyQyUyMm1hcmtzJTIyJTNBJTVCJTVEJTdEJTVEJTdEJTVEJTdEJTVEJTdEJTdE",
+          "text": "entry/slice/doc/doc",
+          "useTextForAutocomplete": false,
+          "isEntryPoint": false,
+          "isKeyword": false
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565383119913,
+          "timeUpdated": 1565383539644
+        },
+        "style": {
+          "min": {
+            "left": 725,
+            "top": 589,
+            "width": 300,
+            "height": 110
+          },
+          "max": {
+            "left": 881.4356435643566,
+            "top": 570.188118811881,
+            "width": 300,
+            "height": 144.65346534653466
+          },
+          "modes": ["max", "min"],
+          "modeIx": 0,
+          "lockedCorner": "nw",
+          "fontSize": 26
+        }
+      },
+      "d6ffdb80-bae5-11e9-9d11-ad62e87aca06": {
+        "id": "d6ffdb80-bae5-11e9-9d11-ad62e87aca06",
+        "data": {
+          "type": "userDoc",
+          "base64": "JTdCJTIyb2JqZWN0JTIyJTNBJTIydmFsdWUlMjIlMkMlMjJkb2N1bWVudCUyMiUzQSU3QiUyMm9iamVjdCUyMiUzQSUyMmRvY3VtZW50JTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIyYmxvY2slMjIlMkMlMjJ0eXBlJTIyJTNBJTIycGFyYWdyYXBoJTIyJTJDJTIyZGF0YSUyMiUzQSU3QiU3RCUyQyUyMm5vZGVzJTIyJTNBJTVCJTdCJTIyb2JqZWN0JTIyJTNBJTIydGV4dCUyMiUyQyUyMmxlYXZlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMmxlYWYlMjIlMkMlMjJ0ZXh0JTIyJTNBJTIyZW50cnklMkYoc2xpY2UlN0Nkb2MpJTJGZG9jJTIyJTJDJTIybWFya3MlMjIlM0ElNUIlNUQlN0QlNUQlN0QlNUQlN0QlNUQlN0QlN0Q=",
+          "text": "entry/(slice|doc)/doc",
+          "useTextForAutocomplete": false,
+          "isEntryPoint": false,
+          "isKeyword": false
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565383119913,
+          "timeUpdated": 1565383514542
+        },
+        "style": {
+          "min": {
+            "left": 548,
+            "top": 1115,
+            "width": 300,
+            "height": 110
+          },
+          "max": {
+            "left": 406.4158415841584,
+            "top": 1337.7722772277207,
             "width": 300,
             "height": 110
           },
@@ -52804,6 +52906,96 @@ module.exports = {
         "source": "05fa9140-ba2e-11e9-9650-293398fcda5b",
         "target": "af0e9060-ba2e-11e9-9650-293398fcda5b",
         "isDirected": true
+      },
+      "link-b5d1bf50-bae5-11e9-9d11-ad62e87aca06": {
+        "id": "link-b5d1bf50-bae5-11e9-9d11-ad62e87aca06",
+        "data": {
+          "text": "",
+          "html": ""
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565383119902,
+          "timeUpdated": 1565383119902
+        },
+        "source": "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+        "target": "b5d0fc00-bae5-11e9-9d11-ad62e87aca06",
+        "isDirected": true
+      },
+      "link-ccb8c8d0-bae5-11e9-9d11-ad62e87aca06": {
+        "id": "link-ccb8c8d0-bae5-11e9-9d11-ad62e87aca06",
+        "data": {
+          "text": "",
+          "html": ""
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565383119902,
+          "timeUpdated": 1565383119902
+        },
+        "source": "b5d0fc00-bae5-11e9-9d11-ad62e87aca06",
+        "target": "ccb7de70-bae5-11e9-9d11-ad62e87aca06",
+        "isDirected": true
+      },
+      "link-d700c5e0-bae5-11e9-9d11-ad62e87aca06": {
+        "id": "link-d700c5e0-bae5-11e9-9d11-ad62e87aca06",
+        "data": {
+          "text": "",
+          "html": ""
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565383119902,
+          "timeUpdated": 1565383119902
+        },
+        "source": "6b2d1790-ba2e-11e9-9650-293398fcda5b",
+        "target": "d6ffdb80-bae5-11e9-9d11-ad62e87aca06",
+        "isDirected": true
+      },
+      "link-d700c5e1-bae5-11e9-9d11-ad62e87aca06": {
+        "id": "link-d700c5e1-bae5-11e9-9d11-ad62e87aca06",
+        "data": {
+          "text": "",
+          "html": ""
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565383119902,
+          "timeUpdated": 1565383119902
+        },
+        "source": "af0e9060-ba2e-11e9-9650-293398fcda5b",
+        "target": "d6ffdb80-bae5-11e9-9d11-ad62e87aca06",
+        "isDirected": true
+      },
+      "link-30d439d0-bae6-11e9-9d11-ad62e87aca06": {
+        "id": "link-30d439d0-bae6-11e9-9d11-ad62e87aca06",
+        "data": {
+          "text": "",
+          "html": ""
+        },
+        "style": {
+          "stroke": "lightgrey"
+        },
+        "meta": {
+          "createdBy": "defaultUser",
+          "timeCreated": 1565383119902,
+          "timeUpdated": 1565383119902
+        },
+        "source": "1085e040-ba2b-11e9-8c37-b1ed03acfdd9",
+        "target": "05fa9140-ba2e-11e9-9650-293398fcda5b",
+        "isDirected": true
       }
     },
     "selectedNodes": ["af0e9060-ba2e-11e9-9650-293398fcda5b"],
@@ -52824,7 +53016,7 @@ module.exports = {
         "meta": {
           "createdBy": "defaultUser",
           "timeCreated": 1565303172330,
-          "timeUpdated": 1565304725431
+          "timeUpdated": 1565383577981
         },
         "style": {
           "min": {
@@ -52834,10 +53026,10 @@ module.exports = {
             "height": 110
           },
           "max": {
-            "left": 614,
-            "top": 842,
+            "left": 586.2772277227725,
+            "top": 905.3663366336631,
             "width": 300,
-            "height": 110
+            "height": 127.82178217821783
           },
           "modes": ["max", "min"],
           "modeIx": 0,
@@ -52855,6 +53047,10 @@ module.exports = {
 };
 },{}],"EntryPoints/utils.ts":[function(require,module,exports) {
 "use strict";
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -52884,7 +53080,11 @@ function get(obj, fn, defaultValue) {
 }
 
 exports.get = get;
-},{}],"EntryPoints/graphUtils.ts":[function(require,module,exports) {
+
+exports.updateArrayIndex = function (arr, index, newValue) {
+  return [].concat((0, _toConsumableArray2.default)(arr.slice(0, index)), [newValue], (0, _toConsumableArray2.default)(arr.slice(index + 1)));
+};
+},{"@babel/runtime/helpers/toConsumableArray":"../../node_modules/@babel/runtime/helpers/toConsumableArray.js"}],"EntryPoints/graphUtils.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -52977,8 +53177,6 @@ var react_1 = require("react");
 
 var state_json_1 = __importDefault(require("./state.json"));
 
-console.log("electronState: ", state_json_1.default);
-
 var utils_1 = require("./utils");
 
 var graphUtils_1 = require("./graphUtils");
@@ -53009,14 +53207,19 @@ var selectedNeighbors = [{
 }];
 
 var getNeighborNodeIds = function getNeighborNodeIds(id) {
-  return graphUtils_1.getNeighborhood([id], state_json_1.default.graph.nodes, state_json_1.default.graph.links).nodes.map(function (node) {
+  return graphUtils_1.getNeighborhood([id], state_json_1.default.graph.nodes, state_json_1.default.graph.links).nodes.filter(function (node) {
+    return node.data.type !== "pdf.publication";
+  }).map(function (node) {
     return node.id;
   });
 };
 
 var getNodeType = function getNodeType(id) {
   var nodeType = state_json_1.default.graph.nodes[id].data.type;
-  return nodeType;
+  var isEntryPoint = utils_1.get(state_json_1.default.graph.nodes[id].data, function (data) {
+    return data.isEntryPoint;
+  }, false);
+  return isEntryPoint ? "Entry Point" : nodeType;
 };
 
 var getText = function getText(id) {
@@ -53047,7 +53250,6 @@ var Entry1 = function Entry1() {
       setSelectedNodePaths = _react_1$useState6[1]; //id lookup
 
 
-  console.log("selectedNodePaths: ", selectedNodePaths);
   react_1.useEffect(function () {
     var nodeArr = Object.values(state_json_1.default.graph.nodes);
     var entryNodeIds = nodeArr.filter(function (node) {
@@ -53068,26 +53270,54 @@ var Entry1 = function Entry1() {
     setNodeToNeighbors(nodeNeighbors);
     setEntryIds(entryNodeIds);
   }, []);
-  return React.createElement("div", null, entryIds.map(function (entryId) {
-    return React.createElement("div", {
-      key: entryId
-    }, React.createElement("div", null, getText(entryId)), React.createElement("div", null, nodeToNeighbors[entryId].map(function (neighborId) {
+
+  var makeNeighborLinks = function makeNeighborLinks(entryId) {
+    var nodeId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+    var depth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
+    var neighborIds = [];
+
+    if (!nodeToNeighbors.hasOwnProperty(nodeId)) {
+      // make it if we need it
+      neighborIds = getNeighborNodeIds(nodeId);
+      setNodeToNeighbors(function (state) {
+        return (0, _objectSpread2.default)({}, state, (0, _defineProperty2.default)({}, nodeId, neighborIds));
+      });
+    } else {
+      // cache hit
+      neighborIds = nodeToNeighbors[nodeId];
+    }
+
+    var NeighborLinks = neighborIds.map(function (neighborId) {
       return React.createElement(styled_1.NeighborLink, {
         key: neighborId,
         style: {
-          color: selectedNodePaths[entryId][0] === neighborId ? "blue" : "black"
+          color: selectedNodePaths[entryId][depth] === neighborId ? "blue" : "black"
         },
         onClick: function onClick(e) {
           return setSelectedNodePaths(function (state) {
-            return (0, _objectSpread2.default)({}, state, (0, _defineProperty2.default)({}, entryId, [neighborId]));
+            var newPath = utils_1.updateArrayIndex(state[entryId], depth, neighborId).slice(0, depth + 1);
+            newPath;
+
+            if (neighborId === state[entryId][newPath.length - 1]) {
+              // console.log(neighborId, newPath[newPath.length - 1]);
+              newPath = newPath.splice(0, newPath.length - 1);
+            }
+
+            var newState = (0, _objectSpread2.default)({}, state, (0, _defineProperty2.default)({}, entryId, newPath));
+            return newState;
           });
         }
       }, getNodeType(neighborId));
-    })), selectedNodePaths[entryId].map(function (x) {
-      return React.createElement("div", {
-        key: x
-      }, x);
-    }));
+    });
+    return NeighborLinks;
+  };
+
+  return React.createElement("div", null, entryIds.map(function (entryId) {
+    return React.createElement("div", {
+      key: entryId
+    }, React.createElement("div", null, getText(entryId)), React.createElement("div", null, makeNeighborLinks(entryId, entryId, 0)), React.createElement("div", null, selectedNodePaths[entryId].map(function (activeTabId, depth) {
+      return React.createElement("div", null, "content", React.createElement("div", null, makeNeighborLinks(entryId, activeTabId, depth + 1)));
+    })));
   }));
 };
 
