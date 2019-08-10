@@ -53117,8 +53117,48 @@ var _taggedTemplateLiteral2 = _interopRequireDefault(require("@babel/runtime/hel
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _templateObject5() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n  margin: 25px;\n  padding: 15px;\n  border: 1px solid grey;\n"]);
+
+  _templateObject5 = function _templateObject5() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject4() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n  font-size: 22px;\n  padding-top: 5px;\n  padding-bottom: 5px;\n  flex: 1;\n  &:not(:last-child) {\n    border-bottom: 1px solid lightgrey;\n  }\n"]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject3() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n  margin: 25px;\n  padding: 15px;\n  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);\n"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n  margin: 5px;\n  padding: 5px;\n  border: 1px solid lightblue;\n  white-space: nowrap;\n  font-weight: normal;\n  cursor: pointer;\n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject() {
-  var data = (0, _taggedTemplateLiteral2.default)(["\n  margin: 5px 5px;\n  border: 1px solid lightblue;\n"]);
+  var data = (0, _taggedTemplateLiteral2.default)(["\n  /* display: inline-block; */\n  margin: 5px;\n  padding: 5px;\n  font-size: 18px;\n  display: inline-block;\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -53139,7 +53179,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var styled_components_1 = __importDefault(require("styled-components"));
 
-exports.NeighborLink = styled_components_1.default.span(_templateObject());
+exports.NeighborOuter = styled_components_1.default.div(_templateObject());
+exports.NeighborLink = styled_components_1.default.span(_templateObject2());
+exports.EntryPointOuter = styled_components_1.default.div(_templateObject3());
+exports.EntryPointText = styled_components_1.default.div(_templateObject4());
+exports.NodeItem = styled_components_1.default.span(_templateObject5());
 },{"@babel/runtime/helpers/taggedTemplateLiteral":"../../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js","styled-components":"../../node_modules/styled-components/dist/styled-components.browser.esm.js"}],"EntryPoints/EntryPoints.tsx":[function(require,module,exports) {
 "use strict";
 
@@ -53230,6 +53274,17 @@ var getText = function getText(id) {
 
 var getNodeContext = function getNodeContext(id) {
   var nodeType = getNodeType(id);
+
+  if (["Entry Point", "userDoc"].includes(nodeType)) {
+    return state_json_1.default.graph.nodes[id].data.text;
+  } else {
+    return "render a box";
+  }
+};
+
+var pathTest = {
+  "1085e040-ba2b-11e9-8c37-b1ed03acfdd9": ["f9f23c00-ba2c-11e9-9650-293398fcda5b", "b5d0fc00-bae5-11e9-9d11-ad62e87aca06", "f9f23c00-ba2c-11e9-9650-293398fcda5b"],
+  "05fa9140-ba2e-11e9-9650-293398fcda5b": ["af0e9060-ba2e-11e9-9650-293398fcda5b", "d6ffdb80-bae5-11e9-9d11-ad62e87aca06"]
 };
 
 var Entry1 = function Entry1() {
@@ -53250,6 +53305,7 @@ var Entry1 = function Entry1() {
       setSelectedNodePaths = _react_1$useState6[1]; //id lookup
 
 
+  console.log("selectedNodePaths: ", selectedNodePaths);
   react_1.useEffect(function () {
     var nodeArr = Object.values(state_json_1.default.graph.nodes);
     var entryNodeIds = nodeArr.filter(function (node) {
@@ -53259,10 +53315,11 @@ var Entry1 = function Entry1() {
     }).map(function (n) {
       return n.id;
     });
-    setSelectedNodePaths(entryNodeIds.reduce(function (state, id, ix) {
-      // initialize to empty
-      return (0, _objectSpread2.default)({}, state, (0, _defineProperty2.default)({}, id, []));
-    }, {}));
+    setSelectedNodePaths(pathTest // entryNodeIds.reduce((state, id, ix) => {
+    //   // initialize to empty
+    //   return { ...state, [id]: [] };
+    // }, {})
+    );
     var nodeNeighbors = entryNodeIds.reduce(function (state, id, ix) {
       var nearestNeighbors = getNeighborNodeIds(id);
       return (0, _objectSpread2.default)({}, state, (0, _defineProperty2.default)({}, id, nearestNeighbors));
@@ -53293,6 +53350,9 @@ var Entry1 = function Entry1() {
         style: {
           color: selectedNodePaths[entryId][depth] === neighborId ? "blue" : "black"
         },
+        onDoubleClick: function onDoubleClick(e) {
+          e.preventDefault();
+        },
         onClick: function onClick(e) {
           return setSelectedNodePaths(function (state) {
             var newPath = utils_1.updateArrayIndex(state[entryId], depth, neighborId).slice(0, depth + 1);
@@ -53309,15 +53369,24 @@ var Entry1 = function Entry1() {
         }
       }, getNodeType(neighborId));
     });
-    return NeighborLinks;
+    return React.createElement(styled_1.NeighborOuter, null, NeighborLinks);
   };
 
   return React.createElement("div", null, entryIds.map(function (entryId) {
-    return React.createElement("div", {
+    return React.createElement(styled_1.EntryPointOuter, {
       key: entryId
-    }, React.createElement("div", null, getText(entryId)), React.createElement("div", null, makeNeighborLinks(entryId, entryId, 0)), React.createElement("div", null, selectedNodePaths[entryId].map(function (activeTabId, depth) {
-      return React.createElement("div", null, "content", React.createElement("div", null, makeNeighborLinks(entryId, activeTabId, depth + 1)));
-    })));
+    }, React.createElement(styled_1.EntryPointText, {
+      style: {
+        fontWeight: "bold"
+      }
+    }, getText(entryId), React.createElement(React.Fragment, null, makeNeighborLinks(entryId, entryId, 0))), selectedNodePaths[entryId].map(function (activeTabId, depth) {
+      return React.createElement(styled_1.EntryPointText, {
+        key: activeTabId + depth,
+        style: {
+          marginLeft: depth * 10 + 5
+        }
+      }, getNodeContext(activeTabId), React.createElement(React.Fragment, null, makeNeighborLinks(entryId, activeTabId, depth + 1)));
+    }));
   }));
 };
 
@@ -53476,7 +53545,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54154" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60339" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

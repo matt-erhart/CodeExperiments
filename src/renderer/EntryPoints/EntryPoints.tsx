@@ -10,7 +10,13 @@ import electronState from "./state.json";
 
 import { get, updateArrayIndex } from "./utils";
 import { GraphNode, getNeighborhood } from "./graphUtils";
-import { NeighborLink } from "./styled";
+import {
+  NeighborLink,
+  EntryPointText,
+  EntryPointOuter,
+  NodeItem,
+  NeighborOuter
+} from "./styled";
 
 /**
  * tokenization
@@ -57,12 +63,28 @@ const getText = id => {
 
 const getNodeContext = id => {
   const nodeType = getNodeType(id);
+  if (["Entry Point", "userDoc"].includes(nodeType)) {
+    return electronState.graph.nodes[id].data.text;
+  } else {
+    return "render a box";
+  }
 };
-
+const pathTest = {
+  "1085e040-ba2b-11e9-8c37-b1ed03acfdd9": [
+    "f9f23c00-ba2c-11e9-9650-293398fcda5b",
+    "b5d0fc00-bae5-11e9-9d11-ad62e87aca06",
+    "f9f23c00-ba2c-11e9-9650-293398fcda5b"
+  ],
+  "05fa9140-ba2e-11e9-9650-293398fcda5b": [
+    "af0e9060-ba2e-11e9-9650-293398fcda5b",
+    "d6ffdb80-bae5-11e9-9d11-ad62e87aca06"
+  ]
+};
 const Entry1 = () => {
   const [entryIds, setEntryIds] = useState([] as string[]);
   const [nodeToNeighbors, setNodeToNeighbors] = useState({}); //id lookup
   const [selectedNodePaths, setSelectedNodePaths] = useState({}); //id lookup
+  console.log("selectedNodePaths: ", selectedNodePaths);
 
   useEffect(() => {
     const nodeArr: GraphNode[] = Object.values(electronState.graph.nodes);
@@ -73,10 +95,11 @@ const Entry1 = () => {
       .map(n => n.id);
 
     setSelectedNodePaths(
-      entryNodeIds.reduce((state, id, ix) => {
-        // initialize to empty
-        return { ...state, [id]: [] };
-      }, {})
+      pathTest
+      // entryNodeIds.reduce((state, id, ix) => {
+      //   // initialize to empty
+      //   return { ...state, [id]: [] };
+      // }, {})
     );
 
     const nodeNeighbors = entryNodeIds.reduce((state, id, ix) => {
@@ -109,6 +132,9 @@ const Entry1 = () => {
                 ? "blue"
                 : "black"
           }}
+          onDoubleClick={e => {
+            e.preventDefault();
+          }}
           onClick={e =>
             setSelectedNodePaths(state => {
               let newPath = updateArrayIndex(
@@ -136,29 +162,30 @@ const Entry1 = () => {
       );
     });
 
-    return NeighborLinks;
+    return <NeighborOuter>{NeighborLinks}</NeighborOuter>;
   };
 
   return (
     <div>
       {entryIds.map(entryId => {
         return (
-          <div key={entryId}>
-            <div>{getText(entryId)}</div>
-            <div>{makeNeighborLinks(entryId, entryId, 0)}</div>
-            <div>
-              {selectedNodePaths[entryId].map((activeTabId, depth) => {
-                return (
-                  <div>
-                    content
-                    <div>
-                      {makeNeighborLinks(entryId, activeTabId, depth + 1)}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          <EntryPointOuter key={entryId}>
+            <EntryPointText style={{ fontWeight: "bold" }}>
+              {getText(entryId)}
+              <>{makeNeighborLinks(entryId, entryId, 0)}</>
+            </EntryPointText>
+            {selectedNodePaths[entryId].map((activeTabId, depth) => {
+              return (
+                <EntryPointText
+                  key={activeTabId + depth}
+                  style={{ marginLeft: (depth*10) + 5}}
+                >
+                  {getNodeContext(activeTabId)}
+                  <>{makeNeighborLinks(entryId, activeTabId, depth + 1)}</>
+                </EntryPointText>
+              );
+            })}
+          </EntryPointOuter>
         );
       })}
     </div>
