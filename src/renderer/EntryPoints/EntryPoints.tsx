@@ -80,7 +80,7 @@ const pathTest = {
     "d6ffdb80-bae5-11e9-9d11-ad62e87aca06"
   ]
 };
-const Entry1 = () => {
+export const Entry1 = () => {
   const [entryIds, setEntryIds] = useState([] as string[]);
   const [nodeToNeighbors, setNodeToNeighbors] = useState({}); //id lookup
   const [selectedNodePaths, setSelectedNodePaths] = useState({}); //id lookup

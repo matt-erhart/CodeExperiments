@@ -11,9 +11,13 @@ import {
 } from "./StyledComponents";
 
 import { PageText } from "./pdfText/PageText";
-import {InfiniTab} from "./EntryPoints/EntryPoints"
+import { InfiniTab } from "./EntryPoints/EntryPoints";
+import { TextEditor } from "./TextEditing/TextEditor";
+import {ExperimentPanels} from "./Experiment/Panels"
 const linkRoute = [
-  { to: "/", label: "entryPoints", component: InfiniTab },
+  { to: "/", label: "ExperimentPanels", component: ExperimentPanels },
+  { to: "/TextEditor", label: "TextEditor", component: TextEditor },
+  { to: "/entryPoints", label: "entryPoints", component: InfiniTab },
   { to: "/pdftext", label: "pdftext", component: PageText },
   { to: "/GestureList", label: "GestureList", component: ListWithGestures },
   { to: "/freeform", label: "freeform", component: FreeformCanvas }
@@ -35,7 +39,14 @@ export default () => {
         <ViewPortMainContent>
           <Switch>
             {linkRoute.map(lr => {
-              return <Route key={lr.label} exact path={lr.to} component={lr.component} />;
+              return (
+                <Route
+                  key={lr.label}
+                  exact
+                  path={lr.to}
+                  component={lr.component}
+                />
+              );
             })}
             <Route component={() => <h1>No Content</h1>} />
           </Switch>
