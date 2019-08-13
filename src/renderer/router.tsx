@@ -13,9 +13,15 @@ import {
 import { PageText } from "./pdfText/PageText";
 import { InfiniTab } from "./EntryPoints/EntryPoints";
 import { TextEditor } from "./TextEditing/TextEditor";
-import {ExperimentPanels} from "./Experiment/Panels"
+import { ExperimentPanels } from "./Experiment/Panels";
+import { PdfReactViewer } from "./PdfReact/PdfReactViewer";
 const linkRoute = [
-  { to: "/", label: "ExperimentPanels", component: ExperimentPanels },
+  { to: "/", label: "PdfReact", component: PdfReactViewer },
+  {
+    to: "/ExperimentPanels",
+    label: "ExperimentPanels",
+    component: ExperimentPanels
+  },
   { to: "/TextEditor", label: "TextEditor", component: TextEditor },
   { to: "/entryPoints", label: "entryPoints", component: InfiniTab },
   { to: "/pdftext", label: "pdftext", component: PageText },
