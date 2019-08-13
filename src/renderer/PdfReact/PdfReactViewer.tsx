@@ -13,34 +13,49 @@ import { useEffect, useState } from "react";
 import PageCanvas from "./PageCanvas";
 import { domIdWithUid, domIds } from "./events";
 
-export const PdfReactViewer = (props = { scale: 1 }) => {
+export const PdfReactViewer = props => {
   const [pages, setPages] = useState(null);
-  const [scale, setScale] = useState(props.scale);
+  const [scale, setScale] = useState(props.scale || 1);
+  
 
   useEffect(() => {
     loadPdfPages(
       require("./Understanding the Group Size Effect in Electronic Brainstorming.pdf")
     ).then(pages => {
       setPages(pages);
-      console.log("pages: ", pages);
     });
   }, []);
 
   return (
-    <div>
+    <div onWheel={onWheel(setScale)}>
       {!!pages && (
         // <PageCanvas page={pages[0].page} viewport={pages[0].viewport} />
-        <PdfPages scale={2} pages={pages} />
+        <PdfPages scale={scale} pages={pages} />
       )}
     </div>
   );
+};
+const onWheel = (setScale: React.Dispatch<React.SetStateAction<number>>) => (
+  e: React.WheelEvent<HTMLDivElement>
+) => {
+  e.persist();
+  if (e.ctrlKey) {
+    e.preventDefault();
+    setScale(prevScale => {
+      
+      const newScale = prevScale - e.deltaY / 1000;
+      const res = newScale >= 0.5 ? newScale : 0.5;
+      return res;
+    });
+  }
 };
 
 import { PdfPageOuter } from "../StyledComponents";
 const PdfPages = ({ pages, scale }) => {
   if (pages.length < 1) return null;
   const Pages = pages.map(page => {
-    let { width, height } = page.page.getViewport({scale});
+    let { width, height } = page.page.getViewport({ scale });
+    
 
     return (
       <PdfPageOuter
@@ -58,6 +73,7 @@ const PdfPages = ({ pages, scale }) => {
           key={domIdWithUid(domIds.pdfCanvas, page.pageNumber)}
           page={page.page}
           scale={scale}
+          viewport={page.viewport}
         />
         )
       </PdfPageOuter>

@@ -10,6 +10,7 @@ const PageCanvasDefaults = {
   props: {
     id: "",
     page: undefined as pdfjs.PDFPageProxy,
+    viewport: undefined as pdfjs.PDFPageViewport,
     scale: 1
   },
   state: { isRendering: true }
@@ -29,6 +30,8 @@ export default class PageCanvas extends React.Component<
   private subjectRendering = new Subject();
 
   scale1Canvas = async () => {
+    // this gets a fast blurry css zoom while the slow, crisp pdf zoom happens
+    // show this while zooming, show the other canvas when its ready
     const { page } = this.props;
     const viewport = page.getViewport({ scale: 1 });
     this.canvasScale1.current.height = viewport.height;
@@ -55,9 +58,10 @@ export default class PageCanvas extends React.Component<
       });
   };
 
-  renderCanvas = async () => {
+  renderCanvas = async scale => {
+    console.log("renderCanvas: ");
     const { page } = this.props;
-    const viewport = page.getViewport({ scale: this.props.scale });
+    const viewport = page.getViewport({ scale });
     this.canvasLayer.current.height = viewport.height;
     this.canvasLayer.current.width = viewport.width;
     const canvasContext = this.canvasLayer.current.getContext("2d");
@@ -90,13 +94,14 @@ export default class PageCanvas extends React.Component<
       .pipe(
         debounceTime(50),
         tap(async () => {
+          console.log("render canvas");
           this.setState({ isRendering: true });
-          await this.renderCanvas();
+          await this.renderCanvas(this.props.scale);
         })
       )
       .subscribe(() => {});
     this.scale1Canvas();
-    this.renderCanvas();
+    this.renderCanvas(this.props.scale);
 
     this.setState({ isRendering: false });
   }
@@ -109,12 +114,11 @@ export default class PageCanvas extends React.Component<
 
   async componentDidUpdate(prevProps) {
     const { viewport, page } = this.props;
-    if (!!page) return false;
 
-    const figureprint1 = (page as any).transport.pdfDocument.pdfInfo
+    const figureprint1 = (page as any)._transport.pdfDocument._pdfInfo
       .fingerprint;
     const figureprint2 =
-      prevProps.page.transport.pdfDocument.pdfInfo.fingerprint;
+      prevProps.page._transport.pdfDocument._pdfInfo.fingerprint;
 
     if (prevProps.viewport !== viewport) {
       if (!!this.canvasLayer.current)
@@ -129,17 +133,16 @@ export default class PageCanvas extends React.Component<
   }
 
   shouldComponentUpdate(prevProps, prevState) {
-    const { viewport, page } = this.props;
-    if (!!page) return false;
     const scaleChange = prevProps.scale !== this.props.scale;
+    console.log("scaleChange: ", scaleChange);
     const viewportChangeHeight =
       prevProps.viewport.height !== this.props.viewport.height;
     const viewportChangeWidth =
       prevProps.viewport.width !== this.props.viewport.width;
-    const figureprint1 = (this.props.page as any).transport.pdfDocument.pdfInfo
-      .fingerprint;
+    const figureprint1 = (this.props.page as any)._transport.pdfDocument
+      ._pdfInfo.fingerprint;
     const figureprint2 =
-      prevProps.page.transport.pdfDocument.pdfInfo.fingerprint;
+      prevProps.page._transport.pdfDocument._pdfInfo.fingerprint;
     const newPdf = figureprint1 !== figureprint2;
 
     return scaleChange || viewportChangeHeight || viewportChangeWidth || newPdf;
