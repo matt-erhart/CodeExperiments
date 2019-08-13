@@ -7,36 +7,44 @@ if (typeof window !== "undefined" && "Worker" in window) {
 }
 import { PDFJSStatic } from "pdfjs-dist";
 const pdfjs: PDFJSStatic = _pdfjs as any;
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // custom
-const load = async () => {
-  const pages = await loadPdfPages(
-    require("./Understanding the Group Size Effect in Electronic Brainstorming.pdf")
-  );
-  console.log(pages);
-};
+import PageCanvas from "./PageCanvas";
+
 export const PdfReactViewer = () => {
+  const [pages, setPages] = useState(null);
   useEffect(() => {
-    load();
+    loadPdfPages(
+      require("./Understanding the Group Size Effect in Electronic Brainstorming.pdf")
+    ).then(pages => {
+      setPages(pages);
+      console.log("pages: ", pages);
+    });
   }, []);
 
-  return <div>PdfReactViewer</div>;
+  return (
+    <div>
+      {!!pages && (
+        <PageCanvas page={pages[0].page} viewport={pages[0].viewport} />
+      )} 
+    </div>
+  );
 };
 
+// utils
 export const loadPdfPages = async (
   path: string,
   pageNumbersToLoad: number[] = [],
   scale = 1,
   isLocalFile = false
 ) => {
-
   // osx+pdfjs+electron needs new Uint8Array(fs.readFileSync(path)) NOT pdfjs.getDocument(path);
   const loadingTask = pdfjs.getDocument(path);
   loadingTask.onProgress = function(progress) {
-    var percent = parseInt((progress.loaded / progress.total) * 100);
+    var percent = (progress.loaded / progress.total) * 100;
   };
-  
+
   const pdf = await loadingTask.promise; //558ms for 21 pages
 
   const pageNumbers = checkGetPageNumsToLoad(pdf.numPages, pageNumbersToLoad);
