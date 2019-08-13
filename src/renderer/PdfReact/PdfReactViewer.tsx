@@ -11,9 +11,12 @@ import { useEffect, useState } from "react";
 
 // custom
 import PageCanvas from "./PageCanvas";
+import { domIdWithUid, domIds } from "./events";
 
-export const PdfReactViewer = () => {
+export const PdfReactViewer = (props = { scale: 1 }) => {
   const [pages, setPages] = useState(null);
+  const [scale, setScale] = useState(props.scale);
+
   useEffect(() => {
     loadPdfPages(
       require("./Understanding the Group Size Effect in Electronic Brainstorming.pdf")
@@ -26,10 +29,41 @@ export const PdfReactViewer = () => {
   return (
     <div>
       {!!pages && (
-        <PageCanvas page={pages[0].page} viewport={pages[0].viewport} />
-      )} 
+        // <PageCanvas page={pages[0].page} viewport={pages[0].viewport} />
+        <PdfPages scale={2} pages={pages} />
+      )}
     </div>
   );
+};
+
+import { PdfPageOuter } from "../StyledComponents";
+const PdfPages = ({ pages, scale }) => {
+  if (pages.length < 1) return null;
+  const Pages = pages.map(page => {
+    let { width, height } = page.page.getViewport({scale});
+
+    return (
+      <PdfPageOuter
+        draggable={false}
+        id={domIdWithUid(domIds.page, page.pageNumber)}
+        key={domIdWithUid(domIds.page, page.pageNumber)}
+        style={{
+          width: width,
+          minWidth: width,
+          height: height
+        }}
+      >
+        <PageCanvas
+          id={domIdWithUid(domIds.pdfCanvas, page.pageNumber)}
+          key={domIdWithUid(domIds.pdfCanvas, page.pageNumber)}
+          page={page.page}
+          scale={scale}
+        />
+        )
+      </PdfPageOuter>
+    );
+  });
+  return Pages;
 };
 
 // utils

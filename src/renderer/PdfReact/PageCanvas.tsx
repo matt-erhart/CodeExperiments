@@ -10,7 +10,6 @@ const PageCanvasDefaults = {
   props: {
     id: "",
     page: undefined as pdfjs.PDFPageProxy,
-    viewport: undefined as pdfjs.PDFPageViewport,
     scale: 1
   },
   state: { isRendering: true }
@@ -31,7 +30,7 @@ export default class PageCanvas extends React.Component<
 
   scale1Canvas = async () => {
     const { page } = this.props;
-    const viewport = page.getViewport(1);
+    const viewport = page.getViewport({ scale: 1 });
     this.canvasScale1.current.height = viewport.height;
     this.canvasScale1.current.width = viewport.width;
     const canvasContext = this.canvasScale1.current.getContext("2d");
@@ -42,7 +41,7 @@ export default class PageCanvas extends React.Component<
       this.renderScale1Task.cancel();
     }
 
-    this.renderScale1Task = page.render({ canvasContext, viewport });
+    this.renderScale1Task = page.render({ canvasContext, viewport }).promise;
     this.renderScale1Task
       .then(() => {
         this.renderScale1Task = null;
@@ -57,7 +56,8 @@ export default class PageCanvas extends React.Component<
   };
 
   renderCanvas = async () => {
-    const { page, viewport } = this.props;
+    const { page } = this.props;
+    const viewport = page.getViewport({ scale: this.props.scale });
     this.canvasLayer.current.height = viewport.height;
     this.canvasLayer.current.width = viewport.width;
     const canvasContext = this.canvasLayer.current.getContext("2d");
@@ -66,7 +66,7 @@ export default class PageCanvas extends React.Component<
       this.renderTask.cancel();
     }
 
-    this.renderTask = page.render({ canvasContext, viewport });
+    this.renderTask = page.render({ canvasContext, viewport }).promise;
 
     this.renderTask
       .then(() => {

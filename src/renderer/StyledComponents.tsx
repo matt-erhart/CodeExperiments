@@ -50,3 +50,8 @@ export const TextEditorOuter = styled.div`
   display: flex;
   overflow: auto;
 `;
+
+export const PdfPageOuter = styled.div`
+  position: relative;
+  border-bottom: 1px solid lightgrey;
+`

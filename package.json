@@ -108,6 +108,7 @@
     "compromise": "^11.14.2",
     "downshift": "^3.2.12",
     "electron-is-dev": "^1.1.0",
+    "electron-settings": "^3.2.0",
     "immutable": "^4.0.0-rc.12",
     "lodash-es": "^4.17.15",
     "lodash-move": "^1.1.1",
