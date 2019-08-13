@@ -59,7 +59,6 @@ export default class PageCanvas extends React.Component<
   };
 
   renderCanvas = async scale => {
-    console.log("renderCanvas: ");
     const { page } = this.props;
     const viewport = page.getViewport({ scale });
     this.canvasLayer.current.height = viewport.height;
@@ -94,7 +93,6 @@ export default class PageCanvas extends React.Component<
       .pipe(
         debounceTime(50),
         tap(async () => {
-          console.log("render canvas");
           this.setState({ isRendering: true });
           await this.renderCanvas(this.props.scale);
         })
@@ -110,17 +108,15 @@ export default class PageCanvas extends React.Component<
     this.subscription.unsubscribe();
   }
 
-  // rxTest = defer(this.renderCanvas).pipe(debounceTime(2200));
-
   async componentDidUpdate(prevProps) {
-    const { viewport, page } = this.props;
+    const { viewport, page, scale } = this.props;
 
     const figureprint1 = (page as any)._transport.pdfDocument._pdfInfo
       .fingerprint;
     const figureprint2 =
       prevProps.page._transport.pdfDocument._pdfInfo.fingerprint;
 
-    if (prevProps.viewport !== viewport) {
+    if (prevProps.scale !== scale) {
       if (!!this.canvasLayer.current)
         this.canvasLayer.current.style.opacity = "0";
       this.subjectRendering.next("request render"); // so we can debounce rendering on zoom
@@ -134,7 +130,7 @@ export default class PageCanvas extends React.Component<
 
   shouldComponentUpdate(prevProps, prevState) {
     const scaleChange = prevProps.scale !== this.props.scale;
-    console.log("scaleChange: ", scaleChange);
+
     const viewportChangeHeight =
       prevProps.viewport.height !== this.props.viewport.height;
     const viewportChangeWidth =
