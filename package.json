@@ -121,6 +121,8 @@
     "react-router-dom": "^5.0.1",
     "react-spring": "^8.0.27",
     "react-use-gesture": "^5.2.0",
+    "react-visibility-sensor": "^5.1.1",
+    "react-window": "^1.8.5",
     "react-with-gesture": "^4.0.8",
     "rxjs": "^6.5.2",
     "slate": "^0.47.4",

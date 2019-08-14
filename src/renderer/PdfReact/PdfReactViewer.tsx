@@ -8,6 +8,7 @@ if (typeof window !== "undefined" && "Worker" in window) {
 import { PDFJSStatic } from "pdfjs-dist";
 const pdfjs: PDFJSStatic = _pdfjs as any;
 import { useEffect, useState } from "react";
+import VisibilitySensor from "react-visibility-sensor";
 
 // custom
 import PageCanvas from "./PageCanvas";
@@ -16,7 +17,6 @@ import { domIdWithUid, domIds } from "./events";
 export const PdfReactViewer = props => {
   const [pages, setPages] = useState(null);
   const [scale, setScale] = useState(props.scale || 1);
-  
 
   useEffect(() => {
     loadPdfPages(
@@ -42,7 +42,6 @@ const onWheel = (setScale: React.Dispatch<React.SetStateAction<number>>) => (
   if (e.ctrlKey) {
     e.preventDefault();
     setScale(prevScale => {
-      
       const newScale = prevScale - e.deltaY / 1000;
       const res = newScale >= 0.5 ? newScale : 0.5;
       return res;
@@ -55,28 +54,34 @@ const PdfPages = ({ pages, scale }) => {
   if (pages.length < 1) return null;
   const Pages = pages.map(page => {
     let { width, height } = page.page.getViewport({ scale });
-    
 
     return (
-      <PdfPageOuter
-        draggable={false}
-        id={domIdWithUid(domIds.page, page.pageNumber)}
-        key={domIdWithUid(domIds.page, page.pageNumber)}
-        style={{
-          width: width,
-          minWidth: width,
-          height: height
+      <VisibilitySensor partialVisibility={true}>
+        {({ isVisible }) => {
+          return (
+            <PdfPageOuter
+              draggable={false}
+              id={domIdWithUid(domIds.page, page.pageNumber)}
+              key={domIdWithUid(domIds.page, page.pageNumber)}
+              style={{
+                width: width,
+                minWidth: width,
+                height: height
+              }}
+            >
+              {isVisible && (
+                <PageCanvas
+                  id={domIdWithUid(domIds.pdfCanvas, page.pageNumber)}
+                  key={domIdWithUid(domIds.pdfCanvas, page.pageNumber)}
+                  page={page.page}
+                  scale={scale}
+                  viewport={page.viewport}
+                />
+              )}
+            </PdfPageOuter>
+          );
         }}
-      >
-        <PageCanvas
-          id={domIdWithUid(domIds.pdfCanvas, page.pageNumber)}
-          key={domIdWithUid(domIds.pdfCanvas, page.pageNumber)}
-          page={page.page}
-          scale={scale}
-          viewport={page.viewport}
-        />
-        )
-      </PdfPageOuter>
+      </VisibilitySensor>
     );
   });
   return Pages;
