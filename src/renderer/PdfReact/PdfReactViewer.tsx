@@ -7,18 +7,33 @@ if (typeof window !== "undefined" && "Worker" in window) {
 }
 import { PDFJSStatic } from "pdfjs-dist";
 const pdfjs: PDFJSStatic = _pdfjs as any;
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import VisibilitySensor from "react-visibility-sensor";
 
 // custom
 import PageCanvas from "./PageCanvas";
 import { domIdWithUid, domIds } from "./events";
 
-export const PdfReactViewer = props => {
-  const [pages, setPages] = useState(null);
+const defaultProps = {
+  scale: 1,
+  width: undefined as number | string,
+  height: 500 as number | string,
+  scrollToLeft: 0,
+  scrollToTop: 1110,
+  scrollToPageNumber: 2,
+  loadPageNumbers: [] as number[],
+  displayMode: "full" as "full" | "box"
+};
+export const PdfReactViewer = _props => {
+  const props = { ..._props, ...defaultProps };
+  const [pages, setPages] = useState([]);
   const [scale, setScale] = useState(props.scale || 1);
-  const ref = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [transStr, setTransString] = useState("");
+  const track = useRef({ scale, pages }); // need in hooks, but don't want to rerun effect
+  useEffect(() => {
+    track.current = { pages, scale };
+  }, [pages, scale]);
 
   useEffect(() => {
     // LOAD PAGES
@@ -29,25 +44,45 @@ export const PdfReactViewer = props => {
     });
   }, []);
 
-  // TODO: show a viewbox, show it in the list, click the eye for full pdf modal
-  // <Pdf
-  // key={"1" + node.id}
-  // loadPageNumbers={pagenum}
-  // load={{ rootDir: pdfRootDir, dir: pdfDir }}
-  // scrollToLeft={scrollToLeft * scalePreview}
-  // scrollToTop={scrollToTop * scalePreview}
-  // scrollToPageNumber={pageNumber}
-  // scale={scalePreview}
-  // displayMode="box"
-  // onChange={event => {
+  const scrollRefCallback = useCallback(
+    node => {
+      // called when react assigns the ref to the html node which is after pages.length > 0
+      if (node !== null && !scrollRef.current) {
+        const pagesOffset = getPageOffset(pages, props.scrollToPageNumber);
 
+        // node.scrollTo(props.scrollToLeft, props.scrollToTop + pagesOffset);
+        node.scrollTo(100, 1000);
+        console.log("node: ", node.getBoundingClientRect());
+        scrollRef.current = node;
+      }
+    },
+    [pages, scale]
+  );
+  useEffect(() => {
+    // if we pass in new scroll
+    if (!scrollRef.current || !track.current || props.displayMode === "box")
+      return undefined;
+    const pagesOffset = getPageOffset(pages, props.scrollToPageNumber);
+    scrollRef.current.scrollTo(
+      props.scrollToLeft * track.current.scale,
+      props.scrollToTop * track.current.scale + pagesOffset
+    );
+  }, [track, props.scrollToLeft, props.scrollToTop, props.loadPageNumbers]);
 
+  if (pages.length < 1) return null; // required for scrollTo on mount to work
   return (
-    <div ref={ref} onWheel={onWheel(setScale, ref.current)}>
-      {!!pages && (
-        // <PageCanvas page={pages[0].page} viewport={pages[0].viewport} />
-        <PdfPages scale={scale} pages={pages} />
-      )}
+    <div
+      id="scrollPdf"
+      ref={scrollRefCallback}
+      onWheel={onWheel(setScale, scrollRef.current)}
+      style={{
+        overflow: "scroll",
+        height: props.height ? props.height : "auto",
+        width: props.width ? props.width : "auto",
+        flex: 1,
+      }}
+    >
+      <PdfPages scale={scale} pages={pages} />
     </div>
   );
 };
@@ -67,10 +102,19 @@ const onWheel = (
   }
 };
 
+const getPageOffset = (pages, pageNumber) => {
+  return pages.reduce((sum, page) => {
+    if (page.pageNumber < pageNumber) {
+      sum += page.viewport.height;
+    }
+    return sum;
+  }, 0);
+};
+
 import { PdfPageOuter } from "../StyledComponents";
 const PdfPages = ({ pages, scale }) => {
   if (pages.length < 1) return null;
-  const Pages = pages.map((page,ix) => {
+  const Pages = pages.map((page, ix) => {
     let { width, height } = page.page.getViewport({ scale });
 
     return (
