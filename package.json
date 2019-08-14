@@ -106,6 +106,7 @@
     "app-root-path": "^2.2.1",
     "approx-string-match": "^1.1.0",
     "compromise": "^11.14.2",
+    "d3": "^5.9.7",
     "downshift": "^3.2.12",
     "electron-is-dev": "^1.1.0",
     "electron-settings": "^3.2.0",

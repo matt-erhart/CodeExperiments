@@ -7,7 +7,7 @@ if (typeof window !== "undefined" && "Worker" in window) {
 }
 import { PDFJSStatic } from "pdfjs-dist";
 const pdfjs: PDFJSStatic = _pdfjs as any;
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import VisibilitySensor from "react-visibility-sensor";
 
 // custom
@@ -17,8 +17,11 @@ import { domIdWithUid, domIds } from "./events";
 export const PdfReactViewer = props => {
   const [pages, setPages] = useState(null);
   const [scale, setScale] = useState(props.scale || 1);
+  const ref = useRef<HTMLDivElement>(null);
+  const [transStr, setTransString] = useState("");
 
   useEffect(() => {
+    // LOAD PAGES
     loadPdfPages(
       require("./Understanding the Group Size Effect in Electronic Brainstorming.pdf")
     ).then(pages => {
@@ -26,8 +29,21 @@ export const PdfReactViewer = props => {
     });
   }, []);
 
+  // TODO: show a viewbox, show it in the list, click the eye for full pdf modal
+  // <Pdf
+  // key={"1" + node.id}
+  // loadPageNumbers={pagenum}
+  // load={{ rootDir: pdfRootDir, dir: pdfDir }}
+  // scrollToLeft={scrollToLeft * scalePreview}
+  // scrollToTop={scrollToTop * scalePreview}
+  // scrollToPageNumber={pageNumber}
+  // scale={scalePreview}
+  // displayMode="box"
+  // onChange={event => {
+
+
   return (
-    <div onWheel={onWheel(setScale)}>
+    <div ref={ref} onWheel={onWheel(setScale, ref.current)}>
       {!!pages && (
         // <PageCanvas page={pages[0].page} viewport={pages[0].viewport} />
         <PdfPages scale={scale} pages={pages} />
@@ -35,9 +51,11 @@ export const PdfReactViewer = props => {
     </div>
   );
 };
-const onWheel = (setScale: React.Dispatch<React.SetStateAction<number>>) => (
-  e: React.WheelEvent<HTMLDivElement>
-) => {
+//onWheel={onWheel(setScale)}
+const onWheel = (
+  setScale: React.Dispatch<React.SetStateAction<number>>,
+  el
+) => (e: React.WheelEvent<HTMLDivElement>) => {
   e.persist();
   if (e.ctrlKey) {
     e.preventDefault();
@@ -52,11 +70,11 @@ const onWheel = (setScale: React.Dispatch<React.SetStateAction<number>>) => (
 import { PdfPageOuter } from "../StyledComponents";
 const PdfPages = ({ pages, scale }) => {
   if (pages.length < 1) return null;
-  const Pages = pages.map(page => {
+  const Pages = pages.map((page,ix) => {
     let { width, height } = page.page.getViewport({ scale });
 
     return (
-      <VisibilitySensor partialVisibility={true}>
+      <VisibilitySensor key={ix} partialVisibility={true}>
         {({ isVisible }) => {
           return (
             <PdfPageOuter
