@@ -12,51 +12,128 @@ import VisibilitySensor from "react-visibility-sensor";
 
 // custom
 import PageCanvas from "./PageCanvas";
+import { PageBoxes } from "./PageBoxes";
 import { domIdWithUid, domIds } from "./events";
+import electronState from "../EntryPoints/state.json";
 
 const defaultProps = {
-  scale: 1,
+  scale: 2,
   width: undefined as number | string,
-  height: 500 as number | string,
+  height: "" as number | string,
   scrollToLeft: 0,
   scrollToTop: 1110,
   scrollToPageNumber: 2,
   loadPageNumbers: [] as number[],
   displayMode: "full" as "full" | "box"
 };
-export const PdfReactViewer = _props => {
-  const props = { ..._props, ...defaultProps };
+
+const useLoadPdfPages = (path: string) => {
   const [pages, setPages] = useState([]);
+  const [pdfHashId, setPdfHash] = useState("");
+  useEffect(() => {
+    // LOAD PAGES
+    loadPdfPages(path).then(pages => {
+      setPdfHash(pages[0].page._transport.pdfDocument._pdfInfo.fingerprint);
+      setPages(pages);
+    });
+  }, []);
+
+  return { pages, pdfHashId };
+};
+
+const useLoadBoxSegments = (
+  props = { nodes: [], pdfHashId: "", loadPageNumbers: [] }
+) => {
+  const segments = props.nodes.filter(n => {
+    return (
+      n.data.type === "pdf.segment.viewbox" &&
+      n.data.pdfDir === props.pdfHashId &&
+      (props.loadPageNumbers.includes(n.data.pageNumber) ||
+        props.loadPageNumbers.length === 0)
+    );
+  });
+  return segments;
+};
+
+interface BoxSegments {
+  id: string;
+  data: {
+    left: number;
+    top: number;
+    height: number;
+    width: number;
+  };
+}
+
+
+export const PdfViewer = _props => {
+    // should build overlays here
+  const props = { ...defaultProps, ..._props };
+  const { pages, pdfHashId } = useLoadPdfPages(
+    require("./Understanding the Group Size Effect in Electronic Brainstorming.pdf")
+  );
+  const boxes = useLoadBoxSegments({
+    nodes: Object.values(electronState.graph.nodes),
+    loadPageNumbers: props.loadPageNumbers,
+    pdfHashId
+  });
+  if (pages.length < 1 || boxes.length < 1) return null;
+
+  const {
+    pdfDir,
+    left,
+    top,
+    scale,
+    pageNumber,
+    scalePreview,
+    height,
+    width
+  } = boxes[0].data;
+  const pagenum = [pageNumber];
+
+  const {
+    max: { scrollToLeft, scrollToTop }
+  } = boxes[0].style;
+  
+
+  return (
+    <PdfPagesOuter
+      key={"1" + boxes[0].id}
+      height={height*2}
+      width={(width+(width/4))}
+      loadPageNumbers={pagenum}
+      scrollToLeft={scrollToLeft}
+      scrollToTop={scrollToTop}
+      scrollToPageNumber={pageNumber}
+      scale={2}
+      pages={pages}
+      boxes={boxes}
+    />
+  );
+  // return <PdfPagesOuter pages={pages} />;
+};
+
+export const PdfPagesOuter = _props => {
+  const props = { ...defaultProps, ..._props };
+  const pages = props.pages;
   const [scale, setScale] = useState(props.scale || 1);
+
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [transStr, setTransString] = useState("");
   const track = useRef({ scale, pages }); // need in hooks, but don't want to rerun effect
   useEffect(() => {
     track.current = { pages, scale };
   }, [pages, scale]);
-
-  useEffect(() => {
-    // LOAD PAGES
-    loadPdfPages(
-      require("./Understanding the Group Size Effect in Electronic Brainstorming.pdf")
-    ).then(pages => {
-      setPages(pages);
-    });
-  }, []);
 
   const scrollRefCallback = useCallback(
     node => {
       // called when react assigns the ref to the html node which is after pages.length > 0
       if (node !== null && !scrollRef.current) {
         const pagesOffset = getPageOffset(pages, props.scrollToPageNumber);
-
-        // node.scrollTo(props.scrollToLeft, props.scrollToTop + pagesOffset);
-        node.scrollTo(100, 1000);
-        console.log("node: ", node.getBoundingClientRect());
+        node.scrollTo(props.scrollToLeft, (props.scrollToTop*scale) + pagesOffset);
         scrollRef.current = node;
       }
     },
-    [pages, scale]
+    [props]
   );
   useEffect(() => {
     // if we pass in new scroll
@@ -79,10 +156,10 @@ export const PdfReactViewer = _props => {
         overflow: "scroll",
         height: props.height ? props.height : "auto",
         width: props.width ? props.width : "auto",
-        flex: 1,
+        flex: 1
       }}
     >
-      <PdfPages scale={scale} pages={pages} />
+      <PdfPages scale={scale} pages={pages} boxes={props.boxes} />
     </div>
   );
 };
@@ -112,7 +189,7 @@ const getPageOffset = (pages, pageNumber) => {
 };
 
 import { PdfPageOuter } from "../StyledComponents";
-const PdfPages = ({ pages, scale }) => {
+const PdfPages = ({ pages, scale, boxes }) => {
   if (pages.length < 1) return null;
   const Pages = pages.map((page, ix) => {
     let { width, height } = page.page.getViewport({ scale });
@@ -132,13 +209,23 @@ const PdfPages = ({ pages, scale }) => {
               }}
             >
               {isVisible && (
-                <PageCanvas
-                  id={domIdWithUid(domIds.pdfCanvas, page.pageNumber)}
-                  key={domIdWithUid(domIds.pdfCanvas, page.pageNumber)}
-                  page={page.page}
-                  scale={scale}
-                  viewport={page.viewport}
-                />
+                <>
+                  <PageBoxes
+                    id={domIdWithUid(domIds.boxSegments, page.pageNumber)}
+                    boxes={scaledBoxesForPage(boxes, page.pageNumber, scale)}
+                    pageHeight={height / scale}
+                    pageWidth={width / scale}
+                    scale={scale}
+                    onChange={() => {}}
+                  />
+                  <PageCanvas
+                    id={domIdWithUid(domIds.pdfCanvas, page.pageNumber)}
+                    key={domIdWithUid(domIds.pdfCanvas, page.pageNumber)}
+                    page={page.page}
+                    scale={scale}
+                    viewport={page.viewport}
+                  />
+                </>
               )}
             </PdfPageOuter>
           );
@@ -197,4 +284,26 @@ export const checkGetPageNumsToLoad = (
   }
 
   return pageNumbers;
+};
+
+// BOXES
+const scaledBoxesForPage = (boxes, pageNumber, scale) => {
+  // so now we scale with css so scale at capture is 1
+  return boxes
+    .filter(b => b.data.pageNumber === pageNumber)
+    .map(b => {
+      const { left, top, width, height, scale: scaleAtCapture } = b.data;
+      return {
+        ...b,
+        data: {
+          ...b.data,
+          id: b.id,
+          left: left / scaleAtCapture,
+          top: top / scaleAtCapture,
+          width: width / scaleAtCapture,
+          height: height / scaleAtCapture,
+          scale: scaleAtCapture
+        }
+      };
+    });
 };

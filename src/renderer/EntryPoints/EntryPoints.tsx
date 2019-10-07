@@ -61,12 +61,14 @@ const getText = id => {
   return get(electronState.graph.nodes[id], node => node.data.text, "");
 };
 
+import { PdfViewer } from "../PdfReact/PdfReactViewer";
+
 const getNodeContext = id => {
   const nodeType = getNodeType(id);
   if (["Entry Point", "userDoc"].includes(nodeType)) {
     return electronState.graph.nodes[id].data.text;
   } else {
-    return "render a box";
+    return <PdfViewer />;
   }
 };
 const pathTest = {
@@ -178,7 +180,7 @@ export const Entry1 = () => {
               return (
                 <EntryPointText
                   key={activeTabId + depth}
-                  style={{ marginLeft: (depth*10) + 5}}
+                  style={{ marginLeft: depth * 10 + 5 }}
                 >
                   {getNodeContext(activeTabId)}
                   <>{makeNeighborLinks(entryId, activeTabId, depth + 1)}</>

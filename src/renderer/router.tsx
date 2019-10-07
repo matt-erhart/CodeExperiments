@@ -14,9 +14,11 @@ import { PageText } from "./pdfText/PageText";
 import { InfiniTab } from "./EntryPoints/EntryPoints";
 import { TextEditor } from "./TextEditing/TextEditor";
 import { ExperimentPanels } from "./Experiment/Panels";
-import { PdfReactViewer } from "./PdfReact/PdfReactViewer";
+import { PdfViewer } from "./PdfReact/PdfReactViewer";
+import Writing from "./Writing/Writing"
 const linkRoute = [
-  { to: "/", label: "PdfReact", component: PdfReactViewer },
+  { to: "/", label: "Compressed Writing", component: Writing },
+  { to: "/PdfReact", label: "PdfReact", component: PdfViewer },
   {
     to: "/ExperimentPanels",
     label: "ExperimentPanels",
