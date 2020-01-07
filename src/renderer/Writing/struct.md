@@ -10,12 +10,13 @@ import \* from cognitveScienceMethods
 */
 
 const imports = [`import 'non-verbal IQ' from CognitiveScienceCollection`];
+// how to meause possible screen sizes? guessability/lossiness
 const scope = [
-  `:brain: << cogfunc << cognitive function = mental function = cognitive ability = cognitive capacity = cognitive performance`, //setting: smallest dictionary word
-  `:raven icon: << ravens = raven's = Raven's < Raven's Matrices = Raven's Progressive Matricies < ^non-verbal IQ^ < predict missing shape in a pattern of shapes < wiki link`,
-  `spatial incompatability < their description < cognitive atlas`,
+  `:brain: < cogfunc < cognitive function #perfered = mental function = cognitive ability = cognitive capacity = cognitive performance`, //setting: smallest dictionary word, sort by corpus freqency
+  `:raven icon: < ravens = raven's = Raven's < Raven's Matrices = Raven's Progressive Matricies < ^non-verbal IQ^ < predict missing shape in a pattern of shapes + picture of trial < wiki link`,
+  `cognitive controll < spatial incompatability < their description < cognitive atlas`,
   `cognitive function < ravens + spatial incompatability`,
-  `$ < (finacial|income|money)`,
+  `x <0 $ < (finacial|income|money)`,
   `effective income < as a math equation < divide household income by the squareroot of household size`,
   `poverty|poor < their general definition < bellow median effective income`,
   `well off|rich < above median effective income`,
@@ -33,7 +34,6 @@ const scope = [
   `easy < (easy|hard) condition = (small number|large number) in the scenarios, e.g. ($150 | $1500)`
 ];
 ```
-
 # Claims x Audience
 
 _all_: Poverty-related concerns consume mental resources which causes a general reduction cognitive performance.

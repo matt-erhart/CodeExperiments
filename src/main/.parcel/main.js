@@ -1,4 +1,4 @@
-process.env.HMR_PORT=50225;process.env.HMR_HOSTNAME="localhost";// modules are defined as an array
+process.env.HMR_PORT=55592;process.env.HMR_HOSTNAME="localhost";// modules are defined as an array
 // [ module function, map of requires ]
 //
 // map of requires is short require name -> numeric require
@@ -120,15 +120,15 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"main.ts":[function(require,module,exports) {
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 const {
   format
 } = require("url");
 
-const {
-  BrowserWindow,
-  app,
-  globalShortcut
-} = require("electron");
+const electron_1 = require("electron");
 
 const isDev = require("electron-is-dev");
 
@@ -136,11 +136,17 @@ const {
   resolve
 } = require("app-root-path");
 
-app.on("ready", async () => {
-  const mainWindow = new BrowserWindow({
+const util = require("util");
+
+const setTimeoutPromise = util.promisify(setTimeout);
+electron_1.app.on("ready", async () => {
+  const mainWindow = new electron_1.BrowserWindow({
     width: 800,
     height: 600,
+    x: 0,
+    y: 0,
     show: false,
+    alwaysOnTop: true,
     webPreferences: {
       nodeIntegration: true,
       plugins: true
@@ -152,6 +158,17 @@ app.on("ready", async () => {
     if (isDev) {
       mainWindow.webContents.openDevTools();
     }
+
+    setTimeoutPromise(1000).then(value => {
+      // value === 'foobar' (passing values is optional)
+      // This is executed after about 40 milliseconds.
+      mainWindow.setBounds({
+        x: 440,
+        y: 225,
+        width: 800,
+        height: 600
+      }, true);
+    });
   });
   const devPath = "http://localhost:1124";
   const prodPath = format({
@@ -163,22 +180,22 @@ app.on("ready", async () => {
   mainWindow.setMenu(null);
   mainWindow.loadURL(url);
   mainWindow.on("focus", () => {
-    globalShortcut.register("CommandOrControl+F", function () {
+    electron_1.globalShortcut.register("CommandOrControl+F", function () {
       if (mainWindow && mainWindow.webContents) {
         mainWindow.webContents.send("on-find", "");
       }
     });
   });
   mainWindow.on("blur", () => {
-    globalShortcut.unregister("CommandOrControl+F");
+    electron_1.globalShortcut.unregister("CommandOrControl+F");
   });
 });
-app.on("window-all-closed", () => {
+electron_1.app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
-    app.quit();
+    electron_1.app.quit();
   }
 
-  globalShortcut.unregister("CommandOrControl+F");
+  electron_1.globalShortcut.unregister("CommandOrControl+F");
 });
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -242,8 +259,8 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
         assetsToAccept.forEach(function (v) {
           hmrAcceptRun(v[0], v[1]);
         });
-      } else {
-        window.location.reload();
+      } else if (location.reload) { // `location` global exists in a web worker context but lacks `.reload()` function.
+        location.reload();
       }
     }
 
