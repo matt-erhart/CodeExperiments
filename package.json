@@ -113,7 +113,7 @@
     "electron-settings": "^3.2.0",
     "immutable": "^4.0.0-rc.12",
     "interactjs": "^1.5.4",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.17.21",
     "lodash-move": "^1.1.1",
     "natural": "^0.6.3",
     "prop-types": "15.x.x",
